@@ -1,5 +1,3 @@
-
-
 lu-lvb-JourneyPlanner/
 ├── public/                      # Static assets (e.g., images, fonts, favicon)
 ├── src/
