@@ -1,6 +1,6 @@
 import { SomeAPIResponse } from '../sampleDto';
 
-// Sample data adhering to the DTO
+// Mock response data to the DTO
 export const mockSomeAPIResponse: SomeAPIResponse[] = [
     {
         id: '1',

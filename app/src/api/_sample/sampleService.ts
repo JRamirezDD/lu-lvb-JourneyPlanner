@@ -1,6 +1,6 @@
 import httpClient from '../httpClient';
 import { SomeAPIResponse, toSomeAPIResponse } from './dto/sampleDto';
-import { mockSomeAPIResponse } from './dto/__mock__/sampleDto.mock';
+import { mockSomeAPIResponse } from './dto/__mock__/sample.mock';
 
 const useMock = process.env.USE_MOCK === 'true';
 
