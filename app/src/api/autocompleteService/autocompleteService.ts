@@ -1,7 +1,8 @@
 import httpClient from '../httpClient';
-import { AutocompleteResponse, toAutocompleteItem, } from './dto/autocompleteItem';
+import { AutocompleteResponse } from './dto/autocompleteItem';
 import { SearchParams } from './dto/searchParams';
 import { mockAutocompleteResponse } from './dto/__mock__/autocomplete.mock';
+import { toAutocompleteItem } from './mappers';
 
 
 const useMock = process.env.USE_MOCK === 'true';
