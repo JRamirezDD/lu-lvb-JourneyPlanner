@@ -66,6 +66,7 @@ export interface ZoneInfo {
 }
 
 export interface Alert {
+    alertUrl?: string;
     effectiveStartDate: number; // Epoch timestamp
     effectiveEndDate: number; // Epoch timestamp
     alertHeaderText?: string;

@@ -1,4 +1,4 @@
-import { AutocompleteItem, TagItem } from "./dto/autocompleteItem";
+import { AutocompleteItem, TagItem } from "./dto/autocompleteitemResponse";
 
 
 // Map function for transforming TagItem data

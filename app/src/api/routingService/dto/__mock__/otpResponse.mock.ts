@@ -1,9 +1,7 @@
-import { OtpResponse } from "../otpResponse";
-
-export const mockOtpResponse: OtpResponse = {
+export const mockOtpResponse = {
     RetStatus: {
         Value: "OK",
-        Comments: "Successful response"
+        Comments: "Mock data response",
     },
     requestParameters: {
         From: "Leipzig Hauptbahnhof",
@@ -11,11 +9,12 @@ export const mockOtpResponse: OtpResponse = {
         Travelmode: "TRANSIT",
         date: "01-22-2025",
         time: "08:00",
-        numItineraries: 3
+        numItineraries: 1,
     },
     plan: {
+        date: 1674384000000, // Epoch time
         from: { name: "Leipzig Hauptbahnhof", lat: 51.342, lon: 12.377 },
-        to: { name: "Leipzig Markt", lat: 51.340, lon: 12.374 },
+        to: { name: "Leipzig Markt", lat: 51.34, lon: 12.374 },
         itineraries: [
             {
                 duration: 600,
@@ -39,7 +38,10 @@ export const mockOtpResponse: OtpResponse = {
                         to: { name: "Bus Stop 1", lat: 51.341, lon: 12.375 },
                         legGeometry: { points: [{ lat: 51.342, lon: 12.377 }, { lat: 51.341, lon: 12.375 }] },
                         duration: 300,
-                        transitLeg: false
+                        transitLeg: false,
+                        rentedBike: false,
+                        rentedEscooter: false,
+                        alerts: [],
                     },
                     {
                         startTime: 1674384200000,
@@ -50,13 +52,30 @@ export const mockOtpResponse: OtpResponse = {
                         distance: 2000,
                         mode: "BUS",
                         from: { name: "Bus Stop 1", lat: 51.341, lon: 12.375 },
-                        to: { name: "Leipzig Markt", lat: 51.340, lon: 12.374 },
-                        legGeometry: { points: [{ lat: 51.341, lon: 12.375 }, { lat: 51.340, lon: 12.374 }] },
+                        to: { name: "Leipzig Markt", lat: 51.34, lon: 12.374 },
+                        legGeometry: { points: [{ lat: 51.341, lon: 12.375 }, { lat: 51.34, lon: 12.374 }] },
                         duration: 600,
-                        transitLeg: true
-                    }
-                ]
-            }
-        ]
-    }
+                        transitLeg: true,
+                        rentedBike: false,
+                        rentedEscooter: false,
+                        alerts: [
+                            {
+                                alertUrl: null,
+                                effectiveStartDate: 1670340300000,
+                                effectiveEndDate: 1670423100000,
+                                alertHeaderText: "Service Disruption",
+                                alertDescriptionText: "Planned construction on the route.",
+                                alertCategory: 4,
+                            },
+                        ],
+                    },
+                ],
+                zoneInfo: {
+                    zones: ["101", "102"],
+                    orderedZones: ["101", "102"],
+                    shortDistanceTicket: true,
+                },
+            },
+        ],
+    },
 };
