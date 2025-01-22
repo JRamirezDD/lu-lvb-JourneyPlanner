@@ -1,35 +1,65 @@
-import { toAutocompleteItem, toTagItem } from '@/api/autocompleteService/mappers';
+import { toTagItem, toAutocompleteItem } from "@/api/autocompleteService/mappers";
+import { mockAutocompleteResponse } from "@/api/autocompleteService/dto/__mock__/autocompleteResponse.mock";
 
-describe('Mapper Functions', () => {
-    test('toTagItem maps correctly', () => {
-        const rawTag = { stop_id: '0011420', lvb_gtfs_stop_id: 11420 };
-        const tag = toTagItem(rawTag);
-        expect(tag.stop_id).toBe('0011420');
-        expect(tag.lvb_gtfs_stop_id).toBe(11420);
+describe("autocompleteService Mappers", () => {
+    it("should map raw TagItem data to TagItem DTO", () => {
+        const rawTag = mockAutocompleteResponse[0].tags[0];
+        const result = toTagItem(rawTag);
+
+        expect(result).toEqual({
+            stop_id: rawTag.stop_id,
+            lvb_gtfs_stop_id: rawTag.lvb_gtfs_stop_id,
+        });
     });
 
-    test('toAutocompleteItem maps correctly', () => {
-        const rawData = {
-            ExtraOrder: {},
-            data: 'Mobilitätsstation 3',
-            id: 'pois_s373327',
-            landkreis: 'Leipzig',
-            lat: 51.230301,
-            lon: 12.715422,
-            name: 'Mobilitätsstation 3 - Augustusplatz',
-            postalcode: '04109',
-            ptype: 'S',
-            stadt: 'Leipzig',
-            stadtteil: 'Zentrum',
-            streetname: 'Augustusplatz',
-            housenumber: '5-6',
-            priority: 1.85,
-            sim: 1.47,
-            tags: [{ stop_id: '0011420', lvb_gtfs_stop_id: 11420 }],
-        };
+    it("should map raw AutocompleteItem data to AutocompleteItem DTO", () => {
+        const rawItem = mockAutocompleteResponse[0];
+        const result = toAutocompleteItem(rawItem);
 
-        const result = toAutocompleteItem(rawData);
-        expect(result).toHaveProperty('data', 'Mobilitätsstation 3');
-        expect(result.tags[0].stop_id).toBe('0011420');
+        expect(result).toEqual({
+            ExtraOrder: rawItem.ExtraOrder,
+            data: rawItem.data,
+            id: rawItem.id,
+            landkreis: rawItem.landkreis,
+            lat: rawItem.lat,
+            lon: rawItem.lon,
+            name: rawItem.name,
+            postalcode: rawItem.postalcode,
+            ptype: rawItem.ptype,
+            stadt: rawItem.stadt,
+            stadtteil: rawItem.stadtteil,
+            streetname: rawItem.streetname,
+            housenumber: rawItem.housenumber,
+            priority: rawItem.priority,
+            sim: rawItem.sim,
+            tags: rawItem.tags.map(toTagItem), // Verify nested mapping
+        });
+    });
+
+    it("should correctly map all raw AutocompleteResponse data to DTOs", () => {
+        const results = mockAutocompleteResponse.map(toAutocompleteItem);
+
+        expect(results.length).toBe(mockAutocompleteResponse.length);
+
+        mockAutocompleteResponse.forEach((rawItem, index) => {
+            expect(results[index]).toEqual({
+                ExtraOrder: rawItem.ExtraOrder,
+                data: rawItem.data,
+                id: rawItem.id,
+                landkreis: rawItem.landkreis,
+                lat: rawItem.lat,
+                lon: rawItem.lon,
+                name: rawItem.name,
+                postalcode: rawItem.postalcode,
+                ptype: rawItem.ptype,
+                stadt: rawItem.stadt,
+                stadtteil: rawItem.stadtteil,
+                streetname: rawItem.streetname,
+                housenumber: rawItem.housenumber,
+                priority: rawItem.priority,
+                sim: rawItem.sim,
+                tags: rawItem.tags.map(toTagItem), // Verify nested mapping
+            });
+        });
     });
 });
