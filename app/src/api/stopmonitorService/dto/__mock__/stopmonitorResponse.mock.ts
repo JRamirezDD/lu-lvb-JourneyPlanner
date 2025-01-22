@@ -87,7 +87,7 @@ export const mockStopTimesResponse = {
         track: "A",
         delay_time: 60,
         departure_delay: 60,
-        alerts: null
+        alerts: []
     },
     beforeGivenStop: [],
     afterGivenStop: [],
