@@ -9,7 +9,7 @@ const useMock = process.env.USE_MOCK === 'true';
 export const fetchAutocompleteDatra = async (params: SearchParams): Promise<AutocompleteResponse> => {
     try {
         if (useMock) {
-            return mockAutocompleteResponse;
+            return mockAutocompleteResponse.map(toAutocompleteItem);
         }
 
         const response = await httpClient.get('/some-endpoint', { params });
