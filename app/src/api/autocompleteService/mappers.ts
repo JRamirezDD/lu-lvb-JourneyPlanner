@@ -1,32 +1,31 @@
 import { AutocompleteItem, TagItem } from "./dto/autocompleteitemResponse";
 
-
 // Map function for transforming TagItem data
 export const toTagItem = (tag: any): TagItem => {
-    return {
-        stop_id: tag.stop_id,
-        lvb_gtfs_stop_id: tag.lvb_gtfs_stop_id,
-    };
+    return new TagItem(
+        tag.stop_id, // Mandatory
+        tag.lvb_gtfs_stop_id // Mandatory
+    );
 };
 
 // Map function for transforming AutocompleteItem data
 export const toAutocompleteItem = (data: any): AutocompleteItem => {
-    return {
-        ExtraOrder: data.ExtraOrder || {},
-        data: data.data,
-        id: data.id,
-        landkreis: data.landkreis,
-        lat: data.lat,
-        lon: data.lon,
-        name: data.name,
-        postalcode: data.postalcode,
-        ptype: data.ptype,
-        stadt: data.stadt,
-        stadtteil: data.stadtteil,
-        streetname: data.streetname,
-        housenumber: data.housenumber,
-        priority: data.priority,
-        sim: data.sim,
-        tags: data.tags ? data.tags.map(toTagItem) : [], // Transform tags if they exist
-    };
+    return new AutocompleteItem(
+        data.ExtraOrder || {}, // Optional (moved first due to optional ordering)
+        data.data, // Mandatory
+        data.id, // Mandatory
+        data.landkreis, // Mandatory
+        data.lat, // Mandatory
+        data.lon, // Mandatory
+        data.name, // Mandatory
+        data.postalcode, // Mandatory
+        data.ptype, // Mandatory
+        data.stadt, // Mandatory
+        data.stadtteil, // Mandatory
+        data.streetname, // Mandatory
+        data.housenumber, // Mandatory
+        data.priority, // Mandatory
+        data.sim, // Mandatory
+        data.tags ? data.tags.map(toTagItem) : [] // Optional (array, safe default is empty array)
+    );
 };

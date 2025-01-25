@@ -1,75 +1,138 @@
+import { GeoJsonConvertible } from "@/types/GeoJsonConvertible";
 import { RequestParameters } from "./otpRequest";
 
-//dto/otpResponse.ts
-export interface OtpResponse {
-    RetStatus: {
-        Value: string; // OK or FEHLER
-        Comments?: string; // More information in case of an error
-    };
-    requestParameters: RequestParameters;
-    plan: Plan;
+// dto/otpResponse.ts
+
+export class OtpResponse extends GeoJsonConvertible {
+    constructor(
+        public RetStatus: { Value: string; Comments?: string },
+        public requestParameters: RequestParameters,
+        public plan: Plan
+    ) {
+        super();
+    }
+
+    toGeoJson(): string {
+        throw new Error("Not Implemented");
+    }
 }
 
-export interface Plan {
-    date?: number; // Epoch timestamp
-    from: Location;
-    to: Location;
-    itineraries: Itinerary[];
+export class Plan extends GeoJsonConvertible {
+    constructor(
+        public date: number | undefined,
+        public from: Location,
+        public to: Location,
+        public itineraries: Itinerary[]
+    ) {
+        super();
+    }
+
+    toGeoJson(): string {
+        throw new Error("Not Implemented");
+    }
 }
 
-export interface Location {
-    name: string;
-    lat: number;
-    lon: number;
+export class Location extends GeoJsonConvertible {
+    constructor(
+        public name: string,
+        public lat: number,
+        public lon: number
+    ) {
+        super();
+    }
+
+    toGeoJson(): string {
+        throw new Error("Not Implemented");
+    }
 }
 
-export interface Itinerary {
-    duration: number;
-    startTime: number; // Epoch timestamp
-    endTime: number; // Epoch timestamp
-    walkTime: number;
-    transitTime: number;
-    waitingTime: number;
-    walkDistance: number;
-    transfers: number;
-    legs: Leg[];
-    zoneInfo?: ZoneInfo;
+export class Itinerary extends GeoJsonConvertible {
+    constructor(
+        public duration: number,
+        public startTime: number,
+        public endTime: number,
+        public walkTime: number,
+        public transitTime: number,
+        public waitingTime: number,
+        public walkDistance: number,
+        public transfers: number,
+        public legs: Leg[],
+        public zoneInfo?: ZoneInfo
+    ) {
+        super();
+    }
+
+    toGeoJson(): string {
+        throw new Error("Not Implemented");
+    }
 }
 
-export interface Leg {
-    startTime: number; // Epoch timestamp
-    endTime: number; // Epoch timestamp
-    departureDelay: number;
-    arrivalDelay: number;
-    realTime: boolean;
-    distance: number;
-    mode: string;
-    from: Location;
-    to: Location;
-    legGeometry: LegGeometry;
-    duration: number;
-    transitLeg: boolean;
-    rentedBike?: boolean;
-    rentedEscooter?: boolean;
-    alerts?: Alert[];
-    intermediateStops?: Location[];
+export class Leg extends GeoJsonConvertible {
+    constructor(
+        public startTime: number,
+        public endTime: number,
+        public departureDelay: number,
+        public arrivalDelay: number,
+        public realTime: boolean,
+        public distance: number,
+        public mode: string,
+        public from: Location,
+        public to: Location,
+        public legGeometry: LegGeometry,
+        public duration: number,
+        public transitLeg: boolean,
+        public intermediateStops?: Location[],
+        public rentedBike?: boolean,
+        public rentedEscooter?: boolean,
+        public alerts?: Alert[]
+    ) {
+        super();
+    }
+
+    toGeoJson(): string {
+        throw new Error("Not Implemented");
+    }
 }
 
-export interface LegGeometry {
-    points: { lat: number; lon: number }[];
+export class LegGeometry extends GeoJsonConvertible {
+    constructor(
+        public points: { lat: number; lon: number }[]
+    ) {
+        super();
+    }
+
+    toGeoJson(): string {
+        throw new Error("Not Implemented");
+    }
 }
 
-export interface ZoneInfo {
-    zones: string[];
-    orderedZones: string[];
-    shortDistanceTicket: boolean;
+export class ZoneInfo extends GeoJsonConvertible {
+    constructor(
+        public zones: string[],
+        public orderedZones: string[],
+        public shortDistanceTicket: boolean
+    ) {
+        super();
+    }
+
+    toGeoJson(): string {
+        throw new Error("Not Implemented");
+    }
 }
 
-export interface Alert {
-    alertUrl?: string;
-    effectiveStartDate: number; // Epoch timestamp
-    effectiveEndDate: number; // Epoch timestamp
-    alertHeaderText?: string;
-    alertDescriptionText: string;
-    alertCategory: number; // 0 to 6, representing alert types
+export class Alert extends GeoJsonConvertible {
+    constructor(
+        public effectiveStartDate: number,
+        public effectiveEndDate: number,
+        public alertDescriptionText: string,
+        public alertCategory: number,
+        public alertUrl?: string,
+        public alertHeaderText?: string
+    ) {
+        super();
+    }
+
+    toGeoJson(): string {
+        throw new Error("Not Implemented");
+    }
 }
