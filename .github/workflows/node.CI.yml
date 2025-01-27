@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   build:
@@ -16,13 +17,16 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '22.12.0'
+        node-version: '20.12.x'
         
     - name: Install dependencies
+      working-directory: ./app
       run: npm ci # uses package-lock.json
       
     - name: Run Tests
-      run: npm test # currently only runs jest tests
+      working-directory: ./app
+      run: npm run test
 
     - name: Build Project
+      working-directory: ./app
       run: npm run build --if-present
