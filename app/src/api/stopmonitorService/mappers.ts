@@ -1,4 +1,3 @@
-// mappers/stopMonitorMappers.ts
 import {
     MonitorItem,
     MonitorResponse,
@@ -8,103 +7,112 @@ import {
     StopsResponse,
     StopTimesResponse,
     StopTimesItem,
-    TripInfo
+    TripInfo,
+    Alert,
 } from "./dto/stopmonitorResponse";
 
-export const toMonitorItem = (data: any): MonitorItem => ({
-    arrival_time: data.arrival_time,
-    date: data.date,
-    departure_time: data.departure_time,
-    departure_date: data.departure_date,
-    trip_id: data.trip_id,
-    stop_id: data.stop_id,
-    parent_id: data.parent_id,
-    route_id: data.route_id,
-    trip_headsign: data.trip_headsign,
-    route_color: data.route_color,
-    directionId: data.directionId,
-    agencyName: data.agencyName,
-    trip_cancelled: data.trip_cancelled,
-    stop_cancelled: data.stop_cancelled,
-    trip_accessible_scheduled: data.trip_accessible_scheduled,
-    trip_accessible: data.trip_accessible,
-    track_scheduled: data.track_scheduled,
-    track: data.track,
-    delay_time: data.delay_time,
-    departure_delay: data.departure_delay,
-    waiting_time: data.waiting_time,
-    dep_waiting_time: data.dep_waiting_time,
-    alerts: data.alerts || [],
-    transport_type: data.transport_type,
-    line: data.line,
-});
+export const toMonitorItem = (data: any): MonitorItem =>
+    new MonitorItem(
+        data.arrival_time,
+        data.date,
+        data.departure_time,
+        data.departure_date,
+        data.trip_id,
+        data.stop_id,
+        data.parent_id,
+        data.route_id,
+        data.trip_headsign,
+        data.route_color,
+        data.directionId,
+        data.agencyName,
+        data.trip_cancelled,
+        data.stop_cancelled,
+        data.waiting_time,
+        data.dep_waiting_time,
+        data.line,
+        data.transport_type,
+        data.trip_accessible_scheduled,
+        data.trip_accessible,
+        data.track_scheduled,
+        data.track,
+        data.delay_time,
+        data.departure_delay,
+        data.alerts ? data.alerts.map(toAlert) : []
+    );
 
-export const toMonitorResponse = (data: any): MonitorResponse => ({
-    items: data.map(toMonitorItem),
-});
+export const toMonitorResponse = (data: any): MonitorResponse =>
+    new MonitorResponse(data.map(toMonitorItem));
 
-export const toDirectionInfo = (data: any): DirectionInfo => ({
-    directionId: data.directionId,
-    agencyName: data.agencyName,
-    line: data.line,
-    route_color: data.route_color,
-    directionName: data.directionName,
-    transport_type: data.transport_type,
-    headsigns: data.headsigns || [],
-});
+export const toDirectionInfo = (data: any): DirectionInfo =>
+    new DirectionInfo(
+        data.directionId,
+        data.agencyName,
+        data.line,
+        data.route_color,
+        data.directionName,
+        data.transport_type,
+        data.headsigns || []
+    );
 
-export const toDirectionResponse = (data: any): DirectionResponse => ({
-    items: data.map(toDirectionInfo),
-});
+export const toDirectionResponse = (data: any): DirectionResponse =>
+    new DirectionResponse(data.map(toDirectionInfo));
 
-export const toStopsItem = (data: any): StopsItem => ({
-    stop_name: data.stop_name,
-    stop_id: data.stop_id,
-    lat: data.lat,
-    lon: data.lon,
-    priority: data.priority,
-});
+export const toStopsItem = (data: any): StopsItem =>
+    new StopsItem(data.stop_name, data.stop_id, data.lat, data.lon, data.priority);
 
-export const toStopsResponse = (data: any): StopsResponse => ({
-    items: data.map(toStopsItem),
-});
+export const toStopsResponse = (data: any): StopsResponse =>
+    new StopsResponse(data.map(toStopsItem));
 
-export const toStopTimesItem = (data: any): StopTimesItem => ({
-    arrival_time: data.arrival_time,
-    date: data.date,
-    departure_time: data.departure_time,
-    departure_date: data.departure_date,
-    stop_id: data.stop_id,
-    parent_id: data.parent_id,
-    stop_name: data.stop_name,
-    stop_sequence: data.stop_sequence,
-    trip_headsign: data.trip_headsign,
-    stop_cancelled: data.stop_cancelled,
-    track_scheduled: data.track_scheduled,
-    track: data.track,
-    delay_time: data.delay_time,
-    departure_delay: data.departure_delay,
-    alerts: data.alerts || [],
-});
+export const toStopTimesItem = (data: any): StopTimesItem =>
+    new StopTimesItem(
+        data.arrival_time,
+        data.date,
+        data.departure_time,
+        data.departure_date,
+        data.stop_id,
+        data.parent_id,
+        data.stop_name,
+        data.stop_sequence,
+        data.trip_headsign,
+        data.stop_cancelled,
+        data.track_scheduled,
+        data.track,
+        data.delay_time,
+        data.departure_delay,
+        data.alerts ? data.alerts.map(toAlert) : []
+    );
 
-export const toTripInfo = (data: any): TripInfo => ({
-    trip_id: data.trip_id,
-    service_date: data.service_date,
-    route_id: data.route_id,
-    route_color: data.route_color,
-    directionId: data.directionId,
-    agencyName: data.agencyName,
-    default_headsign: data.default_headsign,
-    trip_cancelled: data.trip_cancelled,
-    trip_accessible_scheduled: data.trip_accessible_scheduled,
-    trip_accessible: data.trip_accessible,
-    transport_type: data.transport_type,
-    line: data.line,
-});
+export const toTripInfo = (data: any): TripInfo =>
+    new TripInfo(
+        data.trip_id,
+        data.service_date,
+        data.route_id,
+        data.route_color,
+        data.directionId,
+        data.agencyName,
+        data.default_headsign,
+        data.trip_cancelled,
+        data.transport_type,
+        data.line,
+        data.trip_accessible_scheduled,
+        data.trip_accessible
+    );
 
-export const toStopTimesResponse = (data: any): StopTimesResponse => ({
-    tripInfo: toTripInfo(data.tripInfo),
-    beforeGivenStop: data.beforeGivenStop ? data.beforeGivenStop.map(toStopTimesItem) : [],
-    atGivenStop: data.atGivenStop ? toStopTimesItem(data.atGivenStop) : undefined,
-    afterGivenStop: data.afterGivenStop ? data.afterGivenStop.map(toStopTimesItem) : [],
-});
+export const toStopTimesResponse = (data: any): StopTimesResponse =>
+    new StopTimesResponse(
+        toTripInfo(data.tripInfo),
+        data.beforeGivenStop ? data.beforeGivenStop.map(toStopTimesItem) : [],
+        data.atGivenStop ? toStopTimesItem(data.atGivenStop) : undefined,
+        data.afterGivenStop ? data.afterGivenStop.map(toStopTimesItem) : []
+    );
+
+// Helper to convert alerts
+export const toAlert = (data: any): Alert =>
+    new Alert(
+        data.effectiveStartDate,
+        data.effectiveEndDate,
+        data.alertDescriptionText,
+        data.alertCategory,
+        data.alertUrl,
+        data.alertHeaderText
+    );

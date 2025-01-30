@@ -1,71 +1,82 @@
-import { OtpResponse, Plan, Location, Itinerary, Leg, Alert, ZoneInfo } from "./dto/otpResponse";
+import {
+    OtpResponse,
+    Plan,
+    Location,
+    Itinerary,
+    Leg,
+    Alert,
+    ZoneInfo,
+    LegGeometry,
+} from "./dto/otpResponse";
 
-export const toLocation = (data: any): Location => ({
-    name: data.name,
-    lat: data.lat,
-    lon: data.lon,
-});
+export const toLocation = (data: any): Location =>
+    new Location(data.name, data.lat, data.lon);
 
-export const toLeg = (data: any): Leg => ({
-    startTime: data.startTime,
-    endTime: data.endTime,
-    departureDelay: data.departureDelay,
-    arrivalDelay: data.arrivalDelay,
-    realTime: data.realTime,
-    distance: data.distance,
-    mode: data.mode,
-    from: toLocation(data.from),
-    to: toLocation(data.to),
-    legGeometry: {
-        points: data.legGeometry.points.map((point: any) => ({ lat: point.lat, lon: point.lon })),
-    },
-    duration: data.duration,
-    transitLeg: data.transitLeg,
-    rentedBike: data.rentedBike,
-    rentedEscooter: data.rentedEscooter,
-    alerts: data.alerts ? data.alerts.map(toAlert) : [],
-});
+export const toLeg = (data: any): Leg =>
+    new Leg(
+        data.startTime,
+        data.endTime,
+        data.departureDelay,
+        data.arrivalDelay,
+        data.realTime,
+        data.distance,
+        data.mode,
+        toLocation(data.from),
+        toLocation(data.to),
+        new LegGeometry(data.legGeometry.points.map((point: any) => ({ lat: point.lat, lon: point.lon }))),
+        data.duration,
+        data.transitLeg,
+        data.intermediateStops ? data.intermediateStops.map(toLocation) : undefined,
+        data.rentedBike,
+        data.rentedEscooter,
+        data.alerts ? data.alerts.map(toAlert) : [],
+    );
 
-export const toAlert = (data: any): Alert => ({
-    alertUrl: data.alertUrl,
-    effectiveStartDate: data.effectiveStartDate,
-    effectiveEndDate: data.effectiveEndDate,
-    alertHeaderText: data.alertHeaderText,
-    alertDescriptionText: data.alertDescriptionText,
-    alertCategory: data.alertCategory,
-});
+export const toAlert = (data: any): Alert =>
+    new Alert(
+        data.effectiveStartDate, // Required
+        data.effectiveEndDate, // Required
+        data.alertDescriptionText, // Required
+        data.alertCategory, // Required
+        data.alertUrl, // Optional
+        data.alertHeaderText // Optional
+    );
 
-export const toItinerary = (data: any): Itinerary => ({
-    duration: data.duration,
-    startTime: data.startTime,
-    endTime: data.endTime,
-    walkTime: data.walkTime,
-    transitTime: data.transitTime,
-    waitingTime: data.waitingTime,
-    walkDistance: data.walkDistance,
-    transfers: data.transfers,
-    legs: data.legs.map(toLeg),
-    zoneInfo: data.zoneInfo ? toZoneInfo(data.zoneInfo) : undefined,
-});
+export const toItinerary = (data: any): Itinerary =>
+    new Itinerary(
+        data.duration,
+        data.startTime,
+        data.endTime,
+        data.walkTime,
+        data.transitTime,
+        data.waitingTime,
+        data.walkDistance,
+        data.transfers,
+        data.legs.map(toLeg),
+        data.zoneInfo ? toZoneInfo(data.zoneInfo) : undefined
+    );
 
-export const toZoneInfo = (data: any): ZoneInfo => ({
-    zones: data.zones,
-    orderedZones: data.orderedZones,
-    shortDistanceTicket: data.shortDistanceTicket,
-});
+export const toZoneInfo = (data: any): ZoneInfo =>
+    new ZoneInfo(
+        data.zones,
+        data.orderedZones,
+        data.shortDistanceTicket
+    );
 
-export const toPlan = (data: any): Plan => ({
-    date: data.date,
-    from: toLocation(data.from),
-    to: toLocation(data.to),
-    itineraries: data.itineraries.map(toItinerary),
-});
+export const toPlan = (data: any): Plan =>
+    new Plan(
+        data.date,
+        toLocation(data.from),
+        toLocation(data.to),
+        data.itineraries.map(toItinerary)
+    );
 
-export const toOtpResponse = (data: any): OtpResponse => ({
-    RetStatus: {
-        Value: data.RetStatus.Value,
-        Comments: data.RetStatus.Comments,
-    },
-    requestParameters: data.requestParameters,
-    plan: toPlan(data.plan),
-});
+export const toOtpResponse = (data: any): OtpResponse =>
+    new OtpResponse(
+        {
+            Value: data.RetStatus.Value,
+            Comments: data.RetStatus.Comments,
+        },
+        data.requestParameters,
+        toPlan(data.plan)
+    );

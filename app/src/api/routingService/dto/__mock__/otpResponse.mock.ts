@@ -56,11 +56,12 @@ export const mockOtpResponse = {
                         legGeometry: { points: [{ lat: 51.341, lon: 12.375 }, { lat: 51.34, lon: 12.374 }] },
                         duration: 600,
                         transitLeg: true,
+                        intermediateStops: [],
                         rentedBike: false,
                         rentedEscooter: false,
                         alerts: [
                             {
-                                alertUrl: null,
+                                alertUrl: undefined,
                                 effectiveStartDate: 1670340300000,
                                 effectiveEndDate: 1670423100000,
                                 alertHeaderText: "Service Disruption",
