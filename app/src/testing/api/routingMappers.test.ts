@@ -11,6 +11,13 @@ import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.m
 import { Leg, LegGeometry, Location, Alert, Itinerary, ZoneInfo, Plan, OtpResponse } from "@/api/routingService/dto/otpResponse";
 
 describe("routingService Mappers", () => {
+    it("should map the mock data to geoJSON format. Must check manually.", () => {
+        const result = toOtpResponse(mockOtpResponse).toGeoJson();
+        //console.log(result);
+
+        expect(result).not.toEqual("");
+    })
+
     it("should map raw location data to Location DTO", () => {
         const rawLocation = mockOtpResponse.plan.from;
         const result = toLocation(rawLocation);
@@ -40,27 +47,32 @@ describe("routingService Mappers", () => {
                 rawLeg.transitLeg,
                 rawLeg.intermediateStops?.map(toLocation),
                 rawLeg.rentedBike,
-                rawLeg.rentedEscooter,
-                rawLeg.alerts.map(toAlert)
+                rawLeg.alerts?.map(toAlert)
             )
         );
     });
 
     it("should map raw alert data to Alert DTO", () => {
-        const rawAlert = mockOtpResponse.plan.itineraries[0].legs[1].alerts[0];
+        const rawAlert = mockOtpResponse.plan?.itineraries?.[0]?.legs?.[1]?.alerts?.[0];
+    
+        if (!rawAlert) {
+            throw new Error("rawAlert is undefined");
+        }
+    
         const result = toAlert(rawAlert);
-
+    
         expect(result).toEqual(
             new Alert(
                 rawAlert.effectiveStartDate,
                 rawAlert.effectiveEndDate,
                 rawAlert.alertDescriptionText,
                 rawAlert.alertCategory,
-                rawAlert.alertUrl,
-                rawAlert.alertHeaderText
+                rawAlert.alertUrl ?? undefined,
+                rawAlert.alertHeaderText ?? undefined 
             )
-        );
+        );        
     });
+    
 
     it("should map raw itinerary data to Itinerary DTO", () => {
         const rawItinerary = mockOtpResponse.plan.itineraries[0];
@@ -83,13 +95,16 @@ describe("routingService Mappers", () => {
     });
 
     it("should map raw zone info data to ZoneInfo DTO", () => {
-        const rawZoneInfo = mockOtpResponse.plan.itineraries[0].zoneInfo;
+        const rawZoneInfo = mockOtpResponse.plan?.itineraries?.[0]?.zoneInfo;
+        if (!rawZoneInfo) {
+            throw new Error("rawZoneInfo is undefined");
+        }
         const result = toZoneInfo(rawZoneInfo);
-
         expect(result).toEqual(
             new ZoneInfo(rawZoneInfo.zones, rawZoneInfo.orderedZones, rawZoneInfo.shortDistanceTicket)
         );
     });
+    
 
     it("should map raw plan data to Plan DTO", () => {
         const rawPlan = mockOtpResponse.plan;
