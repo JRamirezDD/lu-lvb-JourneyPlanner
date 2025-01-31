@@ -1,0 +1,10 @@
+{
+    "Metadata": {
+        "title": "lu-lvb-project",
+        "description": "Project for lu-lvb from Lancaster University Students"
+    },
+    "HomePage": {
+      "list1": "Hello world!",
+      "list2": "Journey Planner"
+    }
+  }
