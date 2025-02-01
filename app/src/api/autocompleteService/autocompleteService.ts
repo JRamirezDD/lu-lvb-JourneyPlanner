@@ -5,6 +5,7 @@ import { mockAutocompleteResponse } from "./dto/__mock__/autocompleteResponse.mo
 import { toAutocompleteItem } from "./mappers";
 
 const useMock = process.env.USE_MOCK === "true";
+const api_endpoint = process.env.NEXT_PUBLIC_API_ENDPOINT_AUTOCOMPLETE;
 
 export const fetchAutocompleteData = async (params: SearchParams): Promise<AutocompleteResponse> => {
     if (useMock) {
@@ -12,7 +13,7 @@ export const fetchAutocompleteData = async (params: SearchParams): Promise<Autoc
     }
 
     try {
-        const response = await httpClient.get("/some-endpoint", { params });
+        const response = await httpClient.get(api_endpoint + "/search", { params });
         return response.data.map(toAutocompleteItem); // Transform API response to DTOs
     } catch (error) {
         console.error("Error fetching autocomplete data:", error);
