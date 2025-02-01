@@ -5,7 +5,7 @@ import { useSettingsContext } from "@/contexts/settingsContext";
 import { TransportMode } from "@/types/TransportMode";
 
 
-const SettingsDisplay = () => {
+const SettingsComponent = () => {
     const { transportModes, toggleTransportMode } = useSettingsContext();
 
     const handleToggle = (mode: TransportMode) => {
@@ -24,4 +24,4 @@ const SettingsDisplay = () => {
     );
 };
 
-export default SettingsDisplay;
+export default SettingsComponent;
