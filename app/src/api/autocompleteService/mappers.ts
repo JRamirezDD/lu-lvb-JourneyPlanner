@@ -26,6 +26,6 @@ export const toAutocompleteItem = (data: any): AutocompleteItem => {
         data.housenumber, // Mandatory
         data.priority, // Mandatory
         data.sim, // Mandatory
-        data.tags ? toTagItem(data.tags) : null // Optional. P - Need to verify that data is being saved correctly
+        data.tags ? toTagItem(data.tags) : null
     );
 };
