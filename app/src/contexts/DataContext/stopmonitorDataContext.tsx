@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useContext } from "react";
 import { IDataContext } from "@/contexts/DataContext/IDataContext";
 import { useDataFetcher } from "@/hooks/useDataFetcher";
