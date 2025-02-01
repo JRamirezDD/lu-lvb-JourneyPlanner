@@ -7,7 +7,6 @@ import { fetchAutocompleteData } from "@/api/autocompleteService/autocompleteSer
 import { AutocompleteResponse } from "@/api/autocompleteService/dto/autocompleteitemResponse";
 import { SearchParams } from "@/api/autocompleteService/dto/searchparamsRequest";
 
-// Define the shape of the Autocomplete Data Context
 export interface IAutocompleteDataContext extends IDataContext<AutocompleteResponse> {
     // Autocomplete
     autocompleteData: AutocompleteResponse | null;
@@ -23,7 +22,6 @@ const AutocompleteDataContext = createContext<IAutocompleteDataContext | undefin
 
 // Provider component for the AutocompleteDataContext
 export const AutocompleteDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    // Use the standardized data fetching hook with your API service
     const autocompleteFetcher = useDataFetcher<AutocompleteResponse>(fetchAutocompleteData);
 
     return (

@@ -7,14 +7,14 @@ import { fetchOtpData } from "@/api/routingService/routingService";
 import { OtpResponse } from "@/api/routingService/dto/otpResponse";
 import { RequestParameters } from "@/api/routingService/dto/otpRequest";
 
-// Define the shape of the OTP Data Context.
 export interface IOtpDataContext extends IDataContext<OtpResponse> {
     // Routing
     otpData: OtpResponse | null;
     fetchOtpData: (params: Partial<RequestParameters>) => Promise<void>;
     loadingOtp: boolean;
     errorOtp: string | null;
-    // Optionally, you could add a clearState function if needed.
+
+    clearState: () => void;
 }
 
 // Create the context with an undefined default value
@@ -22,7 +22,6 @@ const OtpDataContext = createContext<IOtpDataContext | undefined>(undefined);
 
 // Provider Component for OTP Data
 export const OtpDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    // useDataFetcher returns { data, loading, error, fetchData }
     const otpFetcher = useDataFetcher<OtpResponse>(fetchOtpData);
 
     return (

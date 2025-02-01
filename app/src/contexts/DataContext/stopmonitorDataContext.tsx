@@ -41,6 +41,8 @@ export interface IStopmonitorDataContext extends IDataContext<StopsResponse> {
     fetchDirectionInfo: (stopId: string) => Promise<void>;
     loadingDirection: boolean;
     errorDirection: string | null;
+
+    clearState: () => void;
 }
 
 const StopmonitorDataContext = createContext<IStopmonitorDataContext | undefined>(undefined);
@@ -89,6 +91,7 @@ export const StopmonitorDataProvider: React.FC<{ children: React.ReactNode }> = 
     );
 };
 
+// Hook for consuming the StopMonitorDataContext in your components
 export const useStopmonitorDataContext = () => {
     const context = useContext(StopmonitorDataContext);
     if (!context) {
