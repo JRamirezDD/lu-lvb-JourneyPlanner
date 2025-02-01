@@ -1,8 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import { IContext } from "./IContext";
 import { Coordinates } from "@/types/Coordinates";
+import { IContext } from "./IContext";
 
 
 export interface IMapContext extends IContext {

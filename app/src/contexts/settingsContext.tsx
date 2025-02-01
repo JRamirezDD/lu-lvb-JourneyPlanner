@@ -1,8 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import { IContext } from "./IContext";
 import { TransportMode } from "@/types/TransportMode";
+import { IContext } from "./IContext";
 
 export interface ISettingsContext extends IContext {
     language: "en" | "de";
