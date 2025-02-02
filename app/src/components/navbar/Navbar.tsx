@@ -28,21 +28,23 @@ const Navbar = () => {
     };
 
   return (
-    <div className='py-3 flex items center justify-between border-b'>
-      <h1 className='text-lg font-bold'>Leipziger</h1>
-      <div className='flex items-center gap-3'>
-        <button 
-            onClick={() => handleLanguageChange('en')}
-            className={`border p-2 rounded-md text-sm ${locale === 'en' ? 'bg-black text-white' : ''}`}>
-            EN
-        </button>
-        <button 
-            onClick={() => handleLanguageChange('de')}
-            className={`border p-2 rounded-md text-sm ${locale === 'de' ? 'bg-black text-white' : ''}`}>
-            DE
-        </button>
+    <nav className='w-full border-b'>
+      <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between'>
+        <h1 className='text-lg font-bold'>Leipziger</h1>
+        <div className='flex items-center gap-2 sm:gap-3'>
+          <button 
+              onClick={() => handleLanguageChange('en')}
+              className={`border p-1.5 sm:p-2 rounded-md text-sm ${locale === 'en' ? 'bg-black text-white' : ''}`}>
+              EN
+          </button>
+          <button 
+              onClick={() => handleLanguageChange('de')}
+              className={`border p-1.5 sm:p-2 rounded-md text-sm ${locale === 'de' ? 'bg-black text-white' : ''}`}>
+              DE
+          </button>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

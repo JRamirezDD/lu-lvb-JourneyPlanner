@@ -28,9 +28,9 @@ export default async function RootLayout({
       
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          <div className='mx-auto max-w-6xl felx flex-col h-screenpx-4 sm:px-6 lg:px-8'>
+          <div className='w-full flex flex-col min-h-screen'>
             <Navbar />
-            <div className='flex-grow flex items-center justify-center'>
+            <div className='flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8'>
               {children}
             </div>
           </div>

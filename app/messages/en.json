@@ -6,5 +6,24 @@
     "HomePage": {
       "list1": "Hello world!",
       "list2": "Journey Planner"
+    },
+    "ControlPanel": {
+        "planner": {
+            "title": "Plan Your Trip",
+            "origin": "Origin",
+            "destination": "Destination",
+            "seeRoutes": "See Routes",
+            "filters": {
+                "departure": "Departure",
+                "transport": "Transport",
+                "datePicker": {
+                    "date": "Date",
+                    "time": "Time",
+                    "setToNow": "Set to Now"
+                },
+                "departureNow": "Depart Now",
+                "departureAt": "Depart at {time}"
+            }
+        }
     }
   }

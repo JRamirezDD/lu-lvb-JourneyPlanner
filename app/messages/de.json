@@ -6,5 +6,24 @@
     "HomePage": {
         "list1": "Hallo Welt!",
         "list2": "Reiseplaner"
+    },
+    "ControlPanel": {
+        "planner": {
+            "title": "Planen Sie Ihre Reise",
+            "origin": "Start",
+            "destination": "Ziel",
+            "seeRoutes": "Routen anzeigen",
+            "filters": {
+                "departure": "Abfahrt",
+                "transport": "Transport",
+                "datePicker": {
+                    "date": "Datum",
+                    "time": "Uhrzeit",
+                    "setToNow": "Auf Jetzt setzen"
+                },
+                "departureNow": "Jetzt abfahren",
+                "departureAt": "Abfahrt um {time}"
+            }
+        }
     }
 }
