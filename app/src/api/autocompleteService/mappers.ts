@@ -11,7 +11,7 @@ export const toTagItem = (tag: any): TagItem => {
 // Map function for transforming AutocompleteItem data
 export const toAutocompleteItem = (data: any): AutocompleteItem => {
     return new AutocompleteItem(
-        data.ExtraOrder || {}, // Optional (moved first due to optional ordering)
+        data.ExtraOrder || 0, // Optional 
         data.data, // Mandatory
         data.id, // Mandatory
         data.landkreis, // Mandatory
