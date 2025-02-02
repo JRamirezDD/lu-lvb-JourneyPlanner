@@ -1,0 +1,1 @@
+export type TransportMode = "Bus" | "Metro" | "Tram" | "Walking";

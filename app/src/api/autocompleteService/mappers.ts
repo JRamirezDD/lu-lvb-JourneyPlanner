@@ -26,6 +26,6 @@ export const toAutocompleteItem = (data: any): AutocompleteItem => {
         data.housenumber, // Mandatory
         data.priority, // Mandatory
         data.sim, // Mandatory
-        data.tags ? data.tags.map(toTagItem) : [] // Optional (array, safe default is empty array)
+        data.tags ? toTagItem(data.tags) : null
     );
 };

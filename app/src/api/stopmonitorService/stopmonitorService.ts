@@ -12,6 +12,7 @@ import { mockMonitorResponse, mockDirectionResponse, mockStopsResponse, mockStop
 import { toMonitorResponse, toDirectionResponse, toStopsResponse, toStopTimesResponse } from "./mappers";
 
 const useMock = process.env.USE_MOCK === "true";
+const api_endpoint = process.env.NEXT_PUBLIC_API_ENDPOINT_STOPMONITOR;
 
 export const fetchStopMonitor = async (params: StopMonitorParams): Promise<MonitorResponse> => {
     if (useMock) {
@@ -19,7 +20,7 @@ export const fetchStopMonitor = async (params: StopMonitorParams): Promise<Monit
     }
 
     try {
-        const response = await httpClient.get("/monitor", { params });
+        const response = await httpClient.get(api_endpoint + "/monitor", { params });
         return toMonitorResponse(response.data);
     } catch (error) {
         console.error("Error fetching stop monitor data:", error);
@@ -33,7 +34,7 @@ export const fetchDirectionInfo = async (stopId: string): Promise<DirectionRespo
     }
 
     try {
-        const response = await httpClient.post(`/directionInfo/${stopId}`);
+        const response = await httpClient.post(api_endpoint + `/directionInfo/${stopId}`);
         return toDirectionResponse(response.data);
     } catch (error) {
         console.error("Error fetching direction info:", error);
@@ -41,13 +42,18 @@ export const fetchDirectionInfo = async (stopId: string): Promise<DirectionRespo
     }
 };
 
-export const fetchStops = async (bb: string, order_by?: string, maxlen?: number): Promise<StopsResponse> => {
+/**
+ * bb = boundingBox describing where stations are searched. 
+ * order_by Default "Priority". Orders by station name alphabetically ("Name") or station priority ("Priority")
+ * Number of station items returned if not used there is no limit
+*/
+export const fetchStops = async (bb: string, order_by?: "Name" | "Priority", maxlen?: number): Promise<StopsResponse> => {
     if (useMock) {
         return toStopsResponse(mockStopsResponse);
     }
 
     try {
-        const response = await httpClient.get("/stops", { params: { bb, order_by, maxlen } });
+        const response = await httpClient.get(api_endpoint + "/stops", { params: { bb, order_by, maxlen } });
         return toStopsResponse(response.data);
     } catch (error) {
         console.error("Error fetching stops:", error);
@@ -61,7 +67,7 @@ export const fetchStopTimes = async (params: StopTimesParams): Promise<StopTimes
     }
 
     try {
-        const response = await httpClient.post("/stopTimes", params);
+        const response = await httpClient.post(api_endpoint + "/stopTimes", params);
         return toStopTimesResponse(response.data);
     } catch (error) {
         console.error("Error fetching stop times:", error);
