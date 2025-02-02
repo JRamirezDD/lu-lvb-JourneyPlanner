@@ -34,7 +34,7 @@ const TransportFilter = ({ activeFilters, toggleFilter }: TransportFilterProps) 
             <button
               onClick={() => toggleFilter(type)}
               className={`relative w-12 h-6 flex items-center rounded-full p-1 transition-all duration-300 ${
-                activeFilters[type] ? "bg-green-500" : "bg-gray-400"
+                activeFilters[type] ? "bg-[#1a365d]" : "bg-gray-400"
               }`}
             >
               <div

@@ -58,13 +58,13 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
           placeholder={t('origin')}
           value={origin}
           onChange={(e) => setOrigin(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-[#1a365d]/20 rounded focus:border-[#1a365d] focus:ring-1 focus:ring-[#1a365d] outline-none"
         />
         <button
           onClick={swapLocations}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-200 p-1 rounded-full hover:bg-gray-300"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#1a365d]/10 p-1 rounded-full hover:bg-[#fef9c3] transition-colors"
         >
-          <ArrowUpDown size={18} />
+          <ArrowUpDown size={18} className="text-[#1a365d]" />
         </button>
         <input
           type="text"
@@ -80,7 +80,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         {/* Departure Filter Button */}
         <button
           onClick={() => setShowDepartureFilter(!showDepartureFilter)}
-          className="flex items-center justify-between bg-gray-800 text-white px-4 py-2 rounded-md transition-all hover:bg-gray-700"
+          className="flex items-center justify-between bg-[#1a365d] text-white px-4 py-2 rounded-md transition-all hover:bg-[#2d4a7c]"
         >
           <div className="flex items-center gap-2">
             <Calendar size={18} />
@@ -97,7 +97,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         {/* Transport Filter Button */}
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center justify-between bg-gray-800 text-white px-4 py-2 rounded-md transition-all hover:bg-gray-700"
+          className="flex items-center justify-between bg-[#1a365d] text-white px-4 py-2 rounded-md transition-all hover:bg-[#2d4a7c]"
         >
           <div className="flex items-center gap-2">
             <Filter size={18} />
@@ -122,7 +122,10 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
       )}
 
       {/* See Routes Button */}
-      <button onClick={() => setActiveView("routes")} className="bg-blue-500 text-white p-2 rounded w-full hover:bg-blue-600">
+      <button 
+        onClick={() => setActiveView("routes")} 
+        className="bg-[#1a365d] text-white p-2 rounded w-full hover:bg-[#2d4a7c] transition-colors"
+      >
         {t('seeRoutes')}
       </button>
     </div>

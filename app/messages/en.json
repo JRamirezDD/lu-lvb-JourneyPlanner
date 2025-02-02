@@ -55,6 +55,27 @@
                 "augustusplatz": "Augustusplatz",
                 "university": "Leipzig University"
             }
+        },
+        "station": {
+            "rightNow": "Right now",
+            "timetable": "Timetable",
+            "disruptions": "Disruptions",
+            "columns": {
+                "route": "Route",
+                "destination": "Destination",
+                "leavingAt": "Leaving at",
+                "platform": "Platform"
+            },
+            "minutes": "{count} min",
+            "noDisruptions": "No current disruptions",
+            "disruption": {
+                "title": "Service Disruption",
+                "type": {
+                    "delay": "Delays",
+                    "cancellation": "Cancellations",
+                    "construction": "Construction"
+                }
+            }
         }
     }
   }

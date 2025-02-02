@@ -28,18 +28,26 @@ const Navbar = () => {
     };
 
   return (
-    <nav className='w-full border-b'>
+    <nav className='w-full border-b bg-white shadow-sm'>
       <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between'>
-        <h1 className='text-lg font-bold'>Leipziger</h1>
+        <h1 className='text-lg font-bold text-[#1a365d]'>Leipziger</h1>
         <div className='flex items-center gap-2 sm:gap-3'>
           <button 
               onClick={() => handleLanguageChange('en')}
-              className={`border p-1.5 sm:p-2 rounded-md text-sm ${locale === 'en' ? 'bg-black text-white' : ''}`}>
+              className={`border border-[#1a365d] p-1.5 sm:p-2 rounded-md text-sm transition-colors
+                ${locale === 'en' 
+                  ? 'bg-[#1a365d] text-white' 
+                  : 'text-[#1a365d] hover:bg-[#fef9c3]'
+                }`}>
               EN
           </button>
           <button 
               onClick={() => handleLanguageChange('de')}
-              className={`border p-1.5 sm:p-2 rounded-md text-sm ${locale === 'de' ? 'bg-black text-white' : ''}`}>
+              className={`border border-[#1a365d] p-1.5 sm:p-2 rounded-md text-sm transition-colors
+                ${locale === 'de' 
+                  ? 'bg-[#1a365d] text-white' 
+                  : 'text-[#1a365d] hover:bg-[#fef9c3]'
+                }`}>
               DE
           </button>
         </div>

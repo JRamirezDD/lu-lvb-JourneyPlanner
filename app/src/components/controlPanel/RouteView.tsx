@@ -61,11 +61,11 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
           {routes.map((route) => (
             <li 
               key={route.id} 
-              className="border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors overflow-hidden"
+              className="border border-[#1a365d]/10 rounded-lg hover:bg-[#fef9c3]/20 cursor-pointer transition-colors overflow-hidden"
               onClick={() => setActiveView("details")}
             >
               {/* Time Header */}
-              <div className="flex items-center justify-between p-2 bg-gray-100">
+              <div className="flex items-center justify-between p-2 bg-[#1a365d]/5">
                 <span className="font-medium">{route.departureTime} - {route.arrivalTime}</span>
                 <div className="flex items-center gap-1">
                   <Clock size={14} />

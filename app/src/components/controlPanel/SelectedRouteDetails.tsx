@@ -88,9 +88,9 @@ const SelectedRouteDetails = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full bg-white">
+    <div className="flex flex-col w-full bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b">
+      <div className="flex items-center justify-between p-4 border-b bg-[#1a365d] text-white">
         <button 
           className="p-2 hover:bg-gray-100 rounded-full"
           onClick={handlePrevRoute}
@@ -125,16 +125,12 @@ const SelectedRouteDetails = () => {
       </div>
 
       {/* Required Ticket */}
-      <div className="flex justify-between items-center px-6 py-3 border-b bg-blue-50">
+      <div className="flex justify-between items-center px-6 py-3 border-b bg-[#fef9c3]/30">
         <div className="text-gray-700">{t('requiredTicket')}</div>
-        <div className="flex items-center gap-2">
-          <span className="font-medium text-blue-800">Leipzig AB</span>
-          <ChevronRight size={20} className="text-blue-800" />
-        </div>
       </div>
 
       {/* Detailed Steps */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1">
         <div className="relative">
           {/* Start Point */}
           <div className="flex items-start gap-4 p-4 border-b">
@@ -207,7 +203,7 @@ const SelectedRouteDetails = () => {
           })}
 
           {/* Transfer Point */}
-          <div className="flex items-start gap-4 p-4 border-b bg-yellow-50">
+          <div className="flex items-start gap-4 p-4 border-b bg-[#fef9c3]/30">
             <div className="flex flex-col items-center">
               <div className="text-orange-600 font-medium text-lg">13:27</div>
               <div className="w-0.5 h-full bg-gray-300 absolute"></div>

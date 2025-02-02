@@ -55,6 +55,27 @@
                 "augustusplatz": "Augustusplatz",
                 "university": "Universität Leipzig"
             }
+        },
+        "station": {
+            "rightNow": "Jetzt",
+            "timetable": "Fahrplan",
+            "disruptions": "Störungen",
+            "columns": {
+                "route": "Linie",
+                "destination": "Ziel",
+                "leavingAt": "Abfahrt",
+                "platform": "Gleis"
+            },
+            "minutes": "{count} Min",
+            "noDisruptions": "Keine aktuellen Störungen",
+            "disruption": {
+                "title": "Betriebsstörung",
+                "type": {
+                    "delay": "Verspätungen",
+                    "cancellation": "Ausfälle",
+                    "construction": "Bauarbeiten"
+                }
+            }
         }
     }
 }

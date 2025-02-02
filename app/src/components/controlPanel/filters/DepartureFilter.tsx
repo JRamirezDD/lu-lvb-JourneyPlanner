@@ -16,12 +16,12 @@ const DepartureFilter = ({ selectedDate, setSelectedDate }: DepartureFilterProps
   };
 
   return (
-    <div className="p-4 border rounded bg-gray-50">
+    <div className="p-4 border rounded bg-white shadow-sm">
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <button
             onClick={setToNow}
-            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 text-sm"
+            className="bg-[#1a365d] text-white px-4 py-2 rounded hover:bg-[#2d4a7c] transition-colors text-sm"
           >
             {t('setToNow')}
           </button>
@@ -29,18 +29,18 @@ const DepartureFilter = ({ selectedDate, setSelectedDate }: DepartureFilterProps
         
         {/* Date Picker */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">{t('date')}</label>
+          <label className="block text-sm font-medium text-[#1a365d] mb-2">{t('date')}</label>
           <input
             type="date"
             value={selectedDate.toISOString().split('T')[0]}
             onChange={(e) => setSelectedDate(new Date(e.target.value))}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-[#1a365d]/20 rounded focus:border-[#1a365d] focus:ring-1 focus:ring-[#1a365d] outline-none"
           />
         </div>
 
         {/* Time Picker */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">{t('time')}</label>
+          <label className="block text-sm font-medium text-[#1a365d] mb-2">{t('time')}</label>
           <input
             type="time"
             value={selectedDate.toTimeString().slice(0, 5)}
@@ -50,7 +50,7 @@ const DepartureFilter = ({ selectedDate, setSelectedDate }: DepartureFilterProps
               newDate.setHours(parseInt(hours), parseInt(minutes));
               setSelectedDate(newDate);
             }}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-[#1a365d]/20 rounded focus:border-[#1a365d] focus:ring-1 focus:ring-[#1a365d] outline-none"
           />
         </div>
       </div>
