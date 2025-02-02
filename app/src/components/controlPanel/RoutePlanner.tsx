@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Filter, ArrowUpDown, ChevronDown, ChevronUp, Calendar } from "lucide-react"; // Icons
-import Image from 'next/image';
 import TramLogo from "../../../public/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
 import BusLogo from "../../../public/Bus-Logo.svg"; 

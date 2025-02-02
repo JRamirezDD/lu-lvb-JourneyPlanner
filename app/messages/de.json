@@ -24,6 +24,37 @@
                 "departureNow": "Jetzt abfahren",
                 "departureAt": "Abfahrt um {time}"
             }
+        },
+        "routes": {
+            "availableRoutes": "Verfügbare Routen",
+            "leaves": "Abfahrt um",
+            "from": "von"
+        },
+        "routeDetails": {
+            "itinerary": "Reiseplan",
+            "requiredTicket": "Erforderliche Fahrkarte",
+            "walkTime": "{duration} min Fußweg",
+            "walkDistance": "{distance} zu Fuß",
+            "platform": "Gleis {number}",
+            "underground": "Untergrundbahnsteig",
+            "stops": "{count} Haltestellen",
+            "duration": "{duration} Min",
+            "transfer": "{duration} Min Umsteigezeit",
+            "directions": {
+                "toHalle": "→ Halle (Saale)",
+                "toMiltitz": "→ Miltitzer Allee",
+                "toStotteritz": "→ Stötteritz",
+                "toMeusdorf": "→ Meusdorf",
+                "toSchonefeld": "→ Schönefeld",
+                "toConnewitz": "→ Connewitz"
+            },
+            "stations": {
+                "hauptbahnhof": "Leipzig Hauptbahnhof",
+                "markt": "Markt",
+                "wilhelm": "Wilhelm-Leuschner-Platz",
+                "augustusplatz": "Augustusplatz",
+                "university": "Universität Leipzig"
+            }
         }
     }
 }

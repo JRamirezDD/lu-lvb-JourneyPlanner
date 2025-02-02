@@ -24,6 +24,37 @@
                 "departureNow": "Depart Now",
                 "departureAt": "Depart at {time}"
             }
+        },
+        "routes": {
+            "availableRoutes": "Available Routes",
+            "leaves": "Leaves at",
+            "from": "from"
+        },
+        "routeDetails": {
+            "itinerary": "Itinerary",
+            "requiredTicket": "Required ticket",
+            "walkTime": "Walk {duration}",
+            "walkDistance": "{distance} walking",
+            "platform": "Platform {number}",
+            "underground": "Underground platform",
+            "stops": "{count} stops",
+            "duration": "{duration} min",
+            "transfer": "{duration} min transfer",
+            "directions": {
+                "toHalle": "→ Halle (Saale)",
+                "toMiltitz": "→ Miltitzer Allee",
+                "toStotteritz": "→ Stötteritz",
+                "toMeusdorf": "→ Meusdorf",
+                "toSchonefeld": "→ Schönefeld",
+                "toConnewitz": "→ Connewitz"
+            },
+            "stations": {
+                "hauptbahnhof": "Leipzig Central Station",
+                "markt": "Market Square",
+                "wilhelm": "Wilhelm-Leuschner-Square",
+                "augustusplatz": "Augustusplatz",
+                "university": "Leipzig University"
+            }
         }
     }
   }
