@@ -32,7 +32,7 @@ export class AutocompleteItem extends GeoJsonConvertible {
         public housenumber: string, // House number
         public priority: number, // Priority of the result
         public sim: number, // Similarity score
-        public tags: TagItem[] // Additional tags for the item
+        public tags: TagItem | null = null // Additional tags for the item
     ) {
         super();
     }

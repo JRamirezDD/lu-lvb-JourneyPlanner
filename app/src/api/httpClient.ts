@@ -2,15 +2,16 @@ import axios, { AxiosInstance } from 'axios';
 
 // Create an Axios instance
 const httpClient: AxiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Use environment variables for the base URL
+    baseURL: `https://cors-anywhere.herokuapp.com/${process.env.NEXT_PUBLIC_API_BASE_URL}`, // proxy the request for CORS. end-solution, implement server-side proxy
     timeout: 10000, // Set a timeout
 });
 
 // Add a request interceptor to include the API key
 httpClient.interceptors.request.use(
     (config) => {
-        config.headers['Authorization'] = `Bearer ${process.env.API_KEY}`;
-        config.headers['Content-Type'] = 'application/json';
+        config.headers['X-API-Key'] = `${process.env.NEXT_PUBLIC_API_KEY}`;
+        config.headers['Content-Type'] = 'application/json:';
+
         return config;
     },
     (error) => {

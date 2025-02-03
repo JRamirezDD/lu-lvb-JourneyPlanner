@@ -32,7 +32,7 @@ describe("autocompleteService Mappers", () => {
             housenumber: rawItem.housenumber,
             priority: rawItem.priority,
             sim: rawItem.sim,
-            tags: rawItem.tags.map(toTagItem), // Verify nested mapping
+            tags: toTagItem(rawItem.tags)
         });
     });
 
@@ -58,7 +58,7 @@ describe("autocompleteService Mappers", () => {
                 housenumber: rawItem.housenumber,
                 priority: rawItem.priority,
                 sim: rawItem.sim,
-                tags: rawItem.tags.map(toTagItem), // Verify nested mapping
+                tags: toTagItem(rawItem.tags)
             });
         });
     });
