@@ -26,10 +26,11 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     // Local state for settings
     const [language, setLanguageState] = useState<"en" | "de">("en");
     const [transportModes, setTransportModesState] = useState<TransportMode[]>([
-        "Bus",
-        "Metro",
-        "Tram",
-        "Walking",
+        "WALK",
+        "BUS",
+        "TRAM",
+        "SUBURB",
+        "TRAIN"
     ]);
     const [avoidWalking, setAvoidWalking] = useState<boolean>(false);
     const [wheelchairAccessible, setWheelchairAccessible] = useState<boolean>(false);
@@ -52,7 +53,11 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     const clearState = () => {
         setLanguageState("en");
-        setTransportModesState(["Bus", "Metro", "Tram", "Walking"]);
+        setTransportModesState(["WALK",
+            "BUS",
+            "TRAM",
+            "SUBURB",
+            "TRAIN"]);
         setAvoidWalking(false);
         setWheelchairAccessible(false);
     };
