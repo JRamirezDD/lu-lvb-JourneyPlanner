@@ -2,17 +2,21 @@
 
 import { toOtpResponse } from "@/api/routingService/mappers";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
+import { useSettingsContext } from "@/contexts/settingsContext";
 import { useEffect, useState } from "react";
+import { TransportMode } from "@/types/TransportMode";
 
 const routeLayerData = () => {
     const { otpData, fetchOtpData, loadingOtp, errorOtp } = useOtpDataContext();
+    const { transportModes } = useSettingsContext();
+
     const [geojsonData, setGeojsonData] = useState<any | null>(null);
 
     useEffect(() => {
         fetchOtpData({
             From: "51.331977456411366, 12.39557557569731",
             To: "51.33849468482282, 12.379760960120947",
-            Travelmode: "BIKERENTAL",
+            Travelmode: transportModes,
             date: "02-05-2025",
             time: "23:17",
             numItineraries: 3,
