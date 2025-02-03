@@ -5,12 +5,14 @@ import mapboxgl from "mapbox-gl"
 import stopsLayer from "./map/layers/StopsLayer"
 import type React from "react" // Added import for React
 import routeLayer from "./map/layers/RouteLayer"
+import RouteLayer from "./map/layers/RouteLayer"
+import routeLayerData from "./map/layers/RouteLayer"
 
 const Map: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-
+    console.log(routeLayerData);
     //create map:
     mapboxgl.accessToken =
       "pk.eyJ1IjoibS1iZXJlbmdlciIsImEiOiJjbTZpYnQ2eTUwNjZ4Mm9zNTl4M2wwd2hmIn0.dypp0rb10-6yuJu1YqOjyA"
