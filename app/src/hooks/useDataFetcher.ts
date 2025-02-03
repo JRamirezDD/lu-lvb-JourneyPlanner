@@ -1,4 +1,3 @@
-// src/hooks/useDataFetcher.ts
 import { useState, useCallback } from "react";
 
 interface FetchState<T> {
