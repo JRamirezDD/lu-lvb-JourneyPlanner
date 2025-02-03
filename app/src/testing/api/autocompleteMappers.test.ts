@@ -1,17 +1,32 @@
 import { toTagItem, toAutocompleteItem } from "@/api/autocompleteService/mappers";
 import { mockAutocompleteResponse } from "@/api/autocompleteService/dto/__mock__/autocompleteResponse.mock";
+import { AutocompleteItem, toGeoJsonCollection } from "@/api/autocompleteService/dto/autocompleteitemResponse";
 
 describe("autocompleteService Mappers", () => {
-    it("should map raw TagItem data to TagItem DTO", () => {
-        const rawTag = mockAutocompleteResponse[0].tags[0];
-        const result = toTagItem(rawTag);
-
-        expect(result).toEqual({
-            stop_id: rawTag.stop_id,
-            lvb_gtfs_stop_id: rawTag.lvb_gtfs_stop_id,
-        });
+    it("should print all autocomplete responses as a list of points. Needs to be checked manually.", () => {
+        const results = mockAutocompleteResponse.map(toAutocompleteItem);
+        const geoJson = toGeoJsonCollection(results);
+        
+        //console.log("Full GeoJSON collection:", geoJson);
+    
+        expect(geoJson).toBeDefined(); 
     });
+    
 
+    it("should map raw TagItem data to TagItem DTO", () => {
+        const rawTag = mockAutocompleteResponse[0].tags; 
+        expect(rawTag).toBeDefined(); 
+        
+        if (rawTag) {  
+            const result = toTagItem(rawTag); 
+        
+            expect(result).toEqual({
+                stop_id: rawTag.stop_id,
+                lvb_gtfs_stop_id: rawTag.lvb_gtfs_stop_id,
+            });
+        }
+    });
+    
     it("should map raw AutocompleteItem data to AutocompleteItem DTO", () => {
         const rawItem = mockAutocompleteResponse[0];
         const result = toAutocompleteItem(rawItem);
@@ -58,7 +73,7 @@ describe("autocompleteService Mappers", () => {
                 housenumber: rawItem.housenumber,
                 priority: rawItem.priority,
                 sim: rawItem.sim,
-                tags: toTagItem(rawItem.tags)
+                tags: rawItem.tags ? toTagItem(rawItem.tags) : null,
             });
         });
     });
