@@ -1,5 +1,6 @@
 import { GeoJsonConvertible } from "@/types/GeoJsonConvertible";
 import { RequestParameters } from "./otpRequest";
+import { TransportMode } from "@/types/TransportMode";
 import { toPlan } from "@/api/routingService/mappers";
 
 // dto/otpResponse.ts
@@ -111,7 +112,7 @@ export class Leg extends GeoJsonConvertible {
         public arrivalDelay: number,
         public realTime: boolean,
         public distance: number,
-        public mode: string,
+        public mode: TransportMode, // TODO: Change possible required in toGeoJSON (Previously just string)
         public from: Location,
         public to: Location,
         public legGeometry: LegGeometry,
