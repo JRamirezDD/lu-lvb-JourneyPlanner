@@ -5,44 +5,22 @@ import { toPlan } from "@/api/routingService/mappers";
 
 // dto/otpResponse.ts
 
-export class OtpResponse extends GeoJsonConvertible {
+export class OtpResponse {
     constructor(
         public RetStatus: { Value: string; Comments?: string },
         public requestParameters: RequestParameters,
-        public plan = toPlan(Plan)
+        public plan: Plan
     ) {
-        super();
-    }
-
-    toGeoJson(): string {
-        return this.plan ? this.plan.toGeoJson() : JSON.stringify({ type: "FeatureCollection", features: [] });
     }
 }
 
-export class Plan extends GeoJsonConvertible {
+export class Plan {
     constructor(
         public date: number | undefined,
         public from: Location,
         public to: Location,
-        public itineraries: Itinerary[]
+        public itineraries: OtpItinerary[]
     ) {
-        super();
-    }
-
-    // Generate the GeoJSON structure for the entire Plan object
-    toGeoJson(): string {
-        // Use the toGeoJsonFeature method to generate the FeatureCollection
-        const geojsonFeatureCollection = {
-            type: "FeatureCollection",
-            features: [
-                this.from.toGeoJsonFeature("Origin"),
-                this.to.toGeoJsonFeature("Destination"),
-                ...this.itineraries.flatMap((itinerary) => itinerary.toGeoJsonFeatures()),
-            ],
-        };
-
-        // Convert the object to a pretty-printed GeoJSON string
-        return JSON.stringify(geojsonFeatureCollection, null, 2);
     }
 }
 
@@ -75,7 +53,7 @@ export class Location extends GeoJsonConvertible {
     }
 }
 
-export class Itinerary extends GeoJsonConvertible {
+export class OtpItinerary extends GeoJsonConvertible {
     constructor(
         public duration: number,
         public startTime: number,
