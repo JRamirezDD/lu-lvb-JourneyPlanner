@@ -10,6 +10,9 @@
 !.yarn/releases
 !.yarn/versions
 
+# build
+/dist
+
 # testing
 /coverage
 
@@ -23,6 +26,7 @@
 # misc
 .DS_Store
 *.pem
+env.local
 
 # debug
 npm-debug.log*
