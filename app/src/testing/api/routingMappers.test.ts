@@ -9,6 +9,7 @@ import {
 } from "@/api/routingService/mappers";
 import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.mock";
 import { Leg, LegGeometry, Location, Alert, Itinerary, ZoneInfo, Plan, OtpResponse } from "@/api/routingService/dto/otpResponse";
+import { TransportMode } from "@/types/TransportMode";
 
 describe("routingService Mappers", () => {
     it("should map the mock data to geoJSON format. Must check manually.", () => {
@@ -37,7 +38,7 @@ describe("routingService Mappers", () => {
                 rawLeg.arrivalDelay,
                 rawLeg.realTime,
                 rawLeg.distance,
-                rawLeg.mode,
+                rawLeg.mode as TransportMode,
                 new Location(rawLeg.from.name, rawLeg.from.lat, rawLeg.from.lon),
                 new Location(rawLeg.to.name, rawLeg.to.lat, rawLeg.to.lon),
                 new LegGeometry(
@@ -129,7 +130,10 @@ describe("routingService Mappers", () => {
                     Value: mockOtpResponse.RetStatus.Value,
                     Comments: mockOtpResponse.RetStatus.Comments,
                 },
-                mockOtpResponse.requestParameters,
+                {
+                    ...mockOtpResponse.requestParameters,
+                    Travelmode: [mockOtpResponse.requestParameters.Travelmode as TransportMode]
+                },
                 toPlan(mockOtpResponse.plan)
             )
         );

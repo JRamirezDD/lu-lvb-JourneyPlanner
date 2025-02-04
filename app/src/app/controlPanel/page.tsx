@@ -1,6 +1,5 @@
-import { AbstractIntlMessages, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import Image from 'next/image';
 import ControlPanel from '@/components/controlPanel/ControlPanel';
 
 export async function generateMetadata({

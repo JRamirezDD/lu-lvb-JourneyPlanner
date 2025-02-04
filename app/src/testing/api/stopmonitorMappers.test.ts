@@ -16,7 +16,6 @@ import {
     mockStopsResponse,
     mockStopTimesResponse,
 } from "@/api/stopmonitorService/dto/__mock__/stopmonitorResponse.mock";
-import { MonitorItem } from "@/api/stopmonitorService/dto/stopmonitorResponse";
 
 
 describe("stopMonitorService Mappers", () => {

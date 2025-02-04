@@ -11,6 +11,7 @@ export interface RequestParameters {
     accessibility?: boolean;
     shortWalk?: boolean;
     lessTransfers?: boolean;
+    maxWalkDistance?: number;
     transitOnly?: boolean;
     mockup?: boolean;
 }

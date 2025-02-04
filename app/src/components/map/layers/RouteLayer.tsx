@@ -12,7 +12,7 @@ const routeLayerData = () => {
         fetchOtpData({
             From: "51.331977456411366, 12.39557557569731",
             To: "51.33849468482282, 12.379760960120947",
-            Travelmode: "BIKERENTAL",
+            Travelmode: ["TRANSIT"],
             date: "02-05-2025",
             time: "23:17",
             numItineraries: 3,
