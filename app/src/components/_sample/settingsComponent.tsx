@@ -16,10 +16,10 @@ const SettingsComponent = () => {
         <div>
             <h2>Current Transport Modes:</h2>
             <p>{transportModes.join(", ")}</p>
-            <button onClick={() => handleToggle("Bus")}>Toggle Bus</button>
-            <button onClick={() => handleToggle("Metro")}>Toggle Metro</button>
-            <button onClick={() => handleToggle("Tram")}>Toggle Tram</button>
-            <button onClick={() => handleToggle("Walking")}>Toggle Walking</button>
+            <button onClick={() => handleToggle("WALK")}>Toggle Bus</button>
+            <button onClick={() => handleToggle("SUBURB")}>Toggle Metro</button>
+            <button onClick={() => handleToggle("TRAM")}>Toggle Tram</button>
+            <button onClick={() => handleToggle("WALK")}>Toggle Walking</button>
         </div>
     );
 };

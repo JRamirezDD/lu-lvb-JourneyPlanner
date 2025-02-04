@@ -1,1 +1,1 @@
-export type ViewMode = "DEFAULT" | "ITINERARY" | "ROUTE" | "STATION";
+export type ViewMode = "DEFAULT" | "ITINERARY" | "PLAN" | "STATION";

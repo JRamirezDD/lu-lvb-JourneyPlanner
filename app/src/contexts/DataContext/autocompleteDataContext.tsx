@@ -4,12 +4,12 @@ import React, { createContext, useContext } from "react";
 import { IDataContext } from "@/contexts/DataContext/IDataContext";
 import { useDataFetcher } from "@/hooks/useDataFetcher";
 import { fetchAutocompleteData } from "@/api/autocompleteService/autocompleteService";
-import { AutocompleteResponse } from "@/api/autocompleteService/dto/autocompleteitemResponse";
+import { AutocompleteItem } from "@/api/autocompleteService/dto/autocompleteitemResponse";
 import { SearchParams } from "@/api/autocompleteService/dto/searchparamsRequest";
 
-export interface IAutocompleteDataContext extends IDataContext<AutocompleteResponse> {
+export interface IAutocompleteDataContext extends IDataContext<AutocompleteItem[]> {
     // Autocomplete
-    autocompleteData: AutocompleteResponse | null;
+    autocompleteData: AutocompleteItem[] | null;
     fetchAutocompleteData: (params: SearchParams) => Promise<void>;
     loadingAutocomplete: boolean;
     errorAutocomplete: string | null;
@@ -22,7 +22,7 @@ const AutocompleteDataContext = createContext<IAutocompleteDataContext | undefin
 
 // Provider component for the AutocompleteDataContext
 export const AutocompleteDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const autocompleteFetcher = useDataFetcher<AutocompleteResponse>(fetchAutocompleteData);
+    const autocompleteFetcher = useDataFetcher<AutocompleteItem[]>(fetchAutocompleteData);
 
     return (
         <AutocompleteDataContext.Provider
