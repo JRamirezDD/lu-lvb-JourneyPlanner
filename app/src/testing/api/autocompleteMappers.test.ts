@@ -1,6 +1,6 @@
 import { toTagItem, toAutocompleteItem } from "@/api/autocompleteService/mappers";
 import { mockAutocompleteResponse } from "@/api/autocompleteService/dto/__mock__/autocompleteResponse.mock";
-import { AutocompleteItem, toGeoJsonCollection } from "@/api/autocompleteService/dto/autocompleteitemResponse";
+import { toGeoJsonCollection } from "@/api/autocompleteService/dto/autocompleteitemResponse";
 
 describe("autocompleteService Mappers", () => {
     it("should print all autocomplete responses as a list of points. Needs to be checked manually.", () => {
