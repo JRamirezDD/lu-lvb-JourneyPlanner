@@ -12,14 +12,6 @@ import { Leg, LegGeometry, Location, Alert, OtpItinerary, ZoneInfo, Plan, OtpRes
 import { TransportMode } from "@/types/TransportMode";
 
 describe("routingService Mappers", () => {
-    // @marlene this isn't a test...
-    // it("should map the mock data to geoJSON format. Must check manually.", () => {
-    //     const result = toOtpResponse(mockOtpResponse).toGeoJson();
-    //     //console.log(result);
-
-    //     expect(result).not.toEqual("");
-    // })
-
     it("should map raw location data to Location DTO", () => {
         const rawLocation = mockOtpResponse.plan.from;
         const result = toLocation(rawLocation);
