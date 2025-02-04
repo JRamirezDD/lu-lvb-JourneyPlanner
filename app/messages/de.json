@@ -1,0 +1,90 @@
+{
+    "Metadata": {
+        "title": "lu-lvb-projekt",
+        "description": "Projekt für lu-lvb von Lancaster University Studenten"
+    },
+    "HomePage": {
+        "list1": "Hallo Welt!",
+        "list2": "Reiseplaner"
+    },
+    "ControlPanel": {
+        "planner": {
+            "title": "Planen Sie Ihre Reise",
+            "origin": "Start",
+            "destination": "Ziel",
+            "seeRoutes": "Routen anzeigen",
+            "filters": {
+                "departure": "Abfahrt",
+                "transport": {
+                    "bike": "Fahrrad",
+                    "walk": "Zu Fuß",
+                    "car": "Auto"
+                },
+                "transportButton": "Transport",
+                "datePicker": {
+                    "date": "Datum",
+                    "time": "Uhrzeit",
+                    "setToNow": "Auf Jetzt setzen"
+                },
+                "departureNow": "Jetzt abfahren",
+                "departureAt": "Abfahrt um {time}"
+            }
+        },
+        "routes": {
+            "availableRoutes": "Verfügbare Routen",
+            "leaves": "Abfahrt um",
+            "from": "von"
+        },
+        "routeDetails": {
+            "itinerary": "Reiseplan",
+            "requiredTicket": "Erforderliche Fahrkarte",
+            "walkTime": "{duration} min Fußweg",
+            "walkDistance": "{distance} zu Fuß",
+            "platform": "Gleis {number}",
+            "underground": "Untergrundbahnsteig",
+            "stops": "{count} Haltestellen",
+            "duration": "{duration} Min",
+            "transfer": "{duration} Min Umsteigezeit",
+            "directions": {
+                "toHalle": "→ Halle (Saale)",
+                "toMiltitz": "→ Miltitzer Allee",
+                "toStotteritz": "→ Stötteritz",
+                "toMeusdorf": "→ Meusdorf",
+                "toSchonefeld": "→ Schönefeld",
+                "toConnewitz": "→ Connewitz",
+                "toLindenau": "→ Lindenau",
+                "toUniversity": "→ Universität Leipzig",
+                "toMarkt": "→ Markt",
+                "toHauptbahnhof": "→ Hauptbahnhof"
+            },
+            "stations": {
+                "hauptbahnhof": "Leipzig Hauptbahnhof",
+                "markt": "Markt",
+                "wilhelm": "Wilhelm-Leuschner-Platz",
+                "augustusplatz": "Augustusplatz",
+                "university": "Universität Leipzig"
+            }
+        },
+        "station": {
+            "rightNow": "Jetzt",
+            "timetable": "Fahrplan",
+            "disruptions": "Störungen",
+            "columns": {
+                "route": "Linie",
+                "destination": "Ziel",
+                "leavingAt": "Abfahrt",
+                "platform": "Gleis"
+            },
+            "minutes": "{count} Min",
+            "noDisruptions": "Keine aktuellen Störungen",
+            "disruption": {
+                "title": "Betriebsstörung",
+                "type": {
+                    "delay": "Verspätungen",
+                    "cancellation": "Ausfälle",
+                    "construction": "Bauarbeiten"
+                }
+            }
+        }
+    }
+}

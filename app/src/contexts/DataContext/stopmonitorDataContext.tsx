@@ -24,7 +24,7 @@ export interface IStopmonitorDataContext extends IDataContext<StopsResponse> {
     loadingStops: boolean;
     errorStops: string | null;
 
-    // Stop Monitor
+    // Monitor
     stopMonitorData: MonitorResponse | null;
     fetchStopMonitor: (params: StopMonitorParams) => Promise<void>;
     loadingStopMonitor: boolean;

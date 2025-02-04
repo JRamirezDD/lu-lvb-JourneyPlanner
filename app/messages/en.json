@@ -1,0 +1,90 @@
+{
+    "Metadata": {
+        "title": "lu-lvb-project",
+        "description": "Project for lu-lvb from Lancaster University Students"
+    },
+    "HomePage": {
+      "list1": "Hello world!",
+      "list2": "Journey Planner"
+    },
+    "ControlPanel": {
+        "planner": {
+            "title": "Plan Your Trip",
+            "origin": "Origin",
+            "destination": "Destination",
+            "seeRoutes": "See Routes",
+            "filters": {
+                "departure": "Departure",
+                "transportButton": "Transport",
+                "datePicker": {
+                    "date": "Date",
+                    "time": "Time",
+                    "setToNow": "Set to Now"
+                },
+                "departureNow": "Depart Now",
+                "departureAt": "Depart at {time}",
+                "transport": {
+                    "bike": "Bike",
+                    "walk": "Walk",
+                    "car": "Car"
+                }
+            }
+        },
+        "routes": {
+            "availableRoutes": "Available Routes",
+            "leaves": "Leaves at",
+            "from": "from"
+        },
+        "routeDetails": {
+            "itinerary": "Itinerary",
+            "requiredTicket": "Required ticket",
+            "walkTime": "Walk {duration}",
+            "walkDistance": "{distance} walking",
+            "platform": "Platform {number}",
+            "underground": "Underground platform",
+            "stops": "{count} stops",
+            "duration": "{duration} min",
+            "transfer": "{duration} min transfer",
+            "directions": {
+                "toHalle": "→ Halle (Saale)",
+                "toMiltitz": "→ Miltitzer Allee",
+                "toStotteritz": "→ Stötteritz",
+                "toMeusdorf": "→ Meusdorf",
+                "toSchonefeld": "→ Schönefeld",
+                "toConnewitz": "→ Connewitz",
+                "toLindenau": "→ Lindenau",
+                "toUniversity": "→ Leipzig University",
+                "toMarkt": "→ Market Square",
+                "toHauptbahnhof": "→ Central Station"
+            },
+            "stations": {
+                "hauptbahnhof": "Leipzig Central Station",
+                "markt": "Market Square",
+                "wilhelm": "Wilhelm-Leuschner-Square",
+                "augustusplatz": "Augustusplatz",
+                "university": "Leipzig University"
+            }
+        },
+        "station": {
+            "rightNow": "Right now",
+            "timetable": "Timetable",
+            "disruptions": "Disruptions",
+            "columns": {
+                "route": "Route",
+                "destination": "Destination",
+                "leavingAt": "Leaving at",
+                "platform": "Platform"
+            },
+            "minutes": "{count} min",
+            "noDisruptions": "No current disruptions",
+            "disruption": {
+                "title": "Service Disruption",
+                "type": {
+                    "delay": "Delays",
+                    "cancellation": "Cancellations",
+                    "construction": "Construction"
+                }
+            }
+        }
+    }
+  }
