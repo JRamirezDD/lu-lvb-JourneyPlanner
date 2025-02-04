@@ -32,7 +32,33 @@ export class MonitorItem extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: null
+            },
+            properties: {
+                trip_id: this.trip_id,
+                stop_id: this.stop_id,
+                route_id: this.route_id,
+                trip_headsign: this.trip_headsign,
+                route_color: this.route_color,
+                directionId: this.directionId,
+                agencyName: this.agencyName,
+                trip_cancelled: this.trip_cancelled,
+                stop_cancelled: this.stop_cancelled,
+                waiting_time: this.waiting_time,
+                dep_waiting_time: this.dep_waiting_time,
+                line: this.line,
+                transport_type: this.transport_type,
+                track_scheduled: this.track_scheduled,
+                track: this.track,
+                delay_time: this.delay_time,
+                departure_delay: this.departure_delay,
+                alerts: this.alerts?.map(alert => JSON.parse(alert.toGeoJson())) || []
+            }
+        });
     }
 }
 
@@ -42,7 +68,10 @@ export class MonitorResponse extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "FeatureCollection",
+            features: this.items.map(item => JSON.parse(item.toGeoJson()))
+        });
     }
 }
 
@@ -60,7 +89,18 @@ export class DirectionInfo extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "Feature",
+            properties: {
+                directionId: this.directionId,
+                agencyName: this.agencyName,
+                line: this.line,
+                route_color: this.route_color,
+                directionName: this.directionName,
+                transport_type: this.transport_type,
+                headsigns: this.headsigns
+            }
+        });
     }
 }
 
@@ -70,7 +110,10 @@ export class DirectionResponse extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "FeatureCollection",
+            features: this.items.map(item => JSON.parse(item.toGeoJson()))
+        });
     }
 }
 
@@ -86,7 +129,18 @@ export class StopsItem extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: [this.lon, this.lat]
+            },
+            properties: {
+                stop_name: this.stop_name,
+                stop_id: this.stop_id,
+                priority: this.priority
+            }
+        });
     }
 }
 
@@ -96,7 +150,10 @@ export class StopsResponse extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "FeatureCollection",
+            features: this.items.map(item => JSON.parse(item.toGeoJson()))
+        });
     }
 }
 
@@ -111,7 +168,14 @@ export class StopTimesResponse extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "FeatureCollection",
+            features: [
+                ...this.beforeGivenStop?.map(item => JSON.parse(item.toGeoJson())) || [],
+                this.atGivenStop ? JSON.parse(this.atGivenStop.toGeoJson()) : null,
+                ...this.afterGivenStop?.map(item => JSON.parse(item.toGeoJson())) || []
+            ].filter(item => item !== null)
+        });
     }
 }
 
@@ -134,7 +198,21 @@ export class TripInfo extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "Feature",
+            properties: {
+                trip_id: this.trip_id,
+                service_date: this.service_date,
+                route_id: this.route_id,
+                route_color: this.route_color,
+                directionId: this.directionId,
+                agencyName: this.agencyName,
+                default_headsign: this.default_headsign,
+                trip_cancelled: this.trip_cancelled,
+                transport_type: this.transport_type,
+                line: this.line
+            }
+        });
     }
 }
 
@@ -160,7 +238,25 @@ export class StopTimesItem extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "Feature",
+            properties: {
+                arrival_time: this.arrival_time,
+                date: this.date,
+                departure_time: this.departure_time,
+                departure_date: this.departure_date,
+                stop_id: this.stop_id,
+                stop_name: this.stop_name,
+                stop_sequence: this.stop_sequence,
+                trip_headsign: this.trip_headsign,
+                stop_cancelled: this.stop_cancelled,
+                track_scheduled: this.track_scheduled,
+                track: this.track,
+                delay_time: this.delay_time,
+                departure_delay: this.departure_delay,
+                alerts: this.alerts?.map(alert => JSON.parse(alert.toGeoJson())) || []
+            }
+        });
     }
 }
 
@@ -177,6 +273,16 @@ export class Alert extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "Feature",
+            properties: {
+                effectiveStartDate: this.effectiveStartDate,
+                effectiveEndDate: this.effectiveEndDate,
+                alertDescriptionText: this.alertDescriptionText,
+                alertCategory: this.alertCategory,
+                alertUrl: this.alertUrl,
+                alertHeaderText: this.alertHeaderText
+            }
+        });
     }
 }
