@@ -17,7 +17,15 @@ import {
     mockStopTimesResponse,
 } from "@/api/stopmonitorService/dto/__mock__/stopmonitorResponse.mock";
 
+
 describe("stopMonitorService Mappers", () => {
+    it("should map the mock data response to a dto object and transform it to a valid GeoJSON. Must be manually checked.", () => {
+        const rawItem = mockStopsResponse;
+        const mockItem = toStopsResponse(rawItem);
+        const result = mockItem.toGeoJson();
+        console.log("Stops:" + result)
+    })
+
     it("should map raw monitor item data to MonitorItem DTO", () => {
         const rawItem = mockMonitorResponse[0];
         const result = toMonitorItem(rawItem);

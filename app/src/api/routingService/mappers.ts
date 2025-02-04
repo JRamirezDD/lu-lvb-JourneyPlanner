@@ -8,6 +8,10 @@ import {
     ZoneInfo,
     LegGeometry,
 } from "./dto/otpResponse";
+import { RequestParameters } from "./dto/otpRequest";
+
+//Converts raw data to proper dtos to be converted to GeoJSONs. 
+//Includes: toLocation, toLeg, toAlert, toItinerary, to ZoneInfo, toPlan, and toOtpResponse
 
 export const toLocation = (data: any): Location =>
     new Location(data.name, data.lat, data.lon);
@@ -28,7 +32,6 @@ export const toLeg = (data: any): Leg =>
         data.transitLeg,
         data.intermediateStops ? data.intermediateStops.map(toLocation) : undefined,
         data.rentedBike,
-        data.rentedEscooter,
         data.alerts ? data.alerts.map(toAlert) : [],
     );
 
@@ -71,12 +74,31 @@ export const toPlan = (data: any): Plan =>
         data.itineraries.map(toItinerary)
     );
 
+    export const toRequestParameters = (data: any): RequestParameters => ({
+        From: data.From,
+        To: data.To,
+        Travelmode: Array.isArray(data.Travelmode) ? data.Travelmode : [data.Travelmode], // Ensure array format
+        date: data.date,
+        time: data.time,
+        numItineraries: data.numItineraries,
+        arriveBy: data.arriveBy,
+        accessibility: data.accessibility,
+        shortWalk: data.shortWalk,
+        lessTransfers: data.lessTransfers,
+        maxWalkDistance: data.maxWalkDistance,
+        transitOnly: data.transitOnly,
+        mockup: data.mockup
+    });
+    
+
 export const toOtpResponse = (data: any): OtpResponse =>
     new OtpResponse(
         {
             Value: data.RetStatus.Value,
             Comments: data.RetStatus.Comments,
         },
-        data.requestParameters,
+        toRequestParameters(data.requestParameters),
         toPlan(data.plan)
     );
+
+    

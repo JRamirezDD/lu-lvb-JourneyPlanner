@@ -1,6 +1,18 @@
 import { GeoJsonConvertible } from "@/types/GeoJsonConvertible";
 
 // Expected DTO for the API response
+/* 
+
+To convert autocomplete API responses to a GeoJSON:
+- For one response item: 
+        const rawItem = APIRESPONSE[NUMBER];
+        const autocompleteItem = toAutocompleteItem(rawItem); // Convert to DTO 
+        const geoJsonForRawItem = autocompleteItem.toGeoJson(); // Get GeoJSON
+- For one full response:
+        const results = APIRESPONSE.map(toAutocompleteItem);
+        const geoJson = toGeoJsonCollection(results);
+
+*/ 
 export class TagItem extends GeoJsonConvertible {
     constructor(
         public stop_id: string,
@@ -10,7 +22,17 @@ export class TagItem extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "Feature",
+            properties: {
+                stop_id: this.stop_id,
+                lvb_gtfs_stop_id: this.lvb_gtfs_stop_id
+            },
+            geometry: {
+                type: "Point",
+                coordinates: [] 
+            }
+        });
     }
 }
 
@@ -38,8 +60,34 @@ export class AutocompleteItem extends GeoJsonConvertible {
     }
 
     toGeoJson(): string {
-        throw new Error("Not Implemented");
+        return JSON.stringify({
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: [this.lon, this.lat] 
+            },
+            properties: {
+                id: this.id,
+                name: this.name,
+                postalcode: this.postalcode,
+                city: this.stadt,
+                district: this.stadtteil,
+                street: this.streetname,
+                housenumber: this.housenumber,
+                priority: this.priority,
+                similarity: this.sim,
+                type: this.ptype,
+                tags: this.tags ? JSON.parse(this.tags.toGeoJson()).properties : null
+            }
+        });
     }
 }
 
-export type AutocompleteResponse = AutocompleteItem[]; // Array of results
+// Converts an array of AutocompleteItem into a valid GeoJSON FeatureCollection
+export function toGeoJsonCollection(items: AutocompleteItem[]): string {
+    return JSON.stringify({
+        type: "FeatureCollection",
+        features: items.map(item => JSON.parse(item.toGeoJson()))
+    });
+}
+

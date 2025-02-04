@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import ControlPanel from '@/components/controlPanel/ControlPanel';
 
