@@ -60,7 +60,7 @@ export const createItineraryLayerData = () => {
 
 import { LayerConfig } from "./ILayer";
 
-export const createItineraryLayer = (geojsonData: GeoJSON.FeatureCollection): LayerConfig => ({
+export const createItineraryLayer = (geojsonData: GeoJSON.FeatureCollection | undefined): LayerConfig => ({
   id: "itinerary-layer",
   type: "line",
   source: {

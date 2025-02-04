@@ -1,4 +1,4 @@
-// layerManager.ts
+
 import { LayerSpecification, Map, SourceSpecification } from "mapbox-gl";
 
 export interface LayerConfig {

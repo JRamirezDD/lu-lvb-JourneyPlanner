@@ -66,8 +66,9 @@ const Map: React.FC = () => {
     const layerManager = layerManagerRef.current;
 
     // Remove existing layers
-    layerManager.removeLayer("itinerary-layer");
-    layerManager.removeLayer("stops-layer");
+    layerManager.removeLayer(createItineraryLayer(undefined).id);
+    // P - Implement StopsLayer
+    // layerManager.removeLayer("stops-layer");
 
     // Add layers based on viewMode
     if (viewMode === "ITINERARY") {
