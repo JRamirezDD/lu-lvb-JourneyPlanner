@@ -36,6 +36,11 @@ npx jest --coverage # To view a detailed coverage report under the /coverage fol
 
 ```
 
+### ESLint and Prettier
+```bash
+npm run lint # Runs ESLint formatting checks.
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
