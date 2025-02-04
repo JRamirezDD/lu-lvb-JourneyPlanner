@@ -2,11 +2,18 @@ import Image from 'next/image';
 import TramLogo from "../../../../public/Tram-Logo.svg";
 import S_BahnLogo from "../../../../public/S-Bahn-Logo.svg";
 import BusLogo from "../../../../public/Bus-Logo.svg";
+import Bike from "../../../../public/Bike.svg";
+import PersonStanding from "../../../../public/Walk.svg";
+import Car from "../../../../public/Car.svg";
+import { useTranslations } from 'next-intl';
 
 const transportOptions = [
-  { type: "Tram", logo: TramLogo },
-  { type: "S-Bahn", logo: S_BahnLogo },
-  { type: "Bus", logo: BusLogo },
+  { type: "Tram", logo: TramLogo, translationKey: null },
+  { type: "S-Bahn", logo: S_BahnLogo, translationKey: null },
+  { type: "Bus", logo: BusLogo, translationKey: null },
+  { type: "Bike", logo: Bike, translationKey: "bike" },
+  { type: "Walk", logo: PersonStanding, translationKey: "walk" },
+  { type: "Car", logo: Car, translationKey: "car" }
 ];
 
 interface TransportFilterProps {
@@ -15,21 +22,23 @@ interface TransportFilterProps {
 }
 
 const TransportFilter = ({ activeFilters, toggleFilter }: TransportFilterProps) => {
+  const t = useTranslations('ControlPanel.planner.filters.transport');
+
   return (
     <div className="p-4 border rounded bg-gray-50">
       <ul className="space-y-3">
-        {transportOptions.map(({ type, logo }) => (
+        {transportOptions.map(({ type, logo, translationKey }) => (
           <li key={type} className="flex items-center justify-between border-b pb-2 last:border-none">
             <div className="flex items-center gap-3">
-              {logo && (
-                <Image 
-                  src={logo} 
-                  alt={type} 
-                  width={32} 
-                  height={32}
-                />
-              )}
-              <span className="text-gray-800">{type}</span>
+              <Image 
+                src={logo} 
+                alt={type} 
+                width={32} 
+                height={32}
+              />
+              <span className="text-gray-800">
+                {translationKey ? t(translationKey) : type}
+              </span>
             </div>
             <button
               onClick={() => toggleFilter(type)}

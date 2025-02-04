@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Filter, ArrowUpDown, ChevronDown, ChevronUp, Calendar } from "lucide-react"; // Icons
 import TramLogo from "../../../public/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
@@ -24,16 +24,30 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
     "Tram": true,
     "S-Bahn": true,
     "Bus": true,
+    "Bike": false,
+    "Walk": false,
+    "Car": false,
   });
   const [showDepartureFilter, setShowDepartureFilter] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [defaultDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [defaultDate, setDefaultDate] = useState<Date | null>(null);
   
-  const isDepartureModified = selectedDate.getTime() !== defaultDate.getTime();
-  const formattedTime = selectedDate.toLocaleTimeString([], { 
-    hour: '2-digit', 
-    minute: '2-digit' 
-  });
+  useEffect(() => {
+    const now = new Date();
+    setSelectedDate(now);
+    setDefaultDate(now);
+  }, []);
+  
+  const isDepartureModified = selectedDate && defaultDate 
+    ? selectedDate.getTime() !== defaultDate.getTime()
+    : false;
+    
+  const formattedTime = selectedDate
+    ? selectedDate.toLocaleTimeString([], { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      })
+    : '';
 
   const toggleFilter = (type: string) => {
     setActiveFilters((prevFilters) => ({
@@ -81,6 +95,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         <button
           onClick={() => setShowDepartureFilter(!showDepartureFilter)}
           className="flex items-center justify-between bg-[#1a365d] text-white px-4 py-2 rounded-md transition-all hover:bg-[#2d4a7c]"
+          suppressHydrationWarning
         >
           <div className="flex items-center gap-2">
             <Calendar size={18} />
@@ -101,7 +116,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         >
           <div className="flex items-center gap-2">
             <Filter size={18} />
-            <span>{t('filters.transport')}</span>
+            <span>{t('filters.transportButton')}</span>
           </div>
           {showFilters ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </button>

@@ -15,7 +15,12 @@
             "seeRoutes": "Routen anzeigen",
             "filters": {
                 "departure": "Abfahrt",
-                "transport": "Transport",
+                "transport": {
+                    "bike": "Fahrrad",
+                    "walk": "Zu Fuß",
+                    "car": "Auto"
+                },
+                "transportButton": "Transport",
                 "datePicker": {
                     "date": "Datum",
                     "time": "Uhrzeit",
@@ -46,7 +51,11 @@
                 "toStotteritz": "→ Stötteritz",
                 "toMeusdorf": "→ Meusdorf",
                 "toSchonefeld": "→ Schönefeld",
-                "toConnewitz": "→ Connewitz"
+                "toConnewitz": "→ Connewitz",
+                "toLindenau": "→ Lindenau",
+                "toUniversity": "→ Universität Leipzig",
+                "toMarkt": "→ Markt",
+                "toHauptbahnhof": "→ Hauptbahnhof"
             },
             "stations": {
                 "hauptbahnhof": "Leipzig Hauptbahnhof",

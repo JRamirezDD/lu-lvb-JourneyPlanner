@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import RoutePlanner from './RoutePlanner';
 import { Clock, PersonStanding } from 'lucide-react';
+import React from 'react';
 
 type ViewState = "planner" | "routes" | "details" | "station";
 
@@ -76,7 +77,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
               {/* Route Visualization */}
               <div className="p-3 flex items-center gap-1">
                 {route.steps.map((step, index) => (
-                  <>
+                  <React.Fragment key={index}>
                     {/* Transport Icon/Badge */}
                     {step.type === "Walk" ? (
                       <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
@@ -97,7 +98,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
                     {index < route.steps.length - 1 && (
                       <div className="h-[2px] w-4 bg-gray-300" />
                     )}
-                  </>
+                  </React.Fragment>
                 ))}
               </div>
 

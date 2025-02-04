@@ -51,6 +51,7 @@ const ControlPanel = () => {
         </div>
       </aside>
     </>
+    
   );
 };
 

@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { ChevronLeft, ChevronRight, Clock, MapPin, Info } from 'lucide-react';
-import { PersonStanding } from 'lucide-react';
+import PersonStanding from '../../../public/Walk.svg';
+import Image from 'next/image';
 import { useState } from 'react';
 
 interface RouteData {
@@ -74,6 +75,34 @@ const routes: RouteData[] = [
   }
 ];
 
+const getTransportColor = (type: string) => {
+  switch (type) {
+    case 'tram':
+      return 'bg-red-600';
+    case 's-bahn':
+      return 'bg-green-600';
+    case 'bus':
+      return 'bg-purple-600';
+    case 'walk':
+      return 'bg-gray-200';
+    default:
+      return 'bg-gray-400';
+  }
+};
+
+const getLineColor = (type: string) => {
+  switch (type) {
+    case 'tram':
+      return 'border-red-600';
+    case 's-bahn':
+      return 'border-green-600';
+    case 'bus':
+      return 'border-purple-600';
+    default:
+      return 'border-gray-200';
+  }
+};
+
 const SelectedRouteDetails = () => {
   const t = useTranslations('ControlPanel.routeDetails');
   const [currentRouteIndex, setCurrentRouteIndex] = useState(0);
@@ -116,7 +145,13 @@ const SelectedRouteDetails = () => {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <PersonStanding size={20} className="text-gray-700" />
+          <Image 
+            src={PersonStanding}
+            alt="Walking"
+            width={20}
+            height={20}
+            className="text-gray-700"
+          />
           <div>
             <div className="font-medium">{currentRoute.walkDistance}</div>
             <div className="text-sm text-gray-600">{currentRoute.walkDuration}</div>
@@ -129,125 +164,97 @@ const SelectedRouteDetails = () => {
         <div className="text-gray-700">{t('requiredTicket')}</div>
       </div>
 
-      {/* Detailed Steps */}
+      {/* Detailed Steps - Updated Design */}
       <div className="flex-1">
-        <div className="relative">
-          {/* Start Point */}
-          <div className="flex items-start gap-4 p-4 border-b">
-            <div className="flex flex-col items-center">
-              <div className="text-green-600 font-medium text-lg">13:05</div>
-              <div className="w-0.5 h-full bg-gray-300 absolute top-10"></div>
-            </div>
-            <div className="flex-1">
-              <div className="font-medium text-lg">Leipzig Hauptbahnhof</div>
-              <div className="text-sm text-gray-600">Willy-Brandt-Platz</div>
-              <button className="mt-1">
-                <MapPin size={16} className="text-blue-500" />
-              </button>
-            </div>
-          </div>
+        <div className="relative p-4">
+          {currentRoute.steps.map((step, index) => (
+            <div key={index} className="flex gap-4">
+              {/* Time Column */}
+              <div className="w-16 flex flex-col items-center">
+                <span className="font-medium text-gray-900">{step.time}</span>
+                {index < currentRoute.steps.length - 1 && (
+                  <div className={`h-full border-l-4 my-2 transition-all ${
+                    step.type !== 'start' ? getLineColor(step.type) : 'border-gray-200'
+                  } ${
+                    step.type !== 'walk' && step.type !== 'start' ? 'scale-y-110' : ''
+                  }`} />
+                )}
+              </div>
 
-          {/* Walking Step */}
-          {currentRoute.steps.map((step, index) => {
-            if (step.type === "walk") {
-              return (
-                <div key={index} className="flex items-start gap-4 p-4 border-b bg-gray-50">
-                  <div className="flex flex-col items-center relative">
-                    <PersonStanding size={20} className="text-gray-600" />
-                    <div className="w-0.5 h-full bg-gray-300 absolute top-8"></div>
-                  </div>
-                  <div>
-                    <div className="text-gray-600">
-                      {t('walkTime', { duration: step.duration })} ({t('walkDistance', { distance: step.distance })})
+              {/* Content Column */}
+              <div className="flex-1 pb-8">
+                {/* Transport Badge and Info */}
+                {step.type !== 'start' && step.type !== 'end' && (
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full shadow-sm ${getTransportColor(step.type)} ${
+                      step.type !== 'walk' ? 'scale-105 shadow-md' : ''
+                    }`}>
+                      {step.type === 'walk' ? (
+                        <>
+                          <Image 
+                            src={PersonStanding}
+                            alt="Walking"
+                            width={18}
+                            height={18}
+                            className="text-gray-700"
+                          />
+                          <span className="text-gray-700 font-medium">
+                            {t('walkTime', { duration: step.duration })}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-white font-medium">{step.line}</span>
+                          <span className="text-white/90">
+                            {step.direction ? t(`directions.${step.direction}`) : ''}
+                          </span>
+                        </>
+                      )}
                     </div>
-                  </div>
-                </div>
-              );
-            }
-
-            if (step.type === "tram" || step.type === "s-bahn" || step.type === "bus") {
-              return (
-                <div key={index} className="flex items-start gap-4 p-4 border-b">
-                  <div className="flex flex-col items-center">
-                    <div className="text-green-600 font-medium text-lg">{step.time}</div>
-                    <div className="w-0.5 h-full bg-gray-300 absolute"></div>
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className={`text-white px-3 py-1 rounded-md font-medium ${
-                        step.type === 'tram' ? 'bg-red-600' :
-                        step.type === 'bus' ? 'bg-purple-600' :
-                        'bg-green-600'
-                      }`}>
-                        {step.line}
+                    
+                    {(step.type === 'tram' || step.type === 's-bahn' || step.type === 'bus') && (
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Info size={16} />
+                        <span>
+                          {step.platform === "underground" 
+                            ? t('underground')
+                            : t('platform', { number: step.platform })}
+                        </span>
+                        •
+                        <span>{t('stops', { count: step.stops })} ({t('duration', { duration: step.stopDuration })})</span>
                       </div>
-                      <span>{t(`directions.${step.direction}`)}</span>
-                    </div>
-                    <div className="flex items-center text-gray-600 gap-1 mb-2">
-                      <Info size={16} />
-                      <span>
-                        {step.platform === "underground" 
-                          ? t('underground')
-                          : t('platform', { number: step.platform })}
-                      </span>
-                    </div>
-                    <button className="text-blue-500 text-sm hover:underline">
-                      {t('stops', { count: step.stops })} ({t('duration', { duration: step.stopDuration })})
-                    </button>
+                    )}
+                  </div>
+                )}
+
+                {/* Location Name with Dot */}
+                <div className="flex items-center gap-2">
+                  <div className={`w-3 h-3 rounded-full ${
+                    step.type === 'start' ? 'bg-green-500' :
+                    step.type === 'end' ? 'bg-red-500' :
+                    step.type === 'walk' ? 'bg-gray-400' :
+                    getTransportColor(step.type)
+                  } ${
+                    step.type !== 'walk' && step.type !== 'start' && step.type !== 'end' 
+                      ? 'ring-2 ring-offset-2 ring-opacity-50' : ''
+                  }`} />
+                  <div>
+                    <div className="font-medium text-gray-900">{step.from}</div>
+                    {step.to && (
+                      <div className="text-sm text-gray-600">{step.to}</div>
+                    )}
                   </div>
                 </div>
-              );
-            }
 
-            // ... similar updates for other step types
-          })}
-
-          {/* Transfer Point */}
-          <div className="flex items-start gap-4 p-4 border-b bg-[#fef9c3]/30">
-            <div className="flex flex-col items-center">
-              <div className="text-orange-600 font-medium text-lg">13:27</div>
-              <div className="w-0.5 h-full bg-gray-300 absolute"></div>
-            </div>
-            <div className="flex-1">
-              <div className="font-medium">Wilhelm-Leuschner-Platz</div>
-              <div className="text-sm text-orange-600 font-medium">4 min transfer</div>
-            </div>
-          </div>
-
-          {/* S-Bahn Step */}
-          <div className="flex items-start gap-4 p-4 border-b">
-            <div className="flex flex-col items-center">
-              <div className="text-green-600 font-medium text-lg">13:31</div>
-              <div className="w-0.5 h-full bg-gray-300 absolute"></div>
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="bg-green-600 text-white px-3 py-1 rounded-md font-medium">
-                  S3
-                </div>
-                <span>→ Halle (Saale)</span>
+                {/* Transfer Info */}
+                {step.type === 'transfer' && (
+                  <div className="mt-2 text-sm font-medium text-orange-600">
+                    {t('transfer', { duration: step.transferDuration })}
+                  </div>
+                )}
               </div>
-              <div className="flex items-center text-gray-600 gap-1 mb-2">
-                <Info size={16} />
-                <span>Underground platform</span>
-              </div>
-              <button className="text-blue-500 text-sm hover:underline">4 stops (12 min)</button>
             </div>
-          </div>
-
-          {/* End Point */}
-          <div className="flex items-start gap-4 p-4">
-            <div className="flex flex-col items-center">
-              <div className="text-red-600 font-medium text-lg">13:47</div>
-            </div>
-            <div className="flex-1">
-              <div className="font-medium text-lg">Leipzig Universität</div>
-              <div className="text-sm text-gray-600">Augustusplatz</div>
-              <button className="mt-1">
-                <MapPin size={16} className="text-blue-500" />
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

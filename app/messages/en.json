@@ -15,14 +15,19 @@
             "seeRoutes": "See Routes",
             "filters": {
                 "departure": "Departure",
-                "transport": "Transport",
+                "transportButton": "Transport",
                 "datePicker": {
                     "date": "Date",
                     "time": "Time",
                     "setToNow": "Set to Now"
                 },
                 "departureNow": "Depart Now",
-                "departureAt": "Depart at {time}"
+                "departureAt": "Depart at {time}",
+                "transport": {
+                    "bike": "Bike",
+                    "walk": "Walk",
+                    "car": "Car"
+                }
             }
         },
         "routes": {
@@ -46,7 +51,11 @@
                 "toStotteritz": "→ Stötteritz",
                 "toMeusdorf": "→ Meusdorf",
                 "toSchonefeld": "→ Schönefeld",
-                "toConnewitz": "→ Connewitz"
+                "toConnewitz": "→ Connewitz",
+                "toLindenau": "→ Lindenau",
+                "toUniversity": "→ Leipzig University",
+                "toMarkt": "→ Market Square",
+                "toHauptbahnhof": "→ Central Station"
             },
             "stations": {
                 "hauptbahnhof": "Leipzig Central Station",
