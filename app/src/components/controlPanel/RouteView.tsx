@@ -1,6 +1,8 @@
 import { useTranslations } from 'next-intl';
 import RoutePlanner from './RoutePlanner';
-import { Clock, PersonStanding } from 'lucide-react';
+import { Clock } from 'lucide-react';
+import PersonStanding from '../../../public/Walk.svg';
+import Image from 'next/image';
 import React from 'react';
 
 type ViewState = "planner" | "routes" | "details" | "station";
@@ -81,7 +83,12 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
                     {/* Transport Icon/Badge */}
                     {step.type === "Walk" ? (
                       <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
-                        <PersonStanding size={14} />
+                        <Image 
+                          src={PersonStanding}
+                          alt="Walking"
+                          width={14}
+                          height={14}
+                        />
                         <span>{step.walkDuration}</span>
                       </div>
                     ) : (
