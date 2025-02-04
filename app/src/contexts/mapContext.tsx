@@ -3,17 +3,26 @@
 import React, { createContext, useContext, useState } from "react";
 import { Coordinates } from "@/types/Coordinates";
 import { IContext } from "./IContext";
+import { Itinerary } from "@/types/Itinerary";
 
 
 export interface IMapContext extends IContext {
-    currentPosition: Coordinates;
-    selectedObject: string | null;
-    zoomLevel: number;
+    // Map state
+    currentPosition: Coordinates | null;
     visibleLayers: string[];
-    setCurrentPosition: (lat: number, lon: number) => void;
-    setZoomLevel: (zoom: number) => void;
-    setSelectedObject: (id: string | null) => void;
-    toggleLayer: (layer: string) => void;
+
+    setCurrentPosition: (coordinates: Coordinates) => void;
+    toggleLayer: (layer: string, status: boolean) => void;
+
+    
+    // Pass objects from Control Panel -> Map
+    selectedItinerary: Itinerary | null // Used to store the selected itinerary (selected from Control Panel)
+    setSelectedItinerary: (itinerary: Itinerary) => void;
+
+    // Pass objects from Map -> Control Panel
+    selectedStop: string | null; // Used to store the ID of the selected stop (selected from Stops layer)
+    setSelectedStop: (id: string | null) => void;
+
 
     clearState: () => void;
 }
@@ -24,40 +33,40 @@ const MapContext = createContext<IMapContext | undefined>(undefined);
 // Provider Component for the MapContext
 export const MapProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // Local state for the map.
-    const [currentPosition, setCurrentPositionState] = useState<Coordinates>({ lat: 0, lon: 0 });
-    const [selectedObject, setSelectedObjectState] = useState<string | null>(null);
-    const [zoomLevel, setZoomLevelState] = useState<number>(10); // default zoom level (adjust as needed)
+    const [currentPosition, setCurrentPositionState] = useState<Coordinates | null>(null);
+    const [selectedStop, setSelectedStopState] = useState<string | null>(null);
     const [visibleLayers, setVisibleLayers] = useState<string[]>([]);
+    const [selectedItinerary, setSelectedItineraryState] = useState<Itinerary | null>(null);
+
 
     // Function to update the current position.
-    const setCurrentPosition = (lat: number, lon: number) => {
-        setCurrentPositionState({ lat, lon });
+    const setCurrentPosition = (coordinates: Coordinates) => {
+        setCurrentPositionState(coordinates);
     };
 
-    // Function to update the zoom level.
-    const setZoomLevel = (zoom: number) => {
-        setZoomLevelState(zoom);
+    // Function to update the selected stop.
+    const setSelectedStop = (id: string | null) => {
+        setSelectedStopState(id);
     };
 
-    // Function to update the selected object.
-    const setSelectedObject = (id: string | null) => {
-        setSelectedObjectState(id);
+    // Function to update the selected itinerary.
+    const setSelectedItinerary = (itinerary: Itinerary) => {
+        setSelectedItineraryState(itinerary);
     };
 
     // Function to toggle the presence of a layer in visibleLayers.
-    const toggleLayer = (layer: string) => {
+    const toggleLayer = (layer: string, status: boolean) => {
         setVisibleLayers((prevLayers) =>
-            prevLayers.includes(layer)
-                ? prevLayers.filter((l) => l !== layer)
-                : [...prevLayers, layer]
+            status
+                ? [...new Set([...prevLayers, layer])] // Ensure the layer is added
+                : prevLayers.filter((l) => l !== layer) // Remove the layer if status is false
         );
-    };
+    };    
 
     // Function to reset all map-related state to default values.
     const clearState = () => {
         setCurrentPositionState({ lat: 0, lon: 0 });
-        setSelectedObjectState(null);
-        setZoomLevelState(10);
+        setSelectedStopState(null);
         setVisibleLayers([]);
     };
 
@@ -65,14 +74,14 @@ export const MapProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     // P - Implement in all when there's time.
     const value: IMapContext = {
         currentPosition,
-        selectedObject,
-        zoomLevel,
+        selectedStop,
         visibleLayers,
+        selectedItinerary,
         setCurrentPosition,
-        setZoomLevel,
-        setSelectedObject,
+        setSelectedStop,
         toggleLayer,
         clearState,
+        setSelectedItinerary
     };
 
     return <MapContext.Provider value={value}> {children} </MapContext.Provider>;

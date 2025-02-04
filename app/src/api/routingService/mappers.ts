@@ -2,7 +2,7 @@ import {
     OtpResponse,
     Plan,
     Location,
-    Itinerary,
+    OtpItinerary,
     Leg,
     Alert,
     ZoneInfo,
@@ -45,8 +45,8 @@ export const toAlert = (data: any): Alert =>
         data.alertHeaderText // Optional
     );
 
-export const toItinerary = (data: any): Itinerary =>
-    new Itinerary(
+export const toOtpItinerary = (data: any): OtpItinerary =>
+    new OtpItinerary(
         data.duration,
         data.startTime,
         data.endTime,
@@ -71,7 +71,7 @@ export const toPlan = (data: any): Plan =>
         data.date,
         toLocation(data.from),
         toLocation(data.to),
-        data.itineraries.map(toItinerary)
+        data.itineraries.map(toOtpItinerary)
     );
 
     export const toRequestParameters = (data: any): RequestParameters => ({
