@@ -1,5 +1,14 @@
+// Refer to https://www.ibm.com/docs/en/db2/11.5?topic=formats-geojson-format for GeoJSON specification
 
 import { LayerSpecification, Map, SourceSpecification } from "mapbox-gl";
+
+export interface SourceConfig {
+  id: string;
+  type: "geojson";
+  // Corresponds to Geometry Types
+  // type: "Linestring" | "Polygon" | "MultiPoint" | "MultiLinestring" | "MultiPolygon" | "GeometryCollection"; 
+  data: any;
+}
 
 export interface LayerConfig {
   id: string;
