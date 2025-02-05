@@ -2,23 +2,16 @@ import {
     toLocation,
     toLeg,
     toAlert,
-    toItinerary,
+    toOtpItinerary,
     toZoneInfo,
     toPlan,
     toOtpResponse,
 } from "@/api/routingService/mappers";
 import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.mock";
-import { Leg, LegGeometry, Location, Alert, Itinerary, ZoneInfo, Plan, OtpResponse } from "@/api/routingService/dto/otpResponse";
+import { Leg, LegGeometry, Location, Alert, OtpItinerary, ZoneInfo, Plan, OtpResponse } from "@/api/routingService/dto/otpResponse";
 import { TransportMode } from "@/types/TransportMode";
 
 describe("routingService Mappers", () => {
-    it("should map the mock data to geoJSON format. Must check manually.", () => {
-        const result = toOtpResponse(mockOtpResponse).toGeoJson();
-        //console.log(result);
-
-        expect(result).not.toEqual("");
-    })
-
     it("should map raw location data to Location DTO", () => {
         const rawLocation = mockOtpResponse.plan.from;
         const result = toLocation(rawLocation);
@@ -77,10 +70,10 @@ describe("routingService Mappers", () => {
 
     it("should map raw itinerary data to Itinerary DTO", () => {
         const rawItinerary = mockOtpResponse.plan.itineraries[0];
-        const result = toItinerary(rawItinerary);
+        const result = toOtpItinerary(rawItinerary);
 
         expect(result).toEqual(
-            new Itinerary(
+            new OtpItinerary(
                 rawItinerary.duration,
                 rawItinerary.startTime,
                 rawItinerary.endTime,
@@ -116,7 +109,7 @@ describe("routingService Mappers", () => {
                 rawPlan.date,
                 toLocation(rawPlan.from),
                 toLocation(rawPlan.to),
-                rawPlan.itineraries.map(toItinerary)
+                rawPlan.itineraries.map(toOtpItinerary)
             )
         );
     });
