@@ -1,4 +1,4 @@
-name: CI
+name: CI-Tests
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: CI Tests
+    name: CI-Tests
         
     steps:
     - uses: actions/checkout@v4
