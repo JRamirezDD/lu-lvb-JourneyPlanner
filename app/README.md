@@ -1,6 +1,15 @@
 ## Hosting
 Not currently hosted. Hosting to be delivered in Sprint 2.
 
+## Local environment variables
+The application expects environment variables. For security reasons, API keys and other secrets are stored under .env.local folder.
+To set this up do the following:
+Create .env.local folder under /app/src
+Place the following variables
+- NEXT_PUBLIC_API_KEY=""
+
+
+
 ## Getting Started
 
 First install the dependencies
@@ -18,7 +27,6 @@ Current pages are visible at:
 [/controlPanel](http://localhost:3000/controlPanel)
 [/map](http://localhost:3000/map)
 [/examples/contexts/autocomplete](http://localhost:3000/examples/contexts/autocomplete)
-[/examples/contexts/counter](http://localhost:3000/examples/contexts/counter)
 [/examples/contexts/multi-component](http://localhost:3000/examples/contexts/multi-component)
 [/examples/contexts/trigger-function](http://localhost:3000/examples/contexts/trigger-function)
 
