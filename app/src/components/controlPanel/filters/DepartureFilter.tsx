@@ -21,7 +21,7 @@ const DepartureFilter = ({ selectedDate, setSelectedDate }: DepartureFilterProps
   };
 
   if (!isMounted) {
-    return null; // or return a loading skeleton
+    return null; 
   }
 
   return (
