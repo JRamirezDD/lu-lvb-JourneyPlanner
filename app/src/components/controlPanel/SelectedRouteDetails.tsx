@@ -159,16 +159,17 @@ const SelectedRouteDetails = () => {
         </div>
       </div>
 
-      {/* Required Ticket */}
+      
       <div className="flex justify-between items-center px-6 py-3 border-b bg-[#fef9c3]/30">
         <div className="text-gray-700">{t('requiredTicket')}</div>
       </div>
 
-      {/* Detailed Steps - Updated Design */}
+      {/* Detailed Steps */}
       <div className="flex-1">
         <div className="relative p-4">
           {currentRoute.steps.map((step, index) => (
             <div key={index} className="flex gap-4">
+
               {/* Time Column */}
               <div className="w-16 flex flex-col items-center">
                 <span className="font-medium text-gray-900">{step.time}</span>
@@ -183,7 +184,8 @@ const SelectedRouteDetails = () => {
 
               {/* Content Column */}
               <div className="flex-1 pb-8">
-                {/* Transport Badge and Info */}
+
+                {/* Transport */}
                 {step.type !== 'start' && step.type !== 'end' && (
                   <div className="flex items-center gap-3 mb-2">
                     <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full shadow-sm ${getTransportColor(step.type)} ${
@@ -227,7 +229,7 @@ const SelectedRouteDetails = () => {
                   </div>
                 )}
 
-                {/* Location Name with Dot */}
+                {/* Location Name */}
                 <div className="flex items-center gap-2">
                   <div className={`w-3 h-3 rounded-full ${
                     step.type === 'start' ? 'bg-green-500' :
