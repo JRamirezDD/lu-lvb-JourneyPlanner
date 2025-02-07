@@ -1,9 +1,9 @@
-import { useTranslations } from 'next-intl';
-import RoutePlanner from './RoutePlanner';
-import { Clock } from 'lucide-react';
-import PersonStanding from '../../../public/Walk.svg';
-import Image from 'next/image';
-import React from 'react';
+import { Clock } from "lucide-react";
+import PersonStanding from "../../../public/Walk.svg";
+import Image from "next/image";
+import React from "react";
+import RoutePlanner from "./RoutePlanner";
+import { useSettingsContext } from "@/contexts/settingsContext"; // Import context
 
 type ViewState = "planner" | "routes" | "details" | "station";
 
@@ -25,8 +25,8 @@ interface Route {
 }
 
 const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void }) => {
-  const t = useTranslations('ControlPanel.routes');
-  
+  const { translations } = useSettingsContext(); // Get translations from context
+
   const routes: Route[] = [
     {
       id: 1,
@@ -59,11 +59,13 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
 
       {/* Routes List Section */}
       <div className="border-t pt-4">
-        <h2 className="text-lg font-bold mb-4">{t('availableRoutes')}</h2>
+        <h2 className="text-lg font-bold mb-4">
+          {translations?.ControlPanel?.routes?.availableRoutes || "Available Routes"}
+        </h2>
         <ul className="space-y-3">
           {routes.map((route) => (
-            <li 
-              key={route.id} 
+            <li
+              key={route.id}
               className="border border-[#1a365d]/10 rounded-lg hover:bg-[#fef9c3]/20 cursor-pointer transition-colors overflow-hidden"
               onClick={() => setActiveView("details")}
             >
@@ -100,7 +102,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
                         {step.line}
                       </div>
                     )}
-                    
+
                     {/* Connector Line */}
                     {index < route.steps.length - 1 && (
                       <div className="h-[2px] w-4 bg-gray-300" />
@@ -111,7 +113,8 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
 
               {/* Departure Info */}
               <div className="px-3 pb-2 text-sm text-gray-600">
-                {t('leaves')} {route.steps[0].departureTime} {t('from')} {route.steps[0].from}
+                {translations?.ControlPanel?.routes?.leaves || "Leaves"} {route.steps[0].departureTime}{" "}
+                {translations?.ControlPanel?.routes?.from || "from"} {route.steps[0].from}
               </div>
             </li>
           ))}
@@ -122,4 +125,3 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
 };
 
 export default RouteView;
-  

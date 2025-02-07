@@ -1,6 +1,7 @@
 ## Pre-Deployed App:
 Hosted in GitHub Pages.
 
+Available endpoints:
 
 
 ## Getting Started
