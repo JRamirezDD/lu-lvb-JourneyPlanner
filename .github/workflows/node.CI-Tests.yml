@@ -1,8 +1,6 @@
 name: CI Tests
 
 on:
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch: # Allows manual triggering
 
 jobs:
