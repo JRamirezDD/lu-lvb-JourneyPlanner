@@ -57,6 +57,7 @@ jobs:
           node-version: "20.12.x"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Create .env.local File
+        working-directory: ./app
         run: |
           echo "NEXT_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_API_KEY }}" >> .env.local
         shell: bash
