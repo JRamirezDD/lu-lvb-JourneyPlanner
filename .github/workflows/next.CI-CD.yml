@@ -7,9 +7,11 @@
 name: CI-CD
 
 on:
+  workflow_run: # Run Test before running build job
+    workflows: ["CI Tests"] 
+    types:
+      - completed
   # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch: # Allows manual triggering
