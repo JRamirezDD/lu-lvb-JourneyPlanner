@@ -1,4 +1,4 @@
-# Code Sourced from premade GitHub Workflows
+# Code Sourced from premade GitHub Workflows and modified to fit additional requirements
 
 # Sample workflow for building and deploying a Next.js site to GitHub Pages
 #
@@ -56,6 +56,12 @@ jobs:
         with:
           node-version: "20.12.x"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+      - name: Create .env.local File
+        working-directory: ./app
+        run: |
+          echo "NEXT_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_API_KEY }}" >> .env.local
+        shell: bash
+        
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
