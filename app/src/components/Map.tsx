@@ -21,7 +21,7 @@ const Map: React.FC = () => {
   const { currentPosition, setCurrentPosition } = useMapContext();
   const { selectedStop, setSelectedStop } = useMapContext();
 
-  /** Step 1: Initialize Map **/
+// initialize map:
   useEffect(() => {
 
     if (!mapContainer.current || mapRef.current) return;
@@ -42,10 +42,10 @@ const Map: React.FC = () => {
       loadLayers();
     });
 
-    return () => map.remove(); // Cleanup
+    return () => map.remove(); 
   }, []);
 
-  /** Step 2: Add Layers Dynamically **/
+// add layers:
   // useEffect(() => {
   const loadLayers = () => {
     console.log("Visible Layers:", visibleLayers);
@@ -56,7 +56,7 @@ const Map: React.FC = () => {
     const layerManager = layerManagerRef.current;
     const map = mapRef.current;
 
-    // Remove existing layers to prevent duplicates
+    // Remove existing layers
     if (map.getLayer("stops-layer")) {
       map.removeLayer("stops-layer");
     }

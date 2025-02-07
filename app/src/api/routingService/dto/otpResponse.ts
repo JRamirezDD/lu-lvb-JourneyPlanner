@@ -90,7 +90,7 @@ export class Leg extends GeoJsonConvertible {
         public arrivalDelay: number,
         public realTime: boolean,
         public distance: number,
-        public mode: TransportMode, // TODO: Change possible required in toGeoJSON (Previously just string)
+        public mode: TransportMode, 
         public from: Location,
         public to: Location,
         public legGeometry: LegGeometry,
@@ -118,7 +118,6 @@ export class Leg extends GeoJsonConvertible {
                     coordinates: this.legGeometry.points.map((point) => [point.lon, point.lat]),
                 },
                 properties: {
-                    //TO DO: depending on mode, change line type 
                     mode: this.mode,
                     distance: this.distance,
                     duration: this.duration,
@@ -129,7 +128,6 @@ export class Leg extends GeoJsonConvertible {
         // Add intermediate stops if available
         if (this.intermediateStops) {
             features.push(
-                //TO DO: change logo of intermediate stops 
                 ...this.intermediateStops.map((stop) => stop.toGeoJsonFeature("Intermediate Stop"))
             );
         }
