@@ -5,7 +5,7 @@ import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
 import BusLogo from "../../../public/Bus-Logo.svg"; 
 import TransportFilter from "./filters/TransportFilter";
 import DepartureFilter from "./filters/DepartureFilter";
-import { useTranslations } from 'next-intl';
+import { useSettingsContext } from "@/contexts/settingsContext"; // Import context
 
 type ViewState = "planner" | "routes" | "details" | "station";
 
@@ -16,7 +16,8 @@ const transportOptions = [
 ];
 
 const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => void }) => {
-  const t = useTranslations('ControlPanel.planner');
+  const { translations } = useSettingsContext(); // Get translations from context
+
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -63,13 +64,13 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
 
   return (
     <div className="flex flex-col gap-4 p-4 w-full">
-      <h2 className="text-lg font-bold">{t('title')}</h2>
+      <h2 className="text-lg font-bold">{translations?.ControlPanel?.planner?.title || "Plan Your Journey"}</h2>
 
       {/* Input Fields*/}
       <div className="relative flex flex-col gap-2">
         <input
           type="text"
-          placeholder={t('origin')}
+          placeholder={translations?.ControlPanel?.planner?.origin || "Origin"}
           value={origin}
           onChange={(e) => setOrigin(e.target.value)}
           className="w-full p-2 border border-[#1a365d]/20 rounded focus:border-[#1a365d] focus:ring-1 focus:ring-[#1a365d] outline-none"
@@ -83,7 +84,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         </button>
         <input
           type="text"
-          placeholder={t('destination')}
+          placeholder={translations?.ControlPanel?.planner?.destination || "Destination"}
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
           className="w-full p-2 border rounded"
@@ -102,8 +103,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
             <Calendar size={18} />
             <span>
               {isDepartureModified 
-                ? t('filters.departureAt', { time: formattedTime })
-                : t('filters.departureNow')
+                ? translations?.ControlPanel?.planner?.filters?.departureAt?.replace("{time}", formattedTime) || `Departure at ${formattedTime}`
+                : translations?.ControlPanel?.planner?.filters?.departureNow || "Depart Now"
               }
             </span>
           </div>
@@ -117,7 +118,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         >
           <div className="flex items-center gap-2">
             <Filter size={18} />
-            <span>{t('filters.transportButton')}</span>
+            <span>{translations?.ControlPanel?.planner?.filters?.transportButton || "Transport"}</span>
           </div>
           {showFilters ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </button>
@@ -142,7 +143,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         onClick={() => setActiveView("routes")} 
         className="bg-[#1a365d] text-white p-2 rounded w-full hover:bg-[#2d4a7c] transition-colors"
       >
-        {t('seeRoutes')}
+        {translations?.ControlPanel?.planner?.seeRoutes || "See Routes"}
       </button>
     </div>
   );

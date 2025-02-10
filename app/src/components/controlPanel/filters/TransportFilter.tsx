@@ -1,11 +1,11 @@
-import Image from 'next/image';
+import Image from "next/image";
 import TramLogo from "../../../../public/Tram-Logo.svg";
 import S_BahnLogo from "../../../../public/S-Bahn-Logo.svg";
 import BusLogo from "../../../../public/Bus-Logo.svg";
 import Bike from "../../../../public/Bike.svg";
 import PersonStanding from "../../../../public/Walk.svg";
 import Car from "../../../../public/Car.svg";
-import { useTranslations } from 'next-intl';
+import { useSettingsContext } from "@/contexts/settingsContext"; // Import context
 
 const transportOptions = [
   { type: "Tram", logo: TramLogo, translationKey: null },
@@ -22,7 +22,7 @@ interface TransportFilterProps {
 }
 
 const TransportFilter = ({ activeFilters, toggleFilter }: TransportFilterProps) => {
-  const t = useTranslations('ControlPanel.planner.filters.transport');
+  const { translations } = useSettingsContext(); // Get translations from context
 
   return (
     <div className="p-4 border rounded bg-gray-50">
@@ -30,14 +30,9 @@ const TransportFilter = ({ activeFilters, toggleFilter }: TransportFilterProps) 
         {transportOptions.map(({ type, logo, translationKey }) => (
           <li key={type} className="flex items-center justify-between border-b pb-2 last:border-none">
             <div className="flex items-center gap-3">
-              <Image 
-                src={logo} 
-                alt={type} 
-                width={32} 
-                height={32}
-              />
+              <Image src={logo} alt={type} width={32} height={32} />
               <span className="text-gray-800">
-                {translationKey ? t(translationKey) : type}
+                {translationKey ? translations?.ControlPanel?.planner?.filters?.transport?.[translationKey] || type : type}
               </span>
             </div>
             <button

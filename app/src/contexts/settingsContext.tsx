@@ -1,11 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { TransportMode } from "@/types/TransportMode";
 import { IContext } from "./IContext";
 
 export interface ISettingsContext extends IContext {
     language: "en" | "de";
+    translations: Record<string, any>;
     transportModes: TransportMode[];
     avoidWalking: boolean;
     wheelchairAccessible: boolean;
@@ -15,49 +16,45 @@ export interface ISettingsContext extends IContext {
     toggleAvoidWalking: () => void;
     toggleWheelchairAccessible: () => void;
     toggleTransportMode: (mode: TransportMode) => void;
-
     clearState: () => void;
 }
 
 const SettingsContext = createContext<ISettingsContext | undefined>(undefined);
 
-// Provider Component for the SettingsContext
-export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    // Local state for settings
-    const [language, setLanguageState] = useState<"en" | "de">("en");
-    const [transportModes, setTransportModesState] = useState<TransportMode[]>([
-        "WALK",
-        "BUS",
-        "TRAM",
-        "SUBURB",
-        "TRAIN"
-    ]);
+export const SettingsProvider: React.FC<{ children: React.ReactNode; initialLanguage: "en" | "de" }> = ({ children, initialLanguage }) => {
+    const [language, setLanguageState] = useState<"en" | "de">(initialLanguage);
+    const [translations, setTranslations] = useState<Record<string, any>>({});
+
+    const [transportModes, setTransportModesState] = useState<TransportMode[]>(["WALK", "BUS", "TRAM", "SUBURB", "TRAIN"]);
     const [avoidWalking, setAvoidWalking] = useState<boolean>(false);
     const [wheelchairAccessible, setWheelchairAccessible] = useState<boolean>(false);
 
-    // Implement functions to update settings
+    useEffect(() => {
+        async function loadTranslations() {
+            try {
+                const response = await import(`@/i18n/${language}.json`);
+                setTranslations(response.default);
+            } catch (error) {
+                console.error("Failed to load translations:", error);
+                setTranslations({});
+            }
+        }
+        loadTranslations();
+    }, [language]);
+
     const setLanguage = (lang: "en" | "de") => setLanguageState(lang);
     const setTransportModes = (modes: TransportMode[]) => setTransportModesState(modes);
     const toggleAvoidWalking = () => setAvoidWalking((prev) => !prev);
     const toggleWheelchairAccessible = () => setWheelchairAccessible((prev) => !prev);
-
-    // If the provided mode exists in the transportModes array, remove it.
-    // Otherwise, add it.
     const toggleTransportMode = (mode: TransportMode) => {
         setTransportModesState((prevModes) =>
-            prevModes.includes(mode)
-                ? prevModes.filter((m) => m !== mode)
-                : [...prevModes, mode]
+            prevModes.includes(mode) ? prevModes.filter((m) => m !== mode) : [...prevModes, mode]
         );
     };
 
     const clearState = () => {
         setLanguageState("en");
-        setTransportModesState(["WALK",
-            "BUS",
-            "TRAM",
-            "SUBURB",
-            "TRAIN"]);
+        setTransportModesState(["WALK", "BUS", "TRAM", "SUBURB", "TRAIN"]);
         setAvoidWalking(false);
         setWheelchairAccessible(false);
     };
@@ -66,6 +63,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         <SettingsContext.Provider
             value={{
                 language,
+                translations,
                 transportModes,
                 avoidWalking,
                 wheelchairAccessible,
@@ -82,7 +80,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     );
 };
 
-// Hook for consuming the SettingsContext in your components
 export const useSettingsContext = () => {
     const context = useContext(SettingsContext);
     if (!context) {

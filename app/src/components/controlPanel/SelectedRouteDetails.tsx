@@ -1,8 +1,8 @@
-import { useTranslations } from 'next-intl';
-import { ChevronLeft, ChevronRight, Clock, MapPin, Info } from 'lucide-react';
-import PersonStanding from '../../../public/Walk.svg';
-import Image from 'next/image';
-import { useState } from 'react';
+import { ChevronLeft, ChevronRight, Clock, Info } from "lucide-react";
+import PersonStanding from "../../../public/Walk.svg";
+import Image from "next/image";
+import { useState } from "react";
+import { useSettingsContext } from "@/contexts/settingsContext";
 
 interface RouteData {
   id: number;
@@ -13,7 +13,7 @@ interface RouteData {
   walkDuration: string;
   steps: {
     time: string;
-    type: 'start' | 'walk' | 'tram' | 'bus' | 's-bahn' | 'transfer' | 'end';
+    type: "start" | "walk" | "tram" | "bus" | "s-bahn" | "transfer" | "end";
     line?: string;
     from?: string;
     to?: string;
@@ -42,69 +42,39 @@ const routes: RouteData[] = [
       { time: "13:23", type: "tram", line: "15", direction: "toMeusdorf", platform: "1", stops: 2, stopDuration: "8" },
       { time: "13:33", type: "end", from: "Universität Leipzig", to: "Augustusplatz" }
     ]
-  },
-  {
-    id: 2,
-    duration: "25 min",
-    startTime: "13:10",
-    endTime: "13:35",
-    walkDistance: "300 m",
-    walkDuration: "5 min",
-    steps: [
-      { time: "13:10", type: "start", from: "hauptbahnhof", to: "centralStation" },
-      { time: "13:15", type: "s-bahn", line: "S3", direction: "toHalle", platform: "underground", stops: 1, stopDuration: "4" },
-      { time: "13:19", type: "transfer", from: "wilhelm", transferDuration: "3" },
-      { time: "13:22", type: "tram", line: "11", direction: "toSchonefeld", platform: "3", stops: 3, stopDuration: "10" },
-      { time: "13:35", type: "end", from: "university", to: "augustusplatz" }
-    ]
-  },
-  {
-    id: 3,
-    duration: "38 min",
-    startTime: "13:08",
-    endTime: "13:46",
-    walkDistance: "500 m",
-    walkDuration: "7 min",
-    steps: [
-      { time: "13:08", type: "start", from: "Leipzig Hauptbahnhof", to: "Willy-Brandt-Platz" },
-      { time: "13:12", type: "bus", line: "89", direction: "toConnewitz", platform: "Stop B", stops: 4, stopDuration: "15 min" },
-      { time: "13:27", type: "transfer", from: "Wilhelm-Leuschner-Platz", transferDuration: "3 min" },
-      { time: "13:30", type: "tram", line: "4", direction: "toStotteritz", platform: "Platform 1", stops: 3, stopDuration: "12 min" },
-      { time: "13:46", type: "end", from: "Leipzig Universität", to: "Augustusplatz" }
-    ]
   }
 ];
 
 const getTransportColor = (type: string) => {
   switch (type) {
-    case 'tram':
-      return 'bg-red-600';
-    case 's-bahn':
-      return 'bg-green-600';
-    case 'bus':
-      return 'bg-purple-600';
-    case 'walk':
-      return 'bg-gray-200';
+    case "tram":
+      return "bg-red-600";
+    case "s-bahn":
+      return "bg-green-600";
+    case "bus":
+      return "bg-purple-600";
+    case "walk":
+      return "bg-gray-200";
     default:
-      return 'bg-gray-400';
+      return "bg-gray-400";
   }
 };
 
 const getLineColor = (type: string) => {
   switch (type) {
-    case 'tram':
-      return 'border-red-600';
-    case 's-bahn':
-      return 'border-green-600';
-    case 'bus':
-      return 'border-purple-600';
+    case "tram":
+      return "border-red-600";
+    case "s-bahn":
+      return "border-green-600";
+    case "bus":
+      return "border-purple-600";
     default:
-      return 'border-gray-200';
+      return "border-gray-200";
   }
 };
 
 const SelectedRouteDetails = () => {
-  const t = useTranslations('ControlPanel.routeDetails');
+  const { translations } = useSettingsContext(); // Get translations from context
   const [currentRouteIndex, setCurrentRouteIndex] = useState(0);
   const currentRoute = routes[currentRouteIndex];
 
@@ -120,17 +90,13 @@ const SelectedRouteDetails = () => {
     <div className="flex flex-col w-full bg-white">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b bg-[#1a365d] text-white">
-        <button 
-          className="p-2 hover:bg-gray-100 rounded-full"
-          onClick={handlePrevRoute}
-        >
+        <button className="p-2 hover:bg-gray-100 rounded-full" onClick={handlePrevRoute}>
           <ChevronLeft size={24} />
         </button>
-        <h2 className="text-xl font-bold">{t('itinerary')} ({currentRouteIndex + 1}/{routes.length})</h2>
-        <button 
-          className="p-2 hover:bg-gray-100 rounded-full"
-          onClick={handleNextRoute}
-        >
+        <h2 className="text-xl font-bold">
+          {translations?.ControlPanel?.routeDetails?.itinerary || "Itinerary"} ({currentRouteIndex + 1}/{routes.length})
+        </h2>
+        <button className="p-2 hover:bg-gray-100 rounded-full" onClick={handleNextRoute}>
           <ChevronRight size={24} />
         </button>
       </div>
@@ -141,17 +107,13 @@ const SelectedRouteDetails = () => {
           <Clock size={20} className="text-gray-700" />
           <div>
             <div className="font-medium text-lg">{currentRoute.duration}</div>
-            <div className="text-sm text-gray-600">{currentRoute.startTime} - {currentRoute.endTime}</div>
+            <div className="text-sm text-gray-600">
+              {currentRoute.startTime} - {currentRoute.endTime}
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <Image 
-            src={PersonStanding}
-            alt="Walking"
-            width={20}
-            height={20}
-            className="text-gray-700"
-          />
+          <Image src={PersonStanding} alt="Walking" width={20} height={20} className="text-gray-700" />
           <div>
             <div className="font-medium">{currentRoute.walkDistance}</div>
             <div className="text-sm text-gray-600">{currentRoute.walkDuration}</div>
@@ -161,7 +123,7 @@ const SelectedRouteDetails = () => {
 
       
       <div className="flex justify-between items-center px-6 py-3 border-b bg-[#fef9c3]/30">
-        <div className="text-gray-700">{t('requiredTicket')}</div>
+        <div className="text-gray-700">{translations?.ControlPanel?.routeDetails?.requiredTicket || "Required Ticket"}</div>
       </div>
 
       {/* Detailed Steps */}
@@ -174,61 +136,59 @@ const SelectedRouteDetails = () => {
               <div className="w-16 flex flex-col items-center">
                 <span className="font-medium text-gray-900">{step.time}</span>
                 {index < currentRoute.steps.length - 1 && (
-                  <div className={`h-full border-l-4 my-2 transition-all ${
-                    step.type !== 'start' ? getLineColor(step.type) : 'border-gray-200'
-                  } ${
-                    step.type !== 'walk' && step.type !== 'start' ? 'scale-y-110' : ''
-                  }`} />
+                  <div className={`h-full border-l-4 my-2 transition-all ${getLineColor(step.type)}`} />
                 )}
               </div>
 
               {/* Content Column */}
               <div className="flex-1 pb-8">
-
                 {/* Transport */}
                 {step.type !== 'start' && step.type !== 'end' && (
                   <div className="flex items-center gap-3 mb-2">
-                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full shadow-sm ${getTransportColor(step.type)} ${
-                      step.type !== 'walk' ? 'scale-105 shadow-md' : ''
-                    }`}>
-                      {step.type === 'walk' ? (
+                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full shadow-sm ${getTransportColor(step.type)}`}>
+                      {step.type === "walk" ? (
                         <>
-                          <Image 
-                            src={PersonStanding}
-                            alt="Walking"
-                            width={18}
-                            height={18}
-                            className="text-gray-700"
-                          />
+                          <Image src={PersonStanding} alt="Walking" width={18} height={18} className="text-gray-700" />
                           <span className="text-gray-700 font-medium">
-                            {t('walkTime', { duration: step.duration })}
+                            {translations?.ControlPanel?.routeDetails?.walkTime?.replace(
+                              "{duration}",
+                              step.duration || "0"
+                            ) || `Walk ${step.duration} min`}
                           </span>
                         </>
                       ) : (
                         <>
                           <span className="text-white font-medium">{step.line}</span>
                           <span className="text-white/90">
-                            {step.direction ? t(`directions.${step.direction}`) : ''}
+                            {translations?.ControlPanel?.routeDetails?.directions?.step.direction || ""}
                           </span>
                         </>
                       )}
                     </div>
-                    
-                    {(step.type === 'tram' || step.type === 's-bahn' || step.type === 'bus') && (
+
+                    {/* Additional Info */}
+                    {(step.type === "tram" || step.type === "s-bahn" || step.type === "bus") && (
                       <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Info size={16} />
                         <span>
-                          {step.platform === "underground" 
-                            ? t('underground')
-                            : t('platform', { number: step.platform })}
+                          {step.platform === "underground"
+                            ? translations?.ControlPanel?.routeDetails?.underground || "Underground"
+                            : translations?.ControlPanel?.routeDetails?.platform?.replace("{number}", step.platform || "")}
                         </span>
                         •
-                        <span>{t('stops', { count: step.stops })} ({t('duration', { duration: step.stopDuration })})</span>
+                        <span>
+                          {translations?.ControlPanel?.routeDetails?.stops?.replace("{count}", step.stops?.toString() || "0")} (
+                          {translations?.ControlPanel?.routeDetails?.duration?.replace(
+                            "{duration}",
+                            step.stopDuration || "0"
+                          )}
+                          )
+                        </span>
                       </div>
                     )}
                   </div>
                 )}
-
+                
                 {/* Location Name */}
                 <div className="flex items-center gap-2">
                   <div className={`w-3 h-3 rounded-full ${
@@ -264,4 +224,3 @@ const SelectedRouteDetails = () => {
 };
 
 export default SelectedRouteDetails;
-  

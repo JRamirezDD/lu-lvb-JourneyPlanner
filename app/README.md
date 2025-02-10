@@ -8,6 +8,7 @@ Create .env.local folder under /app/src
 Place the following variables
 - NEXT_PUBLIC_API_KEY=""
 
+Available endpoints:
 
 
 ## Getting Started

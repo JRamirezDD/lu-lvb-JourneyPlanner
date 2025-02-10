@@ -1,6 +1,3 @@
-const createNextIntl = require('next-intl/plugin');
-const withNextIntl = createNextIntl();
-
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -12,4 +9,4 @@ const nextConfig: NextConfig = {
     assetPrefix: '/lu-lvb-JourneyPlanner/',
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;

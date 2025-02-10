@@ -1,3 +1,6 @@
+import { generateStaticParams } from "../generateStaticParams";
+export { generateStaticParams };
+
 import Map from '@/components/Map';
 import { UIProvider } from '@/contexts/uiContext';
 import { SettingsProvider } from '@/contexts/settingsContext';
@@ -9,11 +12,9 @@ export default function Home() {
     <div>
       {/* content */}
       <UIProvider>
-        <SettingsProvider>
           <MapProvider>
             <Map />
           </MapProvider>
-        </SettingsProvider>
       </UIProvider>
     </div>
   );
