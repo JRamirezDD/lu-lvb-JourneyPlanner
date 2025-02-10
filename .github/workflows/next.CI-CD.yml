@@ -7,9 +7,13 @@
 name: CI-CD
 
 on:
+  workflow_run: # Run Test before running build job
+    workflows: ["CI Tests"] 
+    types:
+      - completed
   # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch: # Allows manual triggering
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -35,12 +39,12 @@ jobs:
         id: detect-package-manager
         working-directory: ./app
         run: |
-          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+          if [ -f "${{ github.workspace }}/app/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=yarn" >> $GITHUB_OUTPUT
             exit 0
-          elif [ -f "${{ github.workspace }}/package.json" ]; then
+          elif [ -f "${{ github.workspace }}/app/package.json" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
             echo "command=ci" >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
