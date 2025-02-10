@@ -1,16 +1,13 @@
-name: CI Tests
+name: CI-Tests
+
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch: # Allows manual triggering
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: CI Tests
+    name: CI-Tests
         
     steps:
     - uses: actions/checkout@v4

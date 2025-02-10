@@ -82,7 +82,8 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
               <div className="p-3 flex items-center gap-1">
                 {route.steps.map((step, index) => (
                   <React.Fragment key={index}>
-                    {/* Transport Icon/Badge */}
+
+                    {/* Transport Icon */}
                     {step.type === "Walk" ? (
                       <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
                         <Image 

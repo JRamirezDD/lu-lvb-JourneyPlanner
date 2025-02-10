@@ -66,7 +66,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
     <div className="flex flex-col gap-4 p-4 w-full">
       <h2 className="text-lg font-bold">{translations?.ControlPanel?.planner?.title || "Plan Your Journey"}</h2>
 
-      {/* Input Fields with Swap Button */}
+      {/* Input Fields*/}
       <div className="relative flex flex-col gap-2">
         <input
           type="text"
@@ -75,6 +75,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
           onChange={(e) => setOrigin(e.target.value)}
           className="w-full p-2 border border-[#1a365d]/20 rounded focus:border-[#1a365d] focus:ring-1 focus:ring-[#1a365d] outline-none"
         />
+        {/* Swap Button */}
         <button
           onClick={swapLocations}
           className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#1a365d]/10 p-1 rounded-full hover:bg-[#fef9c3] transition-colors"
