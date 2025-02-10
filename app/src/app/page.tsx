@@ -1,4 +1,3 @@
-// app/page.tsx
 export default function Home() {
     return <h1>
         There's nothing supposed to be here for now. Go to /map or /controlPanel.
