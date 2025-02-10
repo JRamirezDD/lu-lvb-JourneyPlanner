@@ -12,7 +12,7 @@ on:
     types:
       - completed
   # Runs on pushes targeting the default branch
-  pull_request:
+  push:
     branches: [ "main" ]
   workflow_dispatch: # Allows manual triggering
 
