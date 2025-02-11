@@ -211,7 +211,10 @@ const SelectedRouteDetails = () => {
                 {/* Transfer Info */}
                 {step.type === 'transfer' && (
                   <div className="mt-2 text-sm font-medium text-orange-600">
-                    {t('transfer', { duration: step.transferDuration })}
+                    {translations?.ControlPanel?.routeDetails?.transfer?.replace(
+                      "{duration}",
+                      step.transferDuration || "0"
+                    )}
                   </div>
                 )}
               </div>
