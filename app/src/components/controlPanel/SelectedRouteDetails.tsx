@@ -160,7 +160,7 @@ const SelectedRouteDetails = () => {
                         <>
                           <span className="text-white font-medium">{step.line}</span>
                           <span className="text-white/90">
-                            {translations?.ControlPanel?.routeDetails?.directions?.step.direction || ""}
+                            {translations?.ControlPanel?.routeDetails?.directions?.[step.direction || ""] || ""}
                           </span>
                         </>
                       )}
