@@ -76,13 +76,18 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
           format: "JSON",
           pointType: "P,S,W"
         });
-        setShowOriginSuggestions(true);
+        // Only show suggestions if the input doesn't exactly match any suggestion
+        const exactMatch = autocompleteData?.some(suggestion => {
+          const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
+          return fullAddress === origin;
+        });
+        setShowOriginSuggestions(!exactMatch);
         setShowDestinationSuggestions(false);
       }
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [origin, fetchAutocompleteData]);
+  }, [origin, fetchAutocompleteData, autocompleteData]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -92,13 +97,18 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
           format: "JSON",
           pointType: "P,S,W"
         });
-        setShowDestinationSuggestions(true);
+        // Only show suggestions if the input doesn't exactly match any suggestion
+        const exactMatch = autocompleteData?.some(suggestion => {
+          const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
+          return fullAddress === destination;
+        });
+        setShowDestinationSuggestions(!exactMatch);
         setShowOriginSuggestions(false);
       }
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [destination, fetchAutocompleteData]);
+  }, [destination, fetchAutocompleteData, autocompleteData]);
 
   const handleSuggestionClick = (suggestion: AutocompleteItem, isOrigin: boolean) => {
     const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
@@ -112,15 +122,18 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
     }
   };
 
-  // Add click outside handler to close suggestions
+  // Add click outside handler
   useEffect(() => {
-    const handleClickOutside = () => {
-      setShowOriginSuggestions(false);
-      setShowDestinationSuggestions(false);
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.suggestions-container') && !target.closest('.location-input')) {
+        setShowOriginSuggestions(false);
+        setShowDestinationSuggestions(false);
+      }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
   return (
@@ -135,17 +148,14 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
           value={origin}
           onChange={(e) => setOrigin(e.target.value)}
           onFocus={() => origin.length >= 2 && setShowOriginSuggestions(true)}
-          className="w-full p-2 border border-[#1a365d]/20 rounded focus:border-[#1a365d] focus:ring-1 focus:ring-[#1a365d] outline-none"
+          className="location-input w-full p-2 border border-[#1a365d]/20 rounded focus:border-[#1a365d] focus:ring-1 focus:ring-[#1a365d] outline-none"
         />
         {showOriginSuggestions && autocompleteData && autocompleteData.length > 0 && (
-          <div className="absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
+          <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
             {autocompleteData.slice(0, 5).map((suggestion) => (
               <div
                 key={suggestion.id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSuggestionClick(suggestion, true);
-                }}
+                onClick={() => handleSuggestionClick(suggestion, true)}
                 className="p-2 hover:bg-gray-100 cursor-pointer"
               >
                 <div className="font-medium">{suggestion.name}</div>
@@ -174,17 +184,14 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
           onFocus={() => destination.length >= 2 && setShowDestinationSuggestions(true)}
-          className="w-full p-2 border rounded"
+          className="location-input w-full p-2 border rounded"
         />
         {showDestinationSuggestions && autocompleteData && autocompleteData.length > 0 && (
-          <div className="absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
+          <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
             {autocompleteData.slice(0, 5).map((suggestion) => (
               <div
                 key={suggestion.id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSuggestionClick(suggestion, false);
-                }}
+                onClick={() => handleSuggestionClick(suggestion, false)}
                 className="p-2 hover:bg-gray-100 cursor-pointer"
               >
                 <div className="font-medium">{suggestion.name}</div>
