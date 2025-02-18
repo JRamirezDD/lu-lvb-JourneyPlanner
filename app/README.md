@@ -23,19 +23,21 @@ Then, run the development server:
 ```bash
 npm run dev
 ```
+### Accessing pages
+
+Base Endpoint of the project is /lu-lvb-JourneyPlanner (ie. access through localhost:3000/lu-lvb-JourneyPlanner)
+Base URL must be followed by /en or /de for the target locale (ie access through localhost:3000/lu-lvb-JourneyPlanner/en/...)
 
 Current pages are visible at:
-[/controlPanel](http://localhost:3000/controlPanel)
-[/map](http://localhost:3000/map)
-[/examples/contexts/autocomplete](http://localhost:3000/examples/contexts/autocomplete)
-[/examples/contexts/multi-component](http://localhost:3000/examples/contexts/multi-component)
-[/examples/contexts/trigger-function](http://localhost:3000/examples/contexts/trigger-function)
+- [/controlPanel](http://localhost:3000/lu-lvb-JourneyPlanner/en/controlPanel)
+- [/map](http://localhost:3000/lu-lvb-JourneyPlanner/en/map)
+- [/examples/contexts/autocomplete](http://localhost:3000/lu-lvb-JourneyPlanner/en/examples/contexts/autocomplete)
+- [/examples/contexts/multi-component](http://localhost:3000/lu-lvb-JourneyPlanner/en/examples/contexts/multi-component)
+- [/examples/contexts/trigger-function](http://localhost:3000/lu-lvb-JourneyPlanner/en/examples/contexts/trigger-function)
 
 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Running tests
 
