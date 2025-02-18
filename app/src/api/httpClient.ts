@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 
 // Create an Axios instance
 const httpClient: AxiosInstance = axios.create({
-    baseURL: `https://cors-anywhere.herokuapp.com/${process.env.NEXT_PUBLIC_API_BASE_URL}`, // proxy the request for CORS. end-solution, implement server-side proxy
+    baseURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}`, // proxy the request for CORS. end-solution, implement server-side proxy
     timeout: 10000, // Set a timeout
 });
 
