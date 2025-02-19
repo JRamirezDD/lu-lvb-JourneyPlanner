@@ -8,17 +8,30 @@ import DepartureFilter from "./filters/DepartureFilter";
 import { useSettingsContext } from "@/contexts/settingsContext"; // Import context
 import { useAutocompleteDataContext } from "@/contexts/DataContext/autocompleteDataContext";
 import { AutocompleteItem } from "@/api/autocompleteService/dto/autocompleteitemResponse";
+import { TransportMode } from "@/types/TransportMode";
+import Bike from "../../../public/Bike.svg";
+import PersonStanding from "../../../public/Walk.svg";
+import Car from "../../../public/Car.svg";
 
 type ViewState = "planner" | "routes" | "details" | "station";
 
-const transportOptions = [
-  { type: "Tram", logo: TramLogo },
-  { type: "S-Bahn", logo: S_BahnLogo },
-  { type: "Bus", logo: BusLogo },
+type TransportOption = {
+  type: string;
+  logo: any;
+  mode: TransportMode;
+};
+
+const transportOptions: TransportOption[] = [
+  { type: "Tram", logo: TramLogo, mode: "TRAM" },
+  { type: "S-Bahn", logo: S_BahnLogo, mode: "SUBURB" },
+  { type: "Bus", logo: BusLogo, mode: "BUS" },
+  { type: "Bike", logo: Bike, mode: "BIKE" },
+  { type: "Walk", logo: PersonStanding, mode: "WALK" },
+  { type: "Car", logo: Car, mode: "CAR" }
 ];
 
 const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => void }) => {
-  const { translations } = useSettingsContext(); // Get translations from context
+  const { translations, transportModes, toggleTransportMode } = useSettingsContext();
   const { autocompleteData, fetchAutocompleteData, loadingAutocomplete } = useAutocompleteDataContext();
 
   const [origin, setOrigin] = useState("");
@@ -26,14 +39,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
   const [showOriginSuggestions, setShowOriginSuggestions] = useState(false);
   const [showDestinationSuggestions, setShowDestinationSuggestions] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<{ [key: string]: boolean }>({
-    "Tram": true,
-    "S-Bahn": true,
-    "Bus": true,
-    "Bike": false,
-    "Walk": false,
-    "Car": false,
-  });
   const [showDepartureFilter, setShowDepartureFilter] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [defaultDate, setDefaultDate] = useState<Date | null>(null);
@@ -55,11 +60,29 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
       })
     : '';
 
+  // Add logging for transport modes changes
+  useEffect(() => {
+    console.log('Current Transport Modes:', transportModes);
+  }, [transportModes]);
+
   const toggleFilter = (type: string) => {
-    setActiveFilters((prevFilters) => ({
-      ...prevFilters,
-      [type]: !prevFilters[type],
-    }));
+    const modeMap: { [key: string]: TransportMode } = {
+      "Tram": "TRAM",
+      "S-Bahn": "SUBURB",
+      "Bus": "BUS",
+      "Bike": "BIKE",
+      "Walk": "WALK",
+      "Car": "CAR",
+    };
+
+    const mode = modeMap[type];
+    if (mode) {
+      console.log('Toggling transport mode:', {
+        type,
+        mappedMode: mode
+      });
+      toggleTransportMode(mode);
+    }
   };
 
   const swapLocations = () => {
@@ -246,7 +269,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
       )}
       {showFilters && (
         <TransportFilter 
-          activeFilters={activeFilters} 
+          activeFilters={Object.fromEntries(
+            transportOptions.map(option => [
+              option.type,
+              transportModes.includes(option.mode)
+            ])
+          )}
           toggleFilter={toggleFilter}
         />
       )}

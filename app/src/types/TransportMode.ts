@@ -1,1 +1,8 @@
-export type TransportMode = "TRANSIT" | "WALK" | "TRAM" | "BUS" | "SUBURB" | "TRAIN" | "CAR" | "BIKE";
+export type TransportMode = 
+  | "WALK" 
+  | "BUS" 
+  | "TRAM" 
+  | "SUBURB" 
+  | "TRAIN" 
+  | "BIKE"
+  | "CAR";
