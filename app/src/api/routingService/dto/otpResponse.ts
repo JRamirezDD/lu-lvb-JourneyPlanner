@@ -5,6 +5,10 @@ import { toPlan } from "@/api/routingService/mappers";
 
 // dto/otpResponse.ts
 
+    // otp response: ({value, comments}, request parameters, plan 
+    //plan: date, from, to otp itineraries 
+    // otp itinerary: GEOJSON CONVERTIBLE
+
 export class OtpResponse {
     constructor(
         public RetStatus: { Value: string; Comments?: string },
@@ -48,8 +52,8 @@ export class Location extends GeoJsonConvertible {
         };
     }
 
-    toGeoJson(): string {
-        return JSON.stringify(this.toGeoJsonFeature("Location"));
+    toGeoJson(): object {
+        return this.toGeoJsonFeature("Location");
     }
 }
 
@@ -73,12 +77,12 @@ export class OtpItinerary extends GeoJsonConvertible {
         return this.legs.flatMap((leg) => leg.toGeoJsonFeatures());
     }
 
-    toGeoJson(): string {
+    toGeoJson(): object {
         const geojson = {
             type: "FeatureCollection",
             features: this.toGeoJsonFeatures(),
         };
-        return JSON.stringify(geojson, null, 2);
+        return geojson;
     }
 }
 
@@ -135,12 +139,12 @@ export class Leg extends GeoJsonConvertible {
         return features;
     }
 
-    toGeoJson(): string {
+    toGeoJson(): object {
         const geojson = {
             type: "FeatureCollection",
             features: this.toGeoJsonFeatures(),
         };
-        return JSON.stringify(geojson, null, 2);
+        return geojson;
     }
 }
 
@@ -149,12 +153,12 @@ export class LegGeometry extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
+    toGeoJson(): object {
         const geojson = {
             type: "LineString",
             coordinates: this.points.map((point) => [point.lon, point.lat]),
         };
-        return JSON.stringify(geojson, null, 2);
+        return geojson;
     }
 }
 
@@ -167,7 +171,7 @@ export class ZoneInfo extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
+    toGeoJson(): object {
         const geojson = {
             type: "Feature",
             properties: {
@@ -176,7 +180,7 @@ export class ZoneInfo extends GeoJsonConvertible {
                 shortDistanceTicket: this.shortDistanceTicket,
             },
         };
-        return JSON.stringify(geojson, null, 2);
+        return geojson;
     }
 }
 
@@ -192,7 +196,7 @@ export class Alert extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
+    toGeoJson(): object {
         const geojson = {
             type: "Feature",
             properties: {
@@ -204,6 +208,6 @@ export class Alert extends GeoJsonConvertible {
                 alertHeaderText: this.alertHeaderText,
             },
         };
-        return JSON.stringify(geojson, null, 2);
+        return geojson;
     }
 }

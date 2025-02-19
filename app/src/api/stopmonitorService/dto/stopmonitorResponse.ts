@@ -31,8 +31,8 @@ export class MonitorItem extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geojson = {
             type: "Feature",
             geometry: {
                 type: "Point",
@@ -56,9 +56,10 @@ export class MonitorItem extends GeoJsonConvertible {
                 track: this.track,
                 delay_time: this.delay_time,
                 departure_delay: this.departure_delay,
-                alerts: this.alerts?.map(alert => JSON.parse(alert.toGeoJson())) || []
+                alerts: this.alerts?.map(alert => alert.toGeoJson()) || []
             }
-        });
+        };
+        return geojson;
     }
 }
 
@@ -67,11 +68,11 @@ export class MonitorResponse extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        return {
             type: "FeatureCollection",
-            features: this.items.map(item => JSON.parse(item.toGeoJson()))
-        });
+            features: this.items.map(item => item.toGeoJson()) // No need for JSON.parse
+        };
     }
 }
 
@@ -88,8 +89,8 @@ export class DirectionInfo extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geojson = {
             type: "Feature",
             properties: {
                 directionId: this.directionId,
@@ -100,7 +101,8 @@ export class DirectionInfo extends GeoJsonConvertible {
                 transport_type: this.transport_type,
                 headsigns: this.headsigns
             }
-        });
+        };
+        return geojson;
     }
 }
 
@@ -109,11 +111,12 @@ export class DirectionResponse extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geojson = {
             type: "FeatureCollection",
-            features: this.items.map(item => JSON.parse(item.toGeoJson()))
-        });
+            features: this.items.map(item => item.toGeoJson())
+        };
+        return geojson;
     }
 }
 
@@ -128,8 +131,8 @@ export class StopsItem extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geojson = {
             type: "Feature",
             geometry: {
                 type: "Point",
@@ -140,7 +143,8 @@ export class StopsItem extends GeoJsonConvertible {
                 stop_id: this.stop_id,
                 priority: this.priority
             }
-        });
+        };
+        return geojson;
     }
 }
 
@@ -149,11 +153,12 @@ export class StopsResponse extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geojson = {
             type: "FeatureCollection",
-            features: this.items.map(item => JSON.parse(item.toGeoJson()))
-        });
+            features: this.items.map(item => item.toGeoJson())
+        };
+        return geojson;
     }
 }
 
@@ -167,15 +172,16 @@ export class StopTimesResponse extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geojson = {
             type: "FeatureCollection",
             features: [
-                ...this.beforeGivenStop?.map(item => JSON.parse(item.toGeoJson())) || [],
-                this.atGivenStop ? JSON.parse(this.atGivenStop.toGeoJson()) : null,
-                ...this.afterGivenStop?.map(item => JSON.parse(item.toGeoJson())) || []
+                ...this.beforeGivenStop?.map(item => item.toGeoJson()) || [],
+                this.atGivenStop ? this.atGivenStop.toGeoJson() : null,
+                ...this.afterGivenStop?.map(item => item.toGeoJson()) || []
             ].filter(item => item !== null)
-        });
+        };
+        return geojson;
     }
 }
 
@@ -197,8 +203,8 @@ export class TripInfo extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geojson = {
             type: "Feature",
             properties: {
                 trip_id: this.trip_id,
@@ -212,7 +218,8 @@ export class TripInfo extends GeoJsonConvertible {
                 transport_type: this.transport_type,
                 line: this.line
             }
-        });
+        };
+        return geojson;
     }
 }
 
@@ -237,8 +244,8 @@ export class StopTimesItem extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geojson = {
             type: "Feature",
             properties: {
                 arrival_time: this.arrival_time,
@@ -254,9 +261,10 @@ export class StopTimesItem extends GeoJsonConvertible {
                 track: this.track,
                 delay_time: this.delay_time,
                 departure_delay: this.departure_delay,
-                alerts: this.alerts?.map(alert => JSON.parse(alert.toGeoJson())) || []
+                alerts: this.alerts?.map(alert => alert.toGeoJson()) || []
             }
-        });
+        };
+        return geojson;
     }
 }
 
@@ -272,8 +280,8 @@ export class Alert extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geojson = {
             type: "Feature",
             properties: {
                 effectiveStartDate: this.effectiveStartDate,
@@ -283,6 +291,7 @@ export class Alert extends GeoJsonConvertible {
                 alertUrl: this.alertUrl,
                 alertHeaderText: this.alertHeaderText
             }
-        });
+        };
+        return geojson;
     }
 }

@@ -13,11 +13,24 @@ import { TransportMode } from "@/types/TransportMode";
 
 describe("routingService Mappers", () => {
     it("should map raw location data to Location DTO", () => {
-        const rawLocation = mockOtpResponse.plan.from;
-        const result = toLocation(rawLocation);
-
+        const rawLocation = mockOtpResponse.plan.from; // Extract specific location
+        const result = toLocation(rawLocation); // Convert it to a Location object
+    
+        console.log(result); // Print result for debugging
+    
         expect(result).toEqual(new Location(rawLocation.name, rawLocation.lat, rawLocation.lon));
     });
+    
+    it("should map itinerary data to GeoJSON", () => {
+        const rawResponse = mockOtpResponse; // Extract specific location
+        const rawObjects = toOtpResponse(rawResponse);
+        const result = rawObjects.plan.itineraries.map(itinerary => itinerary.toGeoJson());
+
+        //console.log(JSON.stringify(result[1], null, 2));  //FOR MANUAL TESTING 
+        expect(result).toBeDefined();
+    });
+    
+    
 
     it("should map raw leg data to Leg DTO", () => {
         const rawLeg = mockOtpResponse.plan.itineraries[0].legs[0];
@@ -131,4 +144,5 @@ describe("routingService Mappers", () => {
             )
         );
     });
+    
 });
