@@ -24,7 +24,7 @@ interface TransportFilterProps {
 const TransportFilter: React.FC<TransportFilterProps> = ({ activeFilters, toggleFilter }) => {
   const { translations } = useSettingsContext();
   
-  console.log('Active Filters:', activeFilters); // Debug log
+ 
 
   return (
     <div className="p-4 border rounded bg-gray-50">

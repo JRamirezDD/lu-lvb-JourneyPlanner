@@ -4,10 +4,12 @@ import { RequestParameters } from "./dto/otpRequest";
 import { OtpResponse } from "./dto/otpResponse";
 import { toOtpResponse } from "./mappers";
 
-const useMock = process.env.USE_MOCK === "true";
+const useMock = process.env.NEXT_PUBLIC_USE_MOCK === "true";
 const api_endpoint = process.env.NEXT_PUBLIC_API_ENDPOINT_ROUTING;
 
 export const fetchOtpData = async (params: Partial<RequestParameters>): Promise<OtpResponse> => {
+    
+    console.log("useMock", process.env.NEXT_PUBLIC_USE_MOCK);    
     if (useMock) {
         return toOtpResponse(mockOtpResponse);
     }

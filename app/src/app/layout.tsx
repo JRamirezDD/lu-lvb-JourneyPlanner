@@ -5,6 +5,8 @@ import "@/app/globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import { SettingsProvider } from "@/contexts/settingsContext";
 import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDataContext";
+import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
+
 const geistSans = Geist({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -22,7 +24,9 @@ export default function LocaleLayout({ children }: { children: React.ReactNode }
       <body>
         <AutocompleteDataProvider>
           <SettingsProvider initialLanguage="en">
-            {children}
+            <OtpDataProvider>
+              {children}
+            </OtpDataProvider>
           </SettingsProvider>
         </AutocompleteDataProvider>
       </body>

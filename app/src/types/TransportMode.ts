@@ -5,4 +5,5 @@ export type TransportMode =
   | "SUBURB" 
   | "TRAIN" 
   | "BIKE"
-  | "CAR";
+  | "CAR"
+  | "TRANSFER";

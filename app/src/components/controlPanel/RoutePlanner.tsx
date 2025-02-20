@@ -12,6 +12,8 @@ import { TransportMode } from "@/types/TransportMode";
 import Bike from "../../../public/Bike.svg";
 import PersonStanding from "../../../public/Walk.svg";
 import Car from "../../../public/Car.svg";
+import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
+import { RequestParameters } from "@/api/routingService/dto/otpRequest";
 
 type ViewState = "planner" | "routes" | "details" | "station";
 
@@ -33,6 +35,7 @@ const transportOptions: TransportOption[] = [
 const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => void }) => {
   const { translations, transportModes, toggleTransportMode } = useSettingsContext();
   const { autocompleteData, fetchAutocompleteData, loadingAutocomplete } = useAutocompleteDataContext();
+  const { fetchOtpData } = useOtpDataContext();
 
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
@@ -42,6 +45,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
   const [showDepartureFilter, setShowDepartureFilter] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [defaultDate, setDefaultDate] = useState<Date | null>(null);
+  const [originAutocompleteData, setOriginAutocompleteData] = useState<AutocompleteItem[]>([]);
+  const [destinationAutocompleteData, setDestinationAutocompleteData] = useState<AutocompleteItem[]>([]);
   
   useEffect(() => {
     const now = new Date();
@@ -90,48 +95,58 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
     setDestination(origin);
   };
 
-  // Handle input changes with debouncing
+  // Separate effects for origin and destination with loading handling
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       if (origin.length >= 2) {
-        fetchAutocompleteData({ 
-          search: origin,
-          format: "JSON",
-          pointType: "P,S,W"
-        });
-        // Only show suggestions if the input doesn't exactly match any suggestion
-        const exactMatch = autocompleteData?.some(suggestion => {
-          const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
-          return fullAddress === origin;
-        });
-        setShowOriginSuggestions(!exactMatch);
-        setShowDestinationSuggestions(false);
+        try {
+          setShowOriginSuggestions(true);
+          setShowDestinationSuggestions(false);
+          await fetchAutocompleteData({ 
+            search: origin,
+            format: "JSON",
+            pointType: "P,S,W"
+          });
+          if (autocompleteData) {
+            setOriginAutocompleteData(autocompleteData);
+          }
+        } catch (error) {
+          console.error('Error fetching origin suggestions:', error);
+        }
+      } else {
+        setShowOriginSuggestions(false);
+        setOriginAutocompleteData([]);
       }
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [origin, fetchAutocompleteData, autocompleteData]);
+  }, [origin, fetchAutocompleteData]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       if (destination.length >= 2) {
-        fetchAutocompleteData({ 
-          search: destination,
-          format: "JSON",
-          pointType: "P,S,W"
-        });
-        // Only show suggestions if the input doesn't exactly match any suggestion
-        const exactMatch = autocompleteData?.some(suggestion => {
-          const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
-          return fullAddress === destination;
-        });
-        setShowDestinationSuggestions(!exactMatch);
-        setShowOriginSuggestions(false);
+        try {
+          setShowDestinationSuggestions(true);
+          setShowOriginSuggestions(false);
+          await fetchAutocompleteData({ 
+            search: destination,
+            format: "JSON",
+            pointType: "P,S,W"
+          });
+          if (autocompleteData) {
+            setDestinationAutocompleteData(autocompleteData);
+          }
+        } catch (error) {
+          console.error('Error fetching destination suggestions:', error);
+        }
+      } else {
+        setShowDestinationSuggestions(false);
+        setDestinationAutocompleteData([]);
       }
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [destination, fetchAutocompleteData, autocompleteData]);
+  }, [destination, fetchAutocompleteData]);
 
   const handleSuggestionClick = (suggestion: AutocompleteItem, isOrigin: boolean) => {
     const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
@@ -159,6 +174,42 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
+  const handleSeeRoutes = async () => {
+    if (!origin || !destination) {
+      // TODO: Show error message to user
+      return;
+    }
+
+    try {
+      const params: Partial<RequestParameters> = {
+        From: origin,
+        To: destination,
+        Travelmode: transportModes,
+      };
+
+      // Add date and time if modified from "now"
+      if (isDepartureModified && selectedDate) {
+        params.date = selectedDate.toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        });
+        params.time = selectedDate.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        });
+      }
+
+      await fetchOtpData(params);
+      console.log('Routes fetched successfully:' + params);
+      setActiveView("routes");
+    } catch (error) {
+      console.error('Error fetching routes:', error);
+      // TODO: Show error message to user
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 p-4 w-full">
       <h2 className="text-lg font-bold">{translations?.ControlPanel?.planner?.title || "Plan Your Journey"}</h2>
@@ -173,20 +224,26 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
           onFocus={() => origin.length >= 2 && setShowOriginSuggestions(true)}
           className="location-input w-full p-2 border border-[#1a365d]/20 rounded focus:border-[#1a365d] focus:ring-1 focus:ring-[#1a365d] outline-none"
         />
-        {showOriginSuggestions && autocompleteData && autocompleteData.length > 0 && (
+        {showOriginSuggestions && (
           <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
-            {autocompleteData.slice(0, 5).map((suggestion) => (
-              <div
-                key={suggestion.id}
-                onClick={() => handleSuggestionClick(suggestion, true)}
-                className="p-2 hover:bg-gray-100 cursor-pointer"
-              >
-                <div className="font-medium">{suggestion.name}</div>
-                <div className="text-sm text-gray-600">
-                  {suggestion.streetname} {suggestion.housenumber}, {suggestion.stadt}
+            {loadingAutocomplete ? (
+              <div className="p-2 text-gray-600">Loading suggestions...</div>
+            ) : originAutocompleteData.length > 0 ? (
+              originAutocompleteData.slice(0, 5).map((suggestion) => (
+                <div
+                  key={suggestion.id}
+                  onClick={() => handleSuggestionClick(suggestion, true)}
+                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                >
+                  <div className="font-medium">{suggestion.name}</div>
+                  <div className="text-sm text-gray-600">
+                    {suggestion.streetname} {suggestion.housenumber}, {suggestion.stadt}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <div className="p-2 text-gray-600">No suggestions found</div>
+            )}
           </div>
         )}
         
@@ -209,20 +266,26 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
           onFocus={() => destination.length >= 2 && setShowDestinationSuggestions(true)}
           className="location-input w-full p-2 border rounded"
         />
-        {showDestinationSuggestions && autocompleteData && autocompleteData.length > 0 && (
+        {showDestinationSuggestions && (
           <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
-            {autocompleteData.slice(0, 5).map((suggestion) => (
-              <div
-                key={suggestion.id}
-                onClick={() => handleSuggestionClick(suggestion, false)}
-                className="p-2 hover:bg-gray-100 cursor-pointer"
-              >
-                <div className="font-medium">{suggestion.name}</div>
-                <div className="text-sm text-gray-600">
-                  {suggestion.streetname} {suggestion.housenumber}, {suggestion.stadt}
+            {loadingAutocomplete ? (
+              <div className="p-2 text-gray-600">Loading suggestions...</div>
+            ) : destinationAutocompleteData.length > 0 ? (
+              destinationAutocompleteData.slice(0, 5).map((suggestion) => (
+                <div
+                  key={suggestion.id}
+                  onClick={() => handleSuggestionClick(suggestion, false)}
+                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                >
+                  <div className="font-medium">{suggestion.name}</div>
+                  <div className="text-sm text-gray-600">
+                    {suggestion.streetname} {suggestion.housenumber}, {suggestion.stadt}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <div className="p-2 text-gray-600">No suggestions found</div>
+            )}
           </div>
         )}
       </div>
@@ -281,8 +344,13 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
 
       {/* See Routes Button */}
       <button 
-        onClick={() => setActiveView("routes")} 
-        className="bg-[#1a365d] text-white p-2 rounded w-full hover:bg-[#2d4a7c] transition-colors"
+        onClick={handleSeeRoutes}
+        disabled={!origin || !destination}
+        className={`p-2 rounded w-full transition-colors ${
+          !origin || !destination 
+            ? 'bg-gray-400 cursor-not-allowed' 
+            : 'bg-[#1a365d] hover:bg-[#2d4a7c]'
+        } text-white`}
       >
         {translations?.ControlPanel?.planner?.seeRoutes || "See Routes"}
       </button>
