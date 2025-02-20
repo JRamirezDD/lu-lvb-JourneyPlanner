@@ -1,5 +1,7 @@
 import { Clock } from "lucide-react";
 import PersonStanding from "../../../public/Walk.svg";
+import Car from "../../../public/Car.svg";
+import Bike from "../../../public/Bike.svg";
 import Image from "next/image";
 import React from "react";
 import RoutePlanner from "./RoutePlanner";
@@ -26,12 +28,14 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
     });
   };
 
-  const getTransportType = (mode: string): "Tram" | "Bus" | "S-Bahn" | "Walk" => {
+  const getTransportType = (mode: string): "Tram" | "Bus" | "S-Bahn" | "Walk" | "Car" | "Bike" => {
     switch (mode) {
       case "TRAM": return "Tram";
       case "BUS": return "Bus";
       case "SUBURB": return "S-Bahn";
       case "WALK": return "Walk";
+      case "CAR": return "Car";
+      case "BIKE": return "Bike";
       default: return "Walk";
     }
   };
@@ -102,10 +106,11 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
                         <div className={`px-3 py-1 rounded font-medium ${
                           leg.mode === 'TRAM' ? 'bg-red-600 text-white' :
                           leg.mode === 'BUS' ? 'bg-purple-600 text-white' :
+                          leg.mode === 'SUBURB' ? 'bg-green-600 text-white' :
                           'bg-green-600 text-white'
                         }`}>
-                          {/* Add line number when available */}
-                          {leg.mode}
+                          {/* Replace leg.mode with getTransportType(leg.mode) */}
+                          {leg.route ? `${getTransportType(leg.mode)} ${leg.route}` : getTransportType(leg.mode)}
                         </div>
                       )}
 

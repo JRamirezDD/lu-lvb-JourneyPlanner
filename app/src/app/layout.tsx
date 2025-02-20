@@ -2,10 +2,10 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
-import Navbar from "@/components/navbar/Navbar";
 import { SettingsProvider } from "@/contexts/settingsContext";
 import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDataContext";
 import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
+import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataContext";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -17,15 +17,16 @@ const geistMono = Geist_Mono({
   variable: "--font-mono",
 });
 
-export default function LocaleLayout({ children }: { children: React.ReactNode }) {
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <AutocompleteDataProvider>
           <SettingsProvider initialLanguage="en">
             <OtpDataProvider>
-              {children}
+              <StopmonitorDataProvider>
+                {children}
+              </StopmonitorDataProvider>
             </OtpDataProvider>
           </SettingsProvider>
         </AutocompleteDataProvider>
