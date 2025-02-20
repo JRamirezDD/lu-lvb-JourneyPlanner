@@ -109,12 +109,47 @@ const SelectedRouteDetails = () => {
   const { translations } = useSettingsContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
 
+  // Fixed debug logging
+  console.log('Selected Itinerary Data:', {
+    otpData,
+    selectedItineraryIndex,
+    legs: selectedItineraryIndex !== null ? otpData?.plan?.itineraries?.[selectedItineraryIndex]?.legs : null
+  });
+
   if (!otpData || selectedItineraryIndex === null) {
     return <div>No route selected</div>;
   }
 
   const selectedItinerary = otpData.plan.itineraries[selectedItineraryIndex];
   const totalRoutes = Math.min(otpData.plan.itineraries.length, 5);
+
+  // Updated location name handler with more defensive checks
+  const getLocationName = (leg: any, isDestination: boolean) => {
+    try {
+      // Debug log
+      console.log('Leg data:', leg);
+      
+      if (!leg) return "Unknown location";
+
+      const location = isDestination ? leg.to.name : leg.from.name;
+      
+      // Debug log
+      console.log('Location data:', location);
+
+      // Handle different possible formats
+      if (!location) return "Unknown location";
+      if (typeof location === 'string') return location;
+      if (typeof location.name === 'string') return location.name;
+      if (typeof location === 'object' && 'name' in location) {
+        return String(location.name);
+      }
+
+      return "Unknown location";
+    } catch (error) {
+      console.error('Error getting location name:', error);
+      return "Unknown location";
+    }
+  };
 
   const handlePrevRoute = () => {
     if (selectedItineraryIndex > 0) {
@@ -268,10 +303,12 @@ const SelectedRouteDetails = () => {
                   }`} />
                   <div>
                     <div className="font-medium text-gray-900">
-                      {index === 0 ? leg.to.name : leg.from.name}
+                      {getLocationName(leg, index === 0)}
                     </div>
-                    {leg.to && index === selectedItinerary.legs.length - 1 && (
-                      <div className="text-sm text-gray-600">{leg.from.name}</div>
+                    {index === selectedItinerary.legs.length - 1 && (
+                      <div className="text-sm text-gray-600">
+                        {getLocationName(leg, false)}
+                      </div>
                     )}
                   </div>
                 </div>

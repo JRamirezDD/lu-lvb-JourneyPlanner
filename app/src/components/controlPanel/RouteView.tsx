@@ -52,10 +52,19 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
           {translations?.ControlPanel?.routes?.availableRoutes || "Available Routes"}
         </h2>
 
-        {loadingOtp && <div>Loading routes...</div>}
-        {errorOtp && <div>Error loading routes: {errorOtp}</div>}
+        {loadingOtp && (
+          <div className="p-4 text-center text-gray-600">
+            Loading routes...
+          </div>
+        )}
+
+        {errorOtp && (
+          <div className="p-4 text-center text-red-600">
+            {errorOtp}
+          </div>
+        )}
         
-        {otpData && (
+        {!loadingOtp && !errorOtp && otpData && (
           <ul className="space-y-3">
             {otpData.plan.itineraries.slice(0, 5).map((itinerary, idx) => (
               <li

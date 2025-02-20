@@ -30,6 +30,7 @@ export const toLeg = (data: any): Leg =>
         new LegGeometry(data.legGeometry.points.map((point: any) => ({ lat: point.lat, lon: point.lon }))),
         data.duration,
         data.transitLeg,
+        data.route,
         data.intermediateStops ? data.intermediateStops.map(toLocation) : undefined,
         data.rentedBike,
         data.alerts ? data.alerts.map(toAlert) : [],
