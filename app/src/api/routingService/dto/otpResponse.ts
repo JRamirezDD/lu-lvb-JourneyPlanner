@@ -90,12 +90,13 @@ export class Leg extends GeoJsonConvertible {
         public arrivalDelay: number,
         public realTime: boolean,
         public distance: number,
-        public mode: TransportMode, 
+        public mode: TransportMode,
         public from: Location,
         public to: Location,
         public legGeometry: LegGeometry,
         public duration: number,
         public transitLeg: boolean,
+        public route: string,
         public intermediateStops?: Location[],
         public rentedBike?: boolean,
         public alerts?: Alert[]
@@ -118,7 +119,8 @@ export class Leg extends GeoJsonConvertible {
                     coordinates: this.legGeometry.points.map((point) => [point.lon, point.lat]),
                 },
                 properties: {
-                    mode: this.mode,
+                    mode: this.mode,    
+                    route: this.route,
                     distance: this.distance,
                     duration: this.duration,
                 },
@@ -207,3 +209,8 @@ export class Alert extends GeoJsonConvertible {
         return JSON.stringify(geojson, null, 2);
     }
 }
+
+
+
+
+
