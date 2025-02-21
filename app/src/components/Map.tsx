@@ -1,95 +1,73 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import { createItineraryLayer, createItineraryLayerData } from "./map/layers/ItineraryLayer";
-import stopsLayerData from "./map/layers/StopsLayer";
-import type React from "react";
+import stopsLayer from "./map/layers/StopsLayer";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./map/layers/ILayer";
-import stopsLayer from "./map/layers/StopsLayer";
 import { GeoJSON } from "geojson";
-import { Itinerary } from "@/types/Itinerary";
-import { create } from "domain";
+import { fetchOtpData } from "@/api/routingService/routingService";
 
 const Map: React.FC = () => {
-  //Map container:
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const layerManagerRef = useRef<LayerManager | null>(null);
 
-  //get contexts for map:
+  // Get context values
   const { viewMode } = useUIContext();
-  const { visibleLayers, toggleLayer } = useMapContext();
-  const { currentPosition, setCurrentPosition } = useMapContext();
-  const { selectedStop, setSelectedStop } = useMapContext();
+  const { visibleLayers, selectedStop, setSelectedStop } = useMapContext();
 
   useEffect(() => {
-    // initialize map:
     if (!mapContainer.current || mapRef.current) return;
-    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+
+    // Ensure Mapbox token exists
+    if (!process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
+      console.error("Mapbox token is missing.");
+    }
+    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
 
     const map = new mapboxgl.Map({
       container: mapContainer.current!,
       style: "mapbox://styles/mapbox/streets-v12",
-      center: [12.37701425222998, 51.3406130352673], 
+      center: [12.37701425222998, 51.3406130352673],
       zoom: 12,
     });
 
     map.on("style.load", () => {
-      console.log("Map style loaded, initializing layers...");
+      console.log("Initializing layers...");
       layerManagerRef.current = new LayerManager(map);
       mapRef.current = map;
       loadLayers();
     });
 
-    return () => map.remove(); 
+    return () => map.remove();
   }, []);
 
-  const loadLayers = () => {    //load layers:
-    //print status:
-    console.log("Visible Layers:", visibleLayers);
-    console.log(mapRef.current);
-    console.log(layerManagerRef.current);
-    console.log("View Mode:", viewMode);
+  useEffect(() => {
+    if (mapRef.current) {
+      loadLayers();
+    }
+  }, [viewMode]); // Reload layers when view mode changes
 
-    if (!mapRef.current || !layerManagerRef.current) return;
-    const layerManager = layerManagerRef.current;
+  const createStopsLayer = () => {
+    if (!mapRef.current) return;
     const map = mapRef.current;
 
-    // Remove existing layers
-    if (map.getLayer("stops-layer")) {
-      map.removeLayer("stops-layer");
-    }
-    if (map.getSource("stops-source")) {
-      map.removeSource("stops-source");
+    console.log("Creating Stops Layer...");
+    const stopsGeoJson = stopsLayer() as GeoJSON.FeatureCollection;
+    console.log("Stops GeoJSON:", stopsGeoJson);
+
+    if (!map.getSource("stops-source")) {
+      map.addSource("stops-source", { type: "geojson", data: stopsGeoJson });
     }
 
-    //for each layer: check if layer shoudld be shown and call function
-    // DEFAULT - display stations
-    if (viewMode === "DEFAULT") {
-      const itineraryGeoJson = createItineraryLayerData(); // Fetch the GeoJSON data
-      const itineraryLayer = createItineraryLayer(itineraryGeoJson); // Create the layer
-  
-      console.log("Itinerary Layer:", itineraryLayer);
-  
-      map.addSource("itinerary-source", itineraryLayer.source); 
-      map.addLayer(itineraryLayer);
-      const stopsGeoJson = stopsLayer(); // Ensure valid GeoJSON
-      console.log("Feature Geojson:", stopsGeoJson);
-      const stopsGeoJsonTyped: GeoJSON = stopsGeoJson as GeoJSON;
-      // Add GeoJSON Source
-      map.addSource("stops-source", {
-        type: "geojson",
-        data: stopsGeoJsonTyped, // otherwise attempts to GET the geoJSON from an endpoint.
-      });
-
-      // Stops are orange circles
+    if (!map.getLayer("stops-layer")) {
       map.addLayer({
         id: "stops-layer",
         type: "circle",
-        source: "stops-source",
+        source: "stops-source", 
         paint: {
           "circle-radius": 3,
           "circle-color": "#f3780b",
@@ -97,21 +75,10 @@ const Map: React.FC = () => {
           "circle-stroke-color": "#f3780b",
         },
       });
-    }
-
-    // ITINERARY display selected itinerary
-    if (viewMode === "ITINERARY") {
-      createItineraryLayer;
-
-    }
-
-    // STATION display selected station only 
-    
 
       // Enable Click Interaction
       map.on("click", "stops-layer", (e) => {
         const feature = e.features?.[0];
-        console.log("Clicked Feature:", feature?.properties?.stopId);
         if (feature) {
           console.log("Clicked Stop:", feature.properties?.stopId);
           setSelectedStop(feature.properties?.stopId);
@@ -126,8 +93,56 @@ const Map: React.FC = () => {
       map.on("mouseleave", "stops-layer", () => {
         map.getCanvas().style.cursor = "";
       });
-    
+    }
+  };
+
+  const itineraryGeoJson = createItineraryLayerData(); // Hook must be at top level
+
+const loadLayers = async () => {
+  if (!mapRef.current || !layerManagerRef.current) return;
+  const map = mapRef.current;
+
+  console.log("Reloading layers...");
+  console.log("Visible Layers:", visibleLayers);
+  console.log("View Mode:", viewMode);
+
+  if (viewMode === "DEFAULT") {
+    console.log("Fetching itinerary data...");
+
+    if (!itineraryGeoJson) {
+      console.warn("No itinerary data available.");
+      return;
+    }
+
+    console.log("Itinerary GeoJSON:", itineraryGeoJson);
+
+    /*     console.log("Creating Stops Layer...");
+    const stopsGeoJson = stopsLayer() as GeoJSON.FeatureCollection;
+    console.log("Stops GeoJSON:", stopsGeoJson);
+
+    if (!map.getSource("stops-source")) {
+      map.addSource("stops-source", { type: "geojson", data: stopsGeoJson });
+    }
+      if (!map.getSource("itinerary-source")) {
+        map.addSource("itinerary-source", { type: "geojson", data: itineraryGeoJson})
+      }
+    const itineraryLayer = createItineraryLayer(itineraryGeoJson);
+
+    if (!map.getSource("itinerary-source")) {
+      map.addSource("itinerary-source", {
+        type: "geojson",
+        data: itineraryGeoJson,
+      });
+    }
+
+    if (!map.getLayer("itinerary-layer")) {
+      map.addLayer(itineraryLayer);
+    }*/
   }
+};
+
+  
+
   return <div ref={mapContainer} style={{ width: "700px", height: "700px" }} />;
 };
 

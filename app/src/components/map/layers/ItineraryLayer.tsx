@@ -37,13 +37,12 @@ export const createItineraryLayerData = () => {
     // #ENDOFDELETE
 
 
-    const [geojsonData, setGeojsonData] = useState<string>("");
+    const [geojsonData, setGeojsonData] = useState<object | null>(null);
     useEffect(() => {
         if (selectedItinerary) {
             try {
-                // const dtoData = toOtpResponse(otpData); // #DELETE @Marlene don't touch the mappers... the API already handles that.
-                const parsedGeojson = selectedItinerary.toGeoJson();
-                //setGeojsonData(parsedGeojson); 
+                const parsedGeojson = selectedItinerary.toGeoJson();    //make itinerary a geojson formatted object (consists of more objects)
+                setGeojsonData(parsedGeojson); 
             } catch (error) {
                 console.error("Error processing route data:", error);
             }
@@ -53,7 +52,7 @@ export const createItineraryLayerData = () => {
     // Print the geojsonData to the console (if available)
     console.log(geojsonData); 
 
-    return JSON.parse(geojsonData); // This component doesn't render any visual elements
+    return geojsonData; // This component doesn't render any visual elements
 };
 
 
