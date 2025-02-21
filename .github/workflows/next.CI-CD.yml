@@ -38,7 +38,6 @@ jobs:
 
       - name: Detect package manager
         id: detect-package-manager
-        working-directory: ./app
         run: |
           if [ -f "${{ github.workspace }}/app/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
@@ -124,7 +123,7 @@ jobs:
         run: npm install -g vercel
 
       - name: Deploy to Vercel
-        working-directory: ./app  # ✅ Ensure commands run inside the `app/` directory
+        working-directory: ./app
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
