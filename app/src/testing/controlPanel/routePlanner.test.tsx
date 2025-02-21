@@ -6,7 +6,7 @@ import RoutePlanner from "@/components/controlPanel/RoutePlanner";
 jest.mock("@/contexts/settingsContext", () => ({
   useSettingsContext: () => ({
     translations: {},
-    transportModes: ["TRAM", "BUS", "WALK"],
+    transportModes: "WALK,TRAM,BUS",
     toggleTransportMode: jest.fn()
   })
 }));
