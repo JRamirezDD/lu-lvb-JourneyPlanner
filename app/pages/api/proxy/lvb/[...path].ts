@@ -4,14 +4,14 @@ import { URL, URLSearchParams } from 'url';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const { path, ...queryParams } = req.query; // Extract query params separately
-        const apiUrl = new URL(`${process.env.API_BASE_URL}/${(path as string[]).join('/')}`);
+        const apiUrl = new URL(`${process.env.LVB_API_BASE_URL}/${(path as string[]).join('/')}`);
         apiUrl.search = new URLSearchParams(queryParams as Record<string, string>).toString();
 
         console.log('Proxying request to:', apiUrl.toString());
 
         const headers: Record<string, string> = {
             'Content-Type': 'application/json',
-            'X-API-Key': `${process.env.API_KEY}`,
+            'X-API-Key': `${process.env.LVB_API_KEY}`,
         };
 
         // Forward client headers except `host` and `connection`

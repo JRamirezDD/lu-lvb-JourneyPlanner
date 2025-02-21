@@ -2,8 +2,8 @@
 Not currently hosted. Hosting to be delivered in Sprint 2.
 
 ## Local environment variables
-The application expects environment variables. For security reasons, API keys and other secrets are stored under .env.local folder.
-To set this up do the following:
+The application expects environment variables. For security reasons, API keys and other secrets are stored under .env.local folder, which is not available in the GitHub repo.
+To set this up, do the following:
 Create .env.local folder under /app/src
 Place the following variables
 - NEXT_PUBLIC_API_KEY=""
