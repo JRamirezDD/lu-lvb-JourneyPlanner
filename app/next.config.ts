@@ -1,13 +1,16 @@
 import type { NextConfig } from 'next';
 
 const isVercel = process.env.NEXT_PUBLIC_DEPLOY_TARGET === "vercel";
+const isGithubPages = process.env.NEXT_PUBLIC_DEPLOY_TARGET === "github-pages";
+
 
 const nextConfig: NextConfig = {
+    output: isGithubPages ? "export" : "standalone", /// export generates static pages, standalone generates server-side rendered pages (needed for routing proxy)
     images: {
         unoptimized: true // Needed for GitHub pages deployments
     },
     basePath: '',
-    assetPrefix: '/',
+    assetPrefix: '/lu-lvb-JourneyPlanner/',
     reactStrictMode: true,
     trailingSlash: true,
     env: {
@@ -26,7 +29,6 @@ const nextConfig: NextConfig = {
         MAPBOX_ACCESS_TOKEN: process.env.MAPBOX_ACCESS_TOKEN,
         MAPBOX_PROXY_ALLOWED_ORIGINS: process.env.LVB_PROXY_ALLOWED_ORIGINS
     },
-    output: isVercel ? "standalone" : "export", // 🔹 "export" for GitHub Pages, "standalone" for Vercel
 };
 
 export default nextConfig;
