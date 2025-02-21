@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     images: {
         unoptimized: true // Needed for GitHub pages deployments
     },
-    basePath: '',
+    basePath: '/lu-lvb-JourneyPlanner',
     assetPrefix: '/lu-lvb-JourneyPlanner/',
     reactStrictMode: true,
     trailingSlash: true,

@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 
 // Create an Axios instance
 const httpClient: AxiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_PROXY_ADDRESS, // Base URL for API requests
+    baseURL: process.env.NEXT_PUBLIC_LVB_PROXY_ADDRESS, // Base URL for API requests
     timeout: 10000, // 10-second timeout
 });
 

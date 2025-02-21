@@ -125,6 +125,13 @@ jobs:
         with:
           node-version: "20.12.x"
 
+      - name: Create .env.local File
+        working-directory: ./app
+        run: |
+          echo "LVB_API_KEY=${{ secrets.LVB_API_KEY }}" >> .env.local
+          echo "LVB_API_KEY=${{ secrets.MAPBOX_ACCESS_TOKEN }}" >> .env.local
+        shell: bash
+        
       - name: Install Vercel CLI
         run: npm install -g vercel
 
