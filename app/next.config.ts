@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next';
 
-// const isVercel = process.env.NEXT_PUBLIC_DEPLOY_TARGET === "vercel";
-const isVercel = false;
+const isVercel = process.env.NEXT_PUBLIC_DEPLOY_TARGET === "vercel";
 
 const nextConfig: NextConfig = {
     images: {
