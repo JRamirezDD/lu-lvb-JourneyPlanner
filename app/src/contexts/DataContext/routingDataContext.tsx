@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { IDataContext } from "@/contexts/DataContext/IDataContext"; // Your base interface (if needed)
 import { useDataFetcher } from "@/hooks/useDataFetcher";
 import { fetchOtpData } from "@/api/routingService/routingService";
@@ -13,7 +13,8 @@ export interface IOtpDataContext extends IDataContext<OtpResponse> {
     fetchOtpData: (params: Partial<RequestParameters>) => Promise<void>;
     loadingOtp: boolean;
     errorOtp: string | null;
-
+    selectedItineraryIndex: number | null;
+    setSelectedItineraryIndex: (index: number) => void;
     clearState: () => void;
 }
 
@@ -23,6 +24,7 @@ const OtpDataContext = createContext<IOtpDataContext | undefined>(undefined);
 // Provider Component for OTP Data
 export const OtpDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const otpFetcher = useDataFetcher<OtpResponse>(fetchOtpData);
+    const [selectedItineraryIndex, setSelectedItineraryIndex] = useState<number | null>(null);
 
     return (
         <OtpDataContext.Provider
@@ -32,13 +34,11 @@ export const OtpDataProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 fetchOtpData: otpFetcher.fetchData,
                 loadingOtp: otpFetcher.loading,
                 errorOtp: otpFetcher.error,
-
+                selectedItineraryIndex,
+                setSelectedItineraryIndex,
                 clearState: () => {
-                    // Here you could implement a way to clear the state.
-                    // For example, if your useDataFetcher hook returned a setData function,
-                    // you could call setData(null). For now, we define it as a no-op.
+                    setSelectedItineraryIndex(null);
                 },
-
             }}
         >
             {children}

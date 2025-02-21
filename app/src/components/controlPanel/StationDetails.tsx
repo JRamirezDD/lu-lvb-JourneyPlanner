@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, Star, AlertTriangle, Clock, Info } from "lucide-react";
 import { useSettingsContext } from "@/contexts/settingsContext";
+import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
 
 interface Departure {
   line: string;
@@ -18,17 +19,64 @@ interface Disruption {
   until: string;
 }
 
-const StationDetails = () => {
-  const { translations } = useSettingsContext(); // Get translations from context
+const StationDetails = ({ stopId = "0013000" }) => {  // Default to Leipzig Hauptbahnhof for now
+  const { translations } = useSettingsContext();
+  const { 
+    stopMonitorData, 
+    loadingStopMonitor, 
+    errorStopMonitor,
+    fetchStopMonitor 
+  } = useStopmonitorDataContext();
+  
   const [activeTab, setActiveTab] = useState<"now" | "timetable" | "disruptions">("now");
 
-  const departures: Departure[] = [
-    { line: "11", type: "tram", destination: "Schkeuditz", time: "20:52", platform: "2", minutes: 4 },
-    { line: "S3", type: "s-bahn", destination: "Halle (Saale)", time: "21:01", platform: "1", minutes: 13 },
-    { line: "15", type: "tram", destination: "Meusdorf", time: "21:17", platform: "3", minutes: 29 },
-    { line: "60", type: "bus", destination: "Lindenau", time: "21:20", platform: "B", minutes: 32 },
-    { line: "S1", type: "s-bahn", destination: "Miltitzer Allee", time: "21:21", platform: "2", minutes: 33 },
-  ];
+  useEffect(() => {
+    // Fetch stop monitor data when component mounts
+    const fetchData = async () => {
+      try {
+        await fetchStopMonitor({
+          stopid: stopId,
+          date: new Date().toISOString().split('T')[0].replace(/-/g, ''), // Format: YYYYMMDD
+          minutes: "60",  // Show next hour of departures
+          max_items: "10" // Limit to 10 items
+        });
+      } catch (error) {
+        console.error('Error fetching stop monitor data:', error);
+      }
+    };
+
+    fetchData();
+  }, [stopId, fetchStopMonitor]);
+
+  // Add logging
+  console.log('StopMonitor Data:', {
+    data: stopMonitorData,
+    loading: loadingStopMonitor,
+    error: errorStopMonitor,
+    items: stopMonitorData?.items,
+    firstItem: stopMonitorData?.items?.[0]
+  });
+
+  const getTransportType = (type: string): "tram" | "bus" | "s-bahn" => {
+    switch (type.toLowerCase()) {
+      case "tram": return "tram";
+      case "bus": return "bus";
+      default: return "s-bahn";
+    }
+  };
+
+  const formatTime = (time: string) => {
+    return time.substring(0, 5); // Format HH:MM
+  };
+
+  const departures = stopMonitorData?.items.map(item => ({
+    line: item.line,
+    type: getTransportType(item.transport_type),
+    destination: item.trip_headsign,
+    time: formatTime(item.departure_time),
+    platform: item.track || item.track_scheduled || "",
+    minutes: Math.round(item.dep_waiting_time / 60)
+  })) || [];
 
   const disruptions: Disruption[] = [
     {
@@ -53,8 +101,7 @@ const StationDetails = () => {
           <ChevronLeft size={24} />
         </button>
         <div className="flex-1">
-          <h2 className="text-xl font-bold">Leipzig Hauptbahnhof</h2>
-          <p className="text-sm text-white/80">Willy-Brandt-Platz</p>
+          <h2 className="text-xl font-bold">Station {stopId}</h2>
         </div>
         <button className="p-2 hover:bg-[#2d4a7c] rounded-full transition-colors">
           <Star size={24} />
@@ -79,38 +126,53 @@ const StationDetails = () => {
       {/* Station tabs */}
       {(activeTab === 'now' || activeTab === 'timetable') && (
         <div className="flex flex-col">
-          
-          <div className="grid grid-cols-12 gap-2 px-4 py-2 bg-gray-50 text-sm text-gray-600">
-            <div className="col-span-2">{translations?.ControlPanel?.station?.columns?.route || "Route"}</div>
-            <div className="col-span-6">{translations?.ControlPanel?.station?.columns?.destination || "Destination"}</div>
-            <div className="col-span-2 text-right">{translations?.ControlPanel?.station?.columns?.leavingAt || "Leaving At"}</div>
-            <div className="col-span-2 text-right">{translations?.ControlPanel?.station?.columns?.platform || "Platform"}</div>
-          </div>
-
-          {/* Departures */}
-          {departures.map((departure, index) => (
-            <div key={index} className="grid grid-cols-12 gap-2 px-4 py-3 border-b hover:bg-[#fef9c3]/10 items-center">
-              <div className="col-span-2">
-                <div
-                  className={`inline-flex px-3 py-1 rounded-md font-medium text-white ${
-                    departure.type === "tram" ? "bg-red-600" : departure.type === "bus" ? "bg-purple-600" : "bg-green-600"
-                  }`}
-                >
-                  {departure.line}
-                </div>
-              </div>
-              <div className="col-span-6 font-medium text-gray-900">{departure.destination}</div>
-              <div className="col-span-2 text-right">
-                <div className="font-medium text-gray-900">{departure.time}</div>
-                {activeTab === "now" && (
-                  <div className="text-sm text-green-600">
-                    {translations?.ControlPanel?.station?.minutes?.replace("{count}", departure.minutes.toString()) || `${departure.minutes} min`}
-                  </div>
-                )}
-              </div>
-              <div className="col-span-2 text-right font-medium">{departure.platform}</div>
+          {loadingStopMonitor && (
+            <div className="p-4 text-center text-gray-600">
+              Loading departures...
             </div>
-          ))}
+          )}
+
+          {errorStopMonitor && (
+            <div className="p-4 text-center text-red-600">
+              {errorStopMonitor}
+            </div>
+          )}
+
+          {!loadingStopMonitor && !errorStopMonitor && (
+            <>
+              <div className="grid grid-cols-12 gap-2 px-4 py-2 bg-gray-50 text-sm text-gray-600">
+                <div className="col-span-2">{translations?.ControlPanel?.station?.columns?.route || "Route"}</div>
+                <div className="col-span-6">{translations?.ControlPanel?.station?.columns?.destination || "Destination"}</div>
+                <div className="col-span-2 text-right">{translations?.ControlPanel?.station?.columns?.leavingAt || "Leaving At"}</div>
+                <div className="col-span-2 text-right">{translations?.ControlPanel?.station?.columns?.platform || "Platform"}</div>
+              </div>
+
+              {/* Departures */}
+              {departures.map((departure, index) => (
+                <div key={index} className="grid grid-cols-12 gap-2 px-4 py-3 border-b hover:bg-[#fef9c3]/10 items-center">
+                  <div className="col-span-2">
+                    <div
+                      className={`inline-flex px-3 py-1 rounded-md font-medium text-white ${
+                        departure.type === "tram" ? "bg-red-600" : departure.type === "bus" ? "bg-purple-600" : "bg-green-600"
+                      }`}
+                    >
+                      {departure.line}
+                    </div>
+                  </div>
+                  <div className="col-span-6 font-medium text-gray-900">{departure.destination}</div>
+                  <div className="col-span-2 text-right">
+                    <div className="font-medium text-gray-900">{departure.time}</div>
+                    {activeTab === "now" && (
+                      <div className="text-sm text-green-600">
+                        {translations?.ControlPanel?.station?.minutes?.replace("{count}", departure.minutes.toString()) || `${departure.minutes} min`}
+                      </div>
+                    )}
+                  </div>
+                  <div className="col-span-2 text-right font-medium">{departure.platform}</div>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       )}
 

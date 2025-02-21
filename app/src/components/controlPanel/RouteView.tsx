@@ -1,56 +1,49 @@
 import { Clock } from "lucide-react";
 import PersonStanding from "../../../public/Walk.svg";
+import Car from "../../../public/Car.svg";
+import Bike from "../../../public/Bike.svg";
 import Image from "next/image";
 import React from "react";
 import RoutePlanner from "./RoutePlanner";
-import { useSettingsContext } from "@/contexts/settingsContext"; // Import context
+import { useSettingsContext } from "@/contexts/settingsContext";
+import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
 
 type ViewState = "planner" | "routes" | "details" | "station";
 
-interface RouteStep {
-  type: "Tram" | "Bus" | "S-Bahn" | "Walk";
-  line?: string;
-  from: string;
-  to: string;
-  departureTime: string;
-  walkDuration?: number;
-}
-
-interface Route {
-  id: number;
-  totalDuration: string;
-  departureTime: string;
-  arrivalTime: string;
-  steps: RouteStep[];
-}
-
 const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void }) => {
-  const { translations } = useSettingsContext(); // Get translations from context
+  const { translations } = useSettingsContext();
+  const { otpData, loadingOtp, errorOtp, setSelectedItineraryIndex } = useOtpDataContext();
 
-  const routes: Route[] = [
-    {
-      id: 1,
-      totalDuration: "1h 21min",
-      departureTime: "14:09",
-      arrivalTime: "15:31",
-      steps: [
-        { type: "Walk", walkDuration: 9, from: "Current Location", to: "Lentoasema", departureTime: "14:09" },
-        { type: "Bus", line: "600", from: "Lentoasema", to: "Central", departureTime: "14:19" },
-        { type: "Walk", walkDuration: 5, from: "Central", to: "Central Station", departureTime: "14:45" },
-        { type: "S-Bahn", line: "M1", from: "Central Station", to: "Destination", departureTime: "14:50" }
-      ]
-    },
-    {
-      id: 2,
-      totalDuration: "1h 19min",
-      departureTime: "14:22",
-      arrivalTime: "15:42",
-      steps: [
-        { type: "Walk", walkDuration: 13, from: "Current Location", to: "Lentoasema", departureTime: "14:22" },
-        { type: "Tram", line: "1", from: "Lentoasema", to: "Destination", departureTime: "14:36" }
-      ]
+  const formatDuration = (seconds: number): string => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    return hours > 0 ? `${hours}h ${minutes}min` : `${minutes}min`;
+  };
+
+  const formatTime = (timestamp: number): string => {
+    return new Date(timestamp).toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    });
+  };
+
+  const getTransportType = (mode: string): "Tram" | "Bus" | "S-Bahn" | "Walk" | "Car" | "Bike" => {
+    switch (mode) {
+      case "TRAM": return "Tram";
+      case "BUS": return "Bus";
+      case "SUBURB": return "S-Bahn";
+      case "WALK": return "Walk";
+      case "CAR": return "Car";
+      case "BIKE": return "Bike";
+      default: return "Walk";
     }
-  ];
+  };
+
+  const handleRouteClick = (index: number) => {
+    setSelectedItineraryIndex(index);
+    setActiveView("details");
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -62,64 +55,82 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
         <h2 className="text-lg font-bold mb-4">
           {translations?.ControlPanel?.routes?.availableRoutes || "Available Routes"}
         </h2>
-        <ul className="space-y-3">
-          {routes.map((route) => (
-            <li
-              key={route.id}
-              className="border border-[#1a365d]/10 rounded-lg hover:bg-[#fef9c3]/20 cursor-pointer transition-colors overflow-hidden"
-              onClick={() => setActiveView("details")}
-            >
-              {/* Time Header */}
-              <div className="flex items-center justify-between p-2 bg-[#1a365d]/5">
-                <span className="font-medium">{route.departureTime} - {route.arrivalTime}</span>
-                <div className="flex items-center gap-1">
-                  <Clock size={14} />
-                  <span>{route.totalDuration}</span>
+
+        {loadingOtp && (
+          <div className="p-4 text-center text-gray-600">
+            Loading routes...
+          </div>
+        )}
+
+        {errorOtp && (
+          <div className="p-4 text-center text-red-600">
+            {errorOtp}
+          </div>
+        )}
+        
+        {!loadingOtp && !errorOtp && otpData && (
+          <ul className="space-y-3">
+            {otpData.plan.itineraries.slice(0, 5).map((itinerary, idx) => (
+              <li
+                key={idx}
+                className="border border-[#1a365d]/10 rounded-lg hover:bg-[#fef9c3]/20 cursor-pointer transition-colors overflow-hidden"
+                onClick={() => handleRouteClick(idx)}
+              >
+                {/* Time Header */}
+                <div className="flex items-center justify-between p-2 bg-[#1a365d]/5">
+                  <span className="font-medium">
+                    {formatTime(itinerary.startTime)} - {formatTime(itinerary.endTime)}
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <Clock size={14} />
+                    <span>{formatDuration(itinerary.duration)}</span>
+                  </div>
                 </div>
-              </div>
 
-              {/* Route Visualization */}
-              <div className="p-3 flex items-center gap-1">
-                {route.steps.map((step, index) => (
-                  <React.Fragment key={index}>
+                {/* Route Visualization */}
+                <div className="p-3 flex items-center gap-1">
+                  {itinerary.legs.map((leg, index) => (
+                    <React.Fragment key={index}>
+                      {/* Transport Icon */}
+                      {leg.mode === "WALK" ? (
+                        <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
+                          <Image 
+                            src={PersonStanding}
+                            alt="Walking"
+                            width={14}
+                            height={14}
+                          />
+                          <span>{Math.round(leg.duration / 60)}</span>
+                        </div>
+                      ) : (
+                        <div className={`px-3 py-1 rounded font-medium ${
+                          leg.mode === 'TRAM' ? 'bg-red-600 text-white' :
+                          leg.mode === 'BUS' ? 'bg-purple-600 text-white' :
+                          leg.mode === 'SUBURB' ? 'bg-green-600 text-white' :
+                          'bg-green-600 text-white'
+                        }`}>
+                          {/* Replace leg.mode with getTransportType(leg.mode) */}
+                          {leg.route ? `${getTransportType(leg.mode)} ${leg.route}` : getTransportType(leg.mode)}
+                        </div>
+                      )}
 
-                    {/* Transport Icon */}
-                    {step.type === "Walk" ? (
-                      <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
-                        <Image 
-                          src={PersonStanding}
-                          alt="Walking"
-                          width={14}
-                          height={14}
-                        />
-                        <span>{step.walkDuration}</span>
-                      </div>
-                    ) : (
-                      <div className={`px-3 py-1 rounded font-medium ${
-                        step.type === 'Tram' ? 'bg-red-600 text-white' :
-                        step.type === 'Bus' ? 'bg-purple-600 text-white' :
-                        'bg-green-600 text-white'
-                      }`}>
-                        {step.line}
-                      </div>
-                    )}
+                      {/* Connector Line */}
+                      {index < itinerary.legs.length - 1 && (
+                        <div className="h-[2px] w-4 bg-gray-300" />
+                      )}
+                    </React.Fragment>
+                  ))}
+                </div>
 
-                    {/* Connector Line */}
-                    {index < route.steps.length - 1 && (
-                      <div className="h-[2px] w-4 bg-gray-300" />
-                    )}
-                  </React.Fragment>
-                ))}
-              </div>
-
-              {/* Departure Info */}
-              <div className="px-3 pb-2 text-sm text-gray-600">
-                {translations?.ControlPanel?.routes?.leaves || "Leaves"} {route.steps[0].departureTime}{" "}
-                {translations?.ControlPanel?.routes?.from || "from"} {route.steps[0].from}
-              </div>
-            </li>
-          ))}
-        </ul>
+                {/* Departure Info */}
+                <div className="px-3 pb-2 text-sm text-gray-600">
+                  {translations?.ControlPanel?.routes?.leaves || "Leaves"} {formatTime(itinerary.startTime)}{" "}
+                  {translations?.ControlPanel?.routes?.from || "from"} {itinerary.legs[0].from.name}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
