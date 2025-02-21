@@ -1,9 +1,10 @@
+import { Coordinates } from "@/types/Coordinates";
 import { TransportMode } from "@/types/TransportMode";
 
 export interface RequestParameters {
     From: string;
     To: string;
-    Travelmode: TransportMode[];
+    Travelmode: string;
     date?: string; // Format: MM-DD-YYYY
     time?: string; // Format: hh:mm
     numItineraries?: number;

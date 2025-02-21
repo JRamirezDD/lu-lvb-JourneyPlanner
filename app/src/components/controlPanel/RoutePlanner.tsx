@@ -32,6 +32,11 @@ const transportOptions: TransportOption[] = [
   { type: "Car", logo: Car, mode: "CAR" }
 ];
 
+interface SelectedLocation {
+  name: string;
+  coordinates: string; // Format: "lat,lon"
+}
+
 const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => void }) => {
   const { translations, transportModes, toggleTransportMode } = useSettingsContext();
   const { autocompleteData, fetchAutocompleteData, loadingAutocomplete } = useAutocompleteDataContext();
@@ -47,6 +52,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
   const [defaultDate, setDefaultDate] = useState<Date | null>(null);
   const [originAutocompleteData, setOriginAutocompleteData] = useState<AutocompleteItem[]>([]);
   const [destinationAutocompleteData, setDestinationAutocompleteData] = useState<AutocompleteItem[]>([]);
+  const [selectedOrigin, setSelectedOrigin] = useState<SelectedLocation | null>(null);
+  const [selectedDestination, setSelectedDestination] = useState<SelectedLocation | null>(null);
   
   useEffect(() => {
     const now = new Date();
@@ -93,6 +100,9 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
   const swapLocations = () => {
     setOrigin(destination);
     setDestination(origin);
+    const tempOrigin = selectedOrigin;
+    setSelectedOrigin(selectedDestination);
+    setSelectedDestination(tempOrigin);
   };
 
   // Separate effects for origin and destination with loading handling
@@ -150,12 +160,15 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
 
   const handleSuggestionClick = (suggestion: AutocompleteItem, isOrigin: boolean) => {
     const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
+    const coordinates = `${suggestion.lat},${suggestion.lon}`;
     
     if (isOrigin) {
       setOrigin(fullAddress);
+      setSelectedOrigin({ name: fullAddress, coordinates });
       setShowOriginSuggestions(false);
     } else {
       setDestination(fullAddress);
+      setSelectedDestination({ name: fullAddress, coordinates });
       setShowDestinationSuggestions(false);
     }
   };
@@ -175,25 +188,26 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
   }, []);
 
   const handleSeeRoutes = async () => {
-    if (!origin || !destination) {
-      // TODO: Show error message to user
+    if (!selectedOrigin || !selectedDestination) {
+      console.error('Origin or destination not selected');
       return;
     }
 
     try {
       const params: Partial<RequestParameters> = {
-        From: origin,
-        To: destination,
-        Travelmode: transportModes,
+        From: selectedOrigin.coordinates,
+        To: selectedDestination.coordinates,
+        Travelmode: transportModes.join(','),
+        numItineraries: 5,  
       };
 
-      // Add date and time if modified from "now"
-      if (isDepartureModified && selectedDate) {
+      if (selectedDate) {
         params.date = selectedDate.toLocaleDateString('en-US', {
           month: '2-digit',
           day: '2-digit',
           year: 'numeric'
-        });
+        }).replace(/\//g, '-');
+
         params.time = selectedDate.toLocaleTimeString('en-US', {
           hour: '2-digit',
           minute: '2-digit',
@@ -201,12 +215,18 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         });
       }
 
+      console.log('Fetching routes with params:', {
+        From: params.From,
+        To: params.To,
+        Travelmode: params.Travelmode,
+        date: params.date,
+        time: params.time
+      });
+
       await fetchOtpData(params);
-      console.log('Routes fetched successfully:' + params);
       setActiveView("routes");
     } catch (error) {
       console.error('Error fetching routes:', error);
-      // TODO: Show error message to user
     }
   };
 
@@ -219,7 +239,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         <input
           type="text"
           placeholder={translations?.ControlPanel?.planner?.origin || "Origin"}
-          value={origin}
+          value={selectedOrigin?.name || origin}
           onChange={(e) => setOrigin(e.target.value)}
           onFocus={() => origin.length >= 2 && setShowOriginSuggestions(true)}
           className="location-input w-full p-2 border border-[#1a365d]/20 rounded focus:border-[#1a365d] focus:ring-1 focus:ring-[#1a365d] outline-none"
@@ -261,7 +281,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         <input
           type="text"
           placeholder={translations?.ControlPanel?.planner?.destination || "Destination"}
-          value={destination}
+          value={selectedDestination?.name || destination}
           onChange={(e) => setDestination(e.target.value)}
           onFocus={() => destination.length >= 2 && setShowDestinationSuggestions(true)}
           className="location-input w-full p-2 border rounded"
@@ -345,9 +365,9 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
       {/* See Routes Button */}
       <button 
         onClick={handleSeeRoutes}
-        disabled={!origin || !destination}
+        disabled={!selectedOrigin || !selectedDestination}
         className={`p-2 rounded w-full transition-colors ${
-          !origin || !destination 
+          !selectedOrigin || !selectedDestination 
             ? 'bg-gray-400 cursor-not-allowed' 
             : 'bg-[#1a365d] hover:bg-[#2d4a7c]'
         } text-white`}

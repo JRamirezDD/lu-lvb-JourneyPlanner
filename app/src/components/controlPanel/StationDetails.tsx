@@ -101,8 +101,7 @@ const StationDetails = ({ stopId = "0013000" }) => {  // Default to Leipzig Haup
           <ChevronLeft size={24} />
         </button>
         <div className="flex-1">
-          <h2 className="text-xl font-bold">Leipzig Hauptbahnhof</h2>
-          <p className="text-sm text-white/80">Willy-Brandt-Platz</p>
+          <h2 className="text-xl font-bold">Station {stopId}</h2>
         </div>
         <button className="p-2 hover:bg-[#2d4a7c] rounded-full transition-colors">
           <Star size={24} />
