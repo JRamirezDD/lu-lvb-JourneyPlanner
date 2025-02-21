@@ -61,7 +61,7 @@ jobs:
         working-directory: ./app
         run: |
           echo "LVB_API_KEY=${{ secrets.LVB_API_KEY }}" >> .env.local
-          echo "LVB_API_KEY=${{ secrets.MAPBOX_ACCESS_TOKEN }}" >> .env.local
+          echo "MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}" >> .env.local
         shell: bash
         
       - name: Setup Pages
@@ -129,9 +129,9 @@ jobs:
         working-directory: ./app
         run: |
           echo "LVB_API_KEY=${{ secrets.LVB_API_KEY }}" >> .env.local
-          echo "LVB_API_KEY=${{ secrets.MAPBOX_ACCESS_TOKEN }}" >> .env.local
+          echo "MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}" >> .env.local
         shell: bash
-        
+
       - name: Install Vercel CLI
         run: npm install -g vercel
 
