@@ -1,5 +1,8 @@
 import type { NextConfig } from 'next';
 
+// const isVercel = process.env.NEXT_PUBLIC_DEPLOY_TARGET === "vercel";
+const isVercel = false;
+
 const nextConfig: NextConfig = {
     images: {
         unoptimized: true // Needed for GitHub pages deployments
@@ -24,6 +27,7 @@ const nextConfig: NextConfig = {
         MAPBOX_ACCESS_TOKEN: process.env.MAPBOX_ACCESS_TOKEN,
         MAPBOX_PROXY_ALLOWED_ORIGINS: process.env.LVB_PROXY_ALLOWED_ORIGINS
     },
+    output: isVercel ? "standalone" : "export", // 🔹 "export" for GitHub Pages, "standalone" for Vercel
 };
 
 export default nextConfig;
