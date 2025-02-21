@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { URL, URLSearchParams } from 'url';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const { path, ...queryParams } = req.query; // Extract query params separately
         const apiUrl = new URL(`${process.env.LVB_API_BASE_URL}/${(path as string[]).join('/')}`);
@@ -20,20 +21,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 headers[key] = value;
             }
         }
-
-        // Add CORS Headers
-        const allowedOrigins = process.env.LVB_PROXY_ALLOWED_ORIGINS || '*';
-        res.setHeader('Access-Control-Allow-Origin', allowedOrigins);
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-API-Key');
-
-        
-        // Handle Preflight (OPTIONS) Requests
-        if (req.method === 'OPTIONS') {
-            res.status(200).end();
-            return;
-        }
-        
 
         const response = await fetch(apiUrl.toString(), {
             method: req.method,
@@ -67,3 +54,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+
+
+
+const allowCors = (fn: (arg0: any, arg1: any) => any) => async (req: { method: string; }, res: { setHeader: (arg0: string, arg1: string | boolean) => void; status: (arg0: number) => { (): any; new(): any; end: { (): void; new(): any; }; }; }) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    // another common pattern
+    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
+    if (req.method === 'OPTIONS') {
+      res.status(200).end()
+      return
+    }
+    return await fn(req, res)
+  }
+  
+
+export default allowCors(handler);
