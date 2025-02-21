@@ -58,6 +58,7 @@ jobs:
         with:
           node-version: "20.12.x"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache-dependency-path: ./app/${{ steps.detect-package-manager.outputs.manager }}.lock
       - name: Create .env.local File
         working-directory: ./app
         run: |
