@@ -38,29 +38,26 @@ jobs:
 
       - name: Detect package manager
         id: detect-package-manager
+        working-directory: ./app
         run: |
           if [ -f "${{ github.workspace }}/app/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=yarn" >> $GITHUB_OUTPUT
-          elif [ -f "${{ github.workspace }}/app/package-lock.json" ]; then
+          elif [ -f "${{ github.workspace }}/app/package.json" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "command=i" >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
           else
             echo "Unable to determine package manager"
             exit 1
           fi
-        working-directory: ./app
-      
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20.12.x"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: ./app/${{ steps.detect-package-manager.outputs.manager }}.lock
-      
 
       - name: Create .env.local File
         working-directory: ./app
@@ -84,7 +81,7 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
 
       - name: Install dependencies
-        working-directory: ./app  # ✅ Run the install inside the correct directory
+        working-directory: ./app
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build with Next.js
@@ -109,6 +106,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
+
 
   deploy-backend:
     runs-on: ubuntu-latest
@@ -127,7 +127,7 @@ jobs:
         run: npm install -g vercel
 
       - name: Deploy to Vercel
-        working-directory: ./app
+        working-directory: ./app  # ✅ Ensure commands run inside the `app/` directory
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
