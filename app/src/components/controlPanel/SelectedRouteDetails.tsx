@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Clock, Info, ChevronDown } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Info, ChevronDown, ChevronUp } from "lucide-react";
 import PersonStanding from "../../../public/Walk.svg";
 import Image from "next/image";
 import { useState } from "react";
@@ -224,104 +224,83 @@ const SelectedRouteDetails = () => {
 
               {/* Content Column */}
               <div className="flex-1 pb-8">
-                {/* Transport */}
-                {getLegType(leg.mode) !== 'WALK' && (
-                  <div className="flex items-center gap-3 mb-2">
-                    {/* Transport Icon outside bubble */}
-                    {getTransportLogo(leg.mode) && (
-                      <Image 
-                        src={getTransportLogo(leg.mode)!} 
-                        alt={leg.mode} 
-                        width={24} 
-                        height={24} 
-                      />
-                    )}
-                    {/* Route number in colored bubble */}
-                    {leg.route && (
-                      <div className={`px-3 py-1.5 rounded-full shadow-sm ${getTransportColor(leg.mode)}`}>
-                        <span className="text-white font-medium">
-                          {leg.route}
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Additional Info */}
-                    {(leg.mode === "TRAM" || leg.mode === "SUBURB" || leg.mode === "BUS") && (
-                      <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <Info size={16} />
-                          <span>
-                            {translations?.ControlPanel?.routeDetails?.platform?.replace("{number}", leg.mode || "")}
-                          </span>
-                          •
-                          <button 
-                            onClick={() => toggleLegExpansion(index)}
-                            className="flex items-center gap-1 hover:text-gray-900"
-                          >
-                            <span>
-                              {translations?.ControlPanel?.routeDetails?.stops?.replace(
-                                "{count}", 
-                                leg.intermediateStops?.length?.toString() || "0"
-                              )}
-                            </span>
-                            <ChevronDown 
-                              size={16} 
-                              className={`transform transition-transform ${
-                                expandedLegs.includes(index) ? 'rotate-180' : ''
-                              }`}
-                            />
-                          </button>
-                        </div>
-
-                        {/* Collapsible Stops List */}
-                        {expandedLegs.includes(index) && leg.intermediateStops && (
-                          <div className="ml-6 mt-2 space-y-2">
-                            {leg.intermediateStops.map((stop, stopIndex) => (
-                              <div key={stopIndex} className="text-sm text-gray-600">
-                                {stop.name}
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                )}
-                
-                {/* Location Name */}
+                {/* From Location */}
                 <div className="flex items-center gap-2">
                   <div className={`w-3 h-3 rounded-full ${
                     getLegType(leg.mode) === 'START' ? 'bg-green-500' :
-                    getLegType(leg.mode) === 'END' ? 'bg-red-500' :
                     getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' :
                     getTransportColor(leg.mode)
-                  } ${
-                    getLegType(leg.mode) !== 'WALK' && 
-                    getLegType(leg.mode) !== 'START' && 
-                    getLegType(leg.mode) !== 'END'
-                      ? 'ring-2 ring-offset-2 ring-opacity-50' : ''
                   }`} />
-                  <div>
-                    <div className="font-medium text-gray-900">
-                      {getLocationName(leg, index === 0)}
-                    </div>
-                    {index === selectedItinerary.legs.length - 1 && (
-                      <div className="text-sm text-gray-600">
-                        {getLocationName(leg, false)}
-                      </div>
-                    )}
+                  <div className="font-medium text-gray-900">
+                    {leg.from.name}
                   </div>
                 </div>
 
-                {/* Transfer Info */}
-                {getLegType(leg.mode) === 'TRANSFER' && (
-                  <div className="mt-2 text-sm font-medium text-orange-600">
-                    {translations?.ControlPanel?.routeDetails?.transfer?.replace(
-                      "{duration}",
-                      leg.duration || "0"
-                    )}
+                {/* Transport Details */}
+                <div className="ml-5 my-3">
+                  {getLegType(leg.mode) !== 'WALK' ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        {getTransportLogo(leg.mode) && (
+                          <Image src={getTransportLogo(leg.mode)!} alt={leg.mode} width={24} height={24} />
+                        )}
+                        <div className={`px-3 py-1.5 rounded-full shadow-sm ${getTransportColor(leg.mode)}`}>
+                          <span className="text-white font-medium">
+                            {leg.route ? `${leg.mode} ${leg.route}` : leg.mode}
+                          </span>
+                        </div>
+                        {/* Platform and stops info */}
+                        {(leg.mode === "TRAM" || leg.mode === "SUBURB" || leg.mode === "BUS") && (
+                          <div className="text-sm text-gray-600 flex items-center gap-2">
+                            <Info size={16} />
+                            <span>{translations?.ControlPanel?.routeDetails?.platform?.replace("{number}", leg.mode || "")}</span>
+                          </div>
+                        )}
+
+                        {/* Add toggle button when there are stops */}
+                        {leg.intermediateStops && leg.intermediateStops.length > 0 && (
+                          <button
+                            onClick={() => toggleLegExpansion(index)}
+                            className="p-1 hover:bg-gray-100 rounded"
+                          >
+                            {expandedLegs.includes(index) ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                            <span className="text-sm text-gray-600 ml-1">
+                              {leg.intermediateStops.length} stops
+                            </span>
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Show stops only when expanded */}
+                      {expandedLegs.includes(index) && leg.intermediateStops && (
+                        <div className="ml-8 pl-4 border-l-2 border-gray-200">
+                          {leg.intermediateStops.map((stop, stopIndex) => (
+                            <div key={stopIndex} className="text-sm text-gray-600">
+                              {stop.name}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 text-gray-600">
+                      <Image src={PersonStanding} alt="Walking" width={20} height={20} />
+                      <span>Walk ({formatDuration(leg.duration)})</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* To Location */}
+                <div className="flex items-center gap-2">
+                  <div className={`w-3 h-3 rounded-full ${
+                    getLegType(leg.mode) === 'END' ? 'bg-red-500' :
+                    getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' :
+                    getTransportColor(leg.mode)
+                  }`} />
+                  <div className="font-medium text-gray-900">
+                    {leg.to.name}
                   </div>
-                )}
+                </div>
               </div>
             </div>
           ))}

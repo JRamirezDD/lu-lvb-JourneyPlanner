@@ -75,9 +75,11 @@ export const toPlan = (data: any): Plan =>
         data.itineraries.map(toOtpItinerary)
     );
 
-    export const toRequestParameters = (data: any): RequestParameters => ({
-        From: data.From,
-        To: data.To,
+export const toRequestParameters = (data: any): RequestParameters => {
+    console.log("Request Parameters:", data);
+    return {
+        From: data.from,
+        To: data.to,
         Travelmode: Array.isArray(data.Travelmode) ? data.Travelmode : [data.Travelmode], // Ensure array format
         date: data.date,
         time: data.time,
@@ -89,8 +91,8 @@ export const toPlan = (data: any): Plan =>
         maxWalkDistance: data.maxWalkDistance,
         transitOnly: data.transitOnly,
         mockup: data.mockup
-    });
-    
+    };
+};
 
 export const toOtpResponse = (data: any): OtpResponse =>
     new OtpResponse(
@@ -101,5 +103,6 @@ export const toOtpResponse = (data: any): OtpResponse =>
         toRequestParameters(data.requestParameters),
         toPlan(data.plan)
     );
+    
 
     
