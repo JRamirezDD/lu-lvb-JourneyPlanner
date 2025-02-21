@@ -22,7 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         // Add CORS Headers
-        res.setHeader('Access-Control-Allow-Origin', 'https://jramirezdd.github.io'); // Change to your GitHub Pages domain
+        const allowedOrigins = process.env.MAPBOX_PROXY_ALLOWED_ORIGINS || '*';
+        res.setHeader('Access-Control-Allow-Origin', allowedOrigins);
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-API-Key');
         
