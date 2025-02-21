@@ -10,9 +10,8 @@ const Navbar = ({ locale }: { locale: "en" | "de" }) => {
   // Function to change the language by updating the route
   const handleLanguageChange = (newLocale: "en" | "de") => {
     if (newLocale !== locale) {
-      // Replace the first part of the URL with the new locale
-      const newPath = `/${newLocale}${pathname.slice(3)}`; // Remove old locale, replace with new
-      router.push(newPath);
+      // Replace the first part of the URL with the new locale (fallback to empty string if null)
+      const newPath = `/${newLocale}${pathname ? pathname.slice(3) : ''}`;      router.push(newPath);
     }
   };
 

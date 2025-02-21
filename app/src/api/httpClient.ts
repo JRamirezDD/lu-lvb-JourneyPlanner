@@ -2,16 +2,14 @@ import axios, { AxiosInstance } from 'axios';
 
 // Create an Axios instance
 const httpClient: AxiosInstance = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}`, // proxy the request for CORS. end-solution, implement server-side proxy
-    timeout: 10000, // Set a timeout
+    baseURL: process.env.NEXT_PUBLIC_LVB_PROXY_ADDRESS, // Base URL for API requests
+    timeout: 10000, // 10-second timeout
 });
 
-// Add a request interceptor to include the API key
+// Add a request interceptor to set headers
 httpClient.interceptors.request.use(
     (config) => {
-        config.headers['X-API-Key'] = `${process.env.NEXT_PUBLIC_API_KEY}`;
-        config.headers['Content-Type'] = 'application/json:';
-
+        config.headers['Content-Type'] = 'application/json';
         return config;
     },
     (error) => {
@@ -19,9 +17,12 @@ httpClient.interceptors.request.use(
     }
 );
 
-// Add a response interceptor for error handling
+// Add a response interceptor for handling API responses
 httpClient.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        console.log('API Response:', response.data); // parse json for debugging
+        return response; // Directly returning parsed data
+    },
     (error) => {
         console.error('API Error:', error);
         return Promise.reject(error);
