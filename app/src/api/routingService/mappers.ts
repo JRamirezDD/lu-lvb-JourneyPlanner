@@ -78,9 +78,9 @@ export const toPlan = (data: any): Plan =>
 export const toRequestParameters = (data: any): RequestParameters => {
     console.log("Request Parameters:", data);
     return {
-        From: data.from,
-        To: data.to,
-        Travelmode: Array.isArray(data.Travelmode) ? data.Travelmode : [data.Travelmode], // Ensure array format
+        From: data.From,
+        To: data.To,
+        Travelmode: Array.isArray(data.Travelmode) ? data.Travelmode.join(", ") : data.Travelmode, // Ensure array format
         date: data.date,
         time: data.time,
         numItineraries: data.numItineraries,
