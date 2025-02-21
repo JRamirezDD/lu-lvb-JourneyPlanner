@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
     basePath: '/lu-lvb-JourneyPlanner',
     assetPrefix: '/lu-lvb-JourneyPlanner/',
     reactStrictMode: true,
-    trailingSlash: true,
+    trailingSlash: false,
     env: {
         NEXT_PUBLIC_USE_MOCK: process.env.NEXT_PUBLIC_USE_MOCK,
 
