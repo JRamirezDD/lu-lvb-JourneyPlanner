@@ -43,7 +43,7 @@ export const createItineraryLayerData = () => {
             try {
                 // const dtoData = toOtpResponse(otpData); // #DELETE @Marlene don't touch the mappers... the API already handles that.
                 const parsedGeojson = selectedItinerary.toGeoJson();
-                setGeojsonData(parsedGeojson); 
+                //setGeojsonData(parsedGeojson); 
             } catch (error) {
                 console.error("Error processing route data:", error);
             }

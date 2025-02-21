@@ -16,7 +16,7 @@ describe("routingService Mappers", () => {
         const rawLocation = mockOtpResponse.plan.from; // Extract specific location
         const result = toLocation(rawLocation); // Convert it to a Location object
     
-        console.log(result); // Print result for debugging
+        //console.log(result); // Print result for debugging
     
         expect(result).toEqual(new Location(rawLocation.name, rawLocation.lat, rawLocation.lon));
     });

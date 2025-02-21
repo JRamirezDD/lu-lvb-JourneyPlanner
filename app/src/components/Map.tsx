@@ -9,29 +9,31 @@ import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./map/layers/ILayer";
 import stopsLayer from "./map/layers/StopsLayer";
+import { GeoJSON } from "geojson";
+import { Itinerary } from "@/types/Itinerary";
+import { create } from "domain";
 
 const Map: React.FC = () => {
+  //Map container:
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const layerManagerRef = useRef<LayerManager | null>(null);
 
-
+  //get contexts for map:
   const { viewMode } = useUIContext();
   const { visibleLayers, toggleLayer } = useMapContext();
   const { currentPosition, setCurrentPosition } = useMapContext();
   const { selectedStop, setSelectedStop } = useMapContext();
 
-// initialize map:
   useEffect(() => {
-
+    // initialize map:
     if (!mapContainer.current || mapRef.current) return;
-
-    mapboxgl.accessToken = "pk.eyJ1IjoibS1iZXJlbmdlciIsImEiOiJjbTZpYnQ2eTUwNjZ4Mm9zNTl4M2wwd2hmIn0.dypp0rb10-6yuJu1YqOjyA";
+    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
     const map = new mapboxgl.Map({
       container: mapContainer.current!,
       style: "mapbox://styles/mapbox/streets-v12",
-      center: [12.37701425222998, 51.3406130352673], // Initial center
+      center: [12.37701425222998, 51.3406130352673], 
       zoom: 12,
     });
 
@@ -45,13 +47,13 @@ const Map: React.FC = () => {
     return () => map.remove(); 
   }, []);
 
-// add layers:
-  // useEffect(() => {
-  const loadLayers = () => {
+  const loadLayers = () => {    //load layers:
+    //print status:
     console.log("Visible Layers:", visibleLayers);
-
     console.log(mapRef.current);
     console.log(layerManagerRef.current);
+    console.log("View Mode:", viewMode);
+
     if (!mapRef.current || !layerManagerRef.current) return;
     const layerManager = layerManagerRef.current;
     const map = mapRef.current;
@@ -64,32 +66,47 @@ const Map: React.FC = () => {
       map.removeSource("stops-source");
     }
 
-    console.log("View Mode:", viewMode);
-    // Replace with 'case if'
-    if (viewMode === "ITINERARY") {
-      layerManager.addLayer(createItineraryLayer(createItineraryLayerData()));
-    } else if (["DEFAULT", "ITINERARY", "PLAN", "STATION"].includes(viewMode)) {
+    //for each layer: check if layer shoudld be shown and call function
+    // DEFAULT - display stations
+    if (viewMode === "DEFAULT") {
+      const itineraryGeoJson = createItineraryLayerData(); // Fetch the GeoJSON data
+      const itineraryLayer = createItineraryLayer(itineraryGeoJson); // Create the layer
+  
+      console.log("Itinerary Layer:", itineraryLayer);
+  
+      map.addSource("itinerary-source", itineraryLayer.source); 
+      map.addLayer(itineraryLayer);
       const stopsGeoJson = stopsLayer(); // Ensure valid GeoJSON
       console.log("Feature Geojson:", stopsGeoJson);
-
+      const stopsGeoJsonTyped: GeoJSON = stopsGeoJson as GeoJSON;
       // Add GeoJSON Source
       map.addSource("stops-source", {
         type: "geojson",
-        data: JSON.parse(stopsGeoJson), // otherwise attempts to GET the geoJSON from an endpoint.
+        data: stopsGeoJsonTyped, // otherwise attempts to GET the geoJSON from an endpoint.
       });
 
-      // Add Stops Layer (Circles)
+      // Stops are orange circles
       map.addLayer({
         id: "stops-layer",
         type: "circle",
         source: "stops-source",
         paint: {
-          "circle-radius": 6,
-          "circle-color": "#ff0000",
+          "circle-radius": 3,
+          "circle-color": "#f3780b",
           "circle-stroke-width": 2,
-          "circle-stroke-color": "#ffffff",
+          "circle-stroke-color": "#f3780b",
         },
       });
+    }
+
+    // ITINERARY display selected itinerary
+    if (viewMode === "ITINERARY") {
+      createItineraryLayer;
+
+    }
+
+    // STATION display selected station only 
+    
 
       // Enable Click Interaction
       map.on("click", "stops-layer", (e) => {
@@ -109,10 +126,9 @@ const Map: React.FC = () => {
       map.on("mouseleave", "stops-layer", () => {
         map.getCanvas().style.cursor = "";
       });
-    }
-  }//, [viewMode]);
-
-  return <div ref={mapContainer} style={{ width: "100%", height: "700px" }} />;
+    
+  }
+  return <div ref={mapContainer} style={{ width: "700px", height: "700px" }} />;
 };
 
 export default Map;
