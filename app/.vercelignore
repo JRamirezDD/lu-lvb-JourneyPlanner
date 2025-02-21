@@ -1,0 +1,11 @@
+# Ignore everything inside src/
+src/**
+
+
+
+# Ignore frontend-specific files
+out/
+.next/
+public/
+node_modules/
+*.md

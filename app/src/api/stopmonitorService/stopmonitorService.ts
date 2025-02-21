@@ -11,7 +11,7 @@ import { StopMonitorParams, StopTimesParams } from "./dto/stopmonitorRequest";
 import { mockMonitorResponse, mockDirectionResponse, mockStopsResponse, mockStopTimesResponse } from "./dto/__mock__/stopmonitorResponse.mock";
 import { toMonitorResponse, toDirectionResponse, toStopsResponse, toStopTimesResponse } from "./mappers";
 
-const useMock = process.env.USE_MOCK === "true";
+const useMock = process.env.NEXT_PUBLIC_USE_MOCK === "true";
 const api_endpoint = process.env.NEXT_PUBLIC_API_ENDPOINT_STOPMONITOR;
 
 export const fetchStopMonitor = async (params: StopMonitorParams): Promise<MonitorResponse> => {

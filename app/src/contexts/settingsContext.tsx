@@ -25,7 +25,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode; initialLang
     const [language, setLanguageState] = useState<"en" | "de">(initialLanguage);
     const [translations, setTranslations] = useState<Record<string, any>>({});
 
-    const [transportModes, setTransportModesState] = useState<TransportMode[]>(["WALK", "BUS", "TRAM", "SUBURB", "TRAIN"]);
+    const [transportModes, setTransportModesState] = useState<TransportMode[]>(["WALK", "BUS", "TRAM", "SUBURB", "BIKE", "CAR"]);
     const [avoidWalking, setAvoidWalking] = useState<boolean>(false);
     const [wheelchairAccessible, setWheelchairAccessible] = useState<boolean>(false);
 
@@ -47,14 +47,25 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode; initialLang
     const toggleAvoidWalking = () => setAvoidWalking((prev) => !prev);
     const toggleWheelchairAccessible = () => setWheelchairAccessible((prev) => !prev);
     const toggleTransportMode = (mode: TransportMode) => {
-        setTransportModesState((prevModes) =>
-            prevModes.includes(mode) ? prevModes.filter((m) => m !== mode) : [...prevModes, mode]
-        );
+        setTransportModesState((prevModes) => {
+            const newModes = prevModes.includes(mode) 
+                ? prevModes.filter((m) => m !== mode) 
+                : [...prevModes, mode];
+            
+            console.log('Transport Modes Updated:', {
+                mode,
+                action: prevModes.includes(mode) ? 'removed' : 'added',
+                previousModes: prevModes,
+                newModes: newModes
+            });
+            
+            return newModes;
+        });
     };
 
     const clearState = () => {
         setLanguageState("en");
-        setTransportModesState(["WALK", "BUS", "TRAM", "SUBURB", "TRAIN"]);
+        setTransportModesState(["WALK", "BUS", "TRAM", "SUBURB", "BIKE", "CAR"]);
         setAvoidWalking(false);
         setWheelchairAccessible(false);
     };
