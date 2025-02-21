@@ -21,6 +21,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
 
+        // Add CORS Headers
+        const allowedOrigins = process.env.LVB_PROXY_ALLOWED_ORIGINS || '*';
+        res.setHeader('Access-Control-Allow-Origin', allowedOrigins);
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-API-Key');
+
+        
+        // Handle Preflight (OPTIONS) Requests
+        if (req.method === 'OPTIONS') {
+            res.status(200).end();
+            return;
+        }
+        
+
         const response = await fetch(apiUrl.toString(), {
             method: req.method,
             headers,

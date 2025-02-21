@@ -21,6 +21,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
 
+        // Add CORS Headers
+        res.setHeader('Access-Control-Allow-Origin', 'https://jramirezdd.github.io'); // Change to your GitHub Pages domain
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-API-Key');
+        
+        // Handle Preflight (OPTIONS) Requests
+        if (req.method === 'OPTIONS') {
+            res.status(200).end();
+            return;
+        }
+
         const response = await fetch(apiUrl.toString(), {
             method: req.method,
             headers,
@@ -36,7 +47,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.setHeader(key, value);
         });
 
-        // 🛠 Fix: Ensure JSON responses are properly parsed
         if (contentType?.includes('application/json')) {
             try {
                 const jsonData = JSON.parse(rawText);
