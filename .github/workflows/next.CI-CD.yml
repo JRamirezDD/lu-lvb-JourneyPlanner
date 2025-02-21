@@ -46,7 +46,7 @@ jobs:
             echo "runner=yarn" >> $GITHUB_OUTPUT
           elif [ -f "${{ github.workspace }}/app/package.json" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "command=i" >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
           else
             echo "Unable to determine package manager"
@@ -93,9 +93,9 @@ jobs:
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out  # ✅ Explicitly specify the built frontend directory
+          path: ./app/out
 
-  # Deployment job
+  # Deployment jobs
   deploy-frontend:
     environment:
       name: github-pages
