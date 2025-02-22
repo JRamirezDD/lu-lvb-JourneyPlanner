@@ -8,7 +8,7 @@ import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./map/layers/ILayer";
 import { GeoJSON } from "geojson";
 import { fetchOtpData } from "@/api/routingService/routingService";
-import ItineraryDataFetcher from "./map/layers/ItineraryLayer"; // Import the new component
+import {createItineraryLayerData, createItineraryLayer} from "./map/layers/ItineraryLayer"; // Import the new component
 
 const Map: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -107,13 +107,21 @@ const Map: React.FC = () => {
     console.log("Visible Layers:", visibleLayers);
     console.log("View Mode:", viewMode);
 
+    if (viewMode === "ITINERARY") {
+      createStopsLayer;
+    }
+
     if (viewMode === "DEFAULT") {
-      const itineraryGeoJson = ItineraryDataFetcher;
+      const geojsonData = createItineraryLayerData as unknown as GeoJSON.FeatureCollection;
+      console.log("HAHHAHA", JSON.stringify(geojsonData));
+      createItineraryLayer(geojsonData);
+
       console.log("Fetching itinerary data...");
       console.log("CHECK 3")
+      const itineraryGeoJson = createItineraryLayerData;
       console.log(JSON.stringify(itineraryGeoJson));
       //need to load data here
-      <ItineraryDataFetcher setData={setItineraryGeoJson} />
+      //<ItineraryDataFetcher setData={setItineraryGeoJson} />
       if (!itineraryGeoJson) {
         console.warn("No itinerary data available.");
         return;
@@ -121,23 +129,25 @@ const Map: React.FC = () => {
 
       // const itinerary = itineraryGeoJson as unknown as GeoJSON.FeatureCollection;
       //const itineraryLayer = createItineraryLayer(itineraryGeoJson);
-      console.log("Raw Itinerary Data:", itineraryGeoJson);
+      console.log("Raw Itinerary Data:", JSON.stringify(itineraryGeoJson));
 
-      //if (!map.getSource("itinerary-source")) {
-        const itinerary = ItineraryDataFetcher as unknown as GeoJSON.FeatureCollection;
+      if (!map.getSource("itinerary-source")) {
+        const itinerary = itineraryGeoJson as unknown as GeoJSON.FeatureCollection;
         console.log("CHECK 4");
-        console.log(itinerary);
+        console.log(JSON.stringify(itinerary));
         map.addSource("itinerary-source", { type: "geojson", data: itinerary })
 
-      //}
+      }
 
-      //if (!map.getLayer("itinerary-layer")) {
+      if (!map.getLayer("itinerary-layer")) {
       map.addLayer({
         id: "itinerary-layer",
         type: "line",
         source: "itinerary-source",
       });
-      //}
+      }
+
+      createItineraryLayer;
     }
   };
 
@@ -145,7 +155,6 @@ const Map: React.FC = () => {
 
   return (
     <div ref={mapContainer} style={{ width: "700px", height: "700px" }}>
-      <ItineraryDataFetcher setData={setItineraryGeoJson} />
     </div>
   );
 };
