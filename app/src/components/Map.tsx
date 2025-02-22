@@ -57,7 +57,7 @@ const Map: React.FC = () => {
 
     console.log("Creating Stops Layer...");
     const stopsGeoJson = stopsLayer() as GeoJSON.FeatureCollection;
-    console.log("Stops GeoJSON:", stopsGeoJson);
+    //("Stops GeoJSON:", stopsGeoJson);
 
     if (!map.getSource("stops-source")) {
       map.addSource("stops-source", { type: "geojson", data: stopsGeoJson });
@@ -67,7 +67,7 @@ const Map: React.FC = () => {
       map.addLayer({
         id: "stops-layer",
         type: "circle",
-        source: "stops-source", 
+        source: "stops-source",
         paint: {
           "circle-radius": 3,
           "circle-color": "#f3780b",
@@ -98,50 +98,42 @@ const Map: React.FC = () => {
 
   const itineraryGeoJson = createItineraryLayerData(); // Hook must be at top level
 
-const loadLayers = async () => {
-  if (!mapRef.current || !layerManagerRef.current) return;
-  const map = mapRef.current;
+  const loadLayers = async () => {
+    console.log("CHECK 2");
+    if (!mapRef.current || !layerManagerRef.current) return;
+    const map = mapRef.current;
 
-  console.log("Reloading layers...");
-  console.log("Visible Layers:", visibleLayers);
-  console.log("View Mode:", viewMode);
+    console.log("Reloading layers...");
+    console.log("Visible Layers:", visibleLayers);
+    console.log("View Mode:", viewMode);
 
-  if (viewMode === "DEFAULT") {
-    console.log("Fetching itinerary data...");
-
-    if (!itineraryGeoJson) {
-      console.warn("No itinerary data available.");
-      return;
-    }
-
-    console.log("Itinerary GeoJSON:", itineraryGeoJson);
-
-    /*     console.log("Creating Stops Layer...");
-    const stopsGeoJson = stopsLayer() as GeoJSON.FeatureCollection;
-    console.log("Stops GeoJSON:", stopsGeoJson);
-
-    if (!map.getSource("stops-source")) {
-      map.addSource("stops-source", { type: "geojson", data: stopsGeoJson });
-    }
-      if (!map.getSource("itinerary-source")) {
-        map.addSource("itinerary-source", { type: "geojson", data: itineraryGeoJson})
+    if (viewMode === "DEFAULT") {
+      console.log("Fetching itinerary data...");
+      console.log("CHECK 3")
+      if (!itineraryGeoJson) {
+        console.warn("No itinerary data available.");
+        return;
       }
-    const itineraryLayer = createItineraryLayer(itineraryGeoJson);
 
-    if (!map.getSource("itinerary-source")) {
-      map.addSource("itinerary-source", {
-        type: "geojson",
-        data: itineraryGeoJson,
-      });
+      const itinerary = itineraryGeoJson as GeoJSON.FeatureCollection;
+      //const itineraryLayer = createItineraryLayer(itineraryGeoJson);
+
+      //if (!map.getSource("itinerary-source")) {
+      console.log("CHECK 4");
+        map.addSource("itinerary-source", { type: "geojson", data: itinerary })
+      //}
+
+      //if (!map.getLayer("itinerary-layer")) {
+        map.addLayer({
+          id: "itinerary-layer",
+          type: "line",
+          source: "itinerary-source",
+        });
+      //}
     }
+  };
 
-    if (!map.getLayer("itinerary-layer")) {
-      map.addLayer(itineraryLayer);
-    }*/
-  }
-};
 
-  
 
   return <div ref={mapContainer} style={{ width: "700px", height: "700px" }} />;
 };
