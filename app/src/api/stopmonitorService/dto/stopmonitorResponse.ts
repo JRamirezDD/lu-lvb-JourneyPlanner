@@ -1,4 +1,5 @@
 import { GeoJsonConvertible } from "@/types/GeoJsonConvertible";
+import { Feature, FeatureCollection, Point, Geometry } from "geojson";
 
 export class MonitorItem extends GeoJsonConvertible {
     constructor(
@@ -31,13 +32,10 @@ export class MonitorItem extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): Feature<Geometry | null> {
+        const geojson: Feature<Geometry | null> = {
             type: "Feature",
-            geometry: {
-                type: "Point",
-                coordinates: null
-            },
+            geometry: null, // No coordinates provided, geometry set to null
             properties: {
                 trip_id: this.trip_id,
                 stop_id: this.stop_id,
@@ -68,10 +66,10 @@ export class MonitorResponse extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
+    toGeoJson(): FeatureCollection<Geometry | null> {
         return {
             type: "FeatureCollection",
-            features: this.items.map(item => item.toGeoJson()) // No need for JSON.parse
+            features: this.items.map(item => item.toGeoJson())
         };
     }
 }
@@ -89,9 +87,10 @@ export class DirectionInfo extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): Feature<Geometry | null> {
+        const geojson: Feature<Geometry | null> = {
             type: "Feature",
+            geometry: null,
             properties: {
                 directionId: this.directionId,
                 agencyName: this.agencyName,
@@ -111,8 +110,8 @@ export class DirectionResponse extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): FeatureCollection<Geometry | null> {
+        const geojson: FeatureCollection<Geometry | null> = {
             type: "FeatureCollection",
             features: this.items.map(item => item.toGeoJson())
         };
@@ -131,8 +130,8 @@ export class StopsItem extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): Feature<Point> {
+        const geojson: Feature<Point> = {
             type: "Feature",
             geometry: {
                 type: "Point",
@@ -153,8 +152,8 @@ export class StopsResponse extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): FeatureCollection<Point> {
+        const geojson: FeatureCollection<Point> = {
             type: "FeatureCollection",
             features: this.items.map(item => item.toGeoJson())
         };
@@ -172,14 +171,16 @@ export class StopTimesResponse extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): FeatureCollection<Geometry | null> {
+        const features: Feature<Geometry | null>[] = [
+            ...this.beforeGivenStop?.map(item => item.toGeoJson()) || [],
+            this.atGivenStop ? this.atGivenStop.toGeoJson() : null,
+            ...this.afterGivenStop?.map(item => item.toGeoJson()) || []
+        ].filter((item): item is Feature<Geometry | null> => item !== null); // Type predicate
+
+        const geojson: FeatureCollection<Geometry | null> = {
             type: "FeatureCollection",
-            features: [
-                ...this.beforeGivenStop?.map(item => item.toGeoJson()) || [],
-                this.atGivenStop ? this.atGivenStop.toGeoJson() : null,
-                ...this.afterGivenStop?.map(item => item.toGeoJson()) || []
-            ].filter(item => item !== null)
+            features: features,
         };
         return geojson;
     }
@@ -203,9 +204,10 @@ export class TripInfo extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): Feature<Geometry | null> {
+        const geojson: Feature<Geometry | null> = {
             type: "Feature",
+            geometry: null, // Add geometry: null
             properties: {
                 trip_id: this.trip_id,
                 service_date: this.service_date,
@@ -244,9 +246,10 @@ export class StopTimesItem extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): Feature<Geometry | null> {
+        const geojson: Feature<Geometry | null> = {
             type: "Feature",
+            geometry: null, // Add geometry: null
             properties: {
                 arrival_time: this.arrival_time,
                 date: this.date,
@@ -280,9 +283,10 @@ export class Alert extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): Feature<Geometry | null> {
+        const geojson: Feature<Geometry | null> = {
             type: "Feature",
+            geometry: null, // Add geometry: null
             properties: {
                 effectiveStartDate: this.effectiveStartDate,
                 effectiveEndDate: this.effectiveEndDate,

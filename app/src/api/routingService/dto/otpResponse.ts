@@ -2,12 +2,13 @@ import { GeoJsonConvertible } from "@/types/GeoJsonConvertible";
 import { RequestParameters } from "./otpRequest";
 import { TransportMode } from "@/types/TransportMode";
 import { toPlan } from "@/api/routingService/mappers";
+import { Feature, Point, LineString, FeatureCollection, Position, Geometry } from "geojson";
 
 // dto/otpResponse.ts
 
-    // otp response: ({value, comments}, request parameters, plan 
-    //plan: date, from, to otp itineraries 
-    // otp itinerary: GEOJSON CONVERTIBLE
+// otp response: ({value, comments}, request parameters, plan
+// plan: date, from, to otp itineraries
+// otp itinerary: GEOJSON CONVERTIBLE
 
 export class OtpResponse {
     constructor(
@@ -38,21 +39,22 @@ export class Location extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJsonFeature(type: string): object {
-        return {
+    toGeoJsonFeature(type: string): Feature<Point> {
+        const feature: Feature<Point> = {
             type: "Feature",
             geometry: {
                 type: "Point",
-                coordinates: [this.lon, this.lat],
+                coordinates: [this.lon, this.lat] as Position,
             },
             properties: {
                 name: this.name,
                 type: type,
             },
         };
+        return feature;
     }
 
-    toGeoJson(): object {
+    toGeoJson(): Feature<Point> {
         return this.toGeoJsonFeature("Location");
     }
 }
@@ -73,12 +75,12 @@ export class OtpItinerary extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJsonFeatures(): object[] {
+    toGeoJsonFeatures(): Feature<Point | LineString>[] {
         return this.legs.flatMap((leg) => leg.toGeoJsonFeatures());
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): FeatureCollection<Point | LineString> {
+        const geojson: FeatureCollection<Point | LineString> = {
             type: "FeatureCollection",
             features: this.toGeoJsonFeatures(),
         };
@@ -108,27 +110,28 @@ export class Leg extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJsonFeatures(): object[] {
-        const features = [
+    toGeoJsonFeatures(): Feature<Point | LineString>[] {
+        const features: Feature<Point | LineString>[] = [
             this.from.toGeoJsonFeature("Leg Start"),
             this.to.toGeoJsonFeature("Leg End"),
         ];
 
         // Add the leg geometry as a LineString
         if (this.legGeometry.points.length > 0) {
-            features.push({
+            const lineString: Feature<LineString> = {
                 type: "Feature",
                 geometry: {
                     type: "LineString",
-                    coordinates: this.legGeometry.points.map((point) => [point.lon, point.lat]),
+                    coordinates: this.legGeometry.points.map((point) => [point.lon, point.lat] as Position),
                 },
                 properties: {
-                    mode: this.mode,    
+                    mode: this.mode,
                     route: this.route,
                     distance: this.distance,
                     duration: this.duration,
                 },
-            });
+            };
+            features.push(lineString);
         }
 
         // Add intermediate stops if available
@@ -141,8 +144,8 @@ export class Leg extends GeoJsonConvertible {
         return features;
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): FeatureCollection<Point | LineString> {
+        const geojson: FeatureCollection<Point | LineString> = {
             type: "FeatureCollection",
             features: this.toGeoJsonFeatures(),
         };
@@ -155,10 +158,10 @@ export class LegGeometry extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): LineString {
+        const geojson: LineString = {
             type: "LineString",
-            coordinates: this.points.map((point) => [point.lon, point.lat]),
+            coordinates: this.points.map((point) => [point.lon, point.lat] as Position),
         };
         return geojson;
     }
@@ -173,9 +176,10 @@ export class ZoneInfo extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): Feature<Geometry | null> {
+        const geojson: Feature<Geometry | null> = {
             type: "Feature",
+            geometry: null,
             properties: {
                 zones: this.zones,
                 orderedZones: this.orderedZones,
@@ -198,9 +202,10 @@ export class Alert extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): object {
-        const geojson = {
+    toGeoJson(): Feature<Geometry | null> {
+        const geojson: Feature<Geometry | null> = {
             type: "Feature",
+            geometry: null,
             properties: {
                 effectiveStartDate: this.effectiveStartDate,
                 effectiveEndDate: this.effectiveEndDate,
@@ -213,8 +218,3 @@ export class Alert extends GeoJsonConvertible {
         return geojson;
     }
 }
-
-
-
-
-
