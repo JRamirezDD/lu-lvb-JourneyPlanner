@@ -37,7 +37,7 @@ These environment variables relate to target-API-endpoints, API Proxy Configurat
 - `NEXT_PUBLIC_API_ENDPOINT_STOPMONITOR`="/lvb-endpoint"
 - `NEXT_PUBLIC_API_ENDPOINT_ROUTING`="/lvb-endpoint"
 - `NEXT_PUBLIC_API_ENDPOINT_NEARBYSEARCH`="/lvb-endpoint"
-- `NEXT_PUBLIC_USE_MOCK`="true"/"false" => Makes it so that the client does not submit requests through the proxy, and instead returns pre-made objects on request.
+- `NEXT_PUBLIC_USE_MOCK`="`true`"/"`false`" => Makes it so that the client does not submit requests through the proxy, and instead returns pre-made objects on request.
 
 
 
@@ -81,6 +81,7 @@ Base Endpoint of the project is /lu-lvb-JourneyPlanner (ie. access through local
 Base URL must be followed by `/en` or `/de` for the target locale (ie access through `http://localhost:3000/lu-lvb-JourneyPlanner/en/...`)
 
 Current pages are visible at:
+- [/](http://localhost:3000/lu-lvb-JourneyPlanner/en/)
 - [/controlPanel](http://localhost:3000/lu-lvb-JourneyPlanner/en/controlPanel)
 - [/map](http://localhost:3000/lu-lvb-JourneyPlanner/en/map)
 - [/examples/contexts/autocomplete](http://localhost:3000/lu-lvb-JourneyPlanner/en/examples/contexts/autocomplete)
