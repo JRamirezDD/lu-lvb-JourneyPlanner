@@ -3,6 +3,11 @@ import "@/app/globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import { SettingsProvider } from "@/contexts/settingsContext";
 import React from "react";
+import { UIProvider } from "@/contexts/uiContext";
+import { MapProvider } from "@/contexts/mapContext";
+import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDataContext";
+import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
+import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataContext";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -30,15 +35,26 @@ export default async function LocaleLayout({
   return (
     <html lang={language}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SettingsProvider initialLanguage={language}>
-          <div className="w-full flex flex-col min-h-screen">
-            <Navbar locale={language} />
-            <div className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8">
-              {children}
+
+          <SettingsProvider initialLanguage={language}>
+          <UIProvider>
+          <MapProvider>
+            <AutocompleteDataProvider>
+            <OtpDataProvider>
+            <StopmonitorDataProvider>
+            <div className="w-full flex flex-col min-h-screen">
+              <Navbar locale={language} />
+              <div className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8">
+                {children}
+              </div>
             </div>
-          </div>
-        </SettingsProvider>
-      </body>
+            </StopmonitorDataProvider>
+            </OtpDataProvider>
+            </AutocompleteDataProvider>
+          </MapProvider>
+          </UIProvider>
+          </SettingsProvider>
+        </body>
     </html>
   );
 }

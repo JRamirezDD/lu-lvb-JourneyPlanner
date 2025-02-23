@@ -60,14 +60,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.12.x"
-      # CREATE .ENV FILE
-      - name: Create .env.local File
-        working-directory: ./app
-        run: |
-          echo "LVB_API_KEY=${{ secrets.LVB_API_KEY }}" >> .env.local
-          echo "MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}" >> .env.local
-        shell: bash
-
       # RESTORE CACHE
       - name: Restore cache
         uses: actions/cache@v4
@@ -79,13 +71,14 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+      # INSTALL DEPENDENCIES
       - name: Install dependencies
         working-directory: ./app
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build with Next.js
+      # BUILD FRONT-END
+      - name: Build Front-end
         working-directory: ./app
         run: ${{ steps.detect-package-manager.outputs.manager }} run build:frontend
-
       # SETS UP COMPATIBLE NEXT.JS CONFIGURATION FOR GH PAGES
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -95,46 +88,51 @@ jobs:
           #
           # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: next
-      
-      - name: Upload artifact
+      # UPLOAD GH ARTIFACT
+      - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./app/out
 
-  # Build and upload artifact to Vercel
-  build-backend:
+  # Build, upload and deploy artifact of backend
+  build-and-deploy-vercel:
+    runs-on: ubuntu-latest
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_TEAM_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
       BUILD_MODE: "standalone"
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Install Node.js
+      
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20.12.x"
-
+      
       - name: Create .env.local File
         working-directory: ./app
         run: |
           echo "LVB_API_KEY=${{ secrets.LVB_API_KEY }}" >> .env.local
           echo "MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}" >> .env.local
         shell: bash
-
+      
       - name: Install Vercel CLI
         run: npm install -g vercel
-
+      
+      # LOAD VERCEL ENVIRONMENT INFO INTO PROJECT
       - name: Pull Vercel Environment Information
         working-directory: ./app
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-      
-      - name: Build Project Artifacts
+
+      - name: Run Vercel Build
         working-directory: ./app
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      
+      - name: Deploy with Vercel CLI
+        working-directory: ./app
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
 
   # Deployment on Github Pages
   deploy-pages:
@@ -144,22 +142,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-frontend
     steps:
+      # DEPLOY TO GITHUB PAGES
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-  # Deployment on Vercel
-  deploy-vercel:
-    env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_TEAM_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      BUILD_MODE: "standalone"
-    runs-on: ubuntu-latest
-    needs: build-backend
-    steps:
-      - name: Deploy Project Artifacts to Vercel
-        working-directory: ./app 
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
-
-
