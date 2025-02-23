@@ -42,11 +42,12 @@ async function main() {
   try {
     // Run the build process
     await runBuild();
+    renameSrc(backupDir, srcDir);
+    console.log('Build succeeded.');
   } catch (error) {
     console.error('Build failed.');
-  } finally {
-    // Rename src-copy back to src
     renameSrc(backupDir, srcDir);
+    process.exit(1);
   }
 }
 
