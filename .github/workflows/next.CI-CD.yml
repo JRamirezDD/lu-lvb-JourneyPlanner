@@ -121,13 +121,57 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel
       
-      - name: Run Vercel Build
+      # LOAD VERCEL ENVIRONMENT INFO INTO PROJECT
+      - name: Pull Vercel Environment Information
         working-directory: ./app
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Run Vercel Build
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       
       - name: Deploy with Vercel CLI
         working-directory: ./app
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+
+
+
+  # Deployment on Vercel
+  deploy-vercel:
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_TEAM_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    runs-on: ubuntu-latest
+    needs: build-backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # NODE.JS needed for VERCEL CLI
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.12.x"
+      # INSTALL VERCEL CLI
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+      # DOWNLOAD VERCEL ARTIFACT
+      - name: Download Vercel Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: vercel-artifact
+          path: ./artifact
+      # MOVE DOWNLOADED ARTIFACT TO VERCEL's EXPECTED DIRECTORY
+      - name: Move Artifact
+        run: |
+          mkdir -p .vercel/output
+          cp -R ./artifact/* .vercel/output/      
+      # LOAD VERCEL ENVIRONMENT INFO INTO PROJECT
+
+      # DEPLOY TO VERCEL
+      - name: Deploy Vercel Artifact
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+      
 
   # Deployment on Github Pages
   deploy-pages:
