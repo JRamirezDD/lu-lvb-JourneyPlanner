@@ -10,12 +10,7 @@ import { MapProvider } from '@/contexts/mapContext';
 export default function Home() {
   return (
     <div>
-      {/* content */}
-      <UIProvider>
-          <MapProvider>
-            <Map />
-          </MapProvider>
-      </UIProvider>
+        <Map />
     </div>
   );
 }

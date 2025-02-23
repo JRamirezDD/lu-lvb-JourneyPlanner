@@ -197,7 +197,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
       const params: Partial<RequestParameters> = {
         From: selectedOrigin.coordinates,
         To: selectedDestination.coordinates,
-        Travelmode: transportModes.join(','),
+        Travelmode: transportModes,
         numItineraries: 5,  
       };
 

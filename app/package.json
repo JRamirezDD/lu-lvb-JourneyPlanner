@@ -4,8 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "npm run build:standalone",
+    "build:standalone": "cross-env BUILD_MODE=standalone next build",
+    "build:frontend": "cross-env BUILD_MODE=export next build",
+    "build:backend": "node scripts/build-backend.cjs",
+    "start": "npm run start:standalone",
+    "start:standalone": "next start",
+    "start:frontend": "npx serve out",
+    "start:backend": "next start",
     "lint": "next lint",
     "test": "jest"
   },
@@ -23,7 +29,8 @@
     "mapbox-gl": "^3.9.4",
     "next": "15.1.5",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.9",
