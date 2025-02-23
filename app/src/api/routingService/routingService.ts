@@ -22,9 +22,10 @@ export const fetchOtpData = async (params: Partial<RequestParameters>): Promise<
         console.log("HTTP Response Data:", response.data);
 
         // Check cntent for errors: Value: FEHLER
-        if (response.data.toString().includes("FEHLER")) {
-            throw new Error("Failed to fetch OTP data");
-        }
+        if (response.data.RetStatus.Value === "FEHLER") {
+            console.log("Failed to fetch OTP data: " + response.data.RetStatus.Comments);
+            throw new Error("Failed to fetch OTP data: " + response.data.RetStatus.Comments);
+          }
 
         return toOtpResponse(response.data);
     } catch (error) {

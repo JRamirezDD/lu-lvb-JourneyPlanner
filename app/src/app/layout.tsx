@@ -21,15 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <AutocompleteDataProvider>
-          <SettingsProvider initialLanguage="en">
-            <OtpDataProvider>
-              <StopmonitorDataProvider>
-                {children}
-              </StopmonitorDataProvider>
-            </OtpDataProvider>
-          </SettingsProvider>
-        </AutocompleteDataProvider>
+          {children}
       </body>
     </html>
   );
