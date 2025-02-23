@@ -1,18 +1,17 @@
 import type { NextConfig } from 'next';
+import { webpack } from 'next/dist/compiled/webpack/webpack';
 
-const isVercel = process.env.NEXT_PUBLIC_DEPLOY_TARGET === "vercel";
-const isGithubPages = process.env.NEXT_PUBLIC_DEPLOY_TARGET === "github-pages";
-
+const build_mode = process.env.BUILD_MODE;
 
 const nextConfig: NextConfig = {
-    output: isGithubPages ? "export" : "standalone", /// export generates static pages, standalone generates server-side rendered pages (needed for routing proxy)
+    output: build_mode === 'standalone' || build_mode === 'export' ? build_mode : undefined, /// export generates only static pages, standalone generates server-side rendered pages (needed for routing proxy)
     images: {
         unoptimized: true // Needed for GitHub pages deployments
     },
     basePath: '/lu-lvb-JourneyPlanner',
     assetPrefix: '/lu-lvb-JourneyPlanner/',
     reactStrictMode: true,
-    trailingSlash: false,
+    trailingSlash: true, // ? not supported by GitHub Pages? Must be set to false.
     env: {
         NEXT_PUBLIC_USE_MOCK: process.env.NEXT_PUBLIC_USE_MOCK,
 

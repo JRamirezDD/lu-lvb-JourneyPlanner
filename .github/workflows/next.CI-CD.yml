@@ -29,12 +29,14 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Build job
-  build:
+  # Build and upload artifact to GitHub Pages
+  build-frontend:
     runs-on: ubuntu-latest
     steps:
+      # CHECKOUT
       - name: Checkout
         uses: actions/checkout@v4
+      # Detect package manager
       - name: Detect package manager
         id: detect-package-manager
         working-directory: ./app
@@ -53,25 +55,20 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
+      # INSTALL NODE
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20.12.x"
+      # CREATE .ENV FILE
       - name: Create .env.local File
         working-directory: ./app
         run: |
           echo "LVB_API_KEY=${{ secrets.LVB_API_KEY }}" >> .env.local
           echo "MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}" >> .env.local
         shell: bash
-        
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-          #
-          # You may remove this line if you want to manage the configuration yourself.
-          static_site_generator: next
+
+      # RESTORE CACHE
       - name: Restore cache
         uses: actions/cache@v4
         with:
@@ -87,35 +84,31 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         working-directory: ./app
-        env: 
-          NEXT_PUBLIC_DEPLOY_TARGET: github-pages  # Ensure "export" mode is set
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: ${{ steps.detect-package-manager.outputs.manager }} run build:frontend
+
+      # SETS UP COMPATIBLE NEXT.JS CONFIGURATION FOR GH PAGES
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          # Automatically inject basePath in your Next.js configuration file and disable
+          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
+          #
+          # You may remove this line if you want to manage the configuration yourself.
+          static_site_generator: next
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./app/out
 
-  # Deployment job
-  deploy-pages:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-
-  deploy-vercel:
+  # Build and upload artifact to Vercel
+  build-backend:
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_TEAM_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      NEXT_PUBLIC_DEPLOY_TARGET: vercel
+      BUILD_MODE: "standalone"
     runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -136,15 +129,37 @@ jobs:
         run: npm install -g vercel
 
       - name: Pull Vercel Environment Information
-        working-directory: ./app  # ✅ Ensure commands run inside the `app/` directory
+        working-directory: ./app
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
       
       - name: Build Project Artifacts
-        working-directory: ./app  # ✅ Ensure commands run inside the `app/` directory
+        working-directory: ./app
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
+  # Deployment on Github Pages
+  deploy-pages:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build-frontend
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # Deployment on Vercel
+  deploy-vercel:
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_TEAM_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      BUILD_MODE: "standalone"
+    runs-on: ubuntu-latest
+    needs: build-backend
+    steps:
       - name: Deploy Project Artifacts to Vercel
-        working-directory: ./app  # ✅ Ensure commands run inside the `app/` directory
+        working-directory: ./app 
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
 
 
