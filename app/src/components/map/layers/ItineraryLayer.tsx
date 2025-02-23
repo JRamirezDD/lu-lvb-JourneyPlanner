@@ -7,36 +7,40 @@ import { useSettingsContext } from "@/contexts/settingsContext";
 import { Itinerary } from "@/types/Itinerary";
 import { useEffect, useState } from "react";
 import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.mock";
-
-export const createItineraryLayerData = () => {
-    /*
-    const { selectedItinerary } = useMapContext();
-    const [geojsonData, setGeojsonData] = useState<string>("");
-    useEffect(() => {
-        if (selectedItinerary) {
-            try {
-                const parsedGeojson = selectedItinerary.toGeoJson();
-                setGeojsonData(JSON.stringify(parsedGeojson)); 
-            } catch (error) {
-                console.error("Error processing route data:", error);
-            }
-        }
-    }, [selectedItinerary]);
-*/
-    const selectedItinerary = toOtpResponse(mockOtpResponse).plan.itineraries[0];
-    const geojsonData = selectedItinerary.toGeoJson();
-    // Print the geojsonData to the console (if available)
-    console.log(geojsonData); 
-
-    return geojsonData; // This component doesn't render any visual elements
-};
-
-
-
 import { LayerConfig } from "./ILayer";
 import { toOtpResponse } from "@/api/routingService/mappers";
+import { GeoJSON, FeatureCollection, Point, LineString } from "geojson";
 
-export const createItineraryLayer = (geojsonData: GeoJSON.FeatureCollection | undefined): LayerConfig => ({
+export const createItineraryLayerData = (): FeatureCollection<Point | LineString> | undefined => {
+  console.log("CREATE IT LAYER DATA TRIGGERED");
+
+  const { selectedItinerary } = useMapContext(); // Destructure selectedItinerary
+  console.log("CONTEXT", selectedItinerary);
+
+  if (selectedItinerary) {
+    try {
+      const geojsonData = selectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>;
+      console.log("GEOJSON DATA", geojsonData);
+      return geojsonData;
+    } catch (error) {
+      console.error("Error processing route data:", error);
+      return undefined;
+    }
+  } else {
+    console.log("selectedItinerary is undefined");
+    return undefined;
+  }
+
+/*
+setSelectedItinerary(toOtpResponse(mockOtpResponse).plan.itineraries[0]);
+  const selectedItinerary = toOtpResponse(mockOtpResponse).plan.itineraries[0];
+  console.log("SELECTED ITINERARY:", selectedItinerary);
+  const geojsonData = selectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>; // Type assertion
+  console.log("GEOJSON DATA", geojsonData);
+*/
+};
+
+export const createItineraryLayer = (geojsonData: FeatureCollection<Point | LineString> | undefined): LayerConfig => ({
   id: "itinerary-layer",
   type: "line",
   source: {
