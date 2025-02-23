@@ -123,7 +123,7 @@ jobs:
         run: npm run build:backend
       # UPLOAD VERCEL ARTIFACT
       - name: Upload Vercel Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: vercel-artifact
           path: ./app/.next/standalone
@@ -152,7 +152,7 @@ jobs:
         run: npm install -g vercel
       # DOWNLOAD VERCEL ARTIFACT
       - name: Download Vercel Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: vercel-artifact
           path: ./artifact
