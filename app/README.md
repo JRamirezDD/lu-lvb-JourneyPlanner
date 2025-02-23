@@ -1,32 +1,84 @@
+# lu-lvb-JourneyPlanner
+
+
 ## Hosting
 Not currently hosted. Hosting to be delivered in Sprint 2.
 
-## Local environment variables
-The application expects environment variables. For security reasons, API keys and other secrets are stored under .env.local folder, which is not available in the GitHub repo.
-To set this up, do the following:
-Create .env.local folder under /app/src
-Place the following variables
-- NEXT_PUBLIC_API_KEY=""
+## Development Mode vs Production Mode
+The application can be ran in 2 modes. Development Mode, and Production Mode.
+The functional difference between these 2 modes is exclusively pertains to the hosting for the back-end components, which so far only include proxies (which are needed to inject API-Tokens to the requests without exposing them to the Clients, and to have a CORS-valid request source).
+- **In Development Mode**, the back-end components are hosted as React Pages in the local device. No additional set-up is needed, and they will be available by default under `http://localhost:3000/lu-lvb-JourneyPlanner/api/proxy/...`.
+- **In Production Mode**, the back-end components are expected to be hosted either separately (splitting UI or Client-Side components (as static pages)), or in a hosting platform that supports dynamic pages (with server-side scripting) such as Vercel.
+    - In our case, we decided to split the Front-End and Back-End components as a demonstration of the possibilities of deployment (deploying the application in 2 separate hosting platforms). 
+        * __To deploy the application in a single platform, all that is required is to follow a 'next.js' hosting guide.__
+    - __Take into account that back-end components can be responsible for routing requests to an API service, posing a security risk of not dealt with cautiously (by implementing CORS, restrictions, spam protection, etc).__
 
-Available endpoints:
+
+## Environment Variables
+### Local Environment Variables
+The application expects environment variables. For security reasons, API keys and other secrets are stored under `.env.local` file, which is not available in the GitHub repo, and are loaded alongside the main environment variables file (`.env.development`, `.env.test`, or `.env.production`).
+To set this up, do the following:
+Create `.env.local` file under `/app/src`
+Place the following variables
+- `LVB_API_KEY`="YOUR_KEY" => Corresponds to the API Key to the LVB APIs.
+- `MAPBOX_ACCESS_TOKEN`="YOUR_TOKEN" => Corresponds to the API Key for the MapBox account.
+
+
+### Per-Environment Application Environment Variables
+Expected under `.env.development`, `.env.test`, or `.env.production`, depending on your desired environnment.
+These environment variables relate to target-API-endpoints, API Proxy Configurations, and triggering alternative application functionality.
+- `BUILD_MODE`="`export`"/"`standalone`" => Ideally set as part of the build process as the system's environment variables.
+    - `export` => only generates static pages, excluding anything under `/pages/api`.
+    - `standalone` => generates the entire ready-to-host application in a single package.
+- `NEXT_PUBLIC_LVB_PROXY_ADDRESS`="http://LVB_PROXY_ADDRESS" => When the application is hosted locally and in a single deployment, then simply referring to the the localhost address is sufficient. Otherwise, the address of the externally-hosted proxies needs to be provided.
+- `NEXT_PUBLIC_MAPBOX_PROXY_ADDRESS`"=http://MAPBOX_PROXY_ADDRESS" => Same as `NEXT_PUBLIC_LVB_PROXY_ADDRESS`.
+- `LVB_API_BASE_URL`="http://LVB_API_BASE_URL" => Used by the Proxy Component.
+- `NEXT_PUBLIC_API_ENDPOINT_AUTOCOMPLETE`="/lvb-endpoint"
+- `NEXT_PUBLIC_API_ENDPOINT_STOPMONITOR`="/lvb-endpoint"
+- `NEXT_PUBLIC_API_ENDPOINT_ROUTING`="/lvb-endpoint"
+- `NEXT_PUBLIC_API_ENDPOINT_NEARBYSEARCH`="/lvb-endpoint"
+- `NEXT_PUBLIC_USE_MOCK`="true"/"false" => Makes it so that the client does not submit requests through the proxy, and instead returns pre-made objects on request.
+
 
 
 ## Getting Started
 
-First install the dependencies
+### Running in Development Mode:
+1. ***First install the dependencies***
 ```bash
 npm install
 ```
 
-Then, run the development server:
-
+2. ***Then, run the development server:***
 ```bash
 npm run dev
 ```
+
+### Running in Production Mode (Separate Hosting of Front-end and Back-end Components):
+1. ***First install the dependencies***
+```bash
+npm install
+```
+
+2. ***Build and Start back-end components***
+__Don't forget to change the configuration of `.env.production` if required.__
+```bash
+npm run build:backend # runs custom build script that ignores files under /src, which coincidentally contains all front-end files.
+npm run start:backend # simply runs next start, which is intended for server-rendered builds. 
+```
+
+3. ***Build and Start front-end components***
+__Don't forget to change the configuration of `.env.production` if required.__
+```bash
+npm run build:frontend  # runs build and export static pages, which ignores api routes.
+                        # generates static export under /out
+```
+Next step would be to serve the exported static html with your preferred hosting service, such as nginx, github pages, express, etc.
+
 ### Accessing pages
 
 Base Endpoint of the project is /lu-lvb-JourneyPlanner (ie. access through localhost:3000/lu-lvb-JourneyPlanner)
-Base URL must be followed by /en or /de for the target locale (ie access through localhost:3000/lu-lvb-JourneyPlanner/en/...)
+Base URL must be followed by `/en` or `/de` for the target locale (ie access through `http://localhost:3000/lu-lvb-JourneyPlanner/en/...`)
 
 Current pages are visible at:
 - [/controlPanel](http://localhost:3000/lu-lvb-JourneyPlanner/en/controlPanel)

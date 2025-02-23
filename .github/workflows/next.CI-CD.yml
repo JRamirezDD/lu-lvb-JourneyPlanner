@@ -191,6 +191,11 @@ jobs:
         with:
           name: vercel-artifact
           path: ./artifact
+      # MOVE DOWNLOADED ARTIFACT TO VERCEL's EXPECTED DIRECTORY
+      - name: Move Artifact
+        run: |
+          mkdir -p .vercel/output
+          cp -R ./artifact/* .vercel/output/      
       # LOAD VERCEL ENVIRONMENT INFO INTO PROJECT
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
