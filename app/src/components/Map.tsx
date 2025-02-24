@@ -7,32 +7,20 @@ import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./map/layers/ILayer";
 import { GeoJSON, FeatureCollection, Feature, Point, LineString } from "geojson";
-import { fetchOtpData } from "@/api/routingService/routingService";
-import { createItineraryLayerData, createItineraryLayer } from "./map/layers/ItineraryLayer"; // Import the new component
-import { toOtpResponse } from "@/api/routingService/mappers";
-import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.mock";
+import { createItineraryLayer } from "./map/layers/ItineraryLayer";
 
 const Map: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const layerManagerRef = useRef<LayerManager | null>(null);
 
-  // Get context values
   const { viewMode } = useUIContext();
-  const { visibleLayers, selectedStop, setSelectedStop } = useMapContext();
-  const { currentPosition } = useMapContext();
-  const { selectedItinerary, setSelectedItinerary } = useMapContext();
-
-  // State variable for selectedItinerary
+  const { selectedStop, setSelectedStop, selectedItinerary } = useMapContext();
   const [localSelectedItinerary, setLocalSelectedItinerary] = useState<any>(null);
 
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return;
 
-    // Ensure Mapbox token exists
-    if (!process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
-      console.error("Mapbox token is missing.");
-    }
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
 
     const map = new mapboxgl.Map({
@@ -43,7 +31,6 @@ const Map: React.FC = () => {
     });
 
     map.on("style.load", () => {
-      console.log("Initializing layers...");
       layerManagerRef.current = new LayerManager(map);
       mapRef.current = map;
       loadLayers();
@@ -56,21 +43,44 @@ const Map: React.FC = () => {
     if (mapRef.current) {
       loadLayers();
     }
-  }, [viewMode]); // Reload layers when view mode changes
+  }, [viewMode]);
 
-  // Effect to fetch selectedItinerary
   useEffect(() => {
-    if (viewMode === "DEFAULT") {
-          console.log("HELP")
+    if (viewMode === "ITINERARY" || viewMode === "DEFAULT") {
       setLocalSelectedItinerary(selectedItinerary);
+      console.log("localselecteditinerary set to selecteditinerary from context", localSelectedItinerary);
     }
-  }, [viewMode, useMapContext]);
+  }, [viewMode, selectedItinerary]);
+
+  useEffect(() => {
+    // if (mapRef.current && localSelectedItinerary && viewMode === "DEFAULT") {
+      if (mapRef.current && selectedItinerary) {      
+      try {
+        console.log("itinerary useeffect triggered");
+        const geojsonData = localSelectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>;
+        if (!mapRef.current.getSource("itinerary-source")) {
+          mapRef.current.addSource("itinerary-source", { type: "geojson", data: geojsonData });
+          console.log("Data source added")
+        }
+        if (!mapRef.current.getLayer("itinerary-layer")) {
+          mapRef.current.addLayer({
+            id: "itinerary-layer",
+            type: "line",
+            source: "itinerary-source",
+          });
+        }
+        console.log("creating IT layer using geojson data");
+        createItineraryLayer(geojsonData);
+      } catch (error) {
+        console.error("Error processing route data:", error);
+      }
+    }
+  }, [localSelectedItinerary, viewMode]);
 
   const createStopsLayer = () => {
     if (!mapRef.current) return;
     const map = mapRef.current;
 
-    console.log("Creating Stops Layer...");
     const stopsGeoJson = stopsLayer() as FeatureCollection<Point>;
 
     if (!map.getSource("stops-source")) {
@@ -90,16 +100,13 @@ const Map: React.FC = () => {
         },
       });
 
-      // Enable Click Interaction
       map.on("click", "stops-layer", (e) => {
         const feature = e.features?.[0];
         if (feature) {
-          console.log("Clicked Stop:", feature.properties?.stopId);
           setSelectedStop(feature.properties?.stopId);
         }
       });
 
-      // Hover Interaction
       map.on("mouseenter", "stops-layer", () => {
         map.getCanvas().style.cursor = "pointer";
       });
@@ -110,72 +117,27 @@ const Map: React.FC = () => {
     }
   };
 
-  const loadLayers = async () => {
-    console.log("CHECK 2");
-    if (!mapRef.current || !layerManagerRef.current) return;
-    const map = mapRef.current;
-
-    console.log("Reloading layers...");
-    console.log("Visible Layers:", visibleLayers);
-    console.log("View Mode:", viewMode);
-
-    if (viewMode === "DEFAULT") {
-      createStopsLayer();
-    } else {
-      console.log("CONTEXT CHANGED!!!");
-    }
-
-    const selected = toOtpResponse(mockOtpResponse).plan.itineraries[0];
-    const geojsonData = selected.toGeoJson() as FeatureCollection<Point | LineString>;
-    setLocalSelectedItinerary(geojsonData);
+  const loadLayers = () => {
+    if (!mapRef.current) return;
 
     if (viewMode === "ITINERARY") {
-      if (localSelectedItinerary) {
-        try {
-          const geojsonData = localSelectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>;
-          console.log("GEOJSON DATA", geojsonData);
-
-          console.log("Fetching itinerary data...");
-          console.log("CHECK 3");
-          console.log("ITINERARY GEOJSON", JSON.stringify(geojsonData));
-
-          if (!geojsonData) {
-            console.warn("No itinerary data available.");
-            return;
-          }
-
-          console.log("Raw Itinerary Data:", JSON.stringify(geojsonData));
-
-          if (!map.getSource("itinerary-source")) {
-            console.log("CHECK 4");
-            console.log(JSON.stringify(geojsonData));
-            map.addSource("itinerary-source", { type: "geojson", data: geojsonData });
-          }
-
-          if (!map.getLayer("itinerary-layer")) {
-            map.addLayer({
-              id: "itinerary-layer",
-              type: "line",
-              source: "itinerary-source",
-            });
-          }
-
-          createItineraryLayer(geojsonData);
-        } catch (error) {
-          console.error("Error processing route data:", error);
-        }
-      } else {
-        console.log("localSelectedItinerary is undefined");
+      createStopsLayer();
+      if (mapRef.current.getLayer("itinerary-layer")) {
+        mapRef.current.removeLayer("itinerary-layer");
+        mapRef.current.removeSource("itinerary-source");
       }
     }
+    if (viewMode === "DEFAULT") {
+      createStopsLayer();
+    }
   };
+
   useEffect(() => {
     console.log("SELECTED ITINERARY (useEffect):", localSelectedItinerary);
-}, [localSelectedItinerary]);
+  }, [localSelectedItinerary]);
 
   return (
-    <div ref={mapContainer} style={{ width: "700px", height: "700px" }}>
-    </div>
+    <div ref={mapContainer} style={{ width: "700px", height: "700px" }}></div>
   );
 };
 
