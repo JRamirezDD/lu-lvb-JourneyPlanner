@@ -1,5 +1,5 @@
-// app/main/page.tsx
-"use client";
+import { generateStaticParams } from "../generateStaticParams";
+export { generateStaticParams };
 
 import MainView from "@/components/MainView";
 

@@ -80,7 +80,7 @@ export const toRequestParameters = (data: any): RequestParameters => {
     return {
         From: data.From,
         To: data.To,
-        Travelmode: Array.isArray(data.Travelmode) ? data.Travelmode.join(", ") : data.Travelmode, // Ensure array format
+        Travelmode: Array.isArray(data.Travelmode) ? data.Travelmode.join(",") : data.Travelmode, // Ensure array format
         date: data.date,
         time: data.time,
         numItineraries: data.numItineraries,
