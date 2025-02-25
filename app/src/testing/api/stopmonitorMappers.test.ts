@@ -23,7 +23,8 @@ describe("stopMonitorService Mappers", () => {
         const rawItem = mockStopsResponse;
         const mockItem = toStopsResponse(rawItem);
         const result = mockItem.toGeoJson();
-        console.log("Stops:" + result)
+        //console.log(JSON.stringify(result, null, 2));
+        expect(result).toBeDefined();
     })
 
     it("should map raw monitor item data to MonitorItem DTO", () => {
@@ -159,4 +160,5 @@ describe("stopMonitorService Mappers", () => {
         expect(result.beforeGivenStop).toEqual([]);
         expect(result.afterGivenStop).toEqual([]);
     });
+    
 });

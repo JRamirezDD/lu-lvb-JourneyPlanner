@@ -7,7 +7,7 @@ describe("autocompleteService Mappers", () => {
         const results = mockAutocompleteResponse.map(toAutocompleteItem);
         const geoJson = toGeoJsonCollection(results);
         
-        //console.log("Full GeoJSON collection:", geoJson);
+        //console.log(JSON.stringify(geoJson, null, 2));
     
         expect(geoJson).toBeDefined(); 
     });

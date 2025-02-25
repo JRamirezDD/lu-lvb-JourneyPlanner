@@ -6,61 +6,41 @@ import { useMapContext } from "@/contexts/mapContext";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { Itinerary } from "@/types/Itinerary";
 import { useEffect, useState } from "react";
+import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.mock";
+import { LayerConfig } from "./ILayer";
+import { toOtpResponse } from "@/api/routingService/mappers";
+import { GeoJSON, FeatureCollection, Point, LineString } from "geojson";
 
-export const createItineraryLayerData = () => {
-    const { selectedItinerary } = useMapContext();
-    
-    // #DELETE - Temporary operation for testing. Normally done by Control Panel
-    const { setSelectedItinerary } = useMapContext(); 
-    const { transportModes } = useSettingsContext(); // Get the transport mode from the settings context
-    useEffect(() => {
-        fetchOtpData({
-            From: "51.331977456411366, 12.39557557569731",
-            To: "51.33849468482282, 12.379760960120947",
-            Travelmode: transportModes,
-            date: "02-05-2025",
-            time: "23:17",
-            numItineraries: 3,
-            arriveBy: false,
-            accessibility: false,
-            shortWalk: false,
-            lessTransfers: false,
-            mockup: false,
-        }).then((response: OtpResponse) => {
-            setSelectedItinerary(new Itinerary(
-                response.plan.from,
-                response.plan.to,
-                response.plan.itineraries[0]
-            ));
-        });
-    }, [fetchOtpData]);
-    // #ENDOFDELETE
+export const createItineraryLayerData = (): FeatureCollection<Point | LineString> | undefined => {
+  console.log("CREATE IT LAYER DATA TRIGGERED");
 
+  const { selectedItinerary } = useMapContext(); // Destructure selectedItinerary
+  console.log("CONTEXT", selectedItinerary);
 
-    const [geojsonData, setGeojsonData] = useState<string>("");
-    useEffect(() => {
-        if (selectedItinerary) {
-            try {
-                // const dtoData = toOtpResponse(otpData); // #DELETE @Marlene don't touch the mappers... the API already handles that.
-                const parsedGeojson = selectedItinerary.toGeoJson();
-                setGeojsonData(parsedGeojson); 
-            } catch (error) {
-                console.error("Error processing route data:", error);
-            }
-        }
-    }, [selectedItinerary]);
+  if (selectedItinerary) {
+    try {
+      const geojsonData = selectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>;
+      console.log("GEOJSON DATA", geojsonData);
+      return geojsonData;
+    } catch (error) {
+      console.error("Error processing route data:", error);
+      return undefined;
+    }
+  } else {
+    console.log("selectedItinerary is undefined");
+    return undefined;
+  }
 
-    // Print the geojsonData to the console (if available)
-    console.log(geojsonData); 
-
-    return JSON.parse(geojsonData); // This component doesn't render any visual elements
+/*
+setSelectedItinerary(toOtpResponse(mockOtpResponse).plan.itineraries[0]);
+  const selectedItinerary = toOtpResponse(mockOtpResponse).plan.itineraries[0];
+  console.log("SELECTED ITINERARY:", selectedItinerary);
+  const geojsonData = selectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>; // Type assertion
+  console.log("GEOJSON DATA", geojsonData);
+*/
 };
 
-
-
-import { LayerConfig } from "./ILayer";
-
-export const createItineraryLayer = (geojsonData: GeoJSON.FeatureCollection | undefined): LayerConfig => ({
+export const createItineraryLayer = (geojsonData: FeatureCollection<Point | LineString> | undefined): LayerConfig => ({
   id: "itinerary-layer",
   type: "line",
   source: {

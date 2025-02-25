@@ -21,8 +21,8 @@ export class TagItem extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geoJson = {
             type: "Feature",
             properties: {
                 stop_id: this.stop_id,
@@ -32,7 +32,8 @@ export class TagItem extends GeoJsonConvertible {
                 type: "Point",
                 coordinates: [] 
             }
-        });
+        };
+        return geoJson;
     }
 }
 
@@ -59,8 +60,8 @@ export class AutocompleteItem extends GeoJsonConvertible {
         super();
     }
 
-    toGeoJson(): string {
-        return JSON.stringify({
+    toGeoJson(): object {
+        const geoJson = {
             type: "Feature",
             geometry: {
                 type: "Point",
@@ -77,9 +78,10 @@ export class AutocompleteItem extends GeoJsonConvertible {
                 priority: this.priority,
                 similarity: this.sim,
                 type: this.ptype,
-                tags: this.tags ? JSON.parse(this.tags.toGeoJson()).properties : null
+                tags: this.tags ? this.tags.toGeoJson() : null
             }
-        });
+        };
+        return geoJson;
     }
 }
 
@@ -87,7 +89,7 @@ export class AutocompleteItem extends GeoJsonConvertible {
 export function toGeoJsonCollection(items: AutocompleteItem[]): string {
     return JSON.stringify({
         type: "FeatureCollection",
-        features: items.map(item => JSON.parse(item.toGeoJson()))
+        features: items.map(item => item.toGeoJson())
     });
 }
 
