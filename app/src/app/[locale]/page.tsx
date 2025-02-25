@@ -1,7 +1,7 @@
-// app/LocaleHome.tsx (or your current page file)
-import MainView from "@/components/MainView";
 import { generateStaticParams } from "./generateStaticParams";
 export { generateStaticParams };
+
+import MainView from "@/components/MainView";
 
 export default async function LocaleHome({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
