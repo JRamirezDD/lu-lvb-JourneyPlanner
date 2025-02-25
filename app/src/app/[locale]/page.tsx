@@ -14,10 +14,6 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
         {/* MainView fills this section */}
         <MainView />
       </main>
-      {/* Optional Footer */}
-      <footer style={{ padding: "1rem", backgroundColor: "#f0f0f0" }}>
-        Footer Content
-      </footer>
     </div>
   );
 }

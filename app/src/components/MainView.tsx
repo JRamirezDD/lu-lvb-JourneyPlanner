@@ -1,19 +1,91 @@
 "use client";
+import { useEffect, useState } from "react";
 import Map from "@/components/Map";
 import ControlPanel from "./controlPanel/ControlPanel";
 
 const MainView: React.FC = () => {
+  const [isVertical, setIsVertical] = useState(false);
+
+  // Listen for window resizes and toggle vertical mode when width <= 900px.
+  useEffect(() => {
+    const handleResize = () => {
+      setIsVertical(window.innerWidth <= 900);
+    };
+    // Set initial mode.
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Define container style based on the mode.
+  const containerStyle = isVertical
+    ? {
+        display: "grid",
+        gridTemplateRows: "1fr auto", // Map takes all remaining space, control panel takes auto height.
+        width: "100%",
+        height: "100%",
+        fontFamily: "Arial, sans-serif",
+      }
+    : {
+        display: "grid",
+        gridTemplateColumns: "450px 100%", // ControlPanel fixed width and Map takes rest.
+        width: "100%",
+        height: "100%",
+        fontFamily: "Arial, sans-serif",
+      };
+
   return (
-    <main className="grid grid-cols-[25%_75%] h-screen w-screen">
-      {/* Left Column: Control Panel */}
-      <div className="relative overflow-hidden h-full w-full p-2.5">
-        <ControlPanel />
-      </div>
-      {/* Right Column: Map */}
-      <div className="relative h-full w-full overflow-hidden p-2.5">
-        <Map />
-      </div>
-    </main>
+    <div style={containerStyle}>
+      {isVertical ? (
+        // Vertical mode: Map on top, ControlPanel below.
+        <>
+          <div
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <Map />
+          </div>
+          <div
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              width: "100%",
+              height: "auto",
+            }}
+          >
+            <ControlPanel />
+          </div>
+        </>
+      ) : (
+        // Horizontal mode: ControlPanel on the left, Map on the right.
+        <>
+          <div
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <ControlPanel />
+          </div>
+          <div
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <Map />
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 
