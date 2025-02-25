@@ -11,7 +11,7 @@ export class Itinerary extends GeoJsonConvertible {
     }
 
     // Generate the GeoJSON structure for the entire Plan object
-    toGeoJson(): string {
+    toGeoJson(): object {
         // Use the toGeoJsonFeature method to generate the FeatureCollection
         const geojsonFeatureCollection = {
             type: "FeatureCollection",
@@ -23,6 +23,6 @@ export class Itinerary extends GeoJsonConvertible {
         };
 
         // Convert the object to a pretty-printed GeoJSON string
-        return JSON.stringify(geojsonFeatureCollection, null, 2);
+        return geojsonFeatureCollection;
     }
 }
