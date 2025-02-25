@@ -32,7 +32,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode; initialLang
     useEffect(() => {
         async function loadTranslations() {
             try {
-                const response = await import(`@/i18n/${language}.json`);
+                const response = await import(`@/intl/${language}.json`);
                 setTranslations(response.default);
             } catch (error) {
                 console.error("Failed to load translations:", error);
