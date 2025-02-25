@@ -15,8 +15,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
       </header>
       {/* Main content area */}
       <main style={{ flex: 1, display: "flex", overflow: "hidden" }}>
-        {/* MainView fills this section */}
-        <MainView />
+          <MainView />
       </main>
       {/* Optional Footer */}
       <footer style={{ padding: "1rem", backgroundColor: "#f0f0f0" }}>
@@ -25,3 +24,4 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
     </div>
   );
 }
+

@@ -13,7 +13,7 @@ const MainView: React.FC = () => {
       }}
     >
       {/* Left Column: Control Panel */}
-      <div style={{ position: "relative", overflow: "hidden", height: "100%" }}>
+      <div style={{ position: "relative", overflow: "hidden", height: "100%", width: "100%" }}>
         <ControlPanel />
       </div>
       {/* Right Column: Map */}
