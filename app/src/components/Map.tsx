@@ -33,7 +33,7 @@ const Map: React.FC = ({ }) => {
     map.on("style.load", () => {
       layerManagerRef.current = new LayerManager(map);
       mapRef.current = map;
-      setMapLoaded(true); // Set mapLoaded to true when the map is loaded
+      setMapLoaded(true); 
       loadLayers();
     });
 
@@ -66,22 +66,94 @@ const Map: React.FC = ({ }) => {
           console.log("Data source added");
         }
         if (!mapRef.current.getLayer("itinerary-layer")) {
-          mapRef.current.addLayer({
-            id: "itinerary-layer",
+
+          //WALK LAYER: blue dotted line
+          mapRef.current.addLayer({ 
+            id: "walk-layer",
             type: "line",
             source: "itinerary-source",
             layout: {
-              "line-join": "round",
-              "line-cap": "round",
+                "line-join": "round",
+                "line-cap": "round",
             },
             paint: {
-              "line-color": "#007cbf",
-              "line-width": 2,
+                "line-color": "#007cbf",
+                "line-width": 4,
+                "line-dasharray": [4, 2]
             },
-          });
-          console.log("itinerary layer added");
+            filter: ["==", ["get", "mode"], "WALK"],
+        });
+          console.log("walk layer added");
+
+         //s bahn LAYER: full blue line
+         mapRef.current.addLayer({ 
+          id: "suburb-layer",
+          type: "line",
+          source: "itinerary-source",
+          layout: {
+              "line-join": "round",
+              "line-cap": "round",
+          },
+          paint: {
+              "line-color": "red",
+              "line-width": 4,
+          },
+          filter: ["==", ["get", "mode"], "SUBURB"],
+        });
+        console.log("s-bahn layer added");
+
+         //tramLAYER: full blue line
+         mapRef.current.addLayer({ 
+          id: "tram-layer",
+          type: "line",
+          source: "itinerary-source",
+          layout: {
+              "line-join": "round",
+              "line-cap": "round",
+          },
+          paint: {
+              "line-color": "blue",
+              "line-width": 4,
+          },
+          filter: ["==", ["get", "mode"], "TRAM"],
+        });
+        console.log("tram layer added");
+
+          //TRAIN LAYER: full red line
+
+          //LEG START AND END LAYER: black circles
+          mapRef.current.addLayer({ 
+            id: "legstartend-layer",
+            type: "circle",
+            source: "itinerary-source",
+            paint: {
+              "circle-radius": 5,
+              "circle-color": "white",
+              "circle-stroke-width": 2,
+              "circle-stroke-color": "black",            },
+              filter: [
+                "any",
+                ["==", ["get", "type"], "Leg Start"],
+                ["==", ["get", "type"], "Leg End"]
+            ]
+        });
+          console.log("leg start layer added");
         }
-        console.log("creating IT layer using geojson data");
+
+          //LEG START AND END LAYER: black circles
+          mapRef.current.addLayer({ 
+            id: "intermediatestops-layer",
+            type: "circle",
+            source: "itinerary-source",
+            paint: {
+              "circle-radius": 3,
+              "circle-color": "white",
+              "circle-stroke-width": 2,
+              "circle-stroke-color": "black",            },
+            filter: ["==", ["get", "type"], "Intermediate Stop"],
+        });
+          console.log("leg start layer added");
+        
       } catch (error) {
         console.error("Error processing route data:", error);
       }
