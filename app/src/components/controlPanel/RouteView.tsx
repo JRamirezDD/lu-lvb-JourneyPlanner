@@ -73,11 +73,11 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
             {otpData.plan.itineraries.slice(0, 5).map((itinerary, idx) => (
               <li
                 key={idx}
-                className="border border-[#1a365d]/10 rounded-lg hover:bg-[#fef9c3]/20 cursor-pointer transition-colors overflow-hidden"
+                className="border border-primary-blue/10 rounded-lg hover:bg-primary-yellow/10 cursor-pointer transition-colors overflow-hidden"
                 onClick={() => handleRouteClick(idx)}
               >
                 {/* Time Header */}
-                <div className="flex items-center justify-between p-2 bg-[#1a365d]/5">
+                <div className="flex items-center justify-between p-2 bg-primary-yellow/5">
                   <span className="font-medium">
                     {formatTime(itinerary.startTime)} - {formatTime(itinerary.endTime)}
                   </span>

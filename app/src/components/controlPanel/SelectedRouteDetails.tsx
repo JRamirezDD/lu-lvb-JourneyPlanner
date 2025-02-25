@@ -174,7 +174,7 @@ const SelectedRouteDetails = () => {
   return (
     <div className="flex flex-col w-full bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b bg-[#1a365d] text-white">
+      <div className="flex items-center justify-between p-4 border-b bg-primary-yellow text-primary-blue">
         <div className="flex items-center gap-4">
           <div>
             <div className="text-sm opacity-80">
@@ -189,7 +189,7 @@ const SelectedRouteDetails = () => {
             onClick={handlePrevRoute}
             disabled={selectedItineraryIndex === 0}
             className={`p-1 rounded ${
-              selectedItineraryIndex === 0 ? 'text-gray-400' : 'hover:bg-[#2d4a7c]'
+              selectedItineraryIndex === 0 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'
             }`}
           >
             <ChevronLeft size={24} />
@@ -201,7 +201,7 @@ const SelectedRouteDetails = () => {
             onClick={handleNextRoute}
             disabled={selectedItineraryIndex === totalRoutes - 1}
             className={`p-1 rounded ${
-              selectedItineraryIndex === totalRoutes - 1 ? 'text-gray-400' : 'hover:bg-[#2d4a7c]'
+              selectedItineraryIndex === totalRoutes - 1 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'
             }`}
           >
             <ChevronRight size={24} />

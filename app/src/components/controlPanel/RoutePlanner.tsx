@@ -315,7 +315,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         {/* Departure Filter Button */}
         <button
           onClick={() => setShowDepartureFilter(!showDepartureFilter)}
-          className="flex items-center justify-between bg-[#1a365d] text-white px-4 py-2 rounded-md transition-all hover:bg-[#2d4a7c]"
+          className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
           suppressHydrationWarning
         >
           <div className="flex items-center gap-2">
@@ -333,7 +333,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         {/* Transport Filter Button */}
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center justify-between bg-[#1a365d] text-white px-4 py-2 rounded-md transition-all hover:bg-[#2d4a7c]"
+          className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
         >
           <div className="flex items-center gap-2">
             <Filter size={18} />
@@ -369,8 +369,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         className={`p-2 rounded w-full transition-colors ${
           !selectedOrigin || !selectedDestination 
             ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-[#1a365d] hover:bg-[#2d4a7c]'
-        } text-white`}
+            : 'bg-primary-yellow text-primary-blue hover:bg-primary-yellow/80'
+        }`}
       >
         {translations?.ControlPanel?.planner?.seeRoutes || "See Routes"}
       </button>
