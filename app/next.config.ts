@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
     reactStrictMode: true,
     trailingSlash: false, // ? not supported by GitHub Pages? Must be set to false.
     env: {
+        NEXT_PUBLIC_BASE_PATH: '/lu-lvb-JourneyPlanner',
+
         NEXT_PUBLIC_USE_MOCK: process.env.NEXT_PUBLIC_USE_MOCK,
 
         NEXT_PUBLIC_LVB_PROXY_ADDRESS: process.env.NEXT_PUBLIC_LVB_PROXY_ADDRESS,
