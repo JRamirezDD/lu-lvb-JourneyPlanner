@@ -4,20 +4,13 @@ import ControlPanel from "./controlPanel/ControlPanel";
 
 const MainView: React.FC = () => {
   return (
-    <main
-      style={{
-        display: "grid",
-        gridTemplateColumns: "30% 70%",
-        height: "100vh",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
+    <main className="grid grid-cols-[25%_75%] h-screen w-screen">
       {/* Left Column: Control Panel */}
-      <div style={{ position: "relative", overflow: "hidden", height: "100%" }}>
+      <div className="relative overflow-hidden h-full w-full p-2.5">
         <ControlPanel />
       </div>
       {/* Right Column: Map */}
-      <div style={{ position: "relative", height: "100%", width: "100%", overflow: "hidden" }}>
+      <div className="relative h-full w-full overflow-hidden p-2.5">
         <Map />
       </div>
     </main>

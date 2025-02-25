@@ -9,10 +9,6 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      {/* Header */}
-      <header style={{ padding: "1rem", backgroundColor: "#f0f0f0" }}>
-        <h1>My Application</h1>
-      </header>
       {/* Main content area */}
       <main style={{ flex: 1, display: "flex", overflow: "hidden" }}>
         {/* MainView fills this section */}
