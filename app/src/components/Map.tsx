@@ -7,16 +7,17 @@ import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./map/layers/ILayer";
 import { GeoJSON, FeatureCollection, Feature, Point, LineString } from "geojson";
-import { createItineraryLayer } from "./map/layers/ItineraryLayer";
+import { createItineraryLayerData } from "./map/layers/ItineraryLayer";
 
-const Map: React.FC = ({  }) => {
+const Map: React.FC = ({ }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const layerManagerRef = useRef<LayerManager | null>(null);
 
   const { viewMode } = useUIContext();
-  const { selectedStop, setSelectedStop, selectedItinerary } = useMapContext();
-  const [localSelectedItinerary, setLocalSelectedItinerary] = useState<any>(null);
+
+  const { selectedStop, setSelectedStop } = useMapContext();
+  const [localSelectedItinerary, setLocalSelectedItinerary] = useState<FeatureCollection<Point | LineString> | undefined>(undefined);
 
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return;
@@ -47,34 +48,50 @@ const Map: React.FC = ({  }) => {
 
   useEffect(() => {
     if (viewMode === "ITINERARY" || viewMode === "DEFAULT") {
-      setLocalSelectedItinerary(selectedItinerary);
-      console.log("localselecteditinerary set to selecteditinerary from context", localSelectedItinerary);
+      const data = createItineraryLayerData();
+      setLocalSelectedItinerary(data);
+      console.log("localselecteditinerary set to selecteditinerary from context", data);
+    } else {
+      setLocalSelectedItinerary(undefined);
     }
-  }, [viewMode, selectedItinerary]);
+  }, [viewMode]);
 
   useEffect(() => {
-    if (mapRef.current && selectedItinerary) {      
+    if (mapRef.current && localSelectedItinerary) {
       try {
         console.log("itinerary useeffect triggered");
-        const geojsonData = localSelectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>;
+        const geojsonData = localSelectedItinerary;
         if (!mapRef.current.getSource("itinerary-source")) {
           mapRef.current.addSource("itinerary-source", { type: "geojson", data: geojsonData });
-          console.log("Data source added")
+          console.log("Data source added");
         }
         if (!mapRef.current.getLayer("itinerary-layer")) {
           mapRef.current.addLayer({
             id: "itinerary-layer",
             type: "line",
             source: "itinerary-source",
+            layout: {
+              "line-join": "round",
+              "line-cap": "round",
+            },
+            paint: {
+              "line-color": "#007cbf",
+              "line-width": 2,
+            },
           });
+          console.log("itinerary layer added");
         }
         console.log("creating IT layer using geojson data");
-        createItineraryLayer(geojsonData);
       } catch (error) {
         console.error("Error processing route data:", error);
       }
+    } else {
+      if (mapRef.current && mapRef.current.getLayer("itinerary-layer")) {
+        mapRef.current.removeLayer("itinerary-layer");
+        mapRef.current.removeSource("itinerary-source");
+      }
     }
-  }, [localSelectedItinerary, viewMode]);
+  }, [mapRef.current, localSelectedItinerary, viewMode]); // Included mapRef.current as dependency
 
   const createStopsLayer = () => {
     if (!mapRef.current) return;
@@ -121,13 +138,11 @@ const Map: React.FC = ({  }) => {
 
     if (viewMode === "ITINERARY") {
       createStopsLayer();
-      if (mapRef.current.getLayer("itinerary-layer")) {
-        mapRef.current.removeLayer("itinerary-layer");
-        mapRef.current.removeSource("itinerary-source");
+    } else {
+      if (mapRef.current.getLayer("stops-layer")) {
+        mapRef.current.removeLayer("stops-layer");
+        mapRef.current.removeSource("stops-source");
       }
-    }
-    if (viewMode === "DEFAULT") {
-      createStopsLayer();
     }
   };
 
@@ -136,10 +151,7 @@ const Map: React.FC = ({  }) => {
   }, [localSelectedItinerary]);
 
   return (
-    <div 
-      ref={mapContainer} 
-      style={{ width: "100%", height: "100%" }}
-    ></div>
+    <div ref={mapContainer} style={{ width: "100%", height: "100%" }}></div>
   );
 };
 
