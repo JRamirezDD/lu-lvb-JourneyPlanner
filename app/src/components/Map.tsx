@@ -9,7 +9,7 @@ import { LayerManager } from "./map/layers/ILayer";
 import { GeoJSON, FeatureCollection, Feature, Point, LineString } from "geojson";
 import { createItineraryLayer } from "./map/layers/ItineraryLayer";
 
-const Map: React.FC = () => {
+const Map: React.FC = ({  }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const layerManagerRef = useRef<LayerManager | null>(null);
@@ -53,8 +53,7 @@ const Map: React.FC = () => {
   }, [viewMode, selectedItinerary]);
 
   useEffect(() => {
-    // if (mapRef.current && localSelectedItinerary && viewMode === "DEFAULT") {
-      if (mapRef.current && selectedItinerary) {      
+    if (mapRef.current && selectedItinerary) {      
       try {
         console.log("itinerary useeffect triggered");
         const geojsonData = localSelectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>;
@@ -137,7 +136,10 @@ const Map: React.FC = () => {
   }, [localSelectedItinerary]);
 
   return (
-    <div ref={mapContainer} style={{ width: "700px", height: "700px" }}></div>
+    <div 
+      ref={mapContainer} 
+      style={{ width: "100%", height: "100%" }}
+    ></div>
   );
 };
 
