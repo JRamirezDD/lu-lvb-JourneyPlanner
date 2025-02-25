@@ -6,18 +6,17 @@ import stopsLayer from "./map/layers/StopsLayer";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./map/layers/ILayer";
-import { GeoJSON, FeatureCollection, Feature, Point, LineString } from "geojson";
+import { GeoJSON, FeatureCollection, Point, LineString } from "geojson";
 import { createItineraryLayerData } from "./map/layers/ItineraryLayer";
 
 const Map: React.FC = ({ }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const layerManagerRef = useRef<LayerManager | null>(null);
-
   const { viewMode } = useUIContext();
-
   const { selectedStop, setSelectedStop } = useMapContext();
   const [localSelectedItinerary, setLocalSelectedItinerary] = useState<FeatureCollection<Point | LineString> | undefined>(undefined);
+  const [mapLoaded, setMapLoaded] = useState(false); // Add a mapLoaded state
 
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return;
@@ -34,6 +33,7 @@ const Map: React.FC = ({ }) => {
     map.on("style.load", () => {
       layerManagerRef.current = new LayerManager(map);
       mapRef.current = map;
+      setMapLoaded(true); // Set mapLoaded to true when the map is loaded
       loadLayers();
     });
 
@@ -57,7 +57,7 @@ const Map: React.FC = ({ }) => {
   }, [viewMode]);
 
   useEffect(() => {
-    if (mapRef.current && localSelectedItinerary) {
+    if (mapRef.current && localSelectedItinerary && mapLoaded) { // Check mapLoaded
       try {
         console.log("itinerary useeffect triggered");
         const geojsonData = localSelectedItinerary;
@@ -91,7 +91,7 @@ const Map: React.FC = ({ }) => {
         mapRef.current.removeSource("itinerary-source");
       }
     }
-  }, [mapRef.current, localSelectedItinerary, viewMode]); // Included mapRef.current as dependency
+  }, [mapRef.current, localSelectedItinerary, viewMode, mapLoaded]); // Add mapLoaded to dependency array
 
   const createStopsLayer = () => {
     if (!mapRef.current) return;

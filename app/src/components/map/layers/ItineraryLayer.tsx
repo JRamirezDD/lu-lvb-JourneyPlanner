@@ -30,9 +30,6 @@ export const createItineraryLayerData = (): FeatureCollection<Point | LineString
     console.log("selectedItinerary is undefined");
     return undefined;
   }
-
-
-
 };
 
 export const createItineraryLayer = (geojsonData: FeatureCollection<Point | LineString> | undefined): LayerConfig => ({
