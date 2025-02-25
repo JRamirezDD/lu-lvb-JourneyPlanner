@@ -30,12 +30,10 @@ const ControlPanel = () => {
           <button onClick={() => setActiveView("station")}>Station</button>
         </nav>
 
-        {activeView === "planner" && (
-          <RoutePlanner setActiveView={setActiveView} />
-        )}
-        {activeView === "routes" && <RouteView setActiveView={setActiveView} />}
-        {activeView === "details" && <SelectedRouteDetails />}
-        {activeView === "station" && <StationDetails />}
+            {activeView === "planner" && <RoutePlanner setActiveView={setActiveView} />}
+            {activeView === "routes" && <RouteView setActiveView={setActiveView} />}
+            {activeView === "details" && <SelectedRouteDetails />}
+            {activeView === "station" && <StationDetails />}
       </div>
     </div>
   );
