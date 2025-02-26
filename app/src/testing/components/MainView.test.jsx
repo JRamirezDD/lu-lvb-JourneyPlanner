@@ -1,6 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import MainView from "@/components/MainView";
+import { SettingsProvider } from "@/contexts/settingsContext"; 
+import { UIProvider } from "@/contexts/uiContext"; 
+import { MapProvider } from "@/contexts/mapContext";
+import { AutocompleteDataProvider } from "@/contexts/autocompleteContext"; 
+import { OtpDataProvider } from "@/contexts/otpContext";
+import { StopmonitorDataProvider } from "@/contexts/stopmonitorContext";
 
 // Mock mapbox-gl
 jest.mock('mapbox-gl', () => ({
@@ -20,7 +26,21 @@ jest.mock('mapbox-gl', () => ({
 
 describe("MainView Integration Test", () => {
   test("renders ControlPanel with navigation buttons and the Map component", () => {
-    render(<MainView />);
+    render(
+      <SettingsProvider initialLanguage="en">
+        <UIProvider>
+          <MapProvider>
+            <AutocompleteDataProvider>
+              <OtpDataProvider>
+                <StopmonitorDataProvider>
+                  <MainView />
+                </StopmonitorDataProvider>
+              </OtpDataProvider>
+            </AutocompleteDataProvider>
+          </MapProvider>
+        </UIProvider>
+      </SettingsProvider>
+    );
 
     // Verify that control panel and buttons have been rendered.
     expect(screen.getByRole("button", { name: /plan/i })).toBeInTheDocument();
