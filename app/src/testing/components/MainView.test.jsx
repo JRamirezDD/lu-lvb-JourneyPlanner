@@ -1,12 +1,13 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import MainView from "@/components/MainView";
-import { SettingsProvider } from "@/contexts/settingsContext"; 
-import { UIProvider } from "@/contexts/uiContext"; 
+import { SettingsProvider } from "@/contexts/settingsContext";
+import { UIProvider } from "@/contexts/uiContext";
 import { MapProvider } from "@/contexts/mapContext";
-import { AutocompleteDataProvider } from "@/contexts/autocompleteContext"; 
-import { OtpDataProvider } from "@/contexts/otpContext";
-import { StopmonitorDataProvider } from "@/contexts/stopmonitorContext";
+import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDataContext";
+import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
+import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataContext";
+
 
 // Mock mapbox-gl
 jest.mock('mapbox-gl', () => ({
