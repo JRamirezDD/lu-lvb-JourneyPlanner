@@ -44,10 +44,10 @@ describe("MainView Integration Test", () => {
     );
 
     // Verify that control panel and buttons have been rendered.
-    expect(screen.getByRole("button", { name: /plan/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /routes/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /details/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /station/i })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /plan/i })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /routes/i })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /details/i })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /station/i })).toBeInTheDocument();
 
     // Verify that the Map component has been rendered by checking the test id.
     expect(screen.getByTestId("map-container")).toBeInTheDocument();
