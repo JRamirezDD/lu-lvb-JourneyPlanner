@@ -20,6 +20,7 @@ export const UIProvider: React.FC<{ children: React.ReactNode }> = ({ children }
 
     // Function to update the view mode.
     const setViewMode = (mode: ViewMode) => {
+        console.log("Setting view mode to", mode);
         setViewModeState(mode);
     };
 
