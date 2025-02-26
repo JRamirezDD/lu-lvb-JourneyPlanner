@@ -12,22 +12,49 @@ const ControlPanel = () => {
   >("planner");
 
   return (
-    <div className="w-full h-full bg-white shadow-lg overflow-y-auto">
+    <div className="w-full h-full bg-white shadow-lg overflow-y-auto text-primary-blue">
       <div className="p-4 pb-32">
         <nav className="flex space-x-2 mb-4">
           <button
             onClick={() => setActiveView("planner")}
             className={`px-4 py-2 rounded transition-colors ${
               activeView === "planner"
-                ? "bg-[#1a365d] text-white"
-                : "hover:bg-[#fef9c3]"
+                ? "bg-primary-yellow text-primary-blue"
+                : "hover:bg-primary-yellow/10"
             }`}
           >
             Plan
           </button>
-          <button onClick={() => setActiveView("routes")}>Routes</button>
-          <button onClick={() => setActiveView("details")}>Details</button>
-          <button onClick={() => setActiveView("station")}>Station</button>
+          <button 
+            onClick={() => setActiveView("routes")}
+            className={`px-4 py-2 rounded transition-colors ${
+              activeView === "routes"
+                ? "bg-primary-yellow text-primary-blue"
+                : "hover:bg-primary-yellow/10"
+            }`}
+          >
+            Routes
+          </button>
+          <button
+            onClick={() => setActiveView("details")}
+            className={`px-4 py-2 rounded transition-colors ${
+              activeView === "details"
+                ? "bg-primary-yellow text-primary-blue"
+                : "hover:bg-primary-yellow/10"
+            }`}
+          >
+            Details
+          </button>
+          <button
+            onClick={() => setActiveView("station")}
+            className={`px-4 py-2 rounded transition-colors ${
+              activeView === "station"
+                ? "bg-primary-yellow text-primary-blue"
+                : "hover:bg-primary-yellow/10"
+            }`}
+          >
+            Station
+          </button>
         </nav>
 
             {activeView === "planner" && <RoutePlanner setActiveView={setActiveView} />}

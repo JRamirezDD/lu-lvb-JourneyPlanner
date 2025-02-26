@@ -40,7 +40,7 @@
             "requiredTicket": "Required ticket",
             "walkTime": "Walk {duration}",
             "walkDistance": "{distance} walking",
-            "platform": "Platform {number}",
+            "platform": "Method {number}",
             "underground": "Underground platform",
             "stops": "{count} stops",
             "duration": "{duration} min",

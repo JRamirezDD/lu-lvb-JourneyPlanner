@@ -40,7 +40,7 @@
             "requiredTicket": "Erforderliche Fahrkarte",
             "walkTime": "{duration} min Fußweg",
             "walkDistance": "{distance} zu Fuß",
-            "platform": "Gleis {number}",
+            "platform": "Methode {number}",
             "underground": "Untergrundbahnsteig",
             "stops": "{count} Haltestellen",
             "duration": "{duration} Min",

@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "@/app/globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import { SettingsProvider } from "@/contexts/settingsContext";
@@ -9,14 +9,10 @@ import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDat
 import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
 import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataContext";
 
-const geistSans = Geist({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 export default async function LocaleLayout({
@@ -34,7 +30,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={language}>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${roboto.className} antialiased`}>
 
           <SettingsProvider initialLanguage={language}>
           <UIProvider>

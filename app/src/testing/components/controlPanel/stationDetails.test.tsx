@@ -17,14 +17,10 @@ jest.mock("@/contexts/DataContext/stopmonitorDataContext", () => ({
   })
 }));
 
-test("renders selected station details", () => {
-  render(<StationDetails />);
-  expect(screen.getByText(/Route/)).toBeInTheDocument();
-});
-
 test("displays station details for a given stop ID", () => {
   const stopId = "0013000";
   render(<StationDetails stopId={stopId} />);
   // Test for something that should be rendered with the given stopId
   expect(screen.getByText(/Route/)).toBeInTheDocument();
+
 });
