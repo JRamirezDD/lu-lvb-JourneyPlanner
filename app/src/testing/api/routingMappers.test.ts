@@ -43,54 +43,34 @@ describe("routingService Mappers", () => {
             }
         });
     });
-/*
-    it("should map raw leg data to Leg DTO", () => {
-        const rawLeg = mockOtpResponse.plan.itineraries[0].legs[0];
-        const result = toLeg(rawLeg);
-
-        expect(result).toEqual(
-            new Leg(
-                rawLeg.startTime,
-                rawLeg.endTime,
-                rawLeg.departureDelay,
-                rawLeg.arrivalDelay,
-                rawLeg.realTime,
-                rawLeg.distance,
-                rawLeg.mode as TransportMode,
-                new Location(rawLeg.from.name, rawLeg.from.lat, rawLeg.from.lon),
-                new Location(rawLeg.to.name, rawLeg.to.lat, rawLeg.to.lon),
-                new LegGeometry(
-                    rawLeg.legGeometry.points.map((point: any) => ({ lat: point.lat, lon: point.lon }))
-                ),
-                rawLeg.duration,
-                rawLeg.transitLeg,
-                rawLeg.intermediateStops?.map(toLocation),
-                rawLeg.rentedBike,
-                rawLeg.alerts?.map(toAlert)
-            )
-        );
-    });
-
-    it("should map raw alert data to Alert DTO", () => {
-        const rawAlert = mockOtpResponse.plan?.itineraries?.[0]?.legs?.[1]?.alerts?.[0];
-
-        if (rawAlert) {
-            const result = toAlert(rawAlert);
+    /*
+        it("should map raw leg data to Leg DTO", () => {
+            const rawLeg = mockOtpResponse.plan.itineraries[0].legs[0];
+            const result = toLeg(rawLeg);
+    
             expect(result).toEqual(
-                new Alert(
-                    rawAlert.effectiveStartDate,
-                    rawAlert.effectiveEndDate,
-                    rawAlert.alertDescriptionText,
-                    rawAlert.alertCategory,
-                    rawAlert.alertUrl ?? undefined,
-                    rawAlert.alertHeaderText ?? undefined
+                new Leg(
+                    rawLeg.startTime,
+                    rawLeg.endTime,
+                    rawLeg.departureDelay,
+                    rawLeg.arrivalDelay,
+                    rawLeg.realTime,
+                    rawLeg.distance,
+                    rawLeg.mode as TransportMode,
+                    new Location(rawLeg.from.name, rawLeg.from.lat, rawLeg.from.lon),
+                    new Location(rawLeg.to.name, rawLeg.to.lat, rawLeg.to.lon),
+                    new LegGeometry(
+                        rawLeg.legGeometry.points.map((point: any) => ({ lat: point.lat, lon: point.lon }))
+                    ),
+                    rawLeg.duration,
+                    rawLeg.transitLeg,
+                    rawLeg.intermediateStops?.map(toLocation),
+                    rawLeg.rentedBike,
+                    rawLeg.alerts?.map(toAlert)
                 )
             );
-        } else {
-            expect(toAlert(rawAlert)).toBeUndefined();
-        }
-    });
-*/
+        });
+        */
     it("should map raw itinerary data to Itinerary DTO", () => {
         const rawItinerary = mockOtpResponse.plan.itineraries[0];
         const result = toOtpItinerary(rawItinerary);
