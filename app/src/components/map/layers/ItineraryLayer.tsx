@@ -13,14 +13,14 @@ import { GeoJSON, FeatureCollection, Point, LineString } from "geojson";
 
 export const createItineraryLayerData = (): FeatureCollection<Point | LineString> | undefined => {
   console.log("CREATE IT LAYER DATA TRIGGERED");
-
-  const { selectedItinerary } = useMapContext(); // Destructure selectedItinerary
-  console.log("CONTEXT", selectedItinerary);
+  //setSelectedItinerary(toOtpResponse(mockOtpResponse).plan.itineraries[0]);
+  const selectedItinerary = toOtpResponse(mockOtpResponse).plan.itineraries[0];
 
   if (selectedItinerary) {
     try {
-      const geojsonData = selectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>;
-      console.log("GEOJSON DATA", geojsonData);
+      console.log("SELECTED ITINERARY:", selectedItinerary);
+      const geojsonData = selectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>; // Type assertion
+      console.log("GEOJSON DATA", (geojsonData.features));
       return geojsonData;
     } catch (error) {
       console.error("Error processing route data:", error);
@@ -30,14 +30,6 @@ export const createItineraryLayerData = (): FeatureCollection<Point | LineString
     console.log("selectedItinerary is undefined");
     return undefined;
   }
-
-/*
-setSelectedItinerary(toOtpResponse(mockOtpResponse).plan.itineraries[0]);
-  const selectedItinerary = toOtpResponse(mockOtpResponse).plan.itineraries[0];
-  console.log("SELECTED ITINERARY:", selectedItinerary);
-  const geojsonData = selectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>; // Type assertion
-  console.log("GEOJSON DATA", geojsonData);
-*/
 };
 
 export const createItineraryLayer = (geojsonData: FeatureCollection<Point | LineString> | undefined): LayerConfig => ({

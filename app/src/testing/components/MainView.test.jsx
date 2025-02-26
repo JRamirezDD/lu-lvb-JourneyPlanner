@@ -8,6 +8,14 @@ import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDat
 import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
 import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataContext";
 
+// Integration Test verifies that MainView components (map and control panel) are being rendered as expected.
+    // Some examples of fail scenarios include:
+        // Invalid API keys
+        // Invalid data being passed to the component
+        // Incorrect data formatting
+        // Bad code logic
+            // Sometimes code will run with npm run dev, but when building the project errors will occur. This test aims to prevent that from occurring with the UI components.
+        // etc...
 
 // Mock mapbox-gl
 jest.mock('mapbox-gl', () => ({
