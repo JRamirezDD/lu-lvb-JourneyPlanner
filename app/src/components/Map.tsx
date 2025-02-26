@@ -138,6 +138,21 @@ const Map: React.FC = ({ }) => {
           console.log("tram layer added");
 
           //TRAIN LAYER: full red line
+          mapRef.current.addLayer({
+            id: "train-layer",
+            type: "line",
+            source: "itinerary-source",
+            layout: {
+              "line-join": "round",
+              "line-cap": "round",
+            },
+            paint: {
+              "line-color": "red",
+              "line-width": 4,
+            },
+            filter: ["==", ["get", "mode"], "TRAIN"],
+          });
+          console.log("train layer added");
 
           //LEG START AND END LAYER: black circles
           mapRef.current.addLayer({
