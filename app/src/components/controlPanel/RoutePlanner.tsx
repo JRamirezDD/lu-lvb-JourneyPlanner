@@ -189,7 +189,9 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
     setSelectedIndex(-1);
   
     // Ensure input field loses focus
-    document.activeElement instanceof HTMLElement && document.activeElement.blur();
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   };
   
   // Add click outside handler
@@ -273,9 +275,14 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         setSelectedIndex(-1);
         break;
       case 'Escape':
-        isOrigin ? setShowOriginSuggestions(false) : setShowDestinationSuggestions(false);
+        if (isOrigin) {
+          setShowOriginSuggestions(false);
+        } else {
+          setShowDestinationSuggestions(false);
+        }
         setSelectedIndex(-1);
         break;
+        
     }
   };
 
@@ -296,7 +303,11 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
             setSelectedIndex(-1);
           }}
           onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
-          onFocus={() => origin.length >= 2 && setShowOriginSuggestions(true)}
+          onFocus={() => {
+            if (origin.length >= 2) {
+              setShowOriginSuggestions(true);
+            }
+          }}
           className="location-input w-full p-2 border rounded"
         />
         {showOriginSuggestions && (
@@ -348,7 +359,11 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
             setSelectedIndex(-1);
           }}
           onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
-          onFocus={() => destination.length >= 2 && setShowDestinationSuggestions(true)}
+          onFocus={() => {
+            if (destination.length >= 2) {
+              setShowDestinationSuggestions(true);
+            }
+          }}
           className="location-input w-full p-2 border rounded"
         />
         {showDestinationSuggestions && (
