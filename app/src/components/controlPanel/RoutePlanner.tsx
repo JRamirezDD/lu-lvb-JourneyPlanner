@@ -54,6 +54,9 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
   const [destinationAutocompleteData, setDestinationAutocompleteData] = useState<AutocompleteItem[]>([]);
   const [selectedOrigin, setSelectedOrigin] = useState<SelectedLocation | null>(null);
   const [selectedDestination, setSelectedDestination] = useState<SelectedLocation | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isOriginSelected, setIsOriginSelected] = useState(false);
+  const [isDestinationSelected, setIsDestinationSelected] = useState(false);
   
   useEffect(() => {
     const now = new Date();
@@ -105,13 +108,16 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
     setSelectedDestination(tempOrigin);
   };
 
-  // Separate effects for origin and destination with loading handling
+  // Update the origin effect
   useEffect(() => {
+    if(isOriginSelected) return;
+
     const timer = setTimeout(async () => {
       if (origin.length >= 2) {
         try {
           setShowOriginSuggestions(true);
           setShowDestinationSuggestions(false);
+          setOriginAutocompleteData([]); // Clear previous suggestions
           await fetchAutocompleteData({ 
             search: origin,
             format: "JSON",
@@ -127,17 +133,21 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         setShowOriginSuggestions(false);
         setOriginAutocompleteData([]);
       }
-    }, 300);
+    }, 300); // 300ms delay
 
     return () => clearTimeout(timer);
   }, [origin, fetchAutocompleteData]);
 
+  // Update the destination effect
   useEffect(() => {
+    if(isDestinationSelected) return;
+      
     const timer = setTimeout(async () => {
       if (destination.length >= 2) {
         try {
           setShowDestinationSuggestions(true);
           setShowOriginSuggestions(false);
+          setDestinationAutocompleteData([]); // Clear previous suggestions
           await fetchAutocompleteData({ 
             search: destination,
             format: "JSON",
@@ -153,26 +163,35 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         setShowDestinationSuggestions(false);
         setDestinationAutocompleteData([]);
       }
-    }, 300);
+    }, 300); // 300ms delay
 
     return () => clearTimeout(timer);
-  }, [destination, fetchAutocompleteData]);
+  }, [destination, fetchAutocompleteData, selectedOrigin, selectedDestination]);
 
   const handleSuggestionClick = (suggestion: AutocompleteItem, isOrigin: boolean) => {
     const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
     const coordinates = `${suggestion.lat},${suggestion.lon}`;
-    
+  
     if (isOrigin) {
       setOrigin(fullAddress);
       setSelectedOrigin({ name: fullAddress, coordinates });
+      setIsOriginSelected(true);
       setShowOriginSuggestions(false);
     } else {
       setDestination(fullAddress);
       setSelectedDestination({ name: fullAddress, coordinates });
+      setIsDestinationSelected(true);
       setShowDestinationSuggestions(false);
     }
+    
+    setOriginAutocompleteData([]); 
+    setDestinationAutocompleteData([]);
+    setSelectedIndex(-1);
+  
+    // Ensure input field loses focus
+    document.activeElement instanceof HTMLElement && document.activeElement.blur();
   };
-
+  
   // Add click outside handler
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -230,6 +249,36 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
     }
   };
 
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    suggestions: AutocompleteItem[],
+    isOrigin: boolean
+  ) => {
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedIndex(prev => 
+          prev < suggestions.length - 1 ? prev + 1 : prev
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedIndex(prev => prev > -1 ? prev - 1 : -1);
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+          handleSuggestionClick(suggestions[selectedIndex], isOrigin);
+        }
+        setSelectedIndex(-1);
+        break;
+      case 'Escape':
+        isOrigin ? setShowOriginSuggestions(false) : setShowDestinationSuggestions(false);
+        setSelectedIndex(-1);
+        break;
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 p-4 w-full">
       <h2 className="text-lg font-bold">{translations?.ControlPanel?.planner?.title || "Plan Your Journey"}</h2>
@@ -239,21 +288,31 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         <input
           type="text"
           placeholder={translations?.ControlPanel?.planner?.origin || "Origin"}
-          value={selectedOrigin?.name || origin}
-          onChange={(e) => setOrigin(e.target.value)}
+          value={origin}
+          onChange={(e) => {
+            setOrigin(e.target.value);
+            setIsOriginSelected(false);
+            setSelectedOrigin(null);
+            setSelectedIndex(-1);
+          }}
+          onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
           onFocus={() => origin.length >= 2 && setShowOriginSuggestions(true)}
-          className="location-input w-full p-2 border border-[#1a365d]/20 rounded focus:border-[#1a365d] focus:ring-1 focus:ring-[#1a365d] outline-none"
+          className="location-input w-full p-2 border rounded"
         />
         {showOriginSuggestions && (
           <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
             {loadingAutocomplete ? (
               <div className="p-2 text-gray-600">Loading suggestions...</div>
             ) : originAutocompleteData.length > 0 ? (
-              originAutocompleteData.slice(0, 5).map((suggestion) => (
+              originAutocompleteData.slice(0, 5).map((suggestion, index) => (
                 <div
                   key={suggestion.id}
                   onClick={() => handleSuggestionClick(suggestion, true)}
-                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                  className={`p-2 cursor-pointer ${
+                    index === selectedIndex 
+                      ? 'bg-primary-yellow/10' 
+                      : 'hover:bg-gray-100'
+                  }`}
                 >
                   <div className="font-medium">{suggestion.name}</div>
                   <div className="text-sm text-gray-600">
@@ -281,8 +340,14 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         <input
           type="text"
           placeholder={translations?.ControlPanel?.planner?.destination || "Destination"}
-          value={selectedDestination?.name || destination}
-          onChange={(e) => setDestination(e.target.value)}
+          value={destination}
+          onChange={(e) => {
+            setDestination(e.target.value);
+            setIsDestinationSelected(false);
+            setSelectedDestination(null);
+            setSelectedIndex(-1);
+          }}
+          onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
           onFocus={() => destination.length >= 2 && setShowDestinationSuggestions(true)}
           className="location-input w-full p-2 border rounded"
         />
@@ -291,11 +356,15 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
             {loadingAutocomplete ? (
               <div className="p-2 text-gray-600">Loading suggestions...</div>
             ) : destinationAutocompleteData.length > 0 ? (
-              destinationAutocompleteData.slice(0, 5).map((suggestion) => (
+              destinationAutocompleteData.slice(0, 5).map((suggestion, index) => (
                 <div
                   key={suggestion.id}
                   onClick={() => handleSuggestionClick(suggestion, false)}
-                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                  className={`p-2 cursor-pointer ${
+                    index === selectedIndex 
+                      ? 'bg-primary-yellow/10' 
+                      : 'hover:bg-gray-100'
+                  }`}
                 >
                   <div className="font-medium">{suggestion.name}</div>
                   <div className="text-sm text-gray-600">
@@ -315,7 +384,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         {/* Departure Filter Button */}
         <button
           onClick={() => setShowDepartureFilter(!showDepartureFilter)}
-          className="flex items-center justify-between bg-[#1a365d] text-white px-4 py-2 rounded-md transition-all hover:bg-[#2d4a7c]"
+          className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
           suppressHydrationWarning
         >
           <div className="flex items-center gap-2">
@@ -333,7 +402,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         {/* Transport Filter Button */}
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center justify-between bg-[#1a365d] text-white px-4 py-2 rounded-md transition-all hover:bg-[#2d4a7c]"
+          className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
         >
           <div className="flex items-center gap-2">
             <Filter size={18} />
@@ -369,8 +438,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
         className={`p-2 rounded w-full transition-colors ${
           !selectedOrigin || !selectedDestination 
             ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-[#1a365d] hover:bg-[#2d4a7c]'
-        } text-white`}
+            : 'bg-primary-yellow text-primary-blue hover:bg-primary-yellow/80'
+        }`}
       >
         {translations?.ControlPanel?.planner?.seeRoutes || "See Routes"}
       </button>

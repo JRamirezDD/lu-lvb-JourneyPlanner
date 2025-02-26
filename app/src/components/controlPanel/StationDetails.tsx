@@ -96,8 +96,8 @@ const StationDetails = ({ stopId = "0013000" }) => {  // Default to Leipzig Haup
   return (
     <div className="flex flex-col w-full bg-white">
       {/* Header */}
-      <div className="flex items-center gap-4 p-4 border-b bg-[#1a365d] text-white">
-        <button className="p-2 hover:bg-[#2d4a7c] rounded-full transition-colors">
+      <div className="flex items-center gap-4 p-4 border-b bg-primary-yellow text-primary-blue">
+        <button className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors">
           <ChevronLeft size={24} />
         </button>
         <div className="flex-1">
@@ -115,7 +115,9 @@ const StationDetails = ({ stopId = "0013000" }) => {  // Default to Leipzig Haup
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`flex-1 px-4 py-3 transition-colors ${
-              activeTab === tab ? "text-[#1a365d] font-medium border-b-2 border-[#1a365d]" : "text-gray-600 hover:bg-gray-50"
+              activeTab === tab 
+                ? "text-primary-blue font-medium border-b-2 border-primary-blue" 
+                : "text-primary-blue/60 hover:bg-primary-yellow/10"
             }`}
           >
             {translations?.ControlPanel?.station?.[tab] || (tab === "now" ? "Right Now" : tab)}

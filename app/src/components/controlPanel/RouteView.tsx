@@ -3,7 +3,7 @@ import PersonStanding from "../../../public/Walk.svg";
 import Car from "../../../public/Car.svg";
 import Bike from "../../../public/Bike.svg";
 import Image from "next/image";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import RoutePlanner from "./RoutePlanner";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
@@ -13,6 +13,7 @@ type ViewState = "planner" | "routes" | "details" | "station";
 const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void }) => {
   const { translations } = useSettingsContext();
   const { otpData, loadingOtp, errorOtp, setSelectedItineraryIndex } = useOtpDataContext();
+  const [selectedRouteIndex, setSelectedRouteIndex] = useState(-1);
 
   const formatDuration = (seconds: number): string => {
     const hours = Math.floor(seconds / 3600);
@@ -45,6 +46,34 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
     setActiveView("details");
   };
 
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (!otpData) return;
+    const maxRoutes = Math.min(otpData.plan.itineraries.length, 5);
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedRouteIndex(prev => 
+          prev < maxRoutes - 1 ? prev + 1 : prev
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedRouteIndex(prev => prev > -1 ? prev - 1 : -1);
+        break;
+      case 'Enter':
+        if (selectedRouteIndex >= 0) {
+          handleRouteClick(selectedRouteIndex);
+        }
+        break;
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedRouteIndex, otpData]);
+
   return (
     <div className="flex flex-col gap-6">
       {/* Route Planner Section */}
@@ -73,11 +102,15 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
             {otpData.plan.itineraries.slice(0, 5).map((itinerary, idx) => (
               <li
                 key={idx}
-                className="border border-[#1a365d]/10 rounded-lg hover:bg-[#fef9c3]/20 cursor-pointer transition-colors overflow-hidden"
+                className={`border border-primary-blue/10 rounded-lg cursor-pointer transition-colors overflow-hidden ${
+                  idx === selectedRouteIndex 
+                    ? 'bg-primary-yellow/10' 
+                    : 'hover:bg-primary-yellow/5'
+                }`}
                 onClick={() => handleRouteClick(idx)}
               >
                 {/* Time Header */}
-                <div className="flex items-center justify-between p-2 bg-[#1a365d]/5">
+                <div className="flex items-center justify-between p-2 bg-primary-yellow/5">
                   <span className="font-medium">
                     {formatTime(itinerary.startTime)} - {formatTime(itinerary.endTime)}
                   </span>
