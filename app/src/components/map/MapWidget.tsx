@@ -50,6 +50,8 @@ function getExtendedBounds(map: mapboxgl.Map, bufferFactor = 0.5) {
 function boundsToString(bounds: mapboxgl.LngLatBounds) {
     const sw = bounds.getSouthWest();
     const ne = bounds.getNorthEast();
+    // SPECIFIC FORMAT REQUIRED FOR GEOJSON
+        // bbox = min Longitude , min Latitude , max Longitude , max Latitude 
     return `${sw.lat},${ne.lat},${sw.lng},${ne.lng}`;
 }
 
@@ -66,11 +68,12 @@ export const MapWidget: React.FC = () => {
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
     
     // State to hold the current query bounds (the extended bounding box used for querying)
-    const [currentQueryBounds, setCurrentQueryBounds] = useState<mapboxgl.LngLatBounds | null>(null);
-
+    const currentQueryBoundsRef = useRef<mapboxgl.LngLatBounds | null>(null);
+    const [queryBoundsState, setQueryBoundsState] = useState<mapboxgl.LngLatBounds | null>(null);
+    
     useEffect(() => {
         if (!mapContainer.current || mapRef.current) return;
-
+    
         mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
         const map = new mapboxgl.Map({
             container: mapContainer.current,
@@ -78,80 +81,65 @@ export const MapWidget: React.FC = () => {
             center: [12.37701425222998, 51.3406130352673],
             zoom: 12,
         });
-
+    
         map.on("style.load", () => {
-            // Initialize the LayerManager and store the map reference
+            // Initialize LayerManager and mapRef
             layerManagerRef.current = new LayerManager(map);
             mapRef.current = map;
-
-            // Set initial extended bounds and query stops data
+    
+            // Set initial extended bounds
             const extendedBounds = getExtendedBounds(map, 0.5);
-            setCurrentQueryBounds(extendedBounds);
-            if (extendedBounds) {
-                const bboxString = boundsToString(extendedBounds);
-                console.log("Initial stops query:", bboxString);
-                fetchStops(bboxString);
-            }
-
-            // Set up the moveend listener to query stops when the user navigates out of the extended bounds
+            currentQueryBoundsRef.current = extendedBounds;
+            setQueryBoundsState(extendedBounds); // trigger useEffect below
+            console.log("Initial query bounds:", extendedBounds);
+    
+            // Set up moveend listener
             map.on("moveend", () => {
-                if (!mapRef.current || !currentQueryBounds) return;
+                console.log("Map moveend event");
                 const currentViewBounds = map.getBounds();
-                if (!currentViewBounds) return;
-
-                // If the current view is not fully contained in the last queried extended bounds, query new stops data
+                if (!currentQueryBoundsRef.current || !currentViewBounds) return;
+                console.log("Map bounds:", currentViewBounds);
+    
                 if (
-                    !currentQueryBounds.contains(currentViewBounds.getNorthEast()) ||
-                    !currentQueryBounds.contains(currentViewBounds.getSouthWest())
+                    !currentQueryBoundsRef.current.contains(currentViewBounds.getNorthEast()) ||
+                    !currentQueryBoundsRef.current.contains(currentViewBounds.getSouthWest())
                 ) {
                     const newExtendedBounds = getExtendedBounds(map, 0.5);
-                    setCurrentQueryBounds(newExtendedBounds);
-                    if (newExtendedBounds) {
-                        const newBboxString = boundsToString(newExtendedBounds);
-                        console.log("New stops query due to map move:", newBboxString);
-                        fetchStops(newBboxString);
-                    }
+                    currentQueryBoundsRef.current = newExtendedBounds;
+                    setQueryBoundsState(newExtendedBounds); // update state to trigger useEffect
+                    if (newExtendedBounds)
+                        console.log("New stops query due to map move:", boundsToString(newExtendedBounds));
                 }
             });
-
-            // Click listener for Mapbox pre-loaded layers
-            map.on('click', (e) => {
-                const features = map.queryRenderedFeatures(e.point);
-                if (features && features.length > 0) {
-                const feature = features[0];
-                if (feature.geometry.type === 'Point' || feature.geometry.type === 'LineString' || feature.geometry.type === 'Polygon') {
-                    if (feature.geometry.coordinates) {
-                    const coordinates = feature.geometry.coordinates;
-                    console.log('Clicked coordinates:', coordinates);
-                    }
-                } else {
-                    console.log("Geometry type is not a Point, LineString, or Polygon");
-                }
-
-                }
-            });
-
+    
             setMapLoaded(true);
             loadLayers(viewMode);
         });
-
+    
         return () => map.remove();
     }, []);
+    
+
+    useEffect(() => {
+        console.log("queryBounds:", queryBoundsState);
+        if (queryBoundsState && mapRef.current) {
+            const bboxString = boundsToString(queryBoundsState);
+            console.log("Stops query:", bboxString);
+            fetchStops(bboxString);
+        }
+    }, [queryBoundsState]);
+    
+
+    useEffect(() => {
+        if (mapRef.current) {
+            loadLayers(viewMode);
+        }
+    }, [viewMode]);
 
     // Update layers when view mode changes
     const loadLayers = (_viewMode: ViewMode) => {
+
         if (!mapRef.current) return;
-
-        // Cleanup itinerary and stops layers if present
-        if (mapRef.current.getLayer("itinerary-layer")) {
-            mapRef.current.removeLayer("itinerary-layer");
-            mapRef.current.removeSource("itinerary-source");
-        }
-        if (mapRef.current.getLayer("stops-layer")) {
-            mapRef.current.removeLayer("stops-layer");
-            mapRef.current.removeSource("stops-source");
-        }
-
         // For all modes, we add the stops layers...
         createStopsLayers();
 
