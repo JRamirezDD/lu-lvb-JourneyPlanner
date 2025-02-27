@@ -7,10 +7,10 @@ import React, { useState, useEffect } from "react";
 import RoutePlanner from "./RoutePlanner";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
+import { ViewMode } from "@/types/ViewMode";
 
-type ViewState = "planner" | "routes" | "details" | "station";
 
-const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void }) => {
+const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void }) => {
   const { translations } = useSettingsContext();
   const { otpData, loadingOtp, errorOtp, setSelectedItineraryIndex } = useOtpDataContext();
   const [selectedRouteIndex, setSelectedRouteIndex] = useState(-1);
@@ -43,7 +43,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewState) => void
 
   const handleRouteClick = (index: number) => {
     setSelectedItineraryIndex(index);
-    setActiveView("details");
+    setActiveView("ITINERARY");
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {

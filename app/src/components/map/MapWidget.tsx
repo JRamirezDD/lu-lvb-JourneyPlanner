@@ -62,7 +62,7 @@ interface MapWidgetProps {
   onStopSelect: (stop: { stop_id: string; stop_name: string }) => void;
 }
 
-export const MapWidget: React.FC<MapWidgetProps> = ({ onStopSelect }) => {
+export const MapWidget: React.FC = ({ }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
     const layerManagerRef = useRef<LayerManager | null>(null);
@@ -205,14 +205,14 @@ export const MapWidget: React.FC<MapWidgetProps> = ({ onStopSelect }) => {
         removeItineraryLayers(mapRef.current, layerManagerRef.current);
 
             // DELETE THIS - CURRENTLY NEEDED FOR DEMO BECAUSE CONTROL PANEL IS NOT CONNECTED TO CONTEXTS
-            var otpPlan = toOtpResponse(mockOtpResponse).plan; 
-            var itinerary = new Itinerary(
-                otpPlan.from,
-                otpPlan.to,
-                otpPlan.itineraries[0]
-            )
-            setSelectedItinerary(itinerary);
-            createItineraryLayers(mapRef.current, layerManagerRef.current, itinerary);
+             const otpPlan = toOtpResponse(mockOtpResponse).plan; 
+             const itinerary = new Itinerary(
+                 otpPlan.from,
+                 otpPlan.to,
+                 otpPlan.itineraries[0]
+             )
+             setSelectedItinerary(itinerary);
+            // createItineraryLayers(mapRef.current, layerManagerRef.current, itinerary);
             // END DELETE
 
         // And if the view mode is ITINERARY, add itinerary layers too
@@ -258,7 +258,7 @@ export const MapWidget: React.FC<MapWidgetProps> = ({ onStopSelect }) => {
                 if (feature) {
                     const stopId = feature.properties?.stop_id;
                     const stopName = feature.properties?.stop_name;
-                    onStopSelect({ stop_id: stopId, stop_name: stopName });
+                    setSelectedStop({ stop_id: stopId, stop_name: stopName });
                 }
             });
 
@@ -294,6 +294,8 @@ export const MapWidget: React.FC<MapWidgetProps> = ({ onStopSelect }) => {
         ];
 
         layers.forEach((layer) => layerManager.removeLayer(layer.id));
+
+        layerManager.removeSource("itinerary-source");
     }
 
     // Create itinerary layers (using your existing implementation)
