@@ -31,16 +31,15 @@ export default async function LocaleLayout({
   return (
     <html lang={language}>
       <body className={`${roboto.className} antialiased`}>
-
           <SettingsProvider initialLanguage={language}>
           <UIProvider>
           <MapProvider>
             <AutocompleteDataProvider>
             <OtpDataProvider>
             <StopmonitorDataProvider>
-            <div className="w-full flex flex-col min-h-screen">
+            <div className="w-full h-screen flex flex-col">
               <Navbar locale={language} />
-              <div className="flex-grow">
+              <div className="flex-1 overflow-hidden">
                 {children}
               </div>
             </div>
