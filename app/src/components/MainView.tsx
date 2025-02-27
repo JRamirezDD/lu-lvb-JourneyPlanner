@@ -24,14 +24,12 @@ const MainView: React.FC = () => {
         gridTemplateRows: "1fr auto", // Map takes all remaining space, control panel takes auto height.
         width: "100%",
         height: "100%",
-        fontFamily: "Arial, sans-serif",
       }
     : {
         display: "grid",
         gridTemplateColumns: "450px 100%", // ControlPanel fixed width and Map takes rest.
         width: "100%",
         height: "100%",
-        fontFamily: "Arial, sans-serif",
       };
 
   return (

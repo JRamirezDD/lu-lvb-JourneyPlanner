@@ -5,6 +5,11 @@ import { Coordinates } from "@/types/Coordinates";
 import { IContext } from "./IContext";
 import { Itinerary } from "@/types/Itinerary";
 
+interface SelectedStop {
+    stop_id: string;
+    stop_name: string;
+  }
+  
 
 export interface IMapContext extends IContext {
     // Map state
@@ -20,8 +25,8 @@ export interface IMapContext extends IContext {
     setSelectedItinerary: (itinerary: Itinerary) => void;
 
     // Pass objects from Map -> Control Panel
-    selectedStop: string | null; // Used to store the ID of the selected stop (selected from Stops layer)
-    setSelectedStop: (id: string | null) => void;
+    selectedStop: SelectedStop | null; // Used to store the ID and name of the selected stop (selected from Stops layer)
+    setSelectedStop: (stop: SelectedStop | null) => void;
 
 
     clearState: () => void;
@@ -34,7 +39,7 @@ const MapContext = createContext<IMapContext | undefined>(undefined);
 export const MapProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // Local state for the map.
     const [currentPosition, setCurrentPositionState] = useState<Coordinates | null>(null);
-    const [selectedStop, setSelectedStopState] = useState<string | null>(null);
+    const [selectedStop, setSelectedStopState] = useState<SelectedStop | null>(null);
     const [visibleLayers, setVisibleLayers] = useState<string[]>([]);
     const [selectedItinerary, setSelectedItineraryState] = useState<Itinerary | null>(null);
 
@@ -45,8 +50,8 @@ export const MapProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     // Function to update the selected stop.
-    const setSelectedStop = (id: string | null) => {
-        setSelectedStopState(id);
+    const setSelectedStop = (stop: SelectedStop | null) => {
+        setSelectedStopState(stop);
     };
 
     // Function to update the selected itinerary.

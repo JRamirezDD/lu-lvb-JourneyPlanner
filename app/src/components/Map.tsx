@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
-import stopsLayer from "./map/layers/StopsLayer";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./map/layers/ILayer";
@@ -65,13 +64,18 @@ const Map: React.FC = ({ }) => {
   }, [viewMode]);
 
   useEffect(() => {
-    if (viewMode === "ITINERARY" || viewMode === "DEFAULT") {
+    if (viewMode === "DEFAULT") {
+
+    }
+    else if (viewMode === "ITINERARY") {
       const data = createItineraryLayerData();
       setLocalSelectedItinerary(data);
       console.log("localselecteditinerary set to selecteditinerary from context", data);
     } else {
       setLocalSelectedItinerary(undefined);
     }
+
+    
   }, [viewMode]);
 
   useEffect(() => {
@@ -206,6 +210,7 @@ const Map: React.FC = ({ }) => {
     const stopsGeoJson = stopsLayer() as FeatureCollection<Point>;
 
     if (!map.getSource("stops-source")) {
+      
       map.addSource("stops-source", { type: "geojson", data: stopsGeoJson });
     }
 

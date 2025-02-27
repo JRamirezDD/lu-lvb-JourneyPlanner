@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 /**
  * Object that contains related data fetching functionality.
@@ -48,6 +48,7 @@ export function useDataFetcher<T>(
         setError(null); // Reset error state
         try {
             const response = await fetchFunction(...args); // Actually call API Function
+            console.log("FETCHED DATA:", response);
             setData(response); // Store the fetched data
         } catch (err) {
             console.error("Error fetching data:", err);
@@ -56,6 +57,10 @@ export function useDataFetcher<T>(
             setLoading(false);
         }
     }, [fetchFunction]);
+
+    useEffect(() => {
+        console.log("Data updated in state:", data);
+    }, [data]);
 
     return { data, loading, error, fetchData };
 }

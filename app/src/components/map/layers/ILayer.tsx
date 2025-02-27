@@ -1,56 +1,28 @@
-// Refer to https://www.ibm.com/docs/en/db2/11.5?topic=formats-geojson-format for GeoJSON specification
-
-import { LayerSpecification, Map, SourceSpecification } from "mapbox-gl";
-
-export interface SourceConfig {
-  id: string;
-  type: "geojson";
-  // Corresponds to Geometry Types
-  // type: "Linestring" | "Polygon" | "MultiPoint" | "MultiLinestring" | "MultiPolygon" | "GeometryCollection"; 
-  data: any;
-}
-
-export interface LayerConfig {
-  id: string;
-  type: "fill" | "line" | "circle" | "symbol"; // Extend for other types
-  source: SourceSpecification;
-  layout?: LayerSpecification["layout"];
-  paint?: LayerSpecification["paint"];
-  filter?: any[];
-  interactive?: boolean;
-  onClick?: (event: mapboxgl.MapMouseEvent) => void;
-}
+import maplibregl, { LayerSpecification, Map, SourceSpecification } from "maplibre-gl";
 
 export class LayerManager {
-  private map: Map;
+  private map: maplibregl.Map;
 
-  constructor(map: Map) {
+  constructor(map: maplibregl.Map) {
     this.map = map;
   }
 
-  addLayer(layerConfig: LayerConfig) {
-    const { id, source, type, layout, paint, filter, interactive, onClick } = layerConfig;
+  addSource(sourceId: string, sourceConfig: SourceSpecification) {
+    if (!this.map.getSource(sourceId)) {
+      this.map.addSource(sourceId, sourceConfig);
+    }
+  }
 
-    if (this.map.getLayer(id)) {
-      console.warn(`Layer ${id} already exists. Skipping addition.`);
+  addLayer(layerConfig: LayerSpecification, interactive = false, onClick?: (e: maplibregl.MapMouseEvent) => void) {
+    if (this.map.getLayer(layerConfig.id)) {
+      console.warn(`Layer ${layerConfig.id} already exists. Skipping addition.`);
       return;
     }
 
-    if (!this.map.getSource(id)) {
-      this.map.addSource(id, source);
-    }
-
-    this.map.addLayer({
-      id,
-      type,
-      source: id,
-      layout,
-      paint,
-      filter,
-    });
+    this.map.addLayer(layerConfig);
 
     if (interactive && onClick) {
-      this.map.on("click", id, onClick);
+      this.map.on("click", layerConfig.id, onClick);
     }
   }
 
@@ -58,12 +30,15 @@ export class LayerManager {
     if (this.map.getLayer(layerId)) {
       this.map.removeLayer(layerId);
     }
-    if (this.map.getSource(layerId)) {
-      this.map.removeSource(layerId);
+  }
+
+  removeSource(sourceId: string) {
+    if (this.map.getSource(sourceId)) {
+      this.map.removeSource(sourceId);
     }
   }
 
-  updateLayer(layerConfig: LayerConfig) {
+  updateLayer(layerConfig: LayerSpecification) {
     this.removeLayer(layerConfig.id);
     this.addLayer(layerConfig);
   }
