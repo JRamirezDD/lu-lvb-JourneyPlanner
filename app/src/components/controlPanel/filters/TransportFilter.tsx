@@ -23,8 +23,6 @@ interface TransportFilterProps {
 
 const TransportFilter: React.FC<TransportFilterProps> = ({ activeFilters, toggleFilter }) => {
   const { translations } = useSettingsContext();
-  
- 
 
   return (
     <div className="p-4 border rounded bg-gray-50">
