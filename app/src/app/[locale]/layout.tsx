@@ -40,7 +40,7 @@ export default async function LocaleLayout({
             <StopmonitorDataProvider>
             <div className="w-full flex flex-col min-h-screen">
               <Navbar locale={language} />
-              <div className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8">
+              <div className="flex-grow">
                 {children}
               </div>
             </div>

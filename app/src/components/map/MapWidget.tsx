@@ -308,7 +308,7 @@ export const MapWidget: React.FC = () => {
           ref={mapContainerRef}
           style={{
             width: "100%",
-            height: "100vh",
+            height: "100%",
             position: "relative",
          }}
         />
