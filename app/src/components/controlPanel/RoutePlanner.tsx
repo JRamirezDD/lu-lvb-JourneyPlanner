@@ -14,8 +14,7 @@ import PersonStanding from "../../../public/Walk.svg";
 import Car from "../../../public/Car.svg";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
 import { RequestParameters } from "@/api/routingService/dto/otpRequest";
-
-type ViewState = "planner" | "routes" | "details" | "station";
+import { ViewMode } from "@/types/ViewMode";
 
 type TransportOption = {
   type: string;
@@ -37,7 +36,7 @@ interface SelectedLocation {
   coordinates: string; // Format: "lat,lon"
 }
 
-const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => void }) => {
+const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => void }) => {
   const { translations, transportModes, toggleTransportMode } = useSettingsContext();
   const { autocompleteData, fetchAutocompleteData, loadingAutocomplete } = useAutocompleteDataContext();
   const { fetchOtpData } = useOtpDataContext();
@@ -245,7 +244,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewState) => v
       });
 
       await fetchOtpData(params);
-      setActiveView("routes");
+      setActiveView("PLAN");
     } catch (error) {
       console.error('Error fetching routes:', error);
     }
