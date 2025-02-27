@@ -314,4 +314,4 @@ export const MapWidget: React.FC = () => {
         />
       );};
 
-export default Map;
+export default MapWidget;
