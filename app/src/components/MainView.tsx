@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Map from "@/components/Map";
 import ControlPanel from "./controlPanel/ControlPanel";
+import { MapWidget } from "./map/MapWidget";
 
 const MainView: React.FC = () => {
   const [isVertical, setIsVertical] = useState(false);
@@ -45,7 +46,7 @@ const MainView: React.FC = () => {
               height: "100%",
             }}
           >
-            <Map />
+            <MapWidget />
           </div>
           <div
             style={{
@@ -79,7 +80,7 @@ const MainView: React.FC = () => {
               height: "100%",
             }}
           >
-            <Map />
+            <MapWidget />
           </div>
         </>
       )}
