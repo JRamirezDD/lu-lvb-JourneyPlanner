@@ -19,7 +19,12 @@ interface Disruption {
   until: string;
 }
 
-const StationDetails = ({ stopId = "0013000" }) => {  // Default to Leipzig Hauptbahnhof for now
+interface StationDetailsProps {
+  stopId: string;
+  stopName: string;
+}
+
+const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {  // Default to Leipzig Hauptbahnhof for now
   const { translations } = useSettingsContext();
   const { 
     stopMonitorData, 
@@ -33,7 +38,9 @@ const StationDetails = ({ stopId = "0013000" }) => {  // Default to Leipzig Haup
   useEffect(() => {
     // Fetch stop monitor data when component mounts
     const fetchData = async () => {
+
       try {
+        console.log("Fetching stop monitor data for stopId:", stopId);
         await fetchStopMonitor({
           stopid: stopId,
           date: new Date().toISOString().split('T')[0].replace(/-/g, ''), // Format: YYYYMMDD
@@ -101,7 +108,7 @@ const StationDetails = ({ stopId = "0013000" }) => {  // Default to Leipzig Haup
           <ChevronLeft size={24} />
         </button>
         <div className="flex-1">
-          <h2 className="text-xl font-bold">Station {stopId}</h2>
+          <h2 className="text-xl font-bold">Station {stopName}</h2>
         </div>
         <button className="p-2 hover:bg-[#2d4a7c] rounded-full transition-colors">
           <Star size={24} />
