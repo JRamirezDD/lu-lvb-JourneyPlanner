@@ -259,7 +259,6 @@ export const MapWidget: React.FC = ({ }) => {
                     const stopId = feature.properties?.stop_id;
                     const stopName = feature.properties?.stop_name;
                     setSelectedStop({ stop_id: stopId, stop_name: stopName });
-                    setViewMode("STATION");
                 }
             });
 

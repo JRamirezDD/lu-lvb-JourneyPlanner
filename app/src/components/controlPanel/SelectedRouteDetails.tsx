@@ -246,7 +246,7 @@ const SelectedRouteDetails = () => {
                         )}
                         <div className={`px-3 py-1.5 rounded-full shadow-sm ${getTransportColor(leg.mode)}`}>
                           <span className="text-white font-medium">
-                            {leg.route ? `${leg.mode} ${leg.route}` : leg.mode}
+                            {leg.route ? `${leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode} ${leg.route}` : leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode}
                           </span>
                         </div>
                         {/* Platform and stops info */}
