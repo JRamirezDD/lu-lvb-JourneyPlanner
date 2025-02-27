@@ -6,7 +6,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./layers/ILayer";
-import { createItineraryLayerData } from "./layers/ItineraryLayer";
+import { busLayerConfig, createItineraryLayerData } from "./layers/ItineraryLayer";
 import { ViewMode } from "@/types/ViewMode";
 import { stopsLayerConfig, stopsLabelsLayerConfig, stopsSource as stopsSourceConfig, createStopsLayerData, stopsSource } from "./layers/StopsLayer";
 import {
@@ -291,6 +291,7 @@ export const MapWidget: React.FC = ({ }) => {
           trainLayerConfig,
           legStartEndLayerConfig,
           intermediateStopsLayerConfig,
+          busLayerConfig,
         ];
 
         layers.forEach((layer) => layerManager.removeLayer(layer.id));
@@ -329,6 +330,7 @@ export const MapWidget: React.FC = ({ }) => {
             trainLayerConfig,
             legStartEndLayerConfig,
             intermediateStopsLayerConfig,
+            busLayerConfig,
           ];
       
           layers.forEach((layer) => layerManager.addLayer(layer));

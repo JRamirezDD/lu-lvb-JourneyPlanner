@@ -44,37 +44,47 @@ export const itinerarySource: SourceSpecification = {
   },
 };
 
-// Walking route (blue dashed line)
+// Walking route (grey dashed line)
 export const walkLayerConfig: LayerSpecification = {
   id: "walk-layer",
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
   paint: {
-    "line-color": "#007cbf",
-    "line-width": 4,
+    "line-color": "#000000",
+    "line-width": 2,
     "line-dasharray": [4, 2],
   },
   filter: ["==", ["get", "mode"], "WALK"],
 };
 
-// Suburban route (solid red)
+// Suburban route (green)
 export const suburbLayerConfig: LayerSpecification = {
   id: "suburb-layer",
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "red", "line-width": 4 },
+  paint: { "line-color": "#008D4F", "line-width": 4 },
   filter: ["==", ["get", "mode"], "SUBURB"],
 };
 
-// Tram route (solid blue)
+// Bus route (purple)
+export const busLayerConfig: LayerSpecification = {
+  id: "bus-layer",
+  type: "line",
+  source: "itinerary-source",
+  layout: { "line-join": "round", "line-cap": "round" },
+  paint: { "line-color": "#800080", "line-width": 4 },
+  filter: ["==", ["get", "mode"], "BUS"],
+};
+
+// Tram route (red)
 export const tramLayerConfig: LayerSpecification = {
   id: "tram-layer",
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "blue", "line-width": 4 },
+  paint: { "line-color": "#D91A1A", "line-width": 4 },
   filter: ["==", ["get", "mode"], "TRAM"],
 };
 
