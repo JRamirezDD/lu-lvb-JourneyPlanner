@@ -55,7 +55,11 @@ const boundsToString = (bounds: maplibregl.LngLatBounds) => {
 
 // --- Component Implementation ---
 
-export const MapWidget: React.FC = () => {
+interface MapWidgetProps {
+  onStopSelect: (stop: { stop_id: string; stop_name: string }) => void;
+}
+
+export const MapWidget: React.FC<MapWidgetProps> = ({ onStopSelect }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
     const layerManagerRef = useRef<LayerManager | null>(null);
@@ -236,12 +240,9 @@ export const MapWidget: React.FC = () => {
             layerManagerRef.current?.addLayer(stopsLayerConfig, true, (e) => {
                 const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];
                 if (feature) {
-                    console.log("Stop clicked:", feature.properties?.stop_id);
-                    setSelectedStop({ 
-                            stop_id: feature.properties?.stop_id,
-                            stop_name: feature.properties?.stop_name
-                        }
-                    );
+                    const stopId = feature.properties?.stop_id;
+                    const stopName = feature.properties?.stop_name;
+                    onStopSelect({ stop_id: stopId, stop_name: stopName });
                 }
             });
 

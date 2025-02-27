@@ -6,11 +6,13 @@ import RouteView from "./RouteView";
 import SelectedRouteDetails from "./SelectedRouteDetails";
 import StationDetails from "./StationDetails";
 
-const ControlPanel = () => {
-  const [activeView, setActiveView] = useState<
-    "planner" | "routes" | "details" | "station"
-  >("planner");
+interface ControlPanelProps {
+  activeView: "planner" | "routes" | "details" | "station";
+  setActiveView: (view: "planner" | "routes" | "details" | "station") => void;
+  selectedStop: { stop_id: string; stop_name: string } | null;
+}
 
+const ControlPanel = ({ activeView, setActiveView, selectedStop }: ControlPanelProps) => {
   return (
     <div className="w-full h-full bg-white shadow-lg overflow-y-auto text-primary-blue">
       <div className="p-4 pb-32">
@@ -57,10 +59,15 @@ const ControlPanel = () => {
           </button>
         </nav>
 
-            {activeView === "planner" && <RoutePlanner setActiveView={setActiveView} />}
-            {activeView === "routes" && <RouteView setActiveView={setActiveView} />}
-            {activeView === "details" && <SelectedRouteDetails />}
-            {activeView === "station" && <StationDetails />}
+        {activeView === "planner" && <RoutePlanner setActiveView={setActiveView} />}
+        {activeView === "routes" && <RouteView setActiveView={setActiveView} />}
+        {activeView === "details" && <SelectedRouteDetails />}
+        {activeView === "station" && selectedStop && (
+          <StationDetails 
+            stopId={selectedStop.stop_id} 
+            stopName={selectedStop.stop_name} 
+          />
+        )}
       </div>
     </div>
   );

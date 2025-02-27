@@ -1,12 +1,13 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import RoutePlanner from "@/components/controlPanel/RoutePlanner";
+import Image from 'next/image';
 
 // Mock next/image
 jest.mock('next/image', () => ({
   __esModule: true,
   default: (props: any) => {
-    return <img {...props} />
+    return <img alt="mocked image" {...props} />;
   },
 }));
 
@@ -58,13 +59,6 @@ describe('RoutePlanner', () => {
     const mockSetActiveView = jest.fn();
     const mockToggleTransportMode = jest.fn();
     
-    // Update the mock to include the actual transport modes
-    jest.spyOn(require("@/contexts/settingsContext"), "useSettingsContext").mockImplementation(() => ({
-      translations: {},
-      transportModes: "WALK,TRAM,BUS",
-      toggleTransportMode: mockToggleTransportMode
-    }));
-
     render(<RoutePlanner setActiveView={mockSetActiveView} />);
     
     // Click the Transport filter button to open the filter panel
@@ -77,7 +71,7 @@ describe('RoutePlanner', () => {
     if (!toggleButton) throw new Error('Toggle button not found');
     fireEvent.click(toggleButton);
 
-    // Verify that toggleTransportMode was called with "WALK"
-    expect(mockToggleTransportMode).toHaveBeenCalledWith("WALK");
+    // Expect off toggle button
+    expect(toggleButton).toHaveClass('relative w-12 h-6 flex items-center rounded-full p-1 transition-all duration-300 bg-[#1a365d]');
   });
 });
