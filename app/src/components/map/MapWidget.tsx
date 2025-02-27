@@ -66,7 +66,7 @@ export const MapWidget: React.FC = ({ }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
     const layerManagerRef = useRef<LayerManager | null>(null);
-    const { viewMode } = useUIContext();
+    const { viewMode, setViewMode } = useUIContext();
     const { setSelectedStop } = useMapContext();
     const [mapLoaded, setMapLoaded] = useState(false);
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
@@ -259,6 +259,7 @@ export const MapWidget: React.FC = ({ }) => {
                     const stopId = feature.properties?.stop_id;
                     const stopName = feature.properties?.stop_name;
                     setSelectedStop({ stop_id: stopId, stop_name: stopName });
+                    setViewMode("STATION");
                 }
             });
 

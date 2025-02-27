@@ -217,7 +217,7 @@ const SelectedRouteDetails = () => {
               {/* Time Column */}
               <div className="w-16 flex flex-col items-center">
                 <span className="font-medium text-gray-900">{formatTime(leg.startTime)}</span>
-                {index < selectedItinerary.legs.length - 1 && (
+                {index < selectedItinerary.legs.length  && (
                   <div className={`h-full border-l-4 my-2 transition-all ${getLineColor(leg.mode)}`} />
                 )}
               </div>
