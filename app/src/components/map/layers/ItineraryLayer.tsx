@@ -11,7 +11,7 @@ import { toOtpResponse } from "@/api/routingService/mappers";
 import { GeoJSON, FeatureCollection, Point, LineString } from "geojson";
 
 export const createItineraryLayerData = (selectedItinerary: Itinerary): FeatureCollection<Point | LineString> | undefined => {
-  console.log("CREATE IT LAYER DATA TRIGGERED");
+  console.log("CREATE ITINERARY LAYER DATA TRIGGERED");
   //setSelectedItinerary(toOtpResponse(mockOtpResponse).plan.itineraries[0]);
   const _selectedItinerary = toOtpResponse(mockOtpResponse).plan.itineraries[0];
 

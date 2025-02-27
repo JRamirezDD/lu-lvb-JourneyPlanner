@@ -28,7 +28,7 @@ const MainView: React.FC = () => {
       }
     : {
         display: "grid",
-        gridTemplateColumns: "450px 100%", // ControlPanel fixed width and Map takes rest.
+        gridTemplateColumns: "450px 1fr", // ControlPanel fixed width and Map takes rest.
         width: "100%",
         height: "100%",
       };

@@ -8,6 +8,7 @@ import { TransportMode } from "@/types/TransportMode";
 import TramLogo from "../../../public/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
 import BusLogo from "../../../public/Bus-Logo.svg";
+import { useMapContext } from "@/contexts/mapContext";
 
 interface RouteData {
   id: number;
@@ -106,6 +107,7 @@ const getTransportLogo = (mode: TransportMode) => {
 
 const SelectedRouteDetails = () => {
   const { otpData, selectedItineraryIndex, setSelectedItineraryIndex } = useOtpDataContext();
+  const { selectedItinerary, setSelectedItinerary} = useMapContext();
   const { translations } = useSettingsContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
 
@@ -120,7 +122,9 @@ const SelectedRouteDetails = () => {
     return <div>No route selected</div>;
   }
 
-  const selectedItinerary = otpData.plan.itineraries[selectedItineraryIndex];
+  const localSelectedItinerary = otpData.plan.itineraries[selectedItineraryIndex];
+  console.log('Settting selected itinerary on mapContext');
+  setSelectedItinerary(localSelectedItinerary);
   const totalRoutes = Math.min(otpData.plan.itineraries.length, 5);
 
   // Updated location name handler with more defensive checks
@@ -178,9 +182,9 @@ const SelectedRouteDetails = () => {
         <div className="flex items-center gap-4">
           <div>
             <div className="text-sm opacity-80">
-              {formatTime(selectedItinerary.startTime)} - {formatTime(selectedItinerary.endTime)}
+              {formatTime(localSelectedItinerary.startTime)} - {formatTime(localSelectedItinerary.endTime)}
             </div>
-            <div className="font-medium">{formatDuration(selectedItinerary.duration)}</div>
+            <div className="font-medium">{formatDuration(localSelectedItinerary.duration)}</div>
           </div>
         </div>
         {/* Navigation Buttons */}
@@ -212,12 +216,12 @@ const SelectedRouteDetails = () => {
       {/* Steps Timeline */}
       <div className="p-4">
         <div className="space-y-6">
-          {selectedItinerary.legs.map((leg, index) => (
+          {localSelectedItinerary.legs.map((leg, index) => (
             <div key={index} className="flex gap-4">
               {/* Time Column */}
               <div className="w-16 flex flex-col items-center">
                 <span className="font-medium text-gray-900">{formatTime(leg.startTime)}</span>
-                {index < selectedItinerary.legs.length - 1 && (
+                {index < localSelectedItinerary.legs.length - 1 && (
                   <div className={`h-full border-l-4 my-2 transition-all ${getLineColor(leg.mode)}`} />
                 )}
               </div>
