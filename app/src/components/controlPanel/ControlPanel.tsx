@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoutePlanner from "./RoutePlanner";
 import RouteView from "./RouteView";
 import SelectedRouteDetails from "./SelectedRouteDetails";
@@ -12,6 +12,14 @@ import { ViewMode } from "@/types/ViewMode";
 const ControlPanel = () => {
   const { viewMode, setViewMode } = useUIContext();
   const { selectedStop } = useMapContext();
+
+
+  // If change in stationId, set viewMode to STATION
+  useEffect(() => {
+    if (selectedStop) {
+      setViewMode("STATION");
+    }
+  }, [selectedStop]);
 
   return (
     <div className="w-full h-full bg-white shadow-lg overflow-y-auto text-primary-blue">
