@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import maplibregl from "maplibre-gl";
+import { RefObject, useEffect, useRef, useState } from "react";
+import maplibregl, { Map } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
@@ -187,6 +187,7 @@ export const MapWidget: React.FC = () => {
         console.log("Loading layers for view mode:", _viewMode);
 
         if (!mapRef.current) return;
+        if (!layerManagerRef.current) return;
 
         // Fetch data before loading layers
         // For all modes, we add the stops layers...
@@ -198,7 +199,7 @@ export const MapWidget: React.FC = () => {
 
         // And if the view mode is ITINERARY, add itinerary layers too
         if (_viewMode === "ITINERARY" && selectedItinerary && mapLoaded) {
-            createItineraryLayer();
+            createItineraryLayers(mapRef.current, layerManagerRef.current, selectedItinerary);
         }
     };
 
@@ -236,7 +237,11 @@ export const MapWidget: React.FC = () => {
                 const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];
                 if (feature) {
                     console.log("Stop clicked:", feature.properties?.stop_id);
-                    setSelectedStop(feature.properties?.stop_id);
+                    setSelectedStop({ 
+                            stop_id: feature.properties?.stop_id,
+                            stop_name: feature.properties?.stop_name
+                        }
+                    );
                 }
             });
 
@@ -261,29 +266,41 @@ export const MapWidget: React.FC = () => {
 
     // Create itinerary layers (using your existing implementation)
     // This version assumes createItineraryLayerData accepts the current itinerary (if needed)
-    const createItineraryLayer = () => {
-        // You might have some itinerary selection logic here; using a dummy itinerary for now:
-        const selectedItinerary = {} as Itinerary; // replace with real itinerary
-        const itineraryData = createItineraryLayerData(selectedItinerary) as FeatureCollection<Point | LineString>;
-        const itinerarySourceConfig = { ...itinerarySource, data: itineraryData };
-        const layers = [
+    const createItineraryLayers = (map:maplibregl.Map, layerManager: LayerManager, selectedItinerary: Itinerary) => {
+        console.log("Updating itinerary layers...");
+        
+        if (!selectedItinerary) {
+          console.warn("Selected itinerary not available.");
+          return;
+        }
+      
+        // Convert itinerary data to GeoJSON
+        const geojsonData = createItineraryLayerData(selectedItinerary);
+        if (!geojsonData) return;
+      
+        // Check if source exists
+        const source = map.getSource("itinerary-source") as maplibregl.GeoJSONSource;
+        if (source) {
+          console.log("Updating existing itinerary source...");
+          source.setData(geojsonData);
+        } else {
+          console.log("Adding new itinerary source...");
+          map.addSource("itinerary-source", { type: "geojson", data: geojsonData });
+      
+          // Add all itinerary layers (once)
+          const layers = [
             walkLayerConfig,
             suburbLayerConfig,
             tramLayerConfig,
             trainLayerConfig,
             legStartEndLayerConfig,
             intermediateStopsLayerConfig,
-        ];
-
-        if (itineraryData) {
-            if (!mapRef.current?.getSource(itinerarySourceConfig.id)) {
-                mapRef.current?.addSource(itinerarySourceConfig.id, itinerarySourceConfig);
-            }
-            layers.forEach((layer) => {
-                layerManagerRef.current?.addLayer(layer);
-            });
+          ];
+      
+          layers.forEach((layer) => layerManager.addLayer(layer));
         }
-    };
+      };
+      
 
     console.log("Rendering MapWidget. Map container ref:", mapContainerRef.current);
     return (

@@ -33,111 +33,85 @@ export const createItineraryLayerData = (selectedItinerary: Itinerary): FeatureC
 
 
 
-import { LayerConfig, SourceConfig } from "./ILayer";
+import { SourceSpecification, LayerSpecification } from "maplibre-gl";
 
-// The shared source for the itinerary layers. Note that the data will be set dynamically.
-export const itinerarySource: SourceConfig = {
-  id: "itinerary-source",
+// Shared itinerary source (dynamically updated)
+export const itinerarySource: SourceSpecification = {
   type: "geojson",
   data: {
     type: "FeatureCollection",
-    features: []
-  }
+    features: [],
+  },
 };
 
-// Walk layer: blue dotted line
-export const walkLayerConfig: LayerConfig = {
+// Walking route (blue dashed line)
+export const walkLayerConfig: LayerSpecification = {
   id: "walk-layer",
   type: "line",
-  sourceId: itinerarySource.id,
-  layout: {
-    "line-join": "round",
-    "line-cap": "round"
-  },
+  source: "itinerary-source",
+  layout: { "line-join": "round", "line-cap": "round" },
   paint: {
     "line-color": "#007cbf",
     "line-width": 4,
-    "line-dasharray": [4, 2]
+    "line-dasharray": [4, 2],
   },
-  filter: ["==", ["get", "mode"], "WALK"]
+  filter: ["==", ["get", "mode"], "WALK"],
 };
 
-// Suburb layer: full red line (example color)
-export const suburbLayerConfig: LayerConfig = {
+// Suburban route (solid red)
+export const suburbLayerConfig: LayerSpecification = {
   id: "suburb-layer",
   type: "line",
-  sourceId: itinerarySource.id,
-  layout: {
-    "line-join": "round",
-    "line-cap": "round"
-  },
-  paint: {
-    "line-color": "red",
-    "line-width": 4
-  },
-  filter: ["==", ["get", "mode"], "SUBURB"]
+  source: "itinerary-source",
+  layout: { "line-join": "round", "line-cap": "round" },
+  paint: { "line-color": "red", "line-width": 4 },
+  filter: ["==", ["get", "mode"], "SUBURB"],
 };
 
-// Tram layer: full blue line
-export const tramLayerConfig: LayerConfig = {
+// Tram route (solid blue)
+export const tramLayerConfig: LayerSpecification = {
   id: "tram-layer",
   type: "line",
-  sourceId: itinerarySource.id,
-  layout: {
-    "line-join": "round",
-    "line-cap": "round"
-  },
-  paint: {
-    "line-color": "blue",
-    "line-width": 4
-  },
-  filter: ["==", ["get", "mode"], "TRAM"]
+  source: "itinerary-source",
+  layout: { "line-join": "round", "line-cap": "round" },
+  paint: { "line-color": "blue", "line-width": 4 },
+  filter: ["==", ["get", "mode"], "TRAM"],
 };
 
-// Train layer: full red line
-export const trainLayerConfig: LayerConfig = {
+// Train route (solid red)
+export const trainLayerConfig: LayerSpecification = {
   id: "train-layer",
   type: "line",
-  sourceId: itinerarySource.id,
-  layout: {
-    "line-join": "round",
-    "line-cap": "round"
-  },
-  paint: {
-    "line-color": "red",
-    "line-width": 4
-  },
-  filter: ["==", ["get", "mode"], "TRAIN"]
+  source: "itinerary-source",
+  layout: { "line-join": "round", "line-cap": "round" },
+  paint: { "line-color": "red", "line-width": 4 },
+  filter: ["==", ["get", "mode"], "TRAIN"],
 };
 
-// Leg start and end layer: black circles
-export const legStartEndLayerConfig: LayerConfig = {
+// Start & end points (black circles)
+export const legStartEndLayerConfig: LayerSpecification = {
   id: "legstartend-layer",
   type: "circle",
-  sourceId: itinerarySource.id,
+  source: "itinerary-source",
   paint: {
     "circle-radius": 5,
     "circle-color": "white",
     "circle-stroke-width": 2,
-    "circle-stroke-color": "black"
+    "circle-stroke-color": "black",
   },
-  filter: [
-    "any",
-    ["==", ["get", "type"], "Leg Start"],
-    ["==", ["get", "type"], "Leg End"]
-  ]
+  filter: ["any", ["==", ["get", "type"], "Leg Start"], ["==", ["get", "type"], "Leg End"]],
 };
 
-// Intermediate stops layer: black circles
-export const intermediateStopsLayerConfig: LayerConfig = {
+// Intermediate stops (smaller black circles)
+export const intermediateStopsLayerConfig: LayerSpecification = {
   id: "intermediatestops-layer",
   type: "circle",
-  sourceId: itinerarySource.id,
+  source: "itinerary-source",
   paint: {
     "circle-radius": 3,
     "circle-color": "white",
     "circle-stroke-width": 2,
-    "circle-stroke-color": "black"
+    "circle-stroke-color": "black",
   },
-  filter: ["==", ["get", "type"], "Intermediate Stop"]
+  filter: ["==", ["get", "type"], "Intermediate Stop"],
 };
