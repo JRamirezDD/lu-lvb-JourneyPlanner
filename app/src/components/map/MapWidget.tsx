@@ -82,9 +82,9 @@ export const MapWidget: React.FC = ({ }) => {
     
         const map = new maplibregl.Map({
             container: mapContainerRef.current,
-            style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+            style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
             center: [12.377014, 51.340613],
-            zoom: 12,
+            zoom: 14,
           });
     
         map.on("load", () => {
