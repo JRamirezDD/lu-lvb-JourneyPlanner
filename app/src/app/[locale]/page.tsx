@@ -9,7 +9,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Main content area */}
-      <main style={{ flex: 1, display: "flex", overflow: "hidden" }}>
+      <main style={{ flex: 1, display: "flex", overflow: "hidden", height: "100%", margin:0, padding:0 }}>
         {/* MainView fills this section */}
         <MainView />
       </main>
