@@ -11,7 +11,9 @@ const mockItem = toStopsResponse(rawItem);
 
 // Function to generate GeoJSON dynamically from API response
 export const createStopsLayerData = (stops: StopsResponse): GeoJSON.FeatureCollection => {
-  return stops.toGeoJson();
+  const stopsGeoJson = stops.toGeoJson();
+  console.log("Stops GeoJSON:", stopsGeoJson);
+  return stopsGeoJson;
 };
 
 // Stops source definition
@@ -49,6 +51,8 @@ export const stopsSource: GeoJSONSourceSpecification = {
     id: "stops-layer",
     type: "circle",
     source: "stops-source",
+    minzoom: 14,
+    maxzoom: 22,
     paint: {
       "circle-radius": 4,
       "circle-color": "#ff0000",
@@ -62,10 +66,12 @@ export const stopsSource: GeoJSONSourceSpecification = {
     id: "stops-labels",
     type: "symbol",
     source: "stops-source",
+    minzoom: 16,
+    maxzoom: 22, // Labels appear when zoom level is 10 or higher
     layout: {
-      "text-field": ["get", "name"],
+      "text-field": ["get", "stop_name"],
       "text-size": 12,
-      "text-offset": [0, 1.2], // Better text positioning
+      "text-offset": [0, 1.2],
       "text-anchor": "top",
     },
     paint: {
@@ -74,4 +80,5 @@ export const stopsSource: GeoJSONSourceSpecification = {
       "text-halo-width": 1,
     },
   };
+  
   
