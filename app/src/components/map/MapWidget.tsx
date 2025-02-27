@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import mapboxgl from "mapbox-gl";
+import maplibregl from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { FeatureCollection, Point, LineString } from "geojson";
 import { LayerManager } from "./layers/ILayer";
-import { createItineraryLayer, createItineraryLayerData } from "./layers/ItineraryLayer";
+import { createItineraryLayerData } from "./layers/ItineraryLayer";
 import { ViewMode } from "@/types/ViewMode";
-import { stopsLayerConfig, stopsLabelsLayerConfig, stopsSource as stopsSourceConfig, createStopsLayerData } from "./layers/StopsLayer";
+import { stopsLayerConfig, stopsLabelsLayerConfig, stopsSource as stopsSourceConfig, createStopsLayerData, stopsSource } from "./layers/StopsLayer";
 import {
     itinerarySource,
     walkLayerConfig,
@@ -24,65 +25,62 @@ import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDat
 // --- Bounding Box Helpers ---
 
 // Returns an extended bounding box (bufferFactor of 0.5 means 50% larger than view)
-function getExtendedBounds(map: mapboxgl.Map, bufferFactor = 0.5) {
+const getExtendedBounds = (map: maplibregl.Map, bufferFactor = 1) => {
     const bounds = map.getBounds();
-    if (!bounds) return null;
     const sw = bounds.getSouthWest();
     const ne = bounds.getNorthEast();
     const center = bounds.getCenter();
-
-    const lngDiff = Math.abs(ne.lng - sw.lng);
-    const latDiff = Math.abs(ne.lat - sw.lat);
-
-    // Create an extended bounds centered on the current view
-    const extendedSw = new mapboxgl.LngLat(
+  
+    const lngDiff = ne.lng - sw.lng;
+    const latDiff = ne.lat - sw.lat;
+  
+    return new maplibregl.LngLatBounds(
+      [
         center.lng - (lngDiff * (1 + bufferFactor)) / 2,
-        center.lat - (latDiff * (1 + bufferFactor)) / 2
-    );
-    const extendedNe = new mapboxgl.LngLat(
+        center.lat - (latDiff * (1 + bufferFactor)) / 2,
+      ],
+      [
         center.lng + (lngDiff * (1 + bufferFactor)) / 2,
-        center.lat + (latDiff * (1 + bufferFactor)) / 2
+        center.lat + (latDiff * (1 + bufferFactor)) / 2,
+      ]
     );
-    return new mapboxgl.LngLatBounds(extendedSw, extendedNe);
-}
+  };
 
 // Converts bounds into a comma-separated string: "minLng,minLat,maxLng,maxLat"
-function boundsToString(bounds: mapboxgl.LngLatBounds) {
+const boundsToString = (bounds: maplibregl.LngLatBounds) => {
     const sw = bounds.getSouthWest();
     const ne = bounds.getNorthEast();
-    // SPECIFIC FORMAT REQUIRED FOR GEOJSON
-        // bbox = min Longitude , min Latitude , max Longitude , max Latitude 
-    return `${sw.lat},${ne.lat},${sw.lng},${ne.lng}`;
-}
+    return `${sw.lat},${sw.lng},${ne.lat},${ne.lng}`;
+  };
 
 // --- Component Implementation ---
 
 export const MapWidget: React.FC = () => {
-    const mapContainer = useRef<HTMLDivElement>(null);
-    const mapRef = useRef<mapboxgl.Map | null>(null);
+    const mapContainerRef = useRef<HTMLDivElement>(null);
+    const mapRef = useRef<maplibregl.Map | null>(null);
     const layerManagerRef = useRef<LayerManager | null>(null);
     const { viewMode } = useUIContext();
     const { setSelectedStop } = useMapContext();
-    const [localSelectedItinerary, setLocalSelectedItinerary] = useState<FeatureCollection<Point | LineString> | undefined>(undefined);
     const [mapLoaded, setMapLoaded] = useState(false);
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
+    const { selectedItinerary } = useMapContext();
+  
     
     // State to hold the current query bounds (the extended bounding box used for querying)
-    const currentQueryBoundsRef = useRef<mapboxgl.LngLatBounds | null>(null);
-    const [queryBoundsState, setQueryBoundsState] = useState<mapboxgl.LngLatBounds | null>(null);
+    const currentQueryBoundsRef = useRef<maplibregl.LngLatBounds | null>(null);
+    const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
     useEffect(() => {
-        if (!mapContainer.current || mapRef.current) return;
+        if (!mapContainerRef.current || mapRef.current) return;
     
-        mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
-        const map = new mapboxgl.Map({
-            container: mapContainer.current,
-            style: "mapbox://styles/mapbox/streets-v12",
-            center: [12.37701425222998, 51.3406130352673],
+        const map = new maplibregl.Map({
+            container: mapContainerRef.current,
+            style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+            center: [12.377014, 51.340613],
             zoom: 12,
-        });
+          });
     
-        map.on("style.load", () => {
+        map.on("load", () => {
             // Initialize LayerManager and mapRef
             layerManagerRef.current = new LayerManager(map);
             mapRef.current = map;
@@ -111,89 +109,155 @@ export const MapWidget: React.FC = () => {
                         console.log("New stops query due to map move:", boundsToString(newExtendedBounds));
                 }
             });
+
+            // Click listener for Mapbox pre-loaded layers
+            map.on('click', (e) => {
+                const features = map.queryRenderedFeatures(e.point);
+                if (features && features.length > 0) {
+                const feature = features[0];
+                if (feature.geometry.type === 'Point' || feature.geometry.type === 'LineString' || feature.geometry.type === 'Polygon') {
+                    if (feature.geometry.coordinates) {
+                    const coordinates = feature.geometry.coordinates;
+                    console.log('Clicked coordinates:', coordinates, 'of type:', feature.geometry.type);
+                    }
+                } else {
+                    console.log("Geometry type is not a Point, LineString, or Polygon");
+                }
+
+                }
+            });
     
             setMapLoaded(true);
             loadLayers(viewMode);
         });
+
+        map.on("error", (e) => {
+            console.error("Map loading error:", e);
+          });
     
         return () => map.remove();
     }, []);
     
-
+    // React to changes in queryBoundsState
     useEffect(() => {
         console.log("queryBounds:", queryBoundsState);
+        
         if (queryBoundsState && mapRef.current) {
             const bboxString = boundsToString(queryBoundsState);
-            console.log("Stops query:", bboxString);
-            fetchStops(bboxString);
+            fetchStopsData()
         }
     }, [queryBoundsState]);
     
+    // Fetch stops data
+    const fetchStopsData = async () => {
+        if (!currentQueryBoundsRef.current) return;
+        
+        console.log("Stops query:", currentQueryBoundsRef.current);
+        
+        await fetchStops(boundsToString(currentQueryBoundsRef.current));
+        
+        if (errorStops) {
+            console.error("Error fetching stops:", errorStops);
+            return;
+        }
+    };
 
+    // React to viewmode changes
     useEffect(() => {
         if (mapRef.current) {
             loadLayers(viewMode);
         }
     }, [viewMode]);
 
+    // React to stopsData being loaded
+    useEffect(() => {
+        console.log("Stops Data Updated:", stopsData);
+        
+        if (!loadingStops && stopsData) {
+            console.log("Stops data is available, creating layers...");
+            createStopsLayers();
+        } else {
+            console.warn("Stops data not ready yet.");
+        }
+    }, [stopsData, loadingStops]);
+
+
     // Update layers when view mode changes
     const loadLayers = (_viewMode: ViewMode) => {
+        console.log("Loading layers for view mode:", _viewMode);
 
         if (!mapRef.current) return;
+
+        // Fetch data before loading layers
         // For all modes, we add the stops layers...
-        createStopsLayers();
+
+        // createStopsLayers(); - now fully handled by boundingbox observer
+
+        // remove layers
+
 
         // And if the view mode is ITINERARY, add itinerary layers too
-        if (_viewMode === "ITINERARY" && localSelectedItinerary && mapLoaded) {
+        if (_viewMode === "ITINERARY" && selectedItinerary && mapLoaded) {
             createItineraryLayer();
         }
     };
 
+
+    
+
+
+
+
     // Update stops layers using the stops data from context
+    // Function to dynamically update the stops source & layers
     const createStopsLayers = () => {
-        if (!mapRef.current || !stopsData) return;
-
-        // Update the stops source data from context
-        const _stopsSourceConfig = { ...stopsSourceConfig, data: createStopsLayerData(stopsData) };
-        const _stopsLayerConfig = stopsLayerConfig;
-        const _stopsLabelsLayerConfig = stopsLabelsLayerConfig;
-
-        // Clean up existing stops layers and add new ones
-        layerManagerRef.current?.removeLayer(_stopsLayerConfig.id);
-        layerManagerRef.current?.removeLayer(_stopsLabelsLayerConfig.id);
+        console.log("Updating stops layers...");
         
-        // Clean up old source
-        if (mapRef.current.getSource(_stopsSourceConfig.id)) {
-            mapRef.current.removeSource(_stopsSourceConfig.id);
+        if (!mapRef.current || !stopsData) {
+            console.warn("Map or stopsData not available.");
+            return;
         }
 
-        // Add new source
-        if (!mapRef.current.getSource(_stopsSourceConfig.id)) {
-            mapRef.current.addSource(_stopsSourceConfig.id, _stopsSourceConfig);
+        // Convert stopsData into GeoJSON
+        const geojsonData = createStopsLayerData(stopsData);
+        
+        // Check if the source already exists
+        const source = mapRef.current.getSource("stops-source") as maplibregl.GeoJSONSource;
+        if (source) {
+            // updating source data
+            source.setData(geojsonData); // Update data without re-adding the source
+        } else { // If source doesn't exist, create layers and interactions. Operation should only occur once per instance, unless source is removed.
+            stopsSource.data = geojsonData;
+            console.log("Adding stops source and layers...");
+            mapRef.current.addSource("stops-source", stopsSource);
+
+            // Add layers
+            layerManagerRef.current?.addLayer(stopsLayerConfig, true, (e) => {
+                const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];
+                if (feature) {
+                    console.log("Stop clicked:", feature.properties?.stop_id);
+                    setSelectedStop(feature.properties?.stop_id);
+                }
+            });
+
+            layerManagerRef.current?.addLayer(stopsLabelsLayerConfig);
+
+            // Register cursor events
+            mapRef.current.on("mouseenter", "stops-layer", () => {
+
+                if (mapRef.current) {
+                    mapRef.current.getCanvas().style.cursor = "pointer";
+                }
+            });
+
+            mapRef.current.on("mouseleave", "stops-layer", () => {
+                if (mapRef.current) {
+                    mapRef.current.getCanvas().style.cursor = "";
+                }
+            });
         }
-        // Add layers
-        layerManagerRef.current?.addLayer(_stopsLayerConfig);
-        layerManagerRef.current?.addLayer(_stopsLabelsLayerConfig);
-
-        // Register click and cursor events for stops layer
-        mapRef.current.on("click", _stopsLayerConfig.id, (e) => {
-            const feature = e.features?.[0];
-            if (feature) {
-                setSelectedStop(feature.properties?.stopId);
-            }
-        });
-
-        mapRef.current.on("mouseenter", _stopsLayerConfig.id, () => {
-            if (mapRef.current) {
-                mapRef.current.getCanvas().style.cursor = "pointer";
-            }
-        });
-        mapRef.current.on("mouseleave", _stopsLayerConfig.id, () => {
-            if (mapRef.current) {
-                mapRef.current.getCanvas().style.cursor = "";
-            }
-        });
     };
+
 
     // Create itinerary layers (using your existing implementation)
     // This version assumes createItineraryLayerData accepts the current itinerary (if needed)
@@ -221,7 +285,16 @@ export const MapWidget: React.FC = () => {
         }
     };
 
-    return <div ref={mapContainer} style={{ width: "100%", height: "100vh" }} />;
-};
+    console.log("Rendering MapWidget. Map container ref:", mapContainerRef.current);
+    return (
+        <div
+          ref={mapContainerRef}
+          style={{
+            width: "100%",
+            height: "100vh",
+            position: "relative",
+         }}
+        />
+      );};
 
 export default Map;

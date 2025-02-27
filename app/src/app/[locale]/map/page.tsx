@@ -6,8 +6,8 @@ export { generateStaticParams };
 
 export default function Home() {
   return (
-    <div>
-        <MapWidget />
+    <div style={{ width: "100vw", height: "100vh" }}> 
+      <MapWidget />
     </div>
   );
 }
