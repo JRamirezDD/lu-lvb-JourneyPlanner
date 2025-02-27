@@ -19,7 +19,7 @@ export const createItineraryLayerData = (selectedItinerary: Itinerary): FeatureC
     try {
       console.log("SELECTED ITINERARY:", selectedItinerary);
       const geojsonData = selectedItinerary.toGeoJson() as FeatureCollection<Point | LineString>; // Type assertion
-      console.log("GEOJSON DATA", (geojsonData.features));
+      console.log("GEOJSON DATA", (geojsonData));
       return geojsonData;
     } catch (error) {
       console.error("Error processing route data:", error);

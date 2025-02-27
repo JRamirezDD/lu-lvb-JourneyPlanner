@@ -50,9 +50,9 @@ export const stopsSource: GeoJSONSourceSpecification = {
     type: "circle",
     source: "stops-source",
     paint: {
-      "circle-radius": 5,
+      "circle-radius": 4,
       "circle-color": "#ff0000",
-      "circle-stroke-width": 2,
+      "circle-stroke-width": 1,
       "circle-stroke-color": "#000",
     },
   };

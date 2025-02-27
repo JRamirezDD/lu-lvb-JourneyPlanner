@@ -1,11 +1,10 @@
 "use client";
 
-import { RefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import maplibregl, { Map } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
-import { FeatureCollection, Point, LineString } from "geojson";
 import { LayerManager } from "./layers/ILayer";
 import { createItineraryLayerData } from "./layers/ItineraryLayer";
 import { ViewMode } from "@/types/ViewMode";
@@ -21,6 +20,10 @@ import {
 } from "./layers/ItineraryLayer";
 import { Itinerary } from "@/types/Itinerary";
 import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
+import { OtpItinerary } from "@/api/routingService/dto/otpResponse";
+import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.mock";
+import { toOtpResponse } from "@/api/routingService/mappers";
+
 
 // --- Bounding Box Helpers ---
 
@@ -67,7 +70,7 @@ export const MapWidget: React.FC<MapWidgetProps> = ({ onStopSelect }) => {
     const { setSelectedStop } = useMapContext();
     const [mapLoaded, setMapLoaded] = useState(false);
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
-    const { selectedItinerary } = useMapContext();
+    const { setSelectedItinerary, selectedItinerary } = useMapContext();
   
     
     // State to hold the current query bounds (the extended bounding box used for querying)
@@ -199,12 +202,25 @@ export const MapWidget: React.FC<MapWidgetProps> = ({ onStopSelect }) => {
         // createStopsLayers(); - now fully handled by boundingbox observer
 
         // remove layers
+        removeItineraryLayers(mapRef.current, layerManagerRef.current);
 
+            // DELETE THIS - CURRENTLY NEEDED FOR DEMO BECAUSE CONTROL PANEL IS NOT CONNECTED TO CONTEXTS
+            var otpPlan = toOtpResponse(mockOtpResponse).plan; 
+            var itinerary = new Itinerary(
+                otpPlan.from,
+                otpPlan.to,
+                otpPlan.itineraries[0]
+            )
+            setSelectedItinerary(itinerary);
+            createItineraryLayers(mapRef.current, layerManagerRef.current, itinerary);
+            // END DELETE
 
         // And if the view mode is ITINERARY, add itinerary layers too
         if (_viewMode === "ITINERARY" && selectedItinerary && mapLoaded) {
             createItineraryLayers(mapRef.current, layerManagerRef.current, selectedItinerary);
         }
+
+        mapRef.current.resize();
     };
 
 
@@ -264,6 +280,21 @@ export const MapWidget: React.FC<MapWidgetProps> = ({ onStopSelect }) => {
         }
     };
 
+    const removeItineraryLayers = (map:maplibregl.Map, layerManager: LayerManager) => {
+        console.log("Removing itinerary layers...");
+        
+        // Remove all itinerary layers
+        const layers = [
+          walkLayerConfig,
+          suburbLayerConfig,
+          tramLayerConfig,
+          trainLayerConfig,
+          legStartEndLayerConfig,
+          intermediateStopsLayerConfig,
+        ];
+
+        layers.forEach((layer) => layerManager.removeLayer(layer.id));
+    }
 
     // Create itinerary layers (using your existing implementation)
     // This version assumes createItineraryLayerData accepts the current itinerary (if needed)

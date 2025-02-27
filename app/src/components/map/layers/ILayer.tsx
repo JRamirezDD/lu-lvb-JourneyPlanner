@@ -20,6 +20,8 @@ export class LayerManager {
     }
 
     this.map.addLayer(layerConfig);
+    
+    console.log("layer added with properties", layerConfig);
 
     if (interactive && onClick) {
       this.map.on("click", layerConfig.id, onClick);

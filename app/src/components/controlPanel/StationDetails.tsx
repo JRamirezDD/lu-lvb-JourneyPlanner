@@ -53,7 +53,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {  // Defa
     };
 
     fetchData();
-  }, [stopId, fetchStopMonitor]);
+  }, [stopId]);
 
   // Add logging
   console.log('StopMonitor Data:', {
