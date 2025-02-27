@@ -4,8 +4,15 @@ import Map from "@/components/Map";
 import ControlPanel from "./controlPanel/ControlPanel";
 import { MapWidget } from "./map/MapWidget";
 
+interface SelectedStop {
+  stop_id: string;
+  stop_name: string;
+}
+
 const MainView: React.FC = () => {
   const [isVertical, setIsVertical] = useState(false);
+  const [selectedStop, setSelectedStop] = useState<SelectedStop | null>(null);
+  const [activeView, setActiveView] = useState<"planner" | "routes" | "details" | "station">("planner");
 
   // Listen for window resizes and toggle vertical mode when width <= 900px.
   useEffect(() => {
@@ -33,6 +40,12 @@ const MainView: React.FC = () => {
         height: "100%",
       };
 
+  // Handle stop selection
+  const handleStopSelect = (stop: SelectedStop) => {
+    setSelectedStop(stop);
+    setActiveView("station");
+  };
+
   return (
     <div style={containerStyle}>
       {isVertical ? (
@@ -46,7 +59,7 @@ const MainView: React.FC = () => {
               height: "100%",
             }}
           >
-            <MapWidget />
+            <MapWidget onStopSelect={handleStopSelect} />
           </div>
           <div
             style={{
@@ -56,7 +69,11 @@ const MainView: React.FC = () => {
               height: "auto",
             }}
           >
-            <ControlPanel />
+            <ControlPanel 
+              activeView={activeView} 
+              setActiveView={setActiveView}
+              selectedStop={selectedStop} 
+            />
           </div>
         </>
       ) : (
@@ -70,7 +87,11 @@ const MainView: React.FC = () => {
               height: "100%",
             }}
           >
-            <ControlPanel />
+            <ControlPanel 
+              activeView={activeView} 
+              setActiveView={setActiveView}
+              selectedStop={selectedStop} 
+            />
           </div>
           <div
             style={{
@@ -80,7 +101,7 @@ const MainView: React.FC = () => {
               height: "100%",
             }}
           >
-            <MapWidget />
+            <MapWidget onStopSelect={handleStopSelect} />
           </div>
         </>
       )}
