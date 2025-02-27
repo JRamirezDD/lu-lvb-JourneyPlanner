@@ -67,6 +67,7 @@ const getLineColor = (mode: TransportMode) => {
     case "TRAM": return "border-red-600";
     case "SUBURB": return "border-green-600";
     case "BUS": return "border-purple-600";
+    case "WALK": return "border-gray-600 border-dashed";
     default: return "border-gray-200";
   }
 };
