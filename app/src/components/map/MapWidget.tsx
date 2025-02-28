@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import maplibregl, { Map } from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./layers/ILayer";
