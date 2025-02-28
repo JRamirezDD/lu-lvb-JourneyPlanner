@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import MapWidget from '@/components/map/MapWidget';
 import { UIProvider, useUIContext } from '@/contexts/uiContext';
 import { MapProvider, useMapContext } from '@/contexts/mapContext';
-import maplibregl, { Map } from "maplibre-gl";
+import maplibregl from 'maplibre-gl';
 import { StopmonitorDataProvider } from '@/contexts/DataContext/stopmonitorDataContext';
 
 jest.mock('maplibre-gl', () => ({
@@ -18,20 +18,20 @@ jest.mock('maplibre-gl', () => ({
       remove: jest.fn(),
       addSource: jest.fn(),
       getSource: jest.fn(),
-      addLayer: jest.fn(),
+      getLayer: jest.fn(() => ({})),
       removeLayer: jest.fn(),
       removeSource: jest.fn(),
       loadImage: jest.fn((url, callback) => {
         callback(null, { width: 1, height: 1 });
       }),
       addImage: jest.fn(),
-      queryRenderedFeatures: jest.fn((point) => { // Mock queryRenderedFeatures
-          return [{
-              geometry: {
-                type: 'Point',
-                coordinates: [10, 20],
-              },
-            }];
+      queryRenderedFeatures: jest.fn((point) => {
+        return [{
+          geometry: {
+            type: 'Point',
+            coordinates: [10, 20],
+          },
+        }];
       }),
       getCanvas: jest.fn(() => ({ style: { cursor: '' } })),
       resize: jest.fn(),
@@ -41,12 +41,16 @@ jest.mock('maplibre-gl', () => ({
         getCenter: jest.fn(() => ({ lng: 0.5, lat: 0.5 })),
       })),
     })),
-    LngLatBounds: jest.fn(() => ({
+    LngLatBounds: jest.fn((sw, ne) => ({
+      getSouthWest: jest.fn(() => sw),
+      getNorthEast: jest.fn(() => ne),
+      getCenter: jest.fn(() => ({
+        lng: (sw.lng + ne.lng) / 2,
+        lat: (sw.lat + ne.lat) / 2,
+      })),
       contains: jest.fn(() => true),
     })),
   }));
-
-// Mock contexts
 jest.mock('@/contexts/uiContext', () => ({
   UIProvider: ({ children }: any) => <>{children}</>,
   useUIContext: jest.fn(() => ({
@@ -60,6 +64,8 @@ jest.mock('@/contexts/mapContext', () => ({
   useMapContext: jest.fn(() => ({
     selectedStop: null,
     setSelectedStop: jest.fn(),
+    setSelectedItinerary: jest.fn(), // Add this line
+    selectedItinerary: null,
   })),
 }));
 
@@ -112,34 +118,36 @@ describe('Map Component', () => {
     expect(mapMock.on).toHaveBeenCalledWith('click', expect.any(Function));
   });
 
-  it('logs coordinates on map click', () => {
-    const mapMock = new (maplibregl.Map as jest.Mock)();
-    (maplibregl.Map as jest.Mock).mockReturnValue(mapMock);
-    const queryRenderedFeaturesMock = jest.fn((point) => { // Mock queryRenderedFeatures
-          return [{
-              geometry: {
-                type: 'Point',
-                coordinates: [10, 20],
-              },
-            }];
-      });
-    mapMock.queryRenderedFeatures = queryRenderedFeaturesMock;
-    const consoleSpy = jest.spyOn(console, 'log');
-  
-    render(
-      <UIProvider>
-        <MapProvider>
-          <StopmonitorDataProvider>
-            <MapWidget />
-          </StopmonitorDataProvider>
-        </MapProvider>
-      </UIProvider>
-    );
-  
-    const clickCallback = mapMock.on.mock.calls.find((call: string[]) => call[0] === 'click')[1];
-    clickCallback({ point: { x: 10, y: 10 } }); // Pass a mock event object
-  
-    expect(consoleSpy).toHaveBeenCalledWith('Clicked coordinates:', [10, 20]);
-    consoleSpy.mockRestore();
-  });
+// a temporarily disabled feature that will probably be replaced with another feature later:
+
+//   it('logs coordinates on map click', () => {
+//     const mapMock = new (maplibregl.Map as jest.Mock)();
+//     (maplibregl.Map as jest.Mock).mockReturnValue(mapMock);
+//     const queryRenderedFeaturesMock = jest.fn((point) => {
+//       return [{
+//         geometry: {
+//           type: 'Point',
+//           coordinates: [10, 20],
+//         },
+//       }];
+//     });
+//     mapMock.queryRenderedFeatures = queryRenderedFeaturesMock;
+//     const consoleSpy = jest.spyOn(console, 'log');
+
+//     render(
+//       <UIProvider>
+//         <MapProvider>
+//           <StopmonitorDataProvider>
+//             <MapWidget />
+//           </StopmonitorDataProvider>
+//         </MapProvider>
+//       </UIProvider>
+//     );
+
+//     const clickCallback = mapMock.on.mock.calls.find((call: string[]) => call[0] === 'click')[1];
+//     clickCallback({ point: { x: 10, y: 10 } });
+
+//     expect(consoleSpy).toHaveBeenCalledWith('Clicked coordinates:', [10, 20]);
+//     consoleSpy.mockRestore();
+//   });
 });
