@@ -18,7 +18,7 @@ export class Itinerary extends GeoJsonConvertible {
             features: [
                 this.from.toGeoJsonFeature("Origin"),
                 this.to.toGeoJsonFeature("Destination"),
-                this.otpItinerary.toGeoJsonFeatures()
+                ...this.otpItinerary.toGeoJsonFeatures()
             ],
         };
 

@@ -1,24 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoutePlanner from "./RoutePlanner";
 import RouteView from "./RouteView";
 import SelectedRouteDetails from "./SelectedRouteDetails";
 import StationDetails from "./StationDetails";
+import { useUIContext } from "@/contexts/uiContext";
+import { useMapContext } from "@/contexts/mapContext";
+import { ViewMode } from "@/types/ViewMode";
 
 const ControlPanel = () => {
-  const [activeView, setActiveView] = useState<
-    "planner" | "routes" | "details" | "station"
-  >("planner");
+  const { viewMode, setViewMode } = useUIContext();
+  const { selectedStop } = useMapContext();
+
+
+  // If change in stationId, set viewMode to STATION
+  useEffect(() => {
+    if (selectedStop) {
+      setViewMode("STATION");
+    }
+  }, [selectedStop]);
 
   return (
     <div className="w-full h-full bg-white shadow-lg overflow-y-auto text-primary-blue">
       <div className="p-4 pb-32">
         <nav className="flex space-x-2 mb-4">
           <button
-            onClick={() => setActiveView("planner")}
+            onClick={() => setViewMode("DEFAULT")}
             className={`px-4 py-2 rounded transition-colors ${
-              activeView === "planner"
+              viewMode === "PLAN"
                 ? "bg-primary-yellow text-primary-blue"
                 : "hover:bg-primary-yellow/10"
             }`}
@@ -26,9 +36,9 @@ const ControlPanel = () => {
             Plan
           </button>
           <button 
-            onClick={() => setActiveView("routes")}
+            onClick={() => setViewMode("PLAN")}
             className={`px-4 py-2 rounded transition-colors ${
-              activeView === "routes"
+              viewMode === "PLAN"
                 ? "bg-primary-yellow text-primary-blue"
                 : "hover:bg-primary-yellow/10"
             }`}
@@ -36,9 +46,9 @@ const ControlPanel = () => {
             Routes
           </button>
           <button
-            onClick={() => setActiveView("details")}
+            onClick={() => setViewMode("ITINERARY")}
             className={`px-4 py-2 rounded transition-colors ${
-              activeView === "details"
+              viewMode === "ITINERARY"
                 ? "bg-primary-yellow text-primary-blue"
                 : "hover:bg-primary-yellow/10"
             }`}
@@ -46,9 +56,9 @@ const ControlPanel = () => {
             Details
           </button>
           <button
-            onClick={() => setActiveView("station")}
+            onClick={() => setViewMode("STATION")}
             className={`px-4 py-2 rounded transition-colors ${
-              activeView === "station"
+              viewMode === "STATION"
                 ? "bg-primary-yellow text-primary-blue"
                 : "hover:bg-primary-yellow/10"
             }`}
@@ -57,10 +67,15 @@ const ControlPanel = () => {
           </button>
         </nav>
 
-            {activeView === "planner" && <RoutePlanner setActiveView={setActiveView} />}
-            {activeView === "routes" && <RouteView setActiveView={setActiveView} />}
-            {activeView === "details" && <SelectedRouteDetails />}
-            {activeView === "station" && <StationDetails />}
+        {viewMode === "DEFAULT" && <RoutePlanner setActiveView={setViewMode} />}
+        {viewMode === "PLAN" && <RouteView setActiveView={setViewMode} />}
+        {viewMode === "ITINERARY" && <SelectedRouteDetails />}
+        {viewMode === "STATION" && selectedStop && (
+          <StationDetails 
+            stopId={selectedStop.stop_id} 
+            stopName={selectedStop.stop_name} 
+          />
+        )}
       </div>
     </div>
   );

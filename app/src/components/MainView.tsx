@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import Map from "@/components/Map";
 import ControlPanel from "./controlPanel/ControlPanel";
+import { MapWidget } from "./map/MapWidget";
 
 const MainView: React.FC = () => {
   const [isVertical, setIsVertical] = useState(false);
+  const [activeView, setActiveView] = useState<"planner" | "routes" | "details" | "station">("planner");
 
   // Listen for window resizes and toggle vertical mode when width <= 900px.
   useEffect(() => {
@@ -24,14 +25,13 @@ const MainView: React.FC = () => {
         gridTemplateRows: "1fr auto", // Map takes all remaining space, control panel takes auto height.
         width: "100%",
         height: "100%",
-        fontFamily: "Arial, sans-serif",
       }
     : {
         display: "grid",
-        gridTemplateColumns: "450px 100%", // ControlPanel fixed width and Map takes rest.
         width: "100%",
         height: "100%",
-        fontFamily: "Arial, sans-serif",
+        gridTemplateColumns: "450px 1fr", // ControlPanel fixed width and Map takes rest.
+        
       };
 
   return (
@@ -47,7 +47,7 @@ const MainView: React.FC = () => {
               height: "100%",
             }}
           >
-            <Map />
+            <MapWidget/>
           </div>
           <div
             style={{
@@ -57,7 +57,7 @@ const MainView: React.FC = () => {
               height: "auto",
             }}
           >
-            <ControlPanel />
+            <ControlPanel/>
           </div>
         </>
       ) : (
@@ -68,10 +68,10 @@ const MainView: React.FC = () => {
               position: "relative",
               overflow: "hidden",
               width: "100%",
-              height: "100%",
+              height: "auto",
             }}
           >
-            <ControlPanel />
+            <ControlPanel/>
           </div>
           <div
             style={{
@@ -81,7 +81,7 @@ const MainView: React.FC = () => {
               height: "100%",
             }}
           >
-            <Map />
+            <MapWidget />
           </div>
         </>
       )}

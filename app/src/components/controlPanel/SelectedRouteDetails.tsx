@@ -67,6 +67,7 @@ const getLineColor = (mode: TransportMode) => {
     case "TRAM": return "border-red-600";
     case "SUBURB": return "border-green-600";
     case "BUS": return "border-purple-600";
+    case "WALK": return "border-gray-600 border-dashed";
     default: return "border-gray-200";
   }
 };
@@ -217,7 +218,7 @@ const SelectedRouteDetails = () => {
               {/* Time Column */}
               <div className="w-16 flex flex-col items-center">
                 <span className="font-medium text-gray-900">{formatTime(leg.startTime)}</span>
-                {index < selectedItinerary.legs.length - 1 && (
+                {index < selectedItinerary.legs.length  && (
                   <div className={`h-full border-l-4 my-2 transition-all ${getLineColor(leg.mode)}`} />
                 )}
               </div>
@@ -246,7 +247,7 @@ const SelectedRouteDetails = () => {
                         )}
                         <div className={`px-3 py-1.5 rounded-full shadow-sm ${getTransportColor(leg.mode)}`}>
                           <span className="text-white font-medium">
-                            {leg.route ? `${leg.mode} ${leg.route}` : leg.mode}
+                            {leg.route ? `${leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode} ${leg.route}` : leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode}
                           </span>
                         </div>
                         {/* Platform and stops info */}

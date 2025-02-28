@@ -1,19 +1,14 @@
-// app/LocaleHome.tsx (or your current page file)
-import MainView from "@/components/MainView";
+import "maplibre-gl/dist/maplibre-gl.css"; // Additive maplibre-gl CSS functionality
+
 import { generateStaticParams } from "./generateStaticParams";
 export { generateStaticParams };
 
-export default async function LocaleHome({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+import MainView from "@/components/MainView";
 
+export default function MainPage() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      {/* Main content area */}
-      <main style={{ flex: 1, display: "flex", overflow: "hidden" }}>
-        {/* MainView fills this section */}
+    <div id="app" style={{ width: "100%", height: "100%" }}>
         <MainView />
-      </main>
-    </div>
+      </div>
   );
 }
