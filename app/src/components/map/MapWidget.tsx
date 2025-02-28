@@ -95,14 +95,14 @@ export const MapWidget: React.FC = ({ }) => {
             const extendedBounds = getExtendedBounds(map, 0.5);
             currentQueryBoundsRef.current = extendedBounds;
             setQueryBoundsState(extendedBounds); // trigger useEffect below
-            console.log("Initial query bounds:", extendedBounds);
+            //console.log("Initial query bounds:", extendedBounds);
     
             // Set up moveend listener
             map.on("moveend", () => {
                 console.log("Map moveend event");
                 const currentViewBounds = map.getBounds();
                 if (!currentQueryBoundsRef.current || !currentViewBounds) return;
-                console.log("Map bounds:", currentViewBounds);
+                //console.log("Map bounds:", currentViewBounds);
     
                 if (
                     !currentQueryBoundsRef.current.contains(currentViewBounds.getNorthEast()) ||
@@ -111,26 +111,26 @@ export const MapWidget: React.FC = ({ }) => {
                     const newExtendedBounds = getExtendedBounds(map, 0.5);
                     currentQueryBoundsRef.current = newExtendedBounds;
                     setQueryBoundsState(newExtendedBounds); // update state to trigger useEffect
-                    if (newExtendedBounds)
-                        console.log("New stops query due to map move:", boundsToString(newExtendedBounds));
+                    // if (newExtendedBounds)
+                    //     console.log("New stops query due to map move:", boundsToString(newExtendedBounds));
                 }
             });
 
             // Click listener for Mapbox pre-loaded layers
             map.on('click', (e) => {
-                const features = map.queryRenderedFeatures(e.point);
-                if (features && features.length > 0) {
-                const feature = features[0];
-                if (feature.geometry.type === 'Point' || feature.geometry.type === 'LineString' || feature.geometry.type === 'Polygon') {
-                    if (feature.geometry.coordinates) {
-                    const coordinates = feature.geometry.coordinates;
-                    console.log('Clicked coordinates:', coordinates, 'of type:', feature.geometry.type);
-                    }
-                } else {
-                    console.log("Geometry type is not a Point, LineString, or Polygon");
-                }
+                // const features = map.queryRenderedFeatures(e.point);
+                // if (features && features.length > 0) {
+                // const feature = features[0];
+                // if (feature.geometry.type === 'Point' || feature.geometry.type === 'LineString' || feature.geometry.type === 'Polygon') {
+                //     if (feature.geometry.coordinates) {
+                //     const coordinates = feature.geometry.coordinates;
+                //     console.log('Clicked coordinates:', coordinates, 'of type:', feature.geometry.type);
+                //     }
+                // } else {
+                //     console.log("Geometry type is not a Point, LineString, or Polygon");
+                // }
 
-                }
+                // }
             });
     
             setMapLoaded(true);
@@ -157,9 +157,7 @@ export const MapWidget: React.FC = ({ }) => {
     // Fetch stops data
     const fetchStopsData = async () => {
         if (!currentQueryBoundsRef.current) return;
-        
-        console.log("Stops query:", currentQueryBoundsRef.current);
-        
+                
         await fetchStops(boundsToString(currentQueryBoundsRef.current));
         
         if (errorStops) {
@@ -177,7 +175,7 @@ export const MapWidget: React.FC = ({ }) => {
 
     // React to stopsData being loaded
     useEffect(() => {
-        console.log("Stops Data Updated:", stopsData);
+       // console.log("Stops Data Updated:", stopsData);
         
         if (!loadingStops && stopsData) {
             console.log("Stops data is available, creating layers...");
@@ -337,10 +335,11 @@ export const MapWidget: React.FC = ({ }) => {
       };
       
 
-    console.log("Rendering MapWidget. Map container ref:", mapContainerRef.current);
+    //console.log("Rendering MapWidget. Map container ref:", mapContainerRef.current);
     return (
         <div
           ref={mapContainerRef}
+          role="region"
           style={{
             width: "100%",
             height: "100%",

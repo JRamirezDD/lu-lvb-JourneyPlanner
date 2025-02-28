@@ -13,7 +13,7 @@
     "start:frontend": "npx serve out",
     "start:backend": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.64.2",
