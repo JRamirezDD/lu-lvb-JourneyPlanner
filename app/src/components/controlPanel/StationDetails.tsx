@@ -110,9 +110,6 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {  // Defa
         <div className="flex-1">
           <h2 className="text-xl font-bold">Station {stopName}</h2>
         </div>
-        <button className="p-2 hover:bg-[#2d4a7c] rounded-full transition-colors">
-          <Star size={24} />
-        </button>
       </div>
 
       {/* Tab Navigation */}

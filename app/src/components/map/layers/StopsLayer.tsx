@@ -66,7 +66,7 @@ export const stopsSource: GeoJSONSourceSpecification = {
     id: "stops-labels",
     type: "symbol",
     source: "stops-source",
-    minzoom: 16,
+    minzoom: 15,
     maxzoom: 22, // Labels appear when zoom level is 10 or higher
     layout: {
       "text-field": ["get", "stop_name"],

@@ -6,7 +6,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./layers/ILayer";
-import { createItineraryLayerData } from "./layers/ItineraryLayer";
+import { busLayerConfig, createItineraryLayerData } from "./layers/ItineraryLayer";
 import { ViewMode } from "@/types/ViewMode";
 import { stopsLayerConfig, stopsLabelsLayerConfig, stopsSource as stopsSourceConfig, createStopsLayerData, stopsSource } from "./layers/StopsLayer";
 import {
@@ -66,7 +66,7 @@ export const MapWidget: React.FC = ({ }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
     const layerManagerRef = useRef<LayerManager | null>(null);
-    const { viewMode } = useUIContext();
+    const { viewMode, setViewMode } = useUIContext();
     const { setSelectedStop } = useMapContext();
     const [mapLoaded, setMapLoaded] = useState(false);
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
@@ -82,9 +82,9 @@ export const MapWidget: React.FC = ({ }) => {
     
         const map = new maplibregl.Map({
             container: mapContainerRef.current,
-            style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+            style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
             center: [12.377014, 51.340613],
-            zoom: 12,
+            zoom: 14,
           });
     
         map.on("load", () => {
@@ -291,6 +291,7 @@ export const MapWidget: React.FC = ({ }) => {
           trainLayerConfig,
           legStartEndLayerConfig,
           intermediateStopsLayerConfig,
+          busLayerConfig,
         ];
 
         layers.forEach((layer) => layerManager.removeLayer(layer.id));
@@ -329,6 +330,7 @@ export const MapWidget: React.FC = ({ }) => {
             trainLayerConfig,
             legStartEndLayerConfig,
             intermediateStopsLayerConfig,
+            busLayerConfig,
           ];
       
           layers.forEach((layer) => layerManager.addLayer(layer));

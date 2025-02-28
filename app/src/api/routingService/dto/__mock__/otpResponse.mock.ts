@@ -1,8707 +1,9444 @@
 export const mockOtpResponse = {
-    "RetStatus": {
-      "Value": "OK",
-      "Comments": ""
+  "RetStatus": {
+    "Value": "OK",
+    "Comments": ""
+  },
+  "requestParameters": {
+    "From": "51.33821866936748, 12.38351836520276",
+    "To": "51.26559788920488, 12.34513467826688",
+    "Travelmode": "TRANSIT",
+    "date": "02-27-2025",
+    "time": "16:20",
+    "numItineraries": 3,
+    "arriveBy": false,
+    "accessibility": false,
+    "shortWalk": true,
+    "lessTransfers": false,
+    "maxWalkDistance": 5000,
+    "mockup": false,
+    "transitOnly": false
+  },
+  "plan": {
+    "date": 1740669600000,
+    "from": {
+      "name": "Origin",
+      "lon": 12.3835184,
+      "lat": 51.3382187
     },
-    "requestParameters": {
-      "From": "51.33394,12.37490",
-      "To": "51.37435,12.48922",
-      "Travelmode": "TRANSIT",
-      "date": "02-20-2025",
-      "time": "15:12",
-      "numItineraries": 5,
-      "arriveBy": false,
-      "accessibility": false,
-      "shortWalk": false,
-      "lessTransfers": false,
-      "maxWalkDistance": 5000,
-      "mockup": false,
-      "transitOnly": false
+    "to": {
+      "name": "Destination",
+      "lon": 12.3451347,
+      "lat": 51.2655979
     },
-    "plan": {
-      "date": 1740064321000,
-      "from": {
-        "name": "Origin",
-        "lon": 12.3749,
-        "lat": 51.33394
-      },
-      "to": {
-        "name": "Destination",
-        "lon": 12.48922,
-        "lat": 51.37435
-      },
-      "itineraries": [
-        {
-          "duration": 2100,
-          "startTime": 1740061140000,
-          "endTime": 1740063240000,
-          "walkTime": 960,
-          "transitTime": 1140,
-          "waitingTime": 0,
-          "walkDistance": 997,
-          "transfers": 0,
-          "legs": [
-            {
-              "startTime": 1740061140000,
-              "endTime": 1740061380000,
-              "departureDelay": 0,
+    "itineraries": [
+      {
+        "duration": 3660,
+        "startTime": 1740669900000,
+        "endTime": 1740673560000,
+        "walkTime": 2280,
+        "transitTime": 1380,
+        "waitingTime": 0,
+        "walkDistance": 1152,
+        "transfers": 2,
+        "legs": [
+          {
+            "startTime": 1740669900000,
+            "endTime": 1740670080000,
+            "departureDelay": 0,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 127,
+            "mode": "WALK",
+            "transitLeg": false,
+            "route": "",
+            "from": {
+              "name": "Origin",
+              "lon": 12.3835184,
+              "lat": 51.3382187,
+              "departure": 1740669900000,
+              "departureDelayedTime": 1740669900000,
+              "departureDelayedTimeHHMM": "16:25",
+              "arrivalHHMM": "16:25",
+              "departureHHMM": "16:25",
               "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 181,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Origin",
-                "lon": 12.3749,
-                "lat": 51.33394,
-                "departure": 1740061140000,
-                "departureDelayedTime": 1740061140000,
-                "departureDelayedTimeHHMM": "15:19",
-                "arrivalHHMM": "15:19",
-                "departureHHMM": "15:19",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Leipzig, Wilhelm-Leuschner-Platz (S-Bahn)",
-                "stopId": "8012202",
-                "lon": 12.375394,
-                "lat": 51.335396,
-                "arrival": 1740061380000,
-                "departure": 1740061380000,
-                "zoneId": "110",
-                "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740061380000,
-                "arrivalDelayedTime": 1740061380000,
-                "departureDelayedTimeHHMM": "15:23",
-                "arrivalDelayedTimeHHMM": "15:23",
-                "arrivalHHMM": "15:23",
-                "departureHHMM": "15:23",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.333940000000005,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.334010000000006,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.33402,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.33413,
-                    "lon": 12.375210000000001
-                  },
-                  {
-                    "lat": 51.334160000000004,
-                    "lon": 12.37536
-                  },
-                  {
-                    "lat": 51.3342,
-                    "lon": 12.37536
-                  },
-                  {
-                    "lat": 51.334250000000004,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.33431,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37541
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37545
-                  },
-                  {
-                    "lat": 51.334450000000004,
-                    "lon": 12.37551
-                  },
-                  {
-                    "lat": 51.33455000000001,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.33457000000001,
-                    "lon": 12.375610000000002
-                  },
-                  {
-                    "lat": 51.33467,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.334700000000005,
-                    "lon": 12.375630000000001
-                  },
-                  {
-                    "lat": 51.334860000000006,
-                    "lon": 12.375560000000002
-                  },
-                  {
-                    "lat": 51.33487,
-                    "lon": 12.375560000000002
-                  },
-                  {
-                    "lat": 51.33487,
-                    "lon": 12.375580000000001
-                  },
-                  {
-                    "lat": 51.334880000000005,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.335040000000006,
-                    "lon": 12.375530000000001
-                  },
-                  {
-                    "lat": 51.33514,
-                    "lon": 12.3755
-                  },
-                  {
-                    "lat": 51.33540000000001,
-                    "lon": 12.375440000000001
-                  },
-                  {
-                    "lat": 51.335390000000004,
-                    "lon": 12.375390000000001
-                  }
-                ],
-                "length": 24
-              },
-              "steps": [
-                {
-                  "distance": 22,
-                  "relativeDirection": "DEPART",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTH",
-                  "lon": 12.3752261,
-                  "lat": 51.3339461
-                },
-                {
-                  "distance": 64,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "path",
-                  "absoluteDirection": "EAST",
-                  "lon": 12.3752174,
-                  "lat": 51.3341368
-                },
-                {
-                  "distance": 17,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTH",
-                  "lon": 12.3756108,
-                  "lat": 51.3345729
-                },
-                {
-                  "distance": 62,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Leipzig Wilhelm-Leuschner-Platz",
-                  "absoluteDirection": "EAST",
-                  "lon": 12.3755624,
-                  "lat": 51.3348753
-                }
-              ],
-              "rentedBike": false,
-              "duration": 240,
-              "alerts": [],
-              "departureDelayedTime": 1740061140000,
-              "arrivalDelayedTime": 1740061380000,
-              "departureDelayedTimeHHMM": "15:19",
-              "arrivalDelayedTimeHHMM": "15:23",
-              "startTimeHHMM": "15:19",
-              "endTimeHHMM": "15:23",
+              "departureDelay": 0,
               "cancelled": false
             },
-            {
-              "startTime": 1740061380000,
-              "endTime": 1740062520000,
-              "departureDelay": 60,
+            "to": {
+              "name": "Leipzig, Augustusplatz",
+              "stopId": "0013002",
+              "lon": 12.381781,
+              "lat": 51.33843,
+              "arrival": 1740670080000,
+              "departure": 1740670080000,
+              "zoneId": "110",
+              "wheelchairBoarding": 1,
+              "departureDelayedTime": 1740670080000,
+              "arrivalDelayedTime": 1740670080000,
+              "departureDelayedTimeHHMM": "16:28",
+              "arrivalDelayedTimeHHMM": "16:28",
+              "arrivalHHMM": "16:28",
+              "departureHHMM": "16:28",
               "arrivalDelay": 0,
-              "realTime": true,
-              "distance": 11298,
-              "mode": "SUBURB",
-              "transitLeg": true,
-              "route": "S4",
-              "agencyName": "800486",
-              "agencyUrl": "https://www.mdv.de/partner/",
-              "routeColor": "139640",
-              "routeType": 109,
-              "routeId": "800486S4",
-              "headsign": "Torgau",
-              "agencyId": "1:800486",
-              "tripId": "2126",
-              "serviceDate": "20250220",
-              "from": {
+              "departureDelay": 0,
+              "cancelled": false,
+              "hafas_id": "1000904",
+              "hafas_name": "Augustusplatz"
+            },
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.338210000000004,
+                  "lon": 12.38353
+                },
+                {
+                  "lat": 51.338190000000004,
+                  "lon": 12.38352
+                },
+                {
+                  "lat": 51.33831000000001,
+                  "lon": 12.382930000000002
+                },
+                {
+                  "lat": 51.33847,
+                  "lon": 12.382200000000001
+                },
+                {
+                  "lat": 51.338460000000005,
+                  "lon": 12.38211
+                },
+                {
+                  "lat": 51.33849000000001,
+                  "lon": 12.381990000000002
+                },
+                {
+                  "lat": 51.338420000000006,
+                  "lon": 12.381950000000002
+                },
+                {
+                  "lat": 51.338390000000004,
+                  "lon": 12.38193
+                },
+                {
+                  "lat": 51.33843,
+                  "lon": 12.381780000000001
+                }
+              ],
+              "length": 9
+            },
+            "steps": [
+              {
+                "distance": 3,
+                "relativeDirection": "DEPART",
+                "streetName": "parking aisle",
+                "absoluteDirection": "SOUTH",
+                "lon": 12.3835323,
+                "lat": 51.338216
+              },
+              {
+                "distance": 112,
+                "relativeDirection": "RIGHT",
+                "streetName": "Leipzig–Elbe-Radroute",
+                "absoluteDirection": "WEST",
+                "lon": 12.3835225,
+                "lat": 51.3381957
+              },
+              {
+                "distance": 13,
+                "relativeDirection": "LEFT",
+                "streetName": "Augustusplatz",
+                "absoluteDirection": "SOUTH",
+                "lon": 12.3819984,
+                "lat": 51.3384944
+              }
+            ],
+            "rentedBike": false,
+            "duration": 180,
+            "alerts": [],
+            "departureDelayedTime": 1740669900000,
+            "arrivalDelayedTime": 1740670080000,
+            "departureDelayedTimeHHMM": "16:25",
+            "arrivalDelayedTimeHHMM": "16:28",
+            "startTimeHHMM": "16:25",
+            "endTimeHHMM": "16:28",
+            "cancelled": false
+          },
+          {
+            "startTime": 1740670080000,
+            "endTime": 1740670260000,
+            "departureDelay": 0,
+            "arrivalDelay": 0,
+            "realTime": true,
+            "distance": 809,
+            "mode": "TRAM",
+            "transitLeg": true,
+            "route": "11",
+            "agencyName": "Leipziger Verkehrsbetriebe",
+            "agencyUrl": "https://www.mdv.de/partner/",
+            "routeColor": "BB1E10",
+            "routeType": 0,
+            "routeId": "LVTRAM11",
+            "headsign": "Hänichen",
+            "agencyId": "1:00468",
+            "tripId": "lvb07981STRB__20250226",
+            "serviceDate": "20250227",
+            "from": {
+              "name": "Leipzig, Augustusplatz",
+              "stopId": "0013002",
+              "lon": 12.381781,
+              "lat": 51.33843,
+              "arrival": 1740670080000,
+              "departure": 1740670080000,
+              "zoneId": "110",
+              "stopSequence": 15,
+              "wheelchairBoarding": 1,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740670080000,
+              "arrivalDelayedTime": 1740670080000,
+              "departureDelayedTimeHHMM": "16:28",
+              "arrivalDelayedTimeHHMM": "16:28",
+              "arrivalHHMM": "16:28",
+              "departureHHMM": "16:28",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false,
+              "hafas_id": "1000904",
+              "hafas_name": "Augustusplatz"
+            },
+            "to": {
+              "name": "Leipzig, Hauptbahnhof (Tram/Bus)",
+              "stopId": "0013000",
+              "lon": 12.379677,
+              "lat": 51.344306,
+              "arrival": 1740670260000,
+              "departure": 1740670260000,
+              "zoneId": "110",
+              "stopSequence": 16,
+              "wheelchairBoarding": 1,
+              "track": "A",
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740670260000,
+              "arrivalDelayedTime": 1740670260000,
+              "departureDelayedTimeHHMM": "16:31",
+              "arrivalDelayedTimeHHMM": "16:31",
+              "arrivalHHMM": "16:31",
+              "departureHHMM": "16:31",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false,
+              "hafas_id": "1000101",
+              "hafas_name": "Hauptbahnhof (Steig A)"
+            },
+            "intermediateStops": [],
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.338420000000006,
+                  "lon": 12.381780000000001
+                },
+                {
+                  "lat": 51.338420000000006,
+                  "lon": 12.381770000000001
+                },
+                {
+                  "lat": 51.338530000000006,
+                  "lon": 12.38183
+                },
+                {
+                  "lat": 51.33865,
+                  "lon": 12.38189
+                },
+                {
+                  "lat": 51.33872,
+                  "lon": 12.38194
+                },
+                {
+                  "lat": 51.338750000000005,
+                  "lon": 12.381950000000002
+                },
+                {
+                  "lat": 51.338840000000005,
+                  "lon": 12.382000000000001
+                },
+                {
+                  "lat": 51.338860000000004,
+                  "lon": 12.382010000000001
+                },
+                {
+                  "lat": 51.33897,
+                  "lon": 12.38207
+                },
+                {
+                  "lat": 51.339000000000006,
+                  "lon": 12.382090000000002
+                },
+                {
+                  "lat": 51.339020000000005,
+                  "lon": 12.382100000000001
+                },
+                {
+                  "lat": 51.33919,
+                  "lon": 12.382190000000001
+                },
+                {
+                  "lat": 51.33943000000001,
+                  "lon": 12.3823
+                },
+                {
+                  "lat": 51.33968,
+                  "lon": 12.382390000000001
+                },
+                {
+                  "lat": 51.339960000000005,
+                  "lon": 12.382480000000001
+                },
+                {
+                  "lat": 51.340070000000004,
+                  "lon": 12.382510000000002
+                },
+                {
+                  "lat": 51.34033,
+                  "lon": 12.382570000000001
+                },
+                {
+                  "lat": 51.34066000000001,
+                  "lon": 12.38264
+                },
+                {
+                  "lat": 51.34096,
+                  "lon": 12.38268
+                },
+                {
+                  "lat": 51.34111000000001,
+                  "lon": 12.382700000000002
+                },
+                {
+                  "lat": 51.34138,
+                  "lon": 12.38273
+                },
+                {
+                  "lat": 51.34179,
+                  "lon": 12.382760000000001
+                },
+                {
+                  "lat": 51.34205000000001,
+                  "lon": 12.38277
+                },
+                {
+                  "lat": 51.342130000000004,
+                  "lon": 12.38277
+                },
+                {
+                  "lat": 51.34225000000001,
+                  "lon": 12.38278
+                },
+                {
+                  "lat": 51.34234000000001,
+                  "lon": 12.382800000000001
+                },
+                {
+                  "lat": 51.342420000000004,
+                  "lon": 12.38283
+                },
+                {
+                  "lat": 51.34290000000001,
+                  "lon": 12.383070000000002
+                },
+                {
+                  "lat": 51.342940000000006,
+                  "lon": 12.383090000000001
+                },
+                {
+                  "lat": 51.343,
+                  "lon": 12.3831
+                },
+                {
+                  "lat": 51.343050000000005,
+                  "lon": 12.3831
+                },
+                {
+                  "lat": 51.343070000000004,
+                  "lon": 12.383090000000001
+                },
+                {
+                  "lat": 51.343120000000006,
+                  "lon": 12.383070000000002
+                },
+                {
+                  "lat": 51.343160000000005,
+                  "lon": 12.383030000000002
+                },
+                {
+                  "lat": 51.343160000000005,
+                  "lon": 12.38302
+                },
+                {
+                  "lat": 51.343180000000004,
+                  "lon": 12.383000000000001
+                },
+                {
+                  "lat": 51.34319000000001,
+                  "lon": 12.382980000000002
+                },
+                {
+                  "lat": 51.343210000000006,
+                  "lon": 12.382950000000001
+                },
+                {
+                  "lat": 51.343230000000005,
+                  "lon": 12.382880000000002
+                },
+                {
+                  "lat": 51.34331,
+                  "lon": 12.382560000000002
+                },
+                {
+                  "lat": 51.34337000000001,
+                  "lon": 12.38231
+                },
+                {
+                  "lat": 51.34342,
+                  "lon": 12.382060000000001
+                },
+                {
+                  "lat": 51.34344,
+                  "lon": 12.38188
+                },
+                {
+                  "lat": 51.34347,
+                  "lon": 12.381710000000002
+                },
+                {
+                  "lat": 51.34351,
+                  "lon": 12.381580000000001
+                },
+                {
+                  "lat": 51.343630000000005,
+                  "lon": 12.381290000000002
+                },
+                {
+                  "lat": 51.34367,
+                  "lon": 12.38119
+                },
+                {
+                  "lat": 51.344010000000004,
+                  "lon": 12.38038
+                },
+                {
+                  "lat": 51.34404000000001,
+                  "lon": 12.380300000000002
+                },
+                {
+                  "lat": 51.344300000000004,
+                  "lon": 12.37967
+                }
+              ],
+              "length": 50
+            },
+            "steps": [],
+            "routeShortName": "11",
+            "routeLongName": "Tram 11",
+            "wheelchairAccessible": 1,
+            "duration": 180,
+            "alerts": [],
+            "departureDelayedTime": 1740670080000,
+            "arrivalDelayedTime": 1740670260000,
+            "departureDelayedTimeHHMM": "16:28",
+            "arrivalDelayedTimeHHMM": "16:31",
+            "startTimeHHMM": "16:28",
+            "endTimeHHMM": "16:31",
+            "cancelled": false,
+            "wheelchairBoardingVehicle": null
+          },
+          {
+            "startTime": 1740670260000,
+            "endTime": 1740670440000,
+            "departureDelay": 0,
+            "arrivalDelay": 60,
+            "realTime": false,
+            "distance": 247,
+            "mode": "WALK",
+            "transitLeg": false,
+            "route": "",
+            "from": {
+              "name": "Leipzig, Hauptbahnhof (Tram/Bus)",
+              "stopId": "0013000",
+              "lon": 12.379677,
+              "lat": 51.344306,
+              "arrival": 1740670260000,
+              "departure": 1740670260000,
+              "zoneId": "110",
+              "wheelchairBoarding": 1,
+              "departureDelayedTime": 1740670260000,
+              "arrivalDelayedTime": 1740670260000,
+              "departureDelayedTimeHHMM": "16:31",
+              "arrivalDelayedTimeHHMM": "16:31",
+              "arrivalHHMM": "16:31",
+              "departureHHMM": "16:31",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false,
+              "hafas_id": "1000101",
+              "hafas_name": "Hauptbahnhof (Steig A)"
+            },
+            "to": {
+              "name": "Leipzig, Hbf (tief) (S-Bahn)",
+              "stopId": "8098205",
+              "lon": 12.380428,
+              "lat": 51.345696,
+              "arrival": 1740670440000,
+              "departure": 1740670440000,
+              "zoneId": "110",
+              "wheelchairBoarding": 1,
+              "departureDelayedTime": 1740670500000,
+              "arrivalDelayedTime": 1740670500000,
+              "departureDelayedTimeHHMM": "16:35",
+              "arrivalDelayedTimeHHMM": "16:35",
+              "arrivalHHMM": "16:34",
+              "departureHHMM": "16:34",
+              "arrivalDelay": 60,
+              "departureDelay": 60,
+              "cancelled": false
+            },
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.344300000000004,
+                  "lon": 12.37967
+                },
+                {
+                  "lat": 51.34431000000001,
+                  "lon": 12.37968
+                },
+                {
+                  "lat": 51.34433000000001,
+                  "lon": 12.37963
+                },
+                {
+                  "lat": 51.344350000000006,
+                  "lon": 12.379650000000002
+                },
+                {
+                  "lat": 51.344370000000005,
+                  "lon": 12.37959
+                },
+                {
+                  "lat": 51.344390000000004,
+                  "lon": 12.379610000000001
+                },
+                {
+                  "lat": 51.344440000000006,
+                  "lon": 12.379660000000001
+                },
+                {
+                  "lat": 51.34449000000001,
+                  "lon": 12.379710000000001
+                },
+                {
+                  "lat": 51.34451000000001,
+                  "lon": 12.37973
+                },
+                {
+                  "lat": 51.344570000000004,
+                  "lon": 12.379800000000001
+                },
+                {
+                  "lat": 51.34458000000001,
+                  "lon": 12.37981
+                },
+                {
+                  "lat": 51.34461,
+                  "lon": 12.379840000000002
+                },
+                {
+                  "lat": 51.34479,
+                  "lon": 12.380020000000002
+                },
+                {
+                  "lat": 51.34479,
+                  "lon": 12.380020000000002
+                },
+                {
+                  "lat": 51.344800000000006,
+                  "lon": 12.38
+                },
+                {
+                  "lat": 51.344820000000006,
+                  "lon": 12.379990000000001
+                },
+                {
+                  "lat": 51.344840000000005,
+                  "lon": 12.379980000000002
+                },
+                {
+                  "lat": 51.344860000000004,
+                  "lon": 12.379990000000001
+                },
+                {
+                  "lat": 51.34488,
+                  "lon": 12.38001
+                },
+                {
+                  "lat": 51.3449,
+                  "lon": 12.380040000000001
+                },
+                {
+                  "lat": 51.3449,
+                  "lon": 12.380080000000001
+                },
+                {
+                  "lat": 51.3449,
+                  "lon": 12.38011
+                },
+                {
+                  "lat": 51.34489000000001,
+                  "lon": 12.38014
+                },
+                {
+                  "lat": 51.34494,
+                  "lon": 12.380180000000001
+                },
+                {
+                  "lat": 51.345020000000005,
+                  "lon": 12.380270000000001
+                },
+                {
+                  "lat": 51.3451,
+                  "lon": 12.380360000000001
+                },
+                {
+                  "lat": 51.34507000000001,
+                  "lon": 12.38043
+                },
+                {
+                  "lat": 51.345110000000005,
+                  "lon": 12.38047
+                },
+                {
+                  "lat": 51.34516000000001,
+                  "lon": 12.38052
+                },
+                {
+                  "lat": 51.34523,
+                  "lon": 12.38034
+                },
+                {
+                  "lat": 51.34534000000001,
+                  "lon": 12.380070000000002
+                },
+                {
+                  "lat": 51.34545000000001,
+                  "lon": 12.38019
+                },
+                {
+                  "lat": 51.345560000000006,
+                  "lon": 12.380300000000002
+                },
+                {
+                  "lat": 51.34559,
+                  "lon": 12.380220000000001
+                },
+                {
+                  "lat": 51.345780000000005,
+                  "lon": 12.38043
+                },
+                {
+                  "lat": 51.345760000000006,
+                  "lon": 12.38047
+                },
+                {
+                  "lat": 51.345760000000006,
+                  "lon": 12.380490000000002
+                },
+                {
+                  "lat": 51.345690000000005,
+                  "lon": 12.38042
+                },
+                {
+                  "lat": 51.345690000000005,
+                  "lon": 12.38042
+                }
+              ],
+              "length": 39
+            },
+            "steps": [
+              {
+                "distance": 8,
+                "relativeDirection": "DEPART",
+                "streetName": "Steig A",
+                "absoluteDirection": "NORTHWEST",
+                "lon": 12.3796846,
+                "lat": 51.3443132
+              },
+              {
+                "distance": 205,
+                "relativeDirection": "LEFT",
+                "streetName": "path",
+                "absoluteDirection": "NORTHWEST",
+                "lon": 12.3796549,
+                "lat": 51.3443572
+              },
+              {
+                "distance": 9,
+                "relativeDirection": "RIGHT",
+                "streetName": "steps",
+                "absoluteDirection": "SOUTHWEST",
+                "lon": 12.3804968,
+                "lat": 51.3457606
+              }
+            ],
+            "rentedBike": false,
+            "duration": 240,
+            "alerts": [],
+            "departureDelayedTime": 1740670260000,
+            "arrivalDelayedTime": 1740670500000,
+            "departureDelayedTimeHHMM": "16:31",
+            "arrivalDelayedTimeHHMM": "16:35",
+            "startTimeHHMM": "16:31",
+            "endTimeHHMM": "16:34",
+            "cancelled": false,
+            "durationOriginal": 180
+          },
+          {
+            "startTime": 1740670440000,
+            "endTime": 1740671400000,
+            "departureDelay": 60,
+            "arrivalDelay": 60,
+            "realTime": true,
+            "distance": 10069,
+            "mode": "SUBURB",
+            "transitLeg": true,
+            "route": "S4",
+            "agencyName": "800486",
+            "agencyUrl": "https://www.mdv.de/partner/",
+            "routeColor": "139640",
+            "routeType": 109,
+            "routeId": "800486S4",
+            "headsign": "Markkleeberg-Gaschwitz",
+            "agencyId": "1:800486",
+            "tripId": "1505",
+            "serviceDate": "20250227",
+            "from": {
+              "name": "Leipzig, Hbf (tief) (S-Bahn)",
+              "stopId": "8098205",
+              "lon": 12.380428,
+              "lat": 51.345696,
+              "arrival": 1740670440000,
+              "departure": 1740670440000,
+              "zoneId": "110",
+              "stopSequence": 13,
+              "wheelchairBoarding": 1,
+              "track": "1",
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740670500000,
+              "arrivalDelayedTime": 1740670440000,
+              "departureDelayedTimeHHMM": "16:35",
+              "arrivalDelayedTimeHHMM": "16:34",
+              "arrivalHHMM": "16:34",
+              "departureHHMM": "16:34",
+              "arrivalDelay": 0,
+              "departureDelay": 60,
+              "cancelled": false
+            },
+            "to": {
+              "name": "Markkleeberg-Großstädteln",
+              "stopId": "8010228",
+              "lon": 12.376329,
+              "lat": 51.262469,
+              "arrival": 1740671400000,
+              "departure": 1740671400000,
+              "zoneId": "151",
+              "stopSequence": 21,
+              "wheelchairBoarding": 1,
+              "track": "1",
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740671400000,
+              "arrivalDelayedTime": 1740671460000,
+              "departureDelayedTimeHHMM": "16:50",
+              "arrivalDelayedTimeHHMM": "16:51",
+              "arrivalHHMM": "16:50",
+              "departureHHMM": "16:50",
+              "arrivalDelay": 60,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "intermediateStops": [
+              {
+                "name": "Leipzig, Markt (S-Bahn)",
+                "stopId": "8012186",
+                "lon": 12.374612,
+                "lat": 51.34064,
+                "arrival": 1740670500000,
+                "departure": 1740670560000,
+                "zoneId": "110",
+                "stopSequence": 14,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670620000,
+                "arrivalDelayedTime": 1740670560000,
+                "departureDelayedTimeHHMM": "16:37",
+                "arrivalDelayedTimeHHMM": "16:36",
+                "arrivalHHMM": "16:35",
+                "departureHHMM": "16:36",
+                "arrivalDelay": 60,
+                "departureDelay": 60,
+                "cancelled": false
+              },
+              {
                 "name": "Leipzig, Wilhelm-Leuschner-Platz (S-Bahn)",
                 "stopId": "8012202",
                 "lon": 12.375394,
                 "lat": 51.335396,
-                "arrival": 1740061380000,
-                "departure": 1740061380000,
+                "arrival": 1740670620000,
+                "departure": 1740670620000,
                 "zoneId": "110",
-                "stopSequence": 8,
+                "stopSequence": 15,
                 "wheelchairBoarding": 1,
-                "track": "2",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740061440000,
-                "arrivalDelayedTime": 1740061380000,
-                "departureDelayedTimeHHMM": "15:24",
-                "arrivalDelayedTimeHHMM": "15:23",
-                "arrivalHHMM": "15:23",
-                "departureHHMM": "15:23",
+                "departureDelayedTime": 1740670680000,
+                "arrivalDelayedTime": 1740670620000,
+                "departureDelayedTimeHHMM": "16:38",
+                "arrivalDelayedTimeHHMM": "16:37",
+                "arrivalHHMM": "16:37",
+                "departureHHMM": "16:37",
                 "arrivalDelay": 0,
                 "departureDelay": 60,
                 "cancelled": false
               },
-              "to": {
-                "name": "Taucha (Leipzig)",
-                "stopId": "8013093",
-                "lon": 12.484471,
-                "lat": 51.379017,
-                "arrival": 1740062520000,
-                "departure": 1740062520000,
-                "zoneId": "168",
-                "stopSequence": 15,
-                "wheelchairBoarding": 1,
-                "track": "1",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740062520000,
-                "arrivalDelayedTime": 1740062520000,
-                "departureDelayedTimeHHMM": "15:42",
-                "arrivalDelayedTimeHHMM": "15:42",
-                "arrivalHHMM": "15:42",
-                "departureHHMM": "15:42",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "intermediateStops": [
-                {
-                  "name": "Leipzig, Markt (S-Bahn)",
-                  "stopId": "8012186",
-                  "lon": 12.374612,
-                  "lat": 51.34064,
-                  "arrival": 1740061440000,
-                  "departure": 1740061500000,
-                  "zoneId": "110",
-                  "stopSequence": 9,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740061560000,
-                  "arrivalDelayedTime": 1740061500000,
-                  "departureDelayedTimeHHMM": "15:26",
-                  "arrivalDelayedTimeHHMM": "15:25",
-                  "arrivalHHMM": "15:24",
-                  "departureHHMM": "15:25",
-                  "arrivalDelay": 60,
-                  "departureDelay": 60,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Hbf (tief) (S-Bahn)",
-                  "stopId": "8098205",
-                  "lon": 12.380428,
-                  "lat": 51.345696,
-                  "arrival": 1740061560000,
-                  "departure": 1740061680000,
-                  "zoneId": "110",
-                  "stopSequence": 10,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740061740000,
-                  "arrivalDelayedTime": 1740061620000,
-                  "departureDelayedTimeHHMM": "15:29",
-                  "arrivalDelayedTimeHHMM": "15:27",
-                  "arrivalHHMM": "15:26",
-                  "departureHHMM": "15:28",
-                  "arrivalDelay": 60,
-                  "departureDelay": 60,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Nord (S-Bahn)",
-                  "stopId": "8012196",
-                  "lon": 12.40106,
-                  "lat": 51.364162,
-                  "arrival": 1740061860000,
-                  "departure": 1740061860000,
-                  "zoneId": "110",
-                  "stopSequence": 11,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740061920000,
-                  "arrivalDelayedTime": 1740061860000,
-                  "departureDelayedTimeHHMM": "15:32",
-                  "arrivalDelayedTimeHHMM": "15:31",
-                  "arrivalHHMM": "15:31",
-                  "departureHHMM": "15:31",
-                  "arrivalDelay": 0,
-                  "departureDelay": 60,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Mockauer Straße (S-Bahn)",
-                  "stopId": "8012273",
-                  "lon": 12.4121,
-                  "lat": 51.3738,
-                  "arrival": 1740062040000,
-                  "departure": 1740062040000,
-                  "zoneId": "110",
-                  "stopSequence": 12,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740062100000,
-                  "arrivalDelayedTime": 1740062040000,
-                  "departureDelayedTimeHHMM": "15:35",
-                  "arrivalDelayedTimeHHMM": "15:34",
-                  "arrivalHHMM": "15:34",
-                  "departureHHMM": "15:34",
-                  "arrivalDelay": 0,
-                  "departureDelay": 60,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Thekla (S-Bahn)",
-                  "stopId": "8012195",
-                  "lon": 12.430751,
-                  "lat": 51.371626,
-                  "arrival": 1740062160000,
-                  "departure": 1740062160000,
-                  "zoneId": "110",
-                  "stopSequence": 13,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740062220000,
-                  "arrivalDelayedTime": 1740062220000,
-                  "departureDelayedTimeHHMM": "15:37",
-                  "arrivalDelayedTimeHHMM": "15:37",
-                  "arrivalHHMM": "15:36",
-                  "departureHHMM": "15:36",
-                  "arrivalDelay": 60,
-                  "departureDelay": 60,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Heiterblick (S-Bahn)",
-                  "stopId": "8012190",
-                  "lon": 12.459979,
-                  "lat": 51.369339,
-                  "arrival": 1740062340000,
-                  "departure": 1740062400000,
-                  "zoneId": "110",
-                  "stopSequence": 14,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740062400000,
-                  "arrivalDelayedTime": 1740062400000,
-                  "departureDelayedTimeHHMM": "15:40",
-                  "arrivalDelayedTimeHHMM": "15:40",
-                  "arrivalHHMM": "15:39",
-                  "departureHHMM": "15:40",
-                  "arrivalDelay": 60,
-                  "departureDelay": 0,
-                  "cancelled": false
-                }
-              ],
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.33540000000001,
-                    "lon": 12.37546
-                  },
-                  {
-                    "lat": 51.335440000000006,
-                    "lon": 12.37545
-                  },
-                  {
-                    "lat": 51.33637,
-                    "lon": 12.375280000000002
-                  },
-                  {
-                    "lat": 51.336830000000006,
-                    "lon": 12.37517
-                  },
-                  {
-                    "lat": 51.33695,
-                    "lon": 12.37513
-                  },
-                  {
-                    "lat": 51.337770000000006,
-                    "lon": 12.37475
-                  },
-                  {
-                    "lat": 51.338190000000004,
-                    "lon": 12.37465
-                  },
-                  {
-                    "lat": 51.33919,
-                    "lon": 12.374600000000001
-                  },
-                  {
-                    "lat": 51.339740000000006,
-                    "lon": 12.374540000000001
-                  },
-                  {
-                    "lat": 51.34033,
-                    "lon": 12.374600000000001
-                  },
-                  {
-                    "lat": 51.340630000000004,
-                    "lon": 12.374680000000001
-                  },
-                  {
-                    "lat": 51.340630000000004,
-                    "lon": 12.374680000000001
-                  },
-                  {
-                    "lat": 51.34069,
-                    "lon": 12.3747
-                  },
-                  {
-                    "lat": 51.340880000000006,
-                    "lon": 12.374780000000001
-                  },
-                  {
-                    "lat": 51.341330000000006,
-                    "lon": 12.375010000000001
-                  },
-                  {
-                    "lat": 51.341640000000005,
-                    "lon": 12.375240000000002
-                  },
-                  {
-                    "lat": 51.34194,
-                    "lon": 12.375490000000001
-                  },
-                  {
-                    "lat": 51.3423,
-                    "lon": 12.37588
-                  },
-                  {
-                    "lat": 51.342580000000005,
-                    "lon": 12.376220000000002
-                  },
-                  {
-                    "lat": 51.342850000000006,
-                    "lon": 12.37659
-                  },
-                  {
-                    "lat": 51.34386000000001,
-                    "lon": 12.378250000000001
-                  },
-                  {
-                    "lat": 51.34416,
-                    "lon": 12.3787
-                  },
-                  {
-                    "lat": 51.34443,
-                    "lon": 12.37911
-                  },
-                  {
-                    "lat": 51.344750000000005,
-                    "lon": 12.37953
-                  },
-                  {
-                    "lat": 51.345400000000005,
-                    "lon": 12.380180000000001
-                  },
-                  {
-                    "lat": 51.345670000000005,
-                    "lon": 12.38047
-                  },
-                  {
-                    "lat": 51.345670000000005,
-                    "lon": 12.38047
-                  },
-                  {
-                    "lat": 51.345670000000005,
-                    "lon": 12.38047
-                  },
-                  {
-                    "lat": 51.346360000000004,
-                    "lon": 12.381210000000001
-                  },
-                  {
-                    "lat": 51.34713000000001,
-                    "lon": 12.382040000000002
-                  },
-                  {
-                    "lat": 51.350440000000006,
-                    "lon": 12.386370000000001
-                  },
-                  {
-                    "lat": 51.351710000000004,
-                    "lon": 12.38807
-                  },
-                  {
-                    "lat": 51.35183000000001,
-                    "lon": 12.388230000000002
-                  },
-                  {
-                    "lat": 51.352180000000004,
-                    "lon": 12.38868
-                  },
-                  {
-                    "lat": 51.352340000000005,
-                    "lon": 12.38887
-                  },
-                  {
-                    "lat": 51.35269,
-                    "lon": 12.38926
-                  },
-                  {
-                    "lat": 51.353060000000006,
-                    "lon": 12.389660000000001
-                  },
-                  {
-                    "lat": 51.35313000000001,
-                    "lon": 12.38973
-                  },
-                  {
-                    "lat": 51.35347,
-                    "lon": 12.39009
-                  },
-                  {
-                    "lat": 51.35421,
-                    "lon": 12.390880000000001
-                  },
-                  {
-                    "lat": 51.354580000000006,
-                    "lon": 12.391280000000002
-                  },
-                  {
-                    "lat": 51.355720000000005,
-                    "lon": 12.392640000000002
-                  },
-                  {
-                    "lat": 51.357490000000006,
-                    "lon": 12.394770000000001
-                  },
-                  {
-                    "lat": 51.357620000000004,
-                    "lon": 12.39492
-                  },
-                  {
-                    "lat": 51.35942000000001,
-                    "lon": 12.39709
-                  },
-                  {
-                    "lat": 51.360730000000004,
-                    "lon": 12.39864
-                  },
-                  {
-                    "lat": 51.360910000000004,
-                    "lon": 12.398850000000001
-                  },
-                  {
-                    "lat": 51.361290000000004,
-                    "lon": 12.399220000000001
-                  },
-                  {
-                    "lat": 51.36146,
-                    "lon": 12.399370000000001
-                  },
-                  {
-                    "lat": 51.361650000000004,
-                    "lon": 12.399510000000001
-                  },
-                  {
-                    "lat": 51.36245,
-                    "lon": 12.400110000000002
-                  },
-                  {
-                    "lat": 51.36301,
-                    "lon": 12.40052
-                  },
-                  {
-                    "lat": 51.363220000000005,
-                    "lon": 12.40066
-                  },
-                  {
-                    "lat": 51.363510000000005,
-                    "lon": 12.40085
-                  },
-                  {
-                    "lat": 51.363640000000004,
-                    "lon": 12.400910000000001
-                  },
-                  {
-                    "lat": 51.3639,
-                    "lon": 12.40103
-                  },
-                  {
-                    "lat": 51.36415,
-                    "lon": 12.40112
-                  },
-                  {
-                    "lat": 51.36415,
-                    "lon": 12.40112
-                  },
-                  {
-                    "lat": 51.36415,
-                    "lon": 12.40112
-                  },
-                  {
-                    "lat": 51.36444,
-                    "lon": 12.40121
-                  },
-                  {
-                    "lat": 51.36473,
-                    "lon": 12.40126
-                  },
-                  {
-                    "lat": 51.36496,
-                    "lon": 12.401280000000002
-                  },
-                  {
-                    "lat": 51.365280000000006,
-                    "lon": 12.401290000000001
-                  },
-                  {
-                    "lat": 51.36560000000001,
-                    "lon": 12.40126
-                  },
-                  {
-                    "lat": 51.36587,
-                    "lon": 12.40122
-                  },
-                  {
-                    "lat": 51.36614,
-                    "lon": 12.401140000000002
-                  },
-                  {
-                    "lat": 51.36634,
-                    "lon": 12.40108
-                  },
-                  {
-                    "lat": 51.36663,
-                    "lon": 12.400950000000002
-                  },
-                  {
-                    "lat": 51.36695,
-                    "lon": 12.400810000000002
-                  },
-                  {
-                    "lat": 51.368190000000006,
-                    "lon": 12.40018
-                  },
-                  {
-                    "lat": 51.36836,
-                    "lon": 12.400100000000002
-                  },
-                  {
-                    "lat": 51.36957,
-                    "lon": 12.399560000000001
-                  },
-                  {
-                    "lat": 51.36977,
-                    "lon": 12.39948
-                  },
-                  {
-                    "lat": 51.36994000000001,
-                    "lon": 12.39943
-                  },
-                  {
-                    "lat": 51.37022,
-                    "lon": 12.399370000000001
-                  },
-                  {
-                    "lat": 51.37033,
-                    "lon": 12.399350000000002
-                  },
-                  {
-                    "lat": 51.37057,
-                    "lon": 12.39933
-                  },
-                  {
-                    "lat": 51.370830000000005,
-                    "lon": 12.39934
-                  },
-                  {
-                    "lat": 51.371030000000005,
-                    "lon": 12.39938
-                  },
-                  {
-                    "lat": 51.371230000000004,
-                    "lon": 12.39944
-                  },
-                  {
-                    "lat": 51.371640000000006,
-                    "lon": 12.399590000000002
-                  },
-                  {
-                    "lat": 51.37182000000001,
-                    "lon": 12.399680000000002
-                  },
-                  {
-                    "lat": 51.372110000000006,
-                    "lon": 12.399880000000001
-                  },
-                  {
-                    "lat": 51.37223,
-                    "lon": 12.399980000000001
-                  },
-                  {
-                    "lat": 51.37239,
-                    "lon": 12.400120000000001
-                  },
-                  {
-                    "lat": 51.372550000000004,
-                    "lon": 12.40027
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.40046
-                  },
-                  {
-                    "lat": 51.372870000000006,
-                    "lon": 12.40065
-                  },
-                  {
-                    "lat": 51.37299,
-                    "lon": 12.400820000000001
-                  },
-                  {
-                    "lat": 51.3731,
-                    "lon": 12.40098
-                  },
-                  {
-                    "lat": 51.37323000000001,
-                    "lon": 12.40121
-                  },
-                  {
-                    "lat": 51.37339000000001,
-                    "lon": 12.40154
-                  },
-                  {
-                    "lat": 51.373490000000004,
-                    "lon": 12.40177
-                  },
-                  {
-                    "lat": 51.37359000000001,
-                    "lon": 12.40201
-                  },
-                  {
-                    "lat": 51.37369,
-                    "lon": 12.4023
-                  },
-                  {
-                    "lat": 51.37379000000001,
-                    "lon": 12.40258
-                  },
-                  {
-                    "lat": 51.373940000000005,
-                    "lon": 12.403110000000002
-                  },
-                  {
-                    "lat": 51.374050000000004,
-                    "lon": 12.403590000000001
-                  },
-                  {
-                    "lat": 51.37418,
-                    "lon": 12.404230000000002
-                  },
-                  {
-                    "lat": 51.37422,
-                    "lon": 12.404570000000001
-                  },
-                  {
-                    "lat": 51.37427,
-                    "lon": 12.405030000000002
-                  },
-                  {
-                    "lat": 51.374300000000005,
-                    "lon": 12.405330000000001
-                  },
-                  {
-                    "lat": 51.37431,
-                    "lon": 12.405590000000002
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.40591
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.406220000000001
-                  },
-                  {
-                    "lat": 51.374300000000005,
-                    "lon": 12.4068
-                  },
-                  {
-                    "lat": 51.37424000000001,
-                    "lon": 12.407490000000001
-                  },
-                  {
-                    "lat": 51.374210000000005,
-                    "lon": 12.40788
-                  },
-                  {
-                    "lat": 51.37382,
-                    "lon": 12.4121
-                  },
-                  {
-                    "lat": 51.37382,
-                    "lon": 12.4121
-                  },
-                  {
-                    "lat": 51.37373,
-                    "lon": 12.413110000000001
-                  },
-                  {
-                    "lat": 51.373630000000006,
-                    "lon": 12.41416
-                  },
-                  {
-                    "lat": 51.37323000000001,
-                    "lon": 12.418500000000002
-                  },
-                  {
-                    "lat": 51.37312000000001,
-                    "lon": 12.41975
-                  },
-                  {
-                    "lat": 51.37286,
-                    "lon": 12.422630000000002
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.424050000000001
-                  },
-                  {
-                    "lat": 51.37268,
-                    "lon": 12.424700000000001
-                  },
-                  {
-                    "lat": 51.372580000000006,
-                    "lon": 12.42562
-                  },
-                  {
-                    "lat": 51.372510000000005,
-                    "lon": 12.42622
-                  },
-                  {
-                    "lat": 51.37239,
-                    "lon": 12.42706
-                  },
-                  {
-                    "lat": 51.37228,
-                    "lon": 12.427760000000001
-                  },
-                  {
-                    "lat": 51.372080000000004,
-                    "lon": 12.428790000000001
-                  },
-                  {
-                    "lat": 51.371970000000005,
-                    "lon": 12.429440000000001
-                  },
-                  {
-                    "lat": 51.371750000000006,
-                    "lon": 12.430470000000001
-                  },
-                  {
-                    "lat": 51.37167,
-                    "lon": 12.43078
-                  },
-                  {
-                    "lat": 51.37167,
-                    "lon": 12.43078
-                  },
-                  {
-                    "lat": 51.37153000000001,
-                    "lon": 12.43139
-                  },
-                  {
-                    "lat": 51.37138,
-                    "lon": 12.431970000000002
-                  },
-                  {
-                    "lat": 51.370940000000004,
-                    "lon": 12.433980000000002
-                  },
-                  {
-                    "lat": 51.37051,
-                    "lon": 12.43585
-                  },
-                  {
-                    "lat": 51.370360000000005,
-                    "lon": 12.436670000000001
-                  },
-                  {
-                    "lat": 51.37028,
-                    "lon": 12.43701
-                  },
-                  {
-                    "lat": 51.37017,
-                    "lon": 12.437410000000002
-                  },
-                  {
-                    "lat": 51.370000000000005,
-                    "lon": 12.43791
-                  },
-                  {
-                    "lat": 51.36981,
-                    "lon": 12.438410000000001
-                  },
-                  {
-                    "lat": 51.36957,
-                    "lon": 12.43903
-                  },
-                  {
-                    "lat": 51.3693,
-                    "lon": 12.439660000000002
-                  },
-                  {
-                    "lat": 51.369080000000004,
-                    "lon": 12.440140000000001
-                  },
-                  {
-                    "lat": 51.36838,
-                    "lon": 12.441640000000001
-                  },
-                  {
-                    "lat": 51.368140000000004,
-                    "lon": 12.442160000000001
-                  },
-                  {
-                    "lat": 51.36787,
-                    "lon": 12.442730000000001
-                  },
-                  {
-                    "lat": 51.36697,
-                    "lon": 12.44467
-                  },
-                  {
-                    "lat": 51.36648,
-                    "lon": 12.44574
-                  },
-                  {
-                    "lat": 51.366290000000006,
-                    "lon": 12.44621
-                  },
-                  {
-                    "lat": 51.366170000000004,
-                    "lon": 12.44658
-                  },
-                  {
-                    "lat": 51.36605,
-                    "lon": 12.446980000000002
-                  },
-                  {
-                    "lat": 51.36598000000001,
-                    "lon": 12.4473
-                  },
-                  {
-                    "lat": 51.365880000000004,
-                    "lon": 12.447980000000001
-                  },
-                  {
-                    "lat": 51.365840000000006,
-                    "lon": 12.448350000000001
-                  },
-                  {
-                    "lat": 51.36582000000001,
-                    "lon": 12.4487
-                  },
-                  {
-                    "lat": 51.36581,
-                    "lon": 12.449090000000002
-                  },
-                  {
-                    "lat": 51.36583,
-                    "lon": 12.449530000000001
-                  },
-                  {
-                    "lat": 51.365840000000006,
-                    "lon": 12.449660000000002
-                  },
-                  {
-                    "lat": 51.36589000000001,
-                    "lon": 12.45011
-                  },
-                  {
-                    "lat": 51.36592,
-                    "lon": 12.450380000000001
-                  },
-                  {
-                    "lat": 51.365970000000004,
-                    "lon": 12.450650000000001
-                  },
-                  {
-                    "lat": 51.3661,
-                    "lon": 12.451220000000001
-                  },
-                  {
-                    "lat": 51.366170000000004,
-                    "lon": 12.45147
-                  },
-                  {
-                    "lat": 51.36634,
-                    "lon": 12.452000000000002
-                  },
-                  {
-                    "lat": 51.366580000000006,
-                    "lon": 12.45264
-                  },
-                  {
-                    "lat": 51.367450000000005,
-                    "lon": 12.454910000000002
-                  },
-                  {
-                    "lat": 51.36751,
-                    "lon": 12.455060000000001
-                  },
-                  {
-                    "lat": 51.36806000000001,
-                    "lon": 12.45667
-                  },
-                  {
-                    "lat": 51.36867,
-                    "lon": 12.45832
-                  },
-                  {
-                    "lat": 51.368950000000005,
-                    "lon": 12.459040000000002
-                  },
-                  {
-                    "lat": 51.36932,
-                    "lon": 12.459980000000002
-                  },
-                  {
-                    "lat": 51.36932,
-                    "lon": 12.459990000000001
-                  },
-                  {
-                    "lat": 51.36932,
-                    "lon": 12.459990000000001
-                  },
-                  {
-                    "lat": 51.37236000000001,
-                    "lon": 12.4677
-                  },
-                  {
-                    "lat": 51.37312000000001,
-                    "lon": 12.46963
-                  },
-                  {
-                    "lat": 51.37595,
-                    "lon": 12.4768
-                  },
-                  {
-                    "lat": 51.376090000000005,
-                    "lon": 12.47714
-                  },
-                  {
-                    "lat": 51.378980000000006,
-                    "lon": 12.4845
-                  }
-                ],
-                "length": 173
-              },
-              "steps": [],
-              "routeShortName": "S4",
-              "routeLongName": "S-Bahn S4",
-              "wheelchairAccessible": 1,
-              "duration": 1140,
-              "alerts": [],
-              "departureDelayedTime": 1740061440000,
-              "arrivalDelayedTime": 1740062520000,
-              "departureDelayedTimeHHMM": "15:24",
-              "arrivalDelayedTimeHHMM": "15:42",
-              "startTimeHHMM": "15:23",
-              "endTimeHHMM": "15:42",
-              "cancelled": false,
-              "wheelchairBoardingVehicle": null
-            },
-            {
-              "startTime": 1740062520000,
-              "endTime": 1740063240000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 816,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Taucha (Leipzig)",
-                "stopId": "8013093",
-                "lon": 12.484471,
-                "lat": 51.379017,
-                "arrival": 1740062520000,
-                "departure": 1740062520000,
-                "zoneId": "168",
-                "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740062520000,
-                "arrivalDelayedTime": 1740062520000,
-                "departureDelayedTimeHHMM": "15:42",
-                "arrivalDelayedTimeHHMM": "15:42",
-                "arrivalHHMM": "15:42",
-                "departureHHMM": "15:42",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Destination",
-                "lon": 12.48922,
-                "lat": 51.37435,
-                "arrival": 1740063240000,
-                "departureDelayedTime": 1740063240000,
-                "arrivalDelayedTime": 1740063240000,
-                "arrivalDelayedTimeHHMM": "15:54",
-                "arrivalHHMM": "15:54",
-                "departureHHMM": "15:54",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.37901,
-                    "lon": 12.484470000000002
-                  },
-                  {
-                    "lat": 51.37903000000001,
-                    "lon": 12.48445
-                  },
-                  {
-                    "lat": 51.37924,
-                    "lon": 12.484990000000002
-                  },
-                  {
-                    "lat": 51.379250000000006,
-                    "lon": 12.48498
-                  },
-                  {
-                    "lat": 51.379340000000006,
-                    "lon": 12.48521
-                  },
-                  {
-                    "lat": 51.379360000000005,
-                    "lon": 12.485190000000001
-                  },
-                  {
-                    "lat": 51.37933,
-                    "lon": 12.48512
-                  },
-                  {
-                    "lat": 51.37921000000001,
-                    "lon": 12.485230000000001
-                  },
-                  {
-                    "lat": 51.37919,
-                    "lon": 12.48526
-                  },
-                  {
-                    "lat": 51.379180000000005,
-                    "lon": 12.48529
-                  },
-                  {
-                    "lat": 51.379160000000006,
-                    "lon": 12.48545
-                  },
-                  {
-                    "lat": 51.379160000000006,
-                    "lon": 12.48558
-                  },
-                  {
-                    "lat": 51.379160000000006,
-                    "lon": 12.48573
-                  },
-                  {
-                    "lat": 51.37912000000001,
-                    "lon": 12.485790000000001
-                  },
-                  {
-                    "lat": 51.37894000000001,
-                    "lon": 12.485970000000002
-                  },
-                  {
-                    "lat": 51.37903000000001,
-                    "lon": 12.48619
-                  },
-                  {
-                    "lat": 51.37897,
-                    "lon": 12.48629
-                  },
-                  {
-                    "lat": 51.378420000000006,
-                    "lon": 12.4868
-                  },
-                  {
-                    "lat": 51.378350000000005,
-                    "lon": 12.48685
-                  },
-                  {
-                    "lat": 51.378220000000006,
-                    "lon": 12.486960000000002
-                  },
-                  {
-                    "lat": 51.378080000000004,
-                    "lon": 12.487100000000002
-                  },
-                  {
-                    "lat": 51.37776,
-                    "lon": 12.487400000000001
-                  },
-                  {
-                    "lat": 51.37726000000001,
-                    "lon": 12.487850000000002
-                  },
-                  {
-                    "lat": 51.37722,
-                    "lon": 12.48789
-                  },
-                  {
-                    "lat": 51.37716,
-                    "lon": 12.487940000000002
-                  },
-                  {
-                    "lat": 51.377120000000005,
-                    "lon": 12.48783
-                  },
-                  {
-                    "lat": 51.37708000000001,
-                    "lon": 12.48788
-                  },
-                  {
-                    "lat": 51.377030000000005,
-                    "lon": 12.48792
-                  },
-                  {
-                    "lat": 51.376900000000006,
-                    "lon": 12.488040000000002
-                  },
-                  {
-                    "lat": 51.37624,
-                    "lon": 12.488660000000001
-                  },
-                  {
-                    "lat": 51.375620000000005,
-                    "lon": 12.489230000000001
-                  },
-                  {
-                    "lat": 51.375600000000006,
-                    "lon": 12.489260000000002
-                  },
-                  {
-                    "lat": 51.37559,
-                    "lon": 12.489260000000002
-                  },
-                  {
-                    "lat": 51.37541,
-                    "lon": 12.48943
-                  },
-                  {
-                    "lat": 51.37505,
-                    "lon": 12.48845
-                  },
-                  {
-                    "lat": 51.374930000000006,
-                    "lon": 12.488560000000001
-                  },
-                  {
-                    "lat": 51.37489000000001,
-                    "lon": 12.48863
-                  },
-                  {
-                    "lat": 51.37436,
-                    "lon": 12.489120000000002
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.489160000000002
-                  }
-                ],
-                "length": 39
-              },
-              "steps": [
-                {
-                  "distance": 46,
-                  "relativeDirection": "DEPART",
-                  "streetName": "Taucha (Leipzig)",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4844547,
-                  "lat": 51.3790332
-                },
-                {
-                  "distance": 22,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4849877,
-                  "lat": 51.3792561
-                },
-                {
-                  "distance": 58,
-                  "relativeDirection": "HARD_LEFT",
-                  "streetName": "underpass",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.4851939,
-                  "lat": 51.3793657
-                },
-                {
-                  "distance": 30,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Bahnhofstraße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4857308,
-                  "lat": 51.3791677
-                },
-                {
-                  "distance": 19,
-                  "relativeDirection": "LEFT",
-                  "streetName": "Weststraße",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4859759,
-                  "lat": 51.3789482
-                },
-                {
-                  "distance": 242,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Südstraße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4861973,
-                  "lat": 51.3790364
-                },
-                {
-                  "distance": 9,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Leipziger Straße",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.4879439,
-                  "lat": 51.377163
-                },
-                {
-                  "distance": 220,
-                  "relativeDirection": "LEFT",
-                  "streetName": "Karl-Marx-Straße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4878382,
-                  "lat": 51.3771249
-                },
-                {
-                  "distance": 79,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Friedrich-Engels-Straße",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.4894307,
-                  "lat": 51.3754185
-                },
-                {
-                  "distance": 95,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4884558,
-                  "lat": 51.3750563,
-                  "alerts": []
-                }
-              ],
-              "alerts": [],
-              "rentedBike": false,
-              "duration": 720,
-              "departureDelayedTime": 1740062520000,
-              "arrivalDelayedTime": 1740063240000,
-              "departureDelayedTimeHHMM": "15:42",
-              "arrivalDelayedTimeHHMM": "15:54",
-              "startTimeHHMM": "15:42",
-              "endTimeHHMM": "15:54",
-              "cancelled": false
-            }
-          ],
-          "otpVersion": "2.1",
-          "startTimeHHMM": "15:19",
-          "endTimeHHMM": "15:53",
-          "durationHHMM": "00:35",
-          "zoneInfo": {
-            "zones": [
-              "110",
-              "168"
-            ],
-            "orderedZones": [
-              "110",
-              "168"
-            ],
-            "shortDistanceTicket": false
-          },
-          "index": 0
-        },
-        {
-          "duration": 2640,
-          "startTime": 1740062340000,
-          "endTime": 1740064980000,
-          "walkTime": 840,
-          "transitTime": 1800,
-          "waitingTime": 0,
-          "walkDistance": 889,
-          "transfers": 1,
-          "legs": [
-            {
-              "startTime": 1740062340000,
-              "endTime": 1740062580000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 181,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Origin",
-                "lon": 12.3749,
-                "lat": 51.33394,
-                "departure": 1740062340000,
-                "departureDelayedTime": 1740062340000,
-                "departureDelayedTimeHHMM": "15:39",
-                "arrivalHHMM": "15:39",
-                "departureHHMM": "15:39",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Leipzig, Wilhelm-Leuschner-Platz (S-Bahn)",
-                "stopId": "8012202",
-                "lon": 12.375394,
-                "lat": 51.335396,
-                "arrival": 1740062580000,
-                "departure": 1740062580000,
+              {
+                "name": "Leipzig, Bayerischer Bahnhof (S-Bahn)",
+                "stopId": "8012184",
+                "lon": 12.381658,
+                "lat": 51.329267,
+                "arrival": 1740670740000,
+                "departure": 1740670740000,
                 "zoneId": "110",
+                "stopSequence": 16,
                 "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740062580000,
-                "arrivalDelayedTime": 1740062580000,
-                "departureDelayedTimeHHMM": "15:43",
-                "arrivalDelayedTimeHHMM": "15:43",
-                "arrivalHHMM": "15:43",
-                "departureHHMM": "15:43",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.333940000000005,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.334010000000006,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.33402,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.33413,
-                    "lon": 12.375210000000001
-                  },
-                  {
-                    "lat": 51.334160000000004,
-                    "lon": 12.37536
-                  },
-                  {
-                    "lat": 51.3342,
-                    "lon": 12.37536
-                  },
-                  {
-                    "lat": 51.334250000000004,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.33431,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37541
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37545
-                  },
-                  {
-                    "lat": 51.334450000000004,
-                    "lon": 12.37551
-                  },
-                  {
-                    "lat": 51.33455000000001,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.33457000000001,
-                    "lon": 12.375610000000002
-                  },
-                  {
-                    "lat": 51.33467,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.334700000000005,
-                    "lon": 12.375630000000001
-                  },
-                  {
-                    "lat": 51.334860000000006,
-                    "lon": 12.375560000000002
-                  },
-                  {
-                    "lat": 51.33487,
-                    "lon": 12.375560000000002
-                  },
-                  {
-                    "lat": 51.33487,
-                    "lon": 12.375580000000001
-                  },
-                  {
-                    "lat": 51.334880000000005,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.335040000000006,
-                    "lon": 12.375530000000001
-                  },
-                  {
-                    "lat": 51.33514,
-                    "lon": 12.3755
-                  },
-                  {
-                    "lat": 51.33540000000001,
-                    "lon": 12.375440000000001
-                  },
-                  {
-                    "lat": 51.335390000000004,
-                    "lon": 12.375390000000001
-                  }
-                ],
-                "length": 24
-              },
-              "steps": [
-                {
-                  "distance": 22,
-                  "relativeDirection": "DEPART",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTH",
-                  "lon": 12.3752261,
-                  "lat": 51.3339461
-                },
-                {
-                  "distance": 64,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "path",
-                  "absoluteDirection": "EAST",
-                  "lon": 12.3752174,
-                  "lat": 51.3341368
-                },
-                {
-                  "distance": 17,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTH",
-                  "lon": 12.3756108,
-                  "lat": 51.3345729
-                },
-                {
-                  "distance": 62,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Leipzig Wilhelm-Leuschner-Platz",
-                  "absoluteDirection": "EAST",
-                  "lon": 12.3755624,
-                  "lat": 51.3348753
-                }
-              ],
-              "rentedBike": false,
-              "duration": 240,
-              "alerts": [],
-              "departureDelayedTime": 1740062340000,
-              "arrivalDelayedTime": 1740062580000,
-              "departureDelayedTimeHHMM": "15:39",
-              "arrivalDelayedTimeHHMM": "15:43",
-              "startTimeHHMM": "15:39",
-              "endTimeHHMM": "15:43",
-              "cancelled": false
-            },
-            {
-              "startTime": 1740062580000,
-              "endTime": 1740062760000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": true,
-              "distance": 1288,
-              "mode": "SUBURB",
-              "transitLeg": true,
-              "route": "S2",
-              "agencyName": "8004A9",
-              "agencyUrl": "https://www.mdv.de/partner/",
-              "routeColor": "139640",
-              "routeType": 109,
-              "routeId": "8004A9S2",
-              "headsign": "Dessau Hbf",
-              "agencyId": "1:8004A9",
-              "tripId": "3731",
-              "serviceDate": "20250220",
-              "from": {
-                "name": "Leipzig, Wilhelm-Leuschner-Platz (S-Bahn)",
-                "stopId": "8012202",
-                "lon": 12.375394,
-                "lat": 51.335396,
-                "arrival": 1740062580000,
-                "departure": 1740062580000,
-                "zoneId": "110",
-                "stopSequence": 5,
-                "wheelchairBoarding": 1,
-                "track": "2",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740062580000,
-                "arrivalDelayedTime": 1740062520000,
-                "departureDelayedTimeHHMM": "15:43",
-                "arrivalDelayedTimeHHMM": "15:42",
-                "arrivalHHMM": "15:43",
-                "departureHHMM": "15:43",
-                "arrivalDelay": -60,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Leipzig, Hbf (tief) (S-Bahn)",
-                "stopId": "8098205",
-                "lon": 12.380428,
-                "lat": 51.345696,
-                "arrival": 1740062760000,
-                "departure": 1740062760000,
-                "zoneId": "110",
-                "stopSequence": 7,
-                "wheelchairBoarding": 1,
-                "track": "2",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740062760000,
-                "arrivalDelayedTime": 1740062760000,
-                "departureDelayedTimeHHMM": "15:46",
-                "arrivalDelayedTimeHHMM": "15:46",
-                "arrivalHHMM": "15:46",
-                "departureHHMM": "15:46",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "intermediateStops": [
-                {
-                  "name": "Leipzig, Markt (S-Bahn)",
-                  "stopId": "8012186",
-                  "lon": 12.374612,
-                  "lat": 51.34064,
-                  "arrival": 1740062640000,
-                  "departure": 1740062700000,
-                  "zoneId": "110",
-                  "stopSequence": 6,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740062700000,
-                  "arrivalDelayedTime": 1740062640000,
-                  "departureDelayedTimeHHMM": "15:45",
-                  "arrivalDelayedTimeHHMM": "15:44",
-                  "arrivalHHMM": "15:44",
-                  "departureHHMM": "15:45",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false
-                }
-              ],
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.33540000000001,
-                    "lon": 12.37546
-                  },
-                  {
-                    "lat": 51.335440000000006,
-                    "lon": 12.37545
-                  },
-                  {
-                    "lat": 51.33637,
-                    "lon": 12.375280000000002
-                  },
-                  {
-                    "lat": 51.336830000000006,
-                    "lon": 12.37517
-                  },
-                  {
-                    "lat": 51.33695,
-                    "lon": 12.37513
-                  },
-                  {
-                    "lat": 51.337770000000006,
-                    "lon": 12.37475
-                  },
-                  {
-                    "lat": 51.338190000000004,
-                    "lon": 12.37465
-                  },
-                  {
-                    "lat": 51.33919,
-                    "lon": 12.374600000000001
-                  },
-                  {
-                    "lat": 51.339740000000006,
-                    "lon": 12.374540000000001
-                  },
-                  {
-                    "lat": 51.34033,
-                    "lon": 12.374600000000001
-                  },
-                  {
-                    "lat": 51.340630000000004,
-                    "lon": 12.374680000000001
-                  },
-                  {
-                    "lat": 51.340630000000004,
-                    "lon": 12.374680000000001
-                  },
-                  {
-                    "lat": 51.34069,
-                    "lon": 12.3747
-                  },
-                  {
-                    "lat": 51.340880000000006,
-                    "lon": 12.374780000000001
-                  },
-                  {
-                    "lat": 51.341330000000006,
-                    "lon": 12.375010000000001
-                  },
-                  {
-                    "lat": 51.341640000000005,
-                    "lon": 12.375240000000002
-                  },
-                  {
-                    "lat": 51.34194,
-                    "lon": 12.375490000000001
-                  },
-                  {
-                    "lat": 51.3423,
-                    "lon": 12.37588
-                  },
-                  {
-                    "lat": 51.342580000000005,
-                    "lon": 12.376220000000002
-                  },
-                  {
-                    "lat": 51.342850000000006,
-                    "lon": 12.37659
-                  },
-                  {
-                    "lat": 51.34386000000001,
-                    "lon": 12.378250000000001
-                  },
-                  {
-                    "lat": 51.34416,
-                    "lon": 12.3787
-                  },
-                  {
-                    "lat": 51.34443,
-                    "lon": 12.37911
-                  },
-                  {
-                    "lat": 51.344750000000005,
-                    "lon": 12.37953
-                  },
-                  {
-                    "lat": 51.345400000000005,
-                    "lon": 12.380180000000001
-                  },
-                  {
-                    "lat": 51.345670000000005,
-                    "lon": 12.38047
-                  }
-                ],
-                "length": 26
-              },
-              "steps": [],
-              "routeShortName": "S2",
-              "routeLongName": "S-Bahn S2",
-              "wheelchairAccessible": 1,
-              "duration": 180,
-              "alerts": [],
-              "departureDelayedTime": 1740062580000,
-              "arrivalDelayedTime": 1740062760000,
-              "departureDelayedTimeHHMM": "15:43",
-              "arrivalDelayedTimeHHMM": "15:46",
-              "startTimeHHMM": "15:43",
-              "endTimeHHMM": "15:46",
-              "cancelled": false,
-              "wheelchairBoardingVehicle": null
-            },
-            {
-              "startTime": 1740062760000,
-              "endTime": 1740063000000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 338,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Leipzig, Hbf (tief) (S-Bahn)",
-                "stopId": "8098205",
-                "lon": 12.380428,
-                "lat": 51.345696,
-                "arrival": 1740062760000,
-                "departure": 1740062760000,
-                "zoneId": "110",
-                "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740062760000,
-                "arrivalDelayedTime": 1740062760000,
-                "departureDelayedTimeHHMM": "15:46",
-                "arrivalDelayedTimeHHMM": "15:46",
-                "arrivalHHMM": "15:46",
-                "departureHHMM": "15:46",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Leipzig, Hauptbahnhof (Tram/Bus)",
-                "stopId": "0013000",
-                "lon": 12.380878,
-                "lat": 51.343754,
-                "arrival": 1740063000000,
-                "departure": 1740063000000,
-                "zoneId": "110",
-                "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740063000000,
-                "arrivalDelayedTime": 1740063000000,
-                "departureDelayedTimeHHMM": "15:50",
-                "arrivalDelayedTimeHHMM": "15:50",
-                "arrivalHHMM": "15:50",
-                "departureHHMM": "15:50",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false,
-                "hafas_id": "1000102",
-                "hafas_name": "Hauptbahnhof (Steig B)"
-              },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.345690000000005,
-                    "lon": 12.38042
-                  },
-                  {
-                    "lat": 51.345690000000005,
-                    "lon": 12.38042
-                  },
-                  {
-                    "lat": 51.34548,
-                    "lon": 12.3802
-                  },
-                  {
-                    "lat": 51.345490000000005,
-                    "lon": 12.380180000000001
-                  },
-                  {
-                    "lat": 51.3455,
-                    "lon": 12.380160000000002
-                  },
-                  {
-                    "lat": 51.34496000000001,
-                    "lon": 12.37958
-                  },
-                  {
-                    "lat": 51.344800000000006,
-                    "lon": 12.3794
-                  },
-                  {
-                    "lat": 51.344620000000006,
-                    "lon": 12.37916
-                  },
-                  {
-                    "lat": 51.34460000000001,
-                    "lon": 12.3792
-                  },
-                  {
-                    "lat": 51.344590000000004,
-                    "lon": 12.37916
-                  },
-                  {
-                    "lat": 51.34447,
-                    "lon": 12.379010000000001
-                  },
-                  {
-                    "lat": 51.34443,
-                    "lon": 12.37902
-                  },
-                  {
-                    "lat": 51.34434,
-                    "lon": 12.3792
-                  },
-                  {
-                    "lat": 51.344390000000004,
-                    "lon": 12.37925
-                  },
-                  {
-                    "lat": 51.344370000000005,
-                    "lon": 12.379320000000002
-                  },
-                  {
-                    "lat": 51.34431000000001,
-                    "lon": 12.37944
-                  },
-                  {
-                    "lat": 51.34431000000001,
-                    "lon": 12.37945
-                  },
-                  {
-                    "lat": 51.34429,
-                    "lon": 12.379470000000001
-                  },
-                  {
-                    "lat": 51.344280000000005,
-                    "lon": 12.3795
-                  },
-                  {
-                    "lat": 51.344260000000006,
-                    "lon": 12.379550000000002
-                  },
-                  {
-                    "lat": 51.343990000000005,
-                    "lon": 12.3802
-                  },
-                  {
-                    "lat": 51.344010000000004,
-                    "lon": 12.380220000000001
-                  },
-                  {
-                    "lat": 51.34375000000001,
-                    "lon": 12.380880000000001
-                  },
-                  {
-                    "lat": 51.34375000000001,
-                    "lon": 12.380870000000002
-                  }
-                ],
-                "length": 24
-              },
-              "steps": [
-                {
-                  "distance": 29,
-                  "relativeDirection": "DEPART",
-                  "streetName": "steps",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.3804278,
-                  "lat": 51.3456961
-                },
-                {
-                  "distance": 4,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTHWEST",
-                  "lon": 12.3802023,
-                  "lat": 51.3454855
-                },
-                {
-                  "distance": 121,
-                  "relativeDirection": "LEFT",
-                  "streetName": "Platform 1;2",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.380161,
-                  "lat": 51.3455028
-                },
-                {
-                  "distance": 7,
-                  "relativeDirection": "LEFT",
-                  "streetName": "underpass",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.3791611,
-                  "lat": 51.344622
-                },
-                {
-                  "distance": 42,
-                  "relativeDirection": "LEFT",
-                  "streetName": "underpass",
-                  "absoluteDirection": "SOUTH",
-                  "lon": 12.3790167,
-                  "lat": 51.3444755
-                },
-                {
-                  "distance": 54,
-                  "relativeDirection": "CONTINUE",
-                  "streetName": "Steig C",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.3795571,
-                  "lat": 51.3442632
-                },
-                {
-                  "distance": 3,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.3802066,
-                  "lat": 51.3439965
-                },
-                {
-                  "distance": 54,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Steig B",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.3802296,
-                  "lat": 51.344019
-                }
-              ],
-              "rentedBike": false,
-              "duration": 240,
-              "alerts": [],
-              "departureDelayedTime": 1740062760000,
-              "arrivalDelayedTime": 1740063000000,
-              "departureDelayedTimeHHMM": "15:46",
-              "arrivalDelayedTimeHHMM": "15:50",
-              "startTimeHHMM": "15:46",
-              "endTimeHHMM": "15:50",
-              "cancelled": false,
-              "durationOriginal": 240
-            },
-            {
-              "startTime": 1740063000000,
-              "endTime": 1740064620000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": true,
-              "distance": 8583,
-              "mode": "TRAM",
-              "transitLeg": true,
-              "route": "3",
-              "agencyName": "Leipziger Verkehrsbetriebe",
-              "agencyUrl": "https://www.mdv.de/partner/",
-              "routeColor": "61993B",
-              "routeType": 0,
-              "routeId": "LVTRAM3",
-              "headsign": "Taucha",
-              "agencyId": "1:00468",
-              "tripId": "lvb01753STRB__20250219",
-              "serviceDate": "20250220",
-              "from": {
-                "name": "Leipzig, Hauptbahnhof (Tram/Bus)",
-                "stopId": "0013000",
-                "lon": 12.380878,
-                "lat": 51.343754,
-                "arrival": 1740063000000,
-                "departure": 1740063000000,
-                "zoneId": "110",
-                "stopSequence": 18,
-                "wheelchairBoarding": 1,
-                "track": "B",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740063000000,
-                "arrivalDelayedTime": 1740063000000,
-                "departureDelayedTimeHHMM": "15:50",
-                "arrivalDelayedTimeHHMM": "15:50",
-                "arrivalHHMM": "15:50",
-                "departureHHMM": "15:50",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false,
-                "hafas_id": "1000102",
-                "hafas_name": "Hauptbahnhof (Steig B)"
-              },
-              "to": {
-                "name": "Taucha (b. Leipzig), Freiligrathstr.",
-                "stopId": "0011283",
-                "lon": 12.486095,
-                "lat": 51.376567,
-                "arrival": 1740064620000,
-                "departure": 1740064620000,
-                "zoneId": "168",
-                "stopSequence": 34,
-                "wheelchairBoarding": 0,
-                "track": null,
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740064620000,
-                "arrivalDelayedTime": 1740064620000,
-                "departureDelayedTimeHHMM": "16:17",
-                "arrivalDelayedTimeHHMM": "16:17",
-                "arrivalHHMM": "16:17",
-                "departureHHMM": "16:17",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false,
-                "hafas_id": "1006202",
-                "hafas_name": "Taucha, Freiligrathstraße"
-              },
-              "intermediateStops": [
-                {
-                  "name": "Leipzig, Hofmeisterstr.",
-                  "stopId": "0012705",
-                  "lon": 12.386214,
-                  "lat": 51.343458,
-                  "arrival": 1740063120000,
-                  "departure": 1740063120000,
-                  "zoneId": "110",
-                  "stopSequence": 19,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063120000,
-                  "arrivalDelayedTime": 1740063120000,
-                  "departureDelayedTimeHHMM": "15:52",
-                  "arrivalDelayedTimeHHMM": "15:52",
-                  "arrivalHHMM": "15:52",
-                  "departureHHMM": "15:52",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1003002",
-                  "hafas_name": "Hofmeisterstraße"
-                },
-                {
-                  "name": "Leipzig, Friedrich-List-Platz",
-                  "stopId": "0012706",
-                  "lon": 12.3921,
-                  "lat": 51.34529,
-                  "arrival": 1740063240000,
-                  "departure": 1740063240000,
-                  "zoneId": "110",
-                  "stopSequence": 20,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063240000,
-                  "arrivalDelayedTime": 1740063240000,
-                  "departureDelayedTimeHHMM": "15:54",
-                  "arrivalDelayedTimeHHMM": "15:54",
-                  "arrivalHHMM": "15:54",
-                  "departureHHMM": "15:54",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1003102",
-                  "hafas_name": "Friedrich-List-Platz"
-                },
-                {
-                  "name": "Leipzig, Einertstr.",
-                  "stopId": "0012713",
-                  "lon": 12.400027,
-                  "lat": 51.345829,
-                  "arrival": 1740063360000,
-                  "departure": 1740063360000,
-                  "zoneId": "110",
-                  "stopSequence": 21,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063360000,
-                  "arrivalDelayedTime": 1740063360000,
-                  "departureDelayedTimeHHMM": "15:56",
-                  "arrivalDelayedTimeHHMM": "15:56",
-                  "arrivalHHMM": "15:56",
-                  "departureHHMM": "15:56",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1003202",
-                  "hafas_name": "Einertstraße"
-                },
-                {
-                  "name": "Leipzig, Hermann-Liebmann-/Eisenbahnstr.",
-                  "stopId": "0012714",
-                  "lon": 12.405435,
-                  "lat": 51.345541,
-                  "arrival": 1740063480000,
-                  "departure": 1740063480000,
-                  "zoneId": "110",
-                  "stopSequence": 22,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063480000,
-                  "arrivalDelayedTime": 1740063480000,
-                  "departureDelayedTimeHHMM": "15:58",
-                  "arrivalDelayedTimeHHMM": "15:58",
-                  "arrivalHHMM": "15:58",
-                  "departureHHMM": "15:58",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1003302",
-                  "hafas_name": "H.-Liebmann-/Eisenbahnstraße"
-                },
-                {
-                  "name": "Leipzig, Torgauer Platz",
-                  "stopId": "0012851",
-                  "lon": 12.413498,
-                  "lat": 51.345117,
-                  "arrival": 1740063600000,
-                  "departure": 1740063600000,
-                  "zoneId": "110",
-                  "stopSequence": 23,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063600000,
-                  "arrivalDelayedTime": 1740063600000,
-                  "departureDelayedTimeHHMM": "16:00",
-                  "arrivalDelayedTimeHHMM": "16:00",
-                  "arrivalHHMM": "16:00",
-                  "departureHHMM": "16:00",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1004902",
-                  "hafas_name": "Torgauer Platz"
-                },
-                {
-                  "name": "Leipzig, Volksgarten",
-                  "stopId": "0011280",
-                  "lon": 12.420303,
-                  "lat": 51.348518,
-                  "arrival": 1740063720000,
-                  "departure": 1740063720000,
-                  "zoneId": "110",
-                  "stopSequence": 24,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063720000,
-                  "arrivalDelayedTime": 1740063720000,
-                  "departureDelayedTimeHHMM": "16:02",
-                  "arrivalDelayedTimeHHMM": "16:02",
-                  "arrivalHHMM": "16:02",
-                  "departureHHMM": "16:02",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005102",
-                  "hafas_name": "Volksgarten"
-                },
-                {
-                  "name": "Leipzig, Permoser-/Torgauer Str.",
-                  "stopId": "0012829",
-                  "lon": 12.42593,
-                  "lat": 51.351688,
-                  "arrival": 1740063780000,
-                  "departure": 1740063780000,
-                  "zoneId": "110",
-                  "stopSequence": 25,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063780000,
-                  "arrivalDelayedTime": 1740063780000,
-                  "departureDelayedTimeHHMM": "16:03",
-                  "arrivalDelayedTimeHHMM": "16:03",
-                  "arrivalHHMM": "16:03",
-                  "departureHHMM": "16:03",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005202",
-                  "hafas_name": "Permoser-/Torgauer Straße"
-                },
-                {
-                  "name": "Leipzig, Schwantesstr.",
-                  "stopId": "0000696",
-                  "lon": 12.430876,
-                  "lat": 51.354052,
-                  "arrival": 1740063840000,
-                  "departure": 1740063840000,
-                  "zoneId": "110",
-                  "stopSequence": 26,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063840000,
-                  "arrivalDelayedTime": 1740063840000,
-                  "departureDelayedTimeHHMM": "16:04",
-                  "arrivalDelayedTimeHHMM": "16:04",
-                  "arrivalHHMM": "16:04",
-                  "departureHHMM": "16:04",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1016402",
-                  "hafas_name": "Schwantesstraße"
-                },
-                {
-                  "name": "Leipzig, Bautzner Str.",
-                  "stopId": "0011278",
-                  "lon": 12.434308,
-                  "lat": 51.355684,
-                  "arrival": 1740063900000,
-                  "departure": 1740063960000,
-                  "zoneId": "110",
-                  "stopSequence": 27,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063960000,
-                  "arrivalDelayedTime": 1740063900000,
-                  "departureDelayedTimeHHMM": "16:06",
-                  "arrivalDelayedTimeHHMM": "16:05",
-                  "arrivalHHMM": "16:05",
-                  "departureHHMM": "16:06",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005302",
-                  "hafas_name": "Bautzner Straße"
-                },
-                {
-                  "name": "Leipzig, Hohentichelnstr.",
-                  "stopId": "0013282",
-                  "lon": 12.443192,
-                  "lat": 51.35993,
-                  "arrival": 1740064080000,
-                  "departure": 1740064080000,
-                  "zoneId": "110",
-                  "stopSequence": 28,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064080000,
-                  "arrivalDelayedTime": 1740064080000,
-                  "departureDelayedTimeHHMM": "16:08",
-                  "arrivalDelayedTimeHHMM": "16:08",
-                  "arrivalHHMM": "16:08",
-                  "departureHHMM": "16:08",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1006602",
-                  "hafas_name": "Hohentichelnstraße"
-                },
-                {
-                  "name": "Leipzig, Arcus Park",
-                  "stopId": "0000145",
-                  "lon": 12.446856,
-                  "lat": 51.361686,
-                  "arrival": 1740064140000,
-                  "departure": 1740064140000,
-                  "zoneId": "110",
-                  "stopSequence": 29,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064140000,
-                  "arrivalDelayedTime": 1740064140000,
-                  "departureDelayedTimeHHMM": "16:09",
-                  "arrivalDelayedTimeHHMM": "16:09",
-                  "arrivalHHMM": "16:09",
-                  "departureHHMM": "16:09",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005502",
-                  "hafas_name": "Arcus Park"
-                },
-                {
-                  "name": "Leipzig, Heiterblick, Teslastr.",
-                  "stopId": "0011276",
-                  "lon": 12.452323,
-                  "lat": 51.36429,
-                  "arrival": 1740064200000,
-                  "departure": 1740064200000,
-                  "zoneId": "110",
-                  "stopSequence": 30,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064200000,
-                  "arrivalDelayedTime": 1740064200000,
-                  "departureDelayedTimeHHMM": "16:10",
-                  "arrivalDelayedTimeHHMM": "16:10",
-                  "arrivalHHMM": "16:10",
-                  "departureHHMM": "16:10",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005602",
-                  "hafas_name": "Heiterblick, Teslastraße"
-                },
-                {
-                  "name": "Leipzig, Portitzer Allee/S-Bahnhof Heiterblick",
-                  "stopId": "0011277",
-                  "lon": 12.460293,
-                  "lat": 51.36727,
-                  "arrival": 1740064320000,
-                  "departure": 1740064320000,
-                  "zoneId": "110",
-                  "stopSequence": 31,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064320000,
-                  "arrivalDelayedTime": 1740064320000,
-                  "departureDelayedTimeHHMM": "16:12",
-                  "arrivalDelayedTimeHHMM": "16:12",
-                  "arrivalHHMM": "16:12",
-                  "departureHHMM": "16:12",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005702",
-                  "hafas_name": "Portitzer A., S-Bf.Heiterblick"
-                },
-                {
-                  "name": "Taucha (b. Leipzig), Otto-Schmidt-Str.",
-                  "stopId": "0011275",
-                  "lon": 12.475442,
-                  "lat": 51.372728,
-                  "arrival": 1740064500000,
-                  "departure": 1740064500000,
-                  "zoneId": "168",
-                  "stopSequence": 32,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064500000,
-                  "arrivalDelayedTime": 1740064500000,
-                  "departureDelayedTimeHHMM": "16:15",
-                  "arrivalDelayedTimeHHMM": "16:15",
-                  "arrivalHHMM": "16:15",
-                  "departureHHMM": "16:15",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1006002",
-                  "hafas_name": "Taucha, O.-Schmidt-Str."
-                },
-                {
-                  "name": "Taucha (b. Leipzig), Theodor-Körner-Str.",
-                  "stopId": "0011282",
-                  "lon": 12.481366,
-                  "lat": 51.37487,
-                  "arrival": 1740064560000,
-                  "departure": 1740064560000,
-                  "zoneId": "168",
-                  "stopSequence": 33,
-                  "wheelchairBoarding": 0,
-                  "departureDelayedTime": 1740064560000,
-                  "arrivalDelayedTime": 1740064560000,
-                  "departureDelayedTimeHHMM": "16:16",
-                  "arrivalDelayedTimeHHMM": "16:16",
-                  "arrivalHHMM": "16:16",
-                  "departureHHMM": "16:16",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1006102",
-                  "hafas_name": "Taucha, Theodor-Körner-Str."
-                }
-              ],
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.34376,
-                    "lon": 12.380880000000001
-                  },
-                  {
-                    "lat": 51.34375000000001,
-                    "lon": 12.3809
-                  },
-                  {
-                    "lat": 51.34376,
-                    "lon": 12.380910000000002
-                  },
-                  {
-                    "lat": 51.34375000000001,
-                    "lon": 12.3809
-                  },
-                  {
-                    "lat": 51.34364000000001,
-                    "lon": 12.381160000000001
-                  },
-                  {
-                    "lat": 51.343540000000004,
-                    "lon": 12.38141
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.38161
-                  },
-                  {
-                    "lat": 51.34344,
-                    "lon": 12.381670000000002
-                  },
-                  {
-                    "lat": 51.343410000000006,
-                    "lon": 12.38184
-                  },
-                  {
-                    "lat": 51.3434,
-                    "lon": 12.38197
-                  },
-                  {
-                    "lat": 51.34337000000001,
-                    "lon": 12.38231
-                  },
-                  {
-                    "lat": 51.343320000000006,
-                    "lon": 12.38282
-                  },
-                  {
-                    "lat": 51.34331,
-                    "lon": 12.383030000000002
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.38319
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.38324
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.38333
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.383350000000002
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.38344
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.38348
-                  },
-                  {
-                    "lat": 51.34333,
-                    "lon": 12.38367
-                  },
-                  {
-                    "lat": 51.34342,
-                    "lon": 12.38452
-                  },
-                  {
-                    "lat": 51.343430000000005,
-                    "lon": 12.38466
-                  },
-                  {
-                    "lat": 51.34349,
-                    "lon": 12.384970000000001
-                  },
-                  {
-                    "lat": 51.34351,
-                    "lon": 12.38507
-                  },
-                  {
-                    "lat": 51.34351,
-                    "lon": 12.385150000000001
-                  },
-                  {
-                    "lat": 51.343520000000005,
-                    "lon": 12.38527
-                  },
-                  {
-                    "lat": 51.343520000000005,
-                    "lon": 12.385390000000001
-                  },
-                  {
-                    "lat": 51.34351,
-                    "lon": 12.38559
-                  },
-                  {
-                    "lat": 51.34349,
-                    "lon": 12.385840000000002
-                  },
-                  {
-                    "lat": 51.34348000000001,
-                    "lon": 12.385980000000002
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.386220000000002
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.386220000000002
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.386220000000002
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.386220000000002
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.38624
-                  },
-                  {
-                    "lat": 51.343450000000004,
-                    "lon": 12.38635
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.386450000000002
-                  },
-                  {
-                    "lat": 51.34348000000001,
-                    "lon": 12.386560000000001
-                  },
-                  {
-                    "lat": 51.34353,
-                    "lon": 12.386740000000001
-                  },
-                  {
-                    "lat": 51.343770000000006,
-                    "lon": 12.38746
-                  },
-                  {
-                    "lat": 51.343810000000005,
-                    "lon": 12.387580000000002
-                  },
-                  {
-                    "lat": 51.34442000000001,
-                    "lon": 12.38944
-                  },
-                  {
-                    "lat": 51.34526,
-                    "lon": 12.392000000000001
-                  },
-                  {
-                    "lat": 51.345290000000006,
-                    "lon": 12.392080000000002
-                  },
-                  {
-                    "lat": 51.345290000000006,
-                    "lon": 12.392090000000001
-                  },
-                  {
-                    "lat": 51.345290000000006,
-                    "lon": 12.392100000000001
-                  },
-                  {
-                    "lat": 51.345290000000006,
-                    "lon": 12.392100000000001
-                  },
-                  {
-                    "lat": 51.345290000000006,
-                    "lon": 12.392090000000001
-                  },
-                  {
-                    "lat": 51.345330000000004,
-                    "lon": 12.39221
-                  },
-                  {
-                    "lat": 51.34535,
-                    "lon": 12.392280000000001
-                  },
-                  {
-                    "lat": 51.34537,
-                    "lon": 12.392330000000001
-                  },
-                  {
-                    "lat": 51.34539,
-                    "lon": 12.392380000000001
-                  },
-                  {
-                    "lat": 51.34541,
-                    "lon": 12.39245
-                  },
-                  {
-                    "lat": 51.345420000000004,
-                    "lon": 12.392460000000002
-                  },
-                  {
-                    "lat": 51.34546,
-                    "lon": 12.392570000000001
-                  },
-                  {
-                    "lat": 51.345510000000004,
-                    "lon": 12.392700000000001
-                  },
-                  {
-                    "lat": 51.345890000000004,
-                    "lon": 12.39375
-                  },
-                  {
-                    "lat": 51.34601000000001,
-                    "lon": 12.394100000000002
-                  },
-                  {
-                    "lat": 51.346090000000004,
-                    "lon": 12.394350000000001
-                  },
-                  {
-                    "lat": 51.34611,
-                    "lon": 12.394470000000002
-                  },
-                  {
-                    "lat": 51.34611,
-                    "lon": 12.39461
-                  },
-                  {
-                    "lat": 51.34611,
-                    "lon": 12.3947
-                  },
-                  {
-                    "lat": 51.34595,
-                    "lon": 12.3977
-                  },
-                  {
-                    "lat": 51.34586,
-                    "lon": 12.39944
-                  },
-                  {
-                    "lat": 51.345850000000006,
-                    "lon": 12.39967
-                  },
-                  {
-                    "lat": 51.34584,
-                    "lon": 12.399830000000001
-                  },
-                  {
-                    "lat": 51.34583000000001,
-                    "lon": 12.400020000000001
-                  },
-                  {
-                    "lat": 51.34583000000001,
-                    "lon": 12.400020000000001
-                  },
-                  {
-                    "lat": 51.34583000000001,
-                    "lon": 12.400020000000001
-                  },
-                  {
-                    "lat": 51.34583000000001,
-                    "lon": 12.400020000000001
-                  },
-                  {
-                    "lat": 51.34583000000001,
-                    "lon": 12.400020000000001
-                  },
-                  {
-                    "lat": 51.34582,
-                    "lon": 12.400160000000001
-                  },
-                  {
-                    "lat": 51.34573,
-                    "lon": 12.40173
-                  },
-                  {
-                    "lat": 51.34566,
-                    "lon": 12.40314
-                  },
-                  {
-                    "lat": 51.345580000000005,
-                    "lon": 12.4046
-                  },
-                  {
-                    "lat": 51.34554000000001,
-                    "lon": 12.405330000000001
-                  },
-                  {
-                    "lat": 51.345530000000004,
-                    "lon": 12.4054
-                  },
-                  {
-                    "lat": 51.345530000000004,
-                    "lon": 12.40543
-                  },
-                  {
-                    "lat": 51.34554000000001,
-                    "lon": 12.40544
-                  },
-                  {
-                    "lat": 51.34554000000001,
-                    "lon": 12.40544
-                  },
-                  {
-                    "lat": 51.345530000000004,
-                    "lon": 12.40543
-                  },
-                  {
-                    "lat": 51.34552000000001,
-                    "lon": 12.405660000000001
-                  },
-                  {
-                    "lat": 51.3455,
-                    "lon": 12.405930000000001
-                  },
-                  {
-                    "lat": 51.3455,
-                    "lon": 12.406060000000002
-                  },
-                  {
-                    "lat": 51.34543000000001,
-                    "lon": 12.40732
-                  },
-                  {
-                    "lat": 51.34532,
-                    "lon": 12.40915
-                  },
-                  {
-                    "lat": 51.345310000000005,
-                    "lon": 12.409370000000001
-                  },
-                  {
-                    "lat": 51.34523,
-                    "lon": 12.41097
-                  },
-                  {
-                    "lat": 51.34512,
-                    "lon": 12.413390000000001
-                  },
-                  {
-                    "lat": 51.345110000000005,
-                    "lon": 12.413490000000001
-                  },
-                  {
-                    "lat": 51.345110000000005,
-                    "lon": 12.413490000000001
-                  },
-                  {
-                    "lat": 51.345110000000005,
-                    "lon": 12.4135
-                  },
-                  {
-                    "lat": 51.34512,
-                    "lon": 12.4135
-                  },
-                  {
-                    "lat": 51.345110000000005,
-                    "lon": 12.4135
-                  },
-                  {
-                    "lat": 51.345090000000006,
-                    "lon": 12.41397
-                  },
-                  {
-                    "lat": 51.34508,
-                    "lon": 12.41412
-                  },
-                  {
-                    "lat": 51.34508,
-                    "lon": 12.414140000000002
-                  },
-                  {
-                    "lat": 51.34508,
-                    "lon": 12.414250000000001
-                  },
-                  {
-                    "lat": 51.34508,
-                    "lon": 12.414320000000002
-                  },
-                  {
-                    "lat": 51.345090000000006,
-                    "lon": 12.41441
-                  },
-                  {
-                    "lat": 51.34512,
-                    "lon": 12.4145
-                  },
-                  {
-                    "lat": 51.34514,
-                    "lon": 12.414560000000002
-                  },
-                  {
-                    "lat": 51.345240000000004,
-                    "lon": 12.41472
-                  },
-                  {
-                    "lat": 51.345380000000006,
-                    "lon": 12.41496
-                  },
-                  {
-                    "lat": 51.34597,
-                    "lon": 12.41594
-                  },
-                  {
-                    "lat": 51.34637000000001,
-                    "lon": 12.416640000000001
-                  },
-                  {
-                    "lat": 51.3464,
-                    "lon": 12.416690000000001
-                  },
-                  {
-                    "lat": 51.346500000000006,
-                    "lon": 12.41685
-                  },
-                  {
-                    "lat": 51.34655000000001,
-                    "lon": 12.41693
-                  },
-                  {
-                    "lat": 51.3466,
-                    "lon": 12.41702
-                  },
-                  {
-                    "lat": 51.34667,
-                    "lon": 12.41713
-                  },
-                  {
-                    "lat": 51.34707,
-                    "lon": 12.417810000000001
-                  },
-                  {
-                    "lat": 51.34731000000001,
-                    "lon": 12.41821
-                  },
-                  {
-                    "lat": 51.347680000000004,
-                    "lon": 12.41882
-                  },
-                  {
-                    "lat": 51.348020000000005,
-                    "lon": 12.419390000000002
-                  },
-                  {
-                    "lat": 51.34808,
-                    "lon": 12.419490000000001
-                  },
-                  {
-                    "lat": 51.348290000000006,
-                    "lon": 12.419880000000001
-                  },
-                  {
-                    "lat": 51.348530000000004,
-                    "lon": 12.420280000000002
-                  },
-                  {
-                    "lat": 51.34852000000001,
-                    "lon": 12.420300000000001
-                  },
-                  {
-                    "lat": 51.34852000000001,
-                    "lon": 12.420300000000001
-                  },
-                  {
-                    "lat": 51.34852000000001,
-                    "lon": 12.42031
-                  },
-                  {
-                    "lat": 51.348530000000004,
-                    "lon": 12.420280000000002
-                  },
-                  {
-                    "lat": 51.348710000000004,
-                    "lon": 12.420570000000001
-                  },
-                  {
-                    "lat": 51.34893,
-                    "lon": 12.420940000000002
-                  },
-                  {
-                    "lat": 51.34908,
-                    "lon": 12.4212
-                  },
-                  {
-                    "lat": 51.349270000000004,
-                    "lon": 12.42153
-                  },
-                  {
-                    "lat": 51.349720000000005,
-                    "lon": 12.42228
-                  },
-                  {
-                    "lat": 51.35031000000001,
-                    "lon": 12.423280000000002
-                  },
-                  {
-                    "lat": 51.3507,
-                    "lon": 12.42387
-                  },
-                  {
-                    "lat": 51.350840000000005,
-                    "lon": 12.424080000000002
-                  },
-                  {
-                    "lat": 51.35096000000001,
-                    "lon": 12.42431
-                  },
-                  {
-                    "lat": 51.351710000000004,
-                    "lon": 12.425880000000001
-                  },
-                  {
-                    "lat": 51.35168,
-                    "lon": 12.425920000000001
-                  },
-                  {
-                    "lat": 51.35168,
-                    "lon": 12.425920000000001
-                  },
-                  {
-                    "lat": 51.351710000000004,
-                    "lon": 12.425880000000001
-                  },
-                  {
-                    "lat": 51.35175,
-                    "lon": 12.42595
-                  },
-                  {
-                    "lat": 51.351780000000005,
-                    "lon": 12.42604
-                  },
-                  {
-                    "lat": 51.35184,
-                    "lon": 12.426160000000001
-                  },
-                  {
-                    "lat": 51.35192000000001,
-                    "lon": 12.42631
-                  },
-                  {
-                    "lat": 51.351940000000006,
-                    "lon": 12.42636
-                  },
-                  {
-                    "lat": 51.351980000000005,
-                    "lon": 12.426440000000001
-                  },
-                  {
-                    "lat": 51.35204,
-                    "lon": 12.42656
-                  },
-                  {
-                    "lat": 51.35230000000001,
-                    "lon": 12.42712
-                  },
-                  {
-                    "lat": 51.35372,
-                    "lon": 12.430090000000002
-                  },
-                  {
-                    "lat": 51.35380000000001,
-                    "lon": 12.430280000000002
-                  },
-                  {
-                    "lat": 51.35407000000001,
-                    "lon": 12.430840000000002
-                  },
-                  {
-                    "lat": 51.35405,
-                    "lon": 12.43087
-                  },
-                  {
-                    "lat": 51.35405,
-                    "lon": 12.43087
-                  },
-                  {
-                    "lat": 51.354040000000005,
-                    "lon": 12.43087
-                  },
-                  {
-                    "lat": 51.35407000000001,
-                    "lon": 12.430840000000002
-                  },
-                  {
-                    "lat": 51.354130000000005,
-                    "lon": 12.430950000000001
-                  },
-                  {
-                    "lat": 51.35517,
-                    "lon": 12.43313
-                  },
-                  {
-                    "lat": 51.35530000000001,
-                    "lon": 12.43341
-                  },
-                  {
-                    "lat": 51.355410000000006,
-                    "lon": 12.433650000000002
-                  },
-                  {
-                    "lat": 51.35546,
-                    "lon": 12.433750000000002
-                  },
-                  {
-                    "lat": 51.35571,
-                    "lon": 12.434260000000002
-                  },
-                  {
-                    "lat": 51.35568000000001,
-                    "lon": 12.4343
-                  },
-                  {
-                    "lat": 51.35568000000001,
-                    "lon": 12.4343
-                  },
-                  {
-                    "lat": 51.35568000000001,
-                    "lon": 12.4343
-                  },
-                  {
-                    "lat": 51.35571,
-                    "lon": 12.434260000000002
-                  },
-                  {
-                    "lat": 51.35573,
-                    "lon": 12.434320000000001
-                  },
-                  {
-                    "lat": 51.35925,
-                    "lon": 12.441680000000002
-                  },
-                  {
-                    "lat": 51.35961,
-                    "lon": 12.442440000000001
-                  },
-                  {
-                    "lat": 51.359840000000005,
-                    "lon": 12.44293
-                  },
-                  {
-                    "lat": 51.359950000000005,
-                    "lon": 12.44316
-                  },
-                  {
-                    "lat": 51.359930000000006,
-                    "lon": 12.443190000000001
-                  },
-                  {
-                    "lat": 51.359930000000006,
-                    "lon": 12.443190000000001
-                  },
-                  {
-                    "lat": 51.359950000000005,
-                    "lon": 12.44316
-                  },
-                  {
-                    "lat": 51.360020000000006,
-                    "lon": 12.4433
-                  },
-                  {
-                    "lat": 51.36012,
-                    "lon": 12.443520000000001
-                  },
-                  {
-                    "lat": 51.36019,
-                    "lon": 12.443670000000001
-                  },
-                  {
-                    "lat": 51.360290000000006,
-                    "lon": 12.44387
-                  },
-                  {
-                    "lat": 51.36124,
-                    "lon": 12.445870000000001
-                  },
-                  {
-                    "lat": 51.36133,
-                    "lon": 12.446050000000001
-                  },
-                  {
-                    "lat": 51.36142,
-                    "lon": 12.446240000000001
-                  },
-                  {
-                    "lat": 51.361470000000004,
-                    "lon": 12.44635
-                  },
-                  {
-                    "lat": 51.361700000000006,
-                    "lon": 12.44682
-                  },
-                  {
-                    "lat": 51.36168000000001,
-                    "lon": 12.446850000000001
-                  },
-                  {
-                    "lat": 51.36168000000001,
-                    "lon": 12.446850000000001
-                  },
-                  {
-                    "lat": 51.36168000000001,
-                    "lon": 12.446850000000001
-                  },
-                  {
-                    "lat": 51.361700000000006,
-                    "lon": 12.44682
-                  },
-                  {
-                    "lat": 51.363780000000006,
-                    "lon": 12.45119
-                  },
-                  {
-                    "lat": 51.3639,
-                    "lon": 12.451450000000001
-                  },
-                  {
-                    "lat": 51.36408,
-                    "lon": 12.451810000000002
-                  },
-                  {
-                    "lat": 51.36431,
-                    "lon": 12.452290000000001
-                  },
-                  {
-                    "lat": 51.36428,
-                    "lon": 12.45232
-                  },
-                  {
-                    "lat": 51.364290000000004,
-                    "lon": 12.45232
-                  },
-                  {
-                    "lat": 51.364290000000004,
-                    "lon": 12.45232
-                  },
-                  {
-                    "lat": 51.367270000000005,
-                    "lon": 12.46029
-                  },
-                  {
-                    "lat": 51.367270000000005,
-                    "lon": 12.46029
-                  },
-                  {
-                    "lat": 51.36726,
-                    "lon": 12.460280000000001
-                  },
-                  {
-                    "lat": 51.36726,
-                    "lon": 12.460280000000001
-                  },
-                  {
-                    "lat": 51.367290000000004,
-                    "lon": 12.460360000000001
-                  },
-                  {
-                    "lat": 51.36732000000001,
-                    "lon": 12.460450000000002
-                  },
-                  {
-                    "lat": 51.36732000000001,
-                    "lon": 12.460460000000001
-                  },
-                  {
-                    "lat": 51.367380000000004,
-                    "lon": 12.46062
-                  },
-                  {
-                    "lat": 51.36741000000001,
-                    "lon": 12.460700000000001
-                  },
-                  {
-                    "lat": 51.36746,
-                    "lon": 12.46085
-                  },
-                  {
-                    "lat": 51.36750000000001,
-                    "lon": 12.46094
-                  },
-                  {
-                    "lat": 51.36757000000001,
-                    "lon": 12.46114
-                  },
-                  {
-                    "lat": 51.367580000000004,
-                    "lon": 12.461160000000001
-                  },
-                  {
-                    "lat": 51.36766,
-                    "lon": 12.461400000000001
-                  },
-                  {
-                    "lat": 51.36851000000001,
-                    "lon": 12.463780000000002
-                  },
-                  {
-                    "lat": 51.369150000000005,
-                    "lon": 12.46549
-                  },
-                  {
-                    "lat": 51.369400000000006,
-                    "lon": 12.4662
-                  },
-                  {
-                    "lat": 51.36985000000001,
-                    "lon": 12.46743
-                  },
-                  {
-                    "lat": 51.36994000000001,
-                    "lon": 12.467680000000001
-                  },
-                  {
-                    "lat": 51.370110000000004,
-                    "lon": 12.46817
-                  },
-                  {
-                    "lat": 51.370490000000004,
-                    "lon": 12.469220000000002
-                  },
-                  {
-                    "lat": 51.37050000000001,
-                    "lon": 12.46925
-                  },
-                  {
-                    "lat": 51.37107,
-                    "lon": 12.4708
-                  },
-                  {
-                    "lat": 51.37118,
-                    "lon": 12.471110000000001
-                  },
-                  {
-                    "lat": 51.37122,
-                    "lon": 12.471240000000002
-                  },
-                  {
-                    "lat": 51.37131,
-                    "lon": 12.471490000000001
-                  },
-                  {
-                    "lat": 51.372130000000006,
-                    "lon": 12.473770000000002
-                  },
-                  {
-                    "lat": 51.372310000000006,
-                    "lon": 12.474290000000002
-                  },
-                  {
-                    "lat": 51.372440000000005,
-                    "lon": 12.474660000000002
-                  },
-                  {
-                    "lat": 51.372710000000005,
-                    "lon": 12.475430000000001
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.47544
-                  },
-                  {
-                    "lat": 51.372730000000004,
-                    "lon": 12.47544
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.47544
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.47544
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.47544
-                  },
-                  {
-                    "lat": 51.37276000000001,
-                    "lon": 12.475560000000002
-                  },
-                  {
-                    "lat": 51.372820000000004,
-                    "lon": 12.475740000000002
-                  },
-                  {
-                    "lat": 51.372890000000005,
-                    "lon": 12.47592
-                  },
-                  {
-                    "lat": 51.372910000000005,
-                    "lon": 12.47597
-                  },
-                  {
-                    "lat": 51.373650000000005,
-                    "lon": 12.47803
-                  },
-                  {
-                    "lat": 51.37483,
-                    "lon": 12.48127
-                  },
-                  {
-                    "lat": 51.374860000000005,
-                    "lon": 12.48136
-                  },
-                  {
-                    "lat": 51.374860000000005,
-                    "lon": 12.48136
-                  },
-                  {
-                    "lat": 51.37487,
-                    "lon": 12.481370000000002
-                  },
-                  {
-                    "lat": 51.37487,
-                    "lon": 12.481370000000002
-                  },
-                  {
-                    "lat": 51.37487,
-                    "lon": 12.481370000000002
-                  },
-                  {
-                    "lat": 51.37489000000001,
-                    "lon": 12.481430000000001
-                  },
-                  {
-                    "lat": 51.37492,
-                    "lon": 12.481510000000002
-                  },
-                  {
-                    "lat": 51.37494,
-                    "lon": 12.481580000000001
-                  },
-                  {
-                    "lat": 51.37498,
-                    "lon": 12.48168
-                  },
-                  {
-                    "lat": 51.37507,
-                    "lon": 12.48192
-                  },
-                  {
-                    "lat": 51.37519,
-                    "lon": 12.482270000000002
-                  },
-                  {
-                    "lat": 51.37538000000001,
-                    "lon": 12.482790000000001
-                  },
-                  {
-                    "lat": 51.376050000000006,
-                    "lon": 12.48465
-                  },
-                  {
-                    "lat": 51.37623000000001,
-                    "lon": 12.485170000000002
-                  },
-                  {
-                    "lat": 51.37644,
-                    "lon": 12.48576
-                  },
-                  {
-                    "lat": 51.376560000000005,
-                    "lon": 12.48609
-                  },
-                  {
-                    "lat": 51.37657,
-                    "lon": 12.48609
-                  },
-                  {
-                    "lat": 51.376560000000005,
-                    "lon": 12.48609
-                  },
-                  {
-                    "lat": 51.376560000000005,
-                    "lon": 12.48609
-                  }
-                ],
-                "length": 248
-              },
-              "steps": [],
-              "routeShortName": "3",
-              "routeLongName": "Tram 3",
-              "wheelchairAccessible": 1,
-              "duration": 1620,
-              "alerts": [],
-              "departureDelayedTime": 1740063000000,
-              "arrivalDelayedTime": 1740064620000,
-              "departureDelayedTimeHHMM": "15:50",
-              "arrivalDelayedTimeHHMM": "16:17",
-              "startTimeHHMM": "15:50",
-              "endTimeHHMM": "16:17",
-              "cancelled": false,
-              "wheelchairBoardingVehicle": null
-            },
-            {
-              "startTime": 1740064620000,
-              "endTime": 1740064980000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 370,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Taucha (b. Leipzig), Freiligrathstr.",
-                "stopId": "0011283",
-                "lon": 12.486095,
-                "lat": 51.376567,
-                "arrival": 1740064620000,
-                "departure": 1740064620000,
-                "zoneId": "168",
-                "wheelchairBoarding": 0,
-                "departureDelayedTime": 1740064620000,
-                "arrivalDelayedTime": 1740064620000,
-                "departureDelayedTimeHHMM": "16:17",
-                "arrivalDelayedTimeHHMM": "16:17",
-                "arrivalHHMM": "16:17",
-                "departureHHMM": "16:17",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false,
-                "hafas_id": "1006202",
-                "hafas_name": "Taucha, Freiligrathstraße"
-              },
-              "to": {
-                "name": "Destination",
-                "lon": 12.48922,
-                "lat": 51.37435,
-                "arrival": 1740064980000,
-                "departureDelayedTime": 1740064980000,
-                "arrivalDelayedTime": 1740064980000,
-                "arrivalDelayedTimeHHMM": "16:23",
-                "arrivalHHMM": "16:23",
-                "departureHHMM": "16:23",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.376560000000005,
-                    "lon": 12.48609
-                  },
-                  {
-                    "lat": 51.37651,
-                    "lon": 12.48614
-                  },
-                  {
-                    "lat": 51.37659000000001,
-                    "lon": 12.48637
-                  },
-                  {
-                    "lat": 51.37666,
-                    "lon": 12.48657
-                  },
-                  {
-                    "lat": 51.37662,
-                    "lon": 12.48662
-                  },
-                  {
-                    "lat": 51.376580000000004,
-                    "lon": 12.48666
-                  },
-                  {
-                    "lat": 51.376450000000006,
-                    "lon": 12.486780000000001
-                  },
-                  {
-                    "lat": 51.37588,
-                    "lon": 12.48731
-                  },
-                  {
-                    "lat": 51.37581,
-                    "lon": 12.48737
-                  },
-                  {
-                    "lat": 51.375780000000006,
-                    "lon": 12.487400000000001
-                  },
-                  {
-                    "lat": 51.375870000000006,
-                    "lon": 12.487660000000002
-                  },
-                  {
-                    "lat": 51.37538000000001,
-                    "lon": 12.488130000000002
-                  },
-                  {
-                    "lat": 51.37505,
-                    "lon": 12.48845
-                  },
-                  {
-                    "lat": 51.374930000000006,
-                    "lon": 12.488560000000001
-                  },
-                  {
-                    "lat": 51.37489000000001,
-                    "lon": 12.48863
-                  },
-                  {
-                    "lat": 51.37436,
-                    "lon": 12.489120000000002
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.489160000000002
-                  }
-                ],
-                "length": 17
-              },
-              "steps": [
-                {
-                  "distance": 35,
-                  "relativeDirection": "DEPART",
-                  "streetName": "Leipziger Straße",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4861469,
-                  "lat": 51.3765115
-                },
-                {
-                  "distance": 115,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Ferdinand-Lassalle-Straße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4865794,
-                  "lat": 51.376668
-                },
-                {
-                  "distance": 222,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4874093,
-                  "lat": 51.3757811,
-                  "alerts": []
-                }
-              ],
-              "alerts": [],
-              "rentedBike": false,
-              "duration": 360,
-              "departureDelayedTime": 1740064620000,
-              "arrivalDelayedTime": 1740064980000,
-              "departureDelayedTimeHHMM": "16:17",
-              "arrivalDelayedTimeHHMM": "16:23",
-              "startTimeHHMM": "16:17",
-              "endTimeHHMM": "16:23",
-              "cancelled": false
-            }
-          ],
-          "otpVersion": "2.1",
-          "startTimeHHMM": "15:39",
-          "endTimeHHMM": "16:22",
-          "durationHHMM": "00:44",
-          "zoneInfo": {
-            "zones": [
-              "110",
-              "168"
-            ],
-            "orderedZones": [
-              "110",
-              "168"
-            ],
-            "shortDistanceTicket": false
-          },
-          "index": 1
-        },
-        {
-          "duration": 2100,
-          "startTime": 1740062940000,
-          "endTime": 1740065040000,
-          "walkTime": 960,
-          "transitTime": 1140,
-          "waitingTime": 0,
-          "walkDistance": 997,
-          "transfers": 0,
-          "legs": [
-            {
-              "startTime": 1740062940000,
-              "endTime": 1740063180000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 181,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Origin",
-                "lon": 12.3749,
-                "lat": 51.33394,
-                "departure": 1740062940000,
-                "departureDelayedTime": 1740062940000,
-                "departureDelayedTimeHHMM": "15:49",
-                "arrivalHHMM": "15:49",
-                "departureHHMM": "15:49",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Leipzig, Wilhelm-Leuschner-Platz (S-Bahn)",
-                "stopId": "8012202",
-                "lon": 12.375394,
-                "lat": 51.335396,
-                "arrival": 1740063180000,
-                "departure": 1740063180000,
-                "zoneId": "110",
-                "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740063180000,
-                "arrivalDelayedTime": 1740063180000,
-                "departureDelayedTimeHHMM": "15:53",
-                "arrivalDelayedTimeHHMM": "15:53",
-                "arrivalHHMM": "15:53",
-                "departureHHMM": "15:53",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.333940000000005,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.334010000000006,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.33402,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.33413,
-                    "lon": 12.375210000000001
-                  },
-                  {
-                    "lat": 51.334160000000004,
-                    "lon": 12.37536
-                  },
-                  {
-                    "lat": 51.3342,
-                    "lon": 12.37536
-                  },
-                  {
-                    "lat": 51.334250000000004,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.33431,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37541
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37545
-                  },
-                  {
-                    "lat": 51.334450000000004,
-                    "lon": 12.37551
-                  },
-                  {
-                    "lat": 51.33455000000001,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.33457000000001,
-                    "lon": 12.375610000000002
-                  },
-                  {
-                    "lat": 51.33467,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.334700000000005,
-                    "lon": 12.375630000000001
-                  },
-                  {
-                    "lat": 51.334860000000006,
-                    "lon": 12.375560000000002
-                  },
-                  {
-                    "lat": 51.33487,
-                    "lon": 12.375560000000002
-                  },
-                  {
-                    "lat": 51.33487,
-                    "lon": 12.375580000000001
-                  },
-                  {
-                    "lat": 51.334880000000005,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.335040000000006,
-                    "lon": 12.375530000000001
-                  },
-                  {
-                    "lat": 51.33514,
-                    "lon": 12.3755
-                  },
-                  {
-                    "lat": 51.33540000000001,
-                    "lon": 12.375440000000001
-                  },
-                  {
-                    "lat": 51.335390000000004,
-                    "lon": 12.375390000000001
-                  }
-                ],
-                "length": 24
-              },
-              "steps": [
-                {
-                  "distance": 22,
-                  "relativeDirection": "DEPART",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTH",
-                  "lon": 12.3752261,
-                  "lat": 51.3339461
-                },
-                {
-                  "distance": 64,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "path",
-                  "absoluteDirection": "EAST",
-                  "lon": 12.3752174,
-                  "lat": 51.3341368
-                },
-                {
-                  "distance": 17,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTH",
-                  "lon": 12.3756108,
-                  "lat": 51.3345729
-                },
-                {
-                  "distance": 62,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Leipzig Wilhelm-Leuschner-Platz",
-                  "absoluteDirection": "EAST",
-                  "lon": 12.3755624,
-                  "lat": 51.3348753
-                }
-              ],
-              "rentedBike": false,
-              "duration": 240,
-              "alerts": [],
-              "departureDelayedTime": 1740062940000,
-              "arrivalDelayedTime": 1740063180000,
-              "departureDelayedTimeHHMM": "15:49",
-              "arrivalDelayedTimeHHMM": "15:53",
-              "startTimeHHMM": "15:49",
-              "endTimeHHMM": "15:53",
-              "cancelled": false
-            },
-            {
-              "startTime": 1740063180000,
-              "endTime": 1740064320000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": true,
-              "distance": 11298,
-              "mode": "SUBURB",
-              "transitLeg": true,
-              "route": "S4",
-              "agencyName": "800486",
-              "agencyUrl": "https://www.mdv.de/partner/",
-              "routeColor": "139640",
-              "routeType": 109,
-              "routeId": "800486S4",
-              "headsign": "Falkenberg (Elster)",
-              "agencyId": "1:800486",
-              "tripId": "2174",
-              "serviceDate": "20250220",
-              "from": {
-                "name": "Leipzig, Wilhelm-Leuschner-Platz (S-Bahn)",
-                "stopId": "8012202",
-                "lon": 12.375394,
-                "lat": 51.335396,
-                "arrival": 1740063180000,
-                "departure": 1740063180000,
-                "zoneId": "110",
-                "stopSequence": 8,
-                "wheelchairBoarding": 1,
-                "track": "2",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740063180000,
-                "arrivalDelayedTime": 1740063180000,
-                "departureDelayedTimeHHMM": "15:53",
-                "arrivalDelayedTimeHHMM": "15:53",
-                "arrivalHHMM": "15:53",
-                "departureHHMM": "15:53",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Taucha (Leipzig)",
-                "stopId": "8013093",
-                "lon": 12.484471,
-                "lat": 51.379017,
-                "arrival": 1740064320000,
-                "departure": 1740064320000,
-                "zoneId": "168",
-                "stopSequence": 15,
-                "wheelchairBoarding": 1,
-                "track": "1",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740064320000,
-                "arrivalDelayedTime": 1740064320000,
-                "departureDelayedTimeHHMM": "16:12",
-                "arrivalDelayedTimeHHMM": "16:12",
-                "arrivalHHMM": "16:12",
-                "departureHHMM": "16:12",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "intermediateStops": [
-                {
-                  "name": "Leipzig, Markt (S-Bahn)",
-                  "stopId": "8012186",
-                  "lon": 12.374612,
-                  "lat": 51.34064,
-                  "arrival": 1740063240000,
-                  "departure": 1740063300000,
-                  "zoneId": "110",
-                  "stopSequence": 9,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063300000,
-                  "arrivalDelayedTime": 1740063240000,
-                  "departureDelayedTimeHHMM": "15:55",
-                  "arrivalDelayedTimeHHMM": "15:54",
-                  "arrivalHHMM": "15:54",
-                  "departureHHMM": "15:55",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Hbf (tief) (S-Bahn)",
-                  "stopId": "8098205",
-                  "lon": 12.380428,
-                  "lat": 51.345696,
-                  "arrival": 1740063360000,
-                  "departure": 1740063480000,
-                  "zoneId": "110",
-                  "stopSequence": 10,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063540000,
-                  "arrivalDelayedTime": 1740063360000,
-                  "departureDelayedTimeHHMM": "15:59",
-                  "arrivalDelayedTimeHHMM": "15:56",
-                  "arrivalHHMM": "15:56",
-                  "departureHHMM": "15:58",
-                  "arrivalDelay": 0,
-                  "departureDelay": 60,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Nord (S-Bahn)",
-                  "stopId": "8012196",
-                  "lon": 12.40106,
-                  "lat": 51.364162,
-                  "arrival": 1740063660000,
-                  "departure": 1740063660000,
-                  "zoneId": "110",
-                  "stopSequence": 11,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063720000,
-                  "arrivalDelayedTime": 1740063660000,
-                  "departureDelayedTimeHHMM": "16:02",
-                  "arrivalDelayedTimeHHMM": "16:01",
-                  "arrivalHHMM": "16:01",
-                  "departureHHMM": "16:01",
-                  "arrivalDelay": 0,
-                  "departureDelay": 60,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Mockauer Straße (S-Bahn)",
-                  "stopId": "8012273",
-                  "lon": 12.4121,
-                  "lat": 51.3738,
-                  "arrival": 1740063840000,
-                  "departure": 1740063840000,
-                  "zoneId": "110",
-                  "stopSequence": 12,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063900000,
-                  "arrivalDelayedTime": 1740063840000,
-                  "departureDelayedTimeHHMM": "16:05",
-                  "arrivalDelayedTimeHHMM": "16:04",
-                  "arrivalHHMM": "16:04",
-                  "departureHHMM": "16:04",
-                  "arrivalDelay": 0,
-                  "departureDelay": 60,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Thekla (S-Bahn)",
-                  "stopId": "8012195",
-                  "lon": 12.430751,
-                  "lat": 51.371626,
-                  "arrival": 1740063960000,
-                  "departure": 1740063960000,
-                  "zoneId": "110",
-                  "stopSequence": 13,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064020000,
-                  "arrivalDelayedTime": 1740063960000,
-                  "departureDelayedTimeHHMM": "16:07",
-                  "arrivalDelayedTimeHHMM": "16:06",
-                  "arrivalHHMM": "16:06",
-                  "departureHHMM": "16:06",
-                  "arrivalDelay": 0,
-                  "departureDelay": 60,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Heiterblick (S-Bahn)",
-                  "stopId": "8012190",
-                  "lon": 12.459979,
-                  "lat": 51.369339,
-                  "arrival": 1740064140000,
-                  "departure": 1740064200000,
-                  "zoneId": "110",
-                  "stopSequence": 14,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064200000,
-                  "arrivalDelayedTime": 1740064140000,
-                  "departureDelayedTimeHHMM": "16:10",
-                  "arrivalDelayedTimeHHMM": "16:09",
-                  "arrivalHHMM": "16:09",
-                  "departureHHMM": "16:10",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false
-                }
-              ],
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.33540000000001,
-                    "lon": 12.37546
-                  },
-                  {
-                    "lat": 51.335440000000006,
-                    "lon": 12.37545
-                  },
-                  {
-                    "lat": 51.33637,
-                    "lon": 12.375280000000002
-                  },
-                  {
-                    "lat": 51.336830000000006,
-                    "lon": 12.37517
-                  },
-                  {
-                    "lat": 51.33695,
-                    "lon": 12.37513
-                  },
-                  {
-                    "lat": 51.337770000000006,
-                    "lon": 12.37475
-                  },
-                  {
-                    "lat": 51.338190000000004,
-                    "lon": 12.37465
-                  },
-                  {
-                    "lat": 51.33919,
-                    "lon": 12.374600000000001
-                  },
-                  {
-                    "lat": 51.339740000000006,
-                    "lon": 12.374540000000001
-                  },
-                  {
-                    "lat": 51.34033,
-                    "lon": 12.374600000000001
-                  },
-                  {
-                    "lat": 51.340630000000004,
-                    "lon": 12.374680000000001
-                  },
-                  {
-                    "lat": 51.340630000000004,
-                    "lon": 12.374680000000001
-                  },
-                  {
-                    "lat": 51.34069,
-                    "lon": 12.3747
-                  },
-                  {
-                    "lat": 51.340880000000006,
-                    "lon": 12.374780000000001
-                  },
-                  {
-                    "lat": 51.341330000000006,
-                    "lon": 12.375010000000001
-                  },
-                  {
-                    "lat": 51.341640000000005,
-                    "lon": 12.375240000000002
-                  },
-                  {
-                    "lat": 51.34194,
-                    "lon": 12.375490000000001
-                  },
-                  {
-                    "lat": 51.3423,
-                    "lon": 12.37588
-                  },
-                  {
-                    "lat": 51.342580000000005,
-                    "lon": 12.376220000000002
-                  },
-                  {
-                    "lat": 51.342850000000006,
-                    "lon": 12.37659
-                  },
-                  {
-                    "lat": 51.34386000000001,
-                    "lon": 12.378250000000001
-                  },
-                  {
-                    "lat": 51.34416,
-                    "lon": 12.3787
-                  },
-                  {
-                    "lat": 51.34443,
-                    "lon": 12.37911
-                  },
-                  {
-                    "lat": 51.344750000000005,
-                    "lon": 12.37953
-                  },
-                  {
-                    "lat": 51.345400000000005,
-                    "lon": 12.380180000000001
-                  },
-                  {
-                    "lat": 51.345670000000005,
-                    "lon": 12.38047
-                  },
-                  {
-                    "lat": 51.345670000000005,
-                    "lon": 12.38047
-                  },
-                  {
-                    "lat": 51.345670000000005,
-                    "lon": 12.38047
-                  },
-                  {
-                    "lat": 51.346360000000004,
-                    "lon": 12.381210000000001
-                  },
-                  {
-                    "lat": 51.34713000000001,
-                    "lon": 12.382040000000002
-                  },
-                  {
-                    "lat": 51.350440000000006,
-                    "lon": 12.386370000000001
-                  },
-                  {
-                    "lat": 51.351710000000004,
-                    "lon": 12.38807
-                  },
-                  {
-                    "lat": 51.35183000000001,
-                    "lon": 12.388230000000002
-                  },
-                  {
-                    "lat": 51.352180000000004,
-                    "lon": 12.38868
-                  },
-                  {
-                    "lat": 51.352340000000005,
-                    "lon": 12.38887
-                  },
-                  {
-                    "lat": 51.35269,
-                    "lon": 12.38926
-                  },
-                  {
-                    "lat": 51.353060000000006,
-                    "lon": 12.389660000000001
-                  },
-                  {
-                    "lat": 51.35313000000001,
-                    "lon": 12.38973
-                  },
-                  {
-                    "lat": 51.35347,
-                    "lon": 12.39009
-                  },
-                  {
-                    "lat": 51.35421,
-                    "lon": 12.390880000000001
-                  },
-                  {
-                    "lat": 51.354580000000006,
-                    "lon": 12.391280000000002
-                  },
-                  {
-                    "lat": 51.355720000000005,
-                    "lon": 12.392640000000002
-                  },
-                  {
-                    "lat": 51.357490000000006,
-                    "lon": 12.394770000000001
-                  },
-                  {
-                    "lat": 51.357620000000004,
-                    "lon": 12.39492
-                  },
-                  {
-                    "lat": 51.35942000000001,
-                    "lon": 12.39709
-                  },
-                  {
-                    "lat": 51.360730000000004,
-                    "lon": 12.39864
-                  },
-                  {
-                    "lat": 51.360910000000004,
-                    "lon": 12.398850000000001
-                  },
-                  {
-                    "lat": 51.361290000000004,
-                    "lon": 12.399220000000001
-                  },
-                  {
-                    "lat": 51.36146,
-                    "lon": 12.399370000000001
-                  },
-                  {
-                    "lat": 51.361650000000004,
-                    "lon": 12.399510000000001
-                  },
-                  {
-                    "lat": 51.36245,
-                    "lon": 12.400110000000002
-                  },
-                  {
-                    "lat": 51.36301,
-                    "lon": 12.40052
-                  },
-                  {
-                    "lat": 51.363220000000005,
-                    "lon": 12.40066
-                  },
-                  {
-                    "lat": 51.363510000000005,
-                    "lon": 12.40085
-                  },
-                  {
-                    "lat": 51.363640000000004,
-                    "lon": 12.400910000000001
-                  },
-                  {
-                    "lat": 51.3639,
-                    "lon": 12.40103
-                  },
-                  {
-                    "lat": 51.36415,
-                    "lon": 12.40112
-                  },
-                  {
-                    "lat": 51.36415,
-                    "lon": 12.40112
-                  },
-                  {
-                    "lat": 51.36415,
-                    "lon": 12.40112
-                  },
-                  {
-                    "lat": 51.36444,
-                    "lon": 12.40121
-                  },
-                  {
-                    "lat": 51.36473,
-                    "lon": 12.40126
-                  },
-                  {
-                    "lat": 51.36496,
-                    "lon": 12.401280000000002
-                  },
-                  {
-                    "lat": 51.365280000000006,
-                    "lon": 12.401290000000001
-                  },
-                  {
-                    "lat": 51.36560000000001,
-                    "lon": 12.40126
-                  },
-                  {
-                    "lat": 51.36587,
-                    "lon": 12.40122
-                  },
-                  {
-                    "lat": 51.36614,
-                    "lon": 12.401140000000002
-                  },
-                  {
-                    "lat": 51.36634,
-                    "lon": 12.40108
-                  },
-                  {
-                    "lat": 51.36663,
-                    "lon": 12.400950000000002
-                  },
-                  {
-                    "lat": 51.36695,
-                    "lon": 12.400810000000002
-                  },
-                  {
-                    "lat": 51.368190000000006,
-                    "lon": 12.40018
-                  },
-                  {
-                    "lat": 51.36836,
-                    "lon": 12.400100000000002
-                  },
-                  {
-                    "lat": 51.36957,
-                    "lon": 12.399560000000001
-                  },
-                  {
-                    "lat": 51.36977,
-                    "lon": 12.39948
-                  },
-                  {
-                    "lat": 51.36994000000001,
-                    "lon": 12.39943
-                  },
-                  {
-                    "lat": 51.37022,
-                    "lon": 12.399370000000001
-                  },
-                  {
-                    "lat": 51.37033,
-                    "lon": 12.399350000000002
-                  },
-                  {
-                    "lat": 51.37057,
-                    "lon": 12.39933
-                  },
-                  {
-                    "lat": 51.370830000000005,
-                    "lon": 12.39934
-                  },
-                  {
-                    "lat": 51.371030000000005,
-                    "lon": 12.39938
-                  },
-                  {
-                    "lat": 51.371230000000004,
-                    "lon": 12.39944
-                  },
-                  {
-                    "lat": 51.371640000000006,
-                    "lon": 12.399590000000002
-                  },
-                  {
-                    "lat": 51.37182000000001,
-                    "lon": 12.399680000000002
-                  },
-                  {
-                    "lat": 51.372110000000006,
-                    "lon": 12.399880000000001
-                  },
-                  {
-                    "lat": 51.37223,
-                    "lon": 12.399980000000001
-                  },
-                  {
-                    "lat": 51.37239,
-                    "lon": 12.400120000000001
-                  },
-                  {
-                    "lat": 51.372550000000004,
-                    "lon": 12.40027
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.40046
-                  },
-                  {
-                    "lat": 51.372870000000006,
-                    "lon": 12.40065
-                  },
-                  {
-                    "lat": 51.37299,
-                    "lon": 12.400820000000001
-                  },
-                  {
-                    "lat": 51.3731,
-                    "lon": 12.40098
-                  },
-                  {
-                    "lat": 51.37323000000001,
-                    "lon": 12.40121
-                  },
-                  {
-                    "lat": 51.37339000000001,
-                    "lon": 12.40154
-                  },
-                  {
-                    "lat": 51.373490000000004,
-                    "lon": 12.40177
-                  },
-                  {
-                    "lat": 51.37359000000001,
-                    "lon": 12.40201
-                  },
-                  {
-                    "lat": 51.37369,
-                    "lon": 12.4023
-                  },
-                  {
-                    "lat": 51.37379000000001,
-                    "lon": 12.40258
-                  },
-                  {
-                    "lat": 51.373940000000005,
-                    "lon": 12.403110000000002
-                  },
-                  {
-                    "lat": 51.374050000000004,
-                    "lon": 12.403590000000001
-                  },
-                  {
-                    "lat": 51.37418,
-                    "lon": 12.404230000000002
-                  },
-                  {
-                    "lat": 51.37422,
-                    "lon": 12.404570000000001
-                  },
-                  {
-                    "lat": 51.37427,
-                    "lon": 12.405030000000002
-                  },
-                  {
-                    "lat": 51.374300000000005,
-                    "lon": 12.405330000000001
-                  },
-                  {
-                    "lat": 51.37431,
-                    "lon": 12.405590000000002
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.40591
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.406220000000001
-                  },
-                  {
-                    "lat": 51.374300000000005,
-                    "lon": 12.4068
-                  },
-                  {
-                    "lat": 51.37424000000001,
-                    "lon": 12.407490000000001
-                  },
-                  {
-                    "lat": 51.374210000000005,
-                    "lon": 12.40788
-                  },
-                  {
-                    "lat": 51.37382,
-                    "lon": 12.4121
-                  },
-                  {
-                    "lat": 51.37382,
-                    "lon": 12.4121
-                  },
-                  {
-                    "lat": 51.37373,
-                    "lon": 12.413110000000001
-                  },
-                  {
-                    "lat": 51.373630000000006,
-                    "lon": 12.41416
-                  },
-                  {
-                    "lat": 51.37323000000001,
-                    "lon": 12.418500000000002
-                  },
-                  {
-                    "lat": 51.37312000000001,
-                    "lon": 12.41975
-                  },
-                  {
-                    "lat": 51.37286,
-                    "lon": 12.422630000000002
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.424050000000001
-                  },
-                  {
-                    "lat": 51.37268,
-                    "lon": 12.424700000000001
-                  },
-                  {
-                    "lat": 51.372580000000006,
-                    "lon": 12.42562
-                  },
-                  {
-                    "lat": 51.372510000000005,
-                    "lon": 12.42622
-                  },
-                  {
-                    "lat": 51.37239,
-                    "lon": 12.42706
-                  },
-                  {
-                    "lat": 51.37228,
-                    "lon": 12.427760000000001
-                  },
-                  {
-                    "lat": 51.372080000000004,
-                    "lon": 12.428790000000001
-                  },
-                  {
-                    "lat": 51.371970000000005,
-                    "lon": 12.429440000000001
-                  },
-                  {
-                    "lat": 51.371750000000006,
-                    "lon": 12.430470000000001
-                  },
-                  {
-                    "lat": 51.37167,
-                    "lon": 12.43078
-                  },
-                  {
-                    "lat": 51.37167,
-                    "lon": 12.43078
-                  },
-                  {
-                    "lat": 51.37153000000001,
-                    "lon": 12.43139
-                  },
-                  {
-                    "lat": 51.37138,
-                    "lon": 12.431970000000002
-                  },
-                  {
-                    "lat": 51.370940000000004,
-                    "lon": 12.433980000000002
-                  },
-                  {
-                    "lat": 51.37051,
-                    "lon": 12.43585
-                  },
-                  {
-                    "lat": 51.370360000000005,
-                    "lon": 12.436670000000001
-                  },
-                  {
-                    "lat": 51.37028,
-                    "lon": 12.43701
-                  },
-                  {
-                    "lat": 51.37017,
-                    "lon": 12.437410000000002
-                  },
-                  {
-                    "lat": 51.370000000000005,
-                    "lon": 12.43791
-                  },
-                  {
-                    "lat": 51.36981,
-                    "lon": 12.438410000000001
-                  },
-                  {
-                    "lat": 51.36957,
-                    "lon": 12.43903
-                  },
-                  {
-                    "lat": 51.3693,
-                    "lon": 12.439660000000002
-                  },
-                  {
-                    "lat": 51.369080000000004,
-                    "lon": 12.440140000000001
-                  },
-                  {
-                    "lat": 51.36838,
-                    "lon": 12.441640000000001
-                  },
-                  {
-                    "lat": 51.368140000000004,
-                    "lon": 12.442160000000001
-                  },
-                  {
-                    "lat": 51.36787,
-                    "lon": 12.442730000000001
-                  },
-                  {
-                    "lat": 51.36697,
-                    "lon": 12.44467
-                  },
-                  {
-                    "lat": 51.36648,
-                    "lon": 12.44574
-                  },
-                  {
-                    "lat": 51.366290000000006,
-                    "lon": 12.44621
-                  },
-                  {
-                    "lat": 51.366170000000004,
-                    "lon": 12.44658
-                  },
-                  {
-                    "lat": 51.36605,
-                    "lon": 12.446980000000002
-                  },
-                  {
-                    "lat": 51.36598000000001,
-                    "lon": 12.4473
-                  },
-                  {
-                    "lat": 51.365880000000004,
-                    "lon": 12.447980000000001
-                  },
-                  {
-                    "lat": 51.365840000000006,
-                    "lon": 12.448350000000001
-                  },
-                  {
-                    "lat": 51.36582000000001,
-                    "lon": 12.4487
-                  },
-                  {
-                    "lat": 51.36581,
-                    "lon": 12.449090000000002
-                  },
-                  {
-                    "lat": 51.36583,
-                    "lon": 12.449530000000001
-                  },
-                  {
-                    "lat": 51.365840000000006,
-                    "lon": 12.449660000000002
-                  },
-                  {
-                    "lat": 51.36589000000001,
-                    "lon": 12.45011
-                  },
-                  {
-                    "lat": 51.36592,
-                    "lon": 12.450380000000001
-                  },
-                  {
-                    "lat": 51.365970000000004,
-                    "lon": 12.450650000000001
-                  },
-                  {
-                    "lat": 51.3661,
-                    "lon": 12.451220000000001
-                  },
-                  {
-                    "lat": 51.366170000000004,
-                    "lon": 12.45147
-                  },
-                  {
-                    "lat": 51.36634,
-                    "lon": 12.452000000000002
-                  },
-                  {
-                    "lat": 51.366580000000006,
-                    "lon": 12.45264
-                  },
-                  {
-                    "lat": 51.367450000000005,
-                    "lon": 12.454910000000002
-                  },
-                  {
-                    "lat": 51.36751,
-                    "lon": 12.455060000000001
-                  },
-                  {
-                    "lat": 51.36806000000001,
-                    "lon": 12.45667
-                  },
-                  {
-                    "lat": 51.36867,
-                    "lon": 12.45832
-                  },
-                  {
-                    "lat": 51.368950000000005,
-                    "lon": 12.459040000000002
-                  },
-                  {
-                    "lat": 51.36932,
-                    "lon": 12.459980000000002
-                  },
-                  {
-                    "lat": 51.36932,
-                    "lon": 12.459990000000001
-                  },
-                  {
-                    "lat": 51.36932,
-                    "lon": 12.459990000000001
-                  },
-                  {
-                    "lat": 51.37236000000001,
-                    "lon": 12.4677
-                  },
-                  {
-                    "lat": 51.37312000000001,
-                    "lon": 12.46963
-                  },
-                  {
-                    "lat": 51.37595,
-                    "lon": 12.4768
-                  },
-                  {
-                    "lat": 51.376090000000005,
-                    "lon": 12.47714
-                  },
-                  {
-                    "lat": 51.378980000000006,
-                    "lon": 12.4845
-                  }
-                ],
-                "length": 173
-              },
-              "steps": [],
-              "routeShortName": "S4",
-              "routeLongName": "S-Bahn S4",
-              "wheelchairAccessible": 1,
-              "duration": 1140,
-              "alerts": [],
-              "departureDelayedTime": 1740063180000,
-              "arrivalDelayedTime": 1740064320000,
-              "departureDelayedTimeHHMM": "15:53",
-              "arrivalDelayedTimeHHMM": "16:12",
-              "startTimeHHMM": "15:53",
-              "endTimeHHMM": "16:12",
-              "cancelled": false,
-              "wheelchairBoardingVehicle": null
-            },
-            {
-              "startTime": 1740064320000,
-              "endTime": 1740065040000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 816,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Taucha (Leipzig)",
-                "stopId": "8013093",
-                "lon": 12.484471,
-                "lat": 51.379017,
-                "arrival": 1740064320000,
-                "departure": 1740064320000,
-                "zoneId": "168",
-                "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740064320000,
-                "arrivalDelayedTime": 1740064320000,
-                "departureDelayedTimeHHMM": "16:12",
-                "arrivalDelayedTimeHHMM": "16:12",
-                "arrivalHHMM": "16:12",
-                "departureHHMM": "16:12",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Destination",
-                "lon": 12.48922,
-                "lat": 51.37435,
-                "arrival": 1740065040000,
-                "departureDelayedTime": 1740065040000,
-                "arrivalDelayedTime": 1740065040000,
-                "arrivalDelayedTimeHHMM": "16:24",
-                "arrivalHHMM": "16:24",
-                "departureHHMM": "16:24",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.37901,
-                    "lon": 12.484470000000002
-                  },
-                  {
-                    "lat": 51.37903000000001,
-                    "lon": 12.48445
-                  },
-                  {
-                    "lat": 51.37924,
-                    "lon": 12.484990000000002
-                  },
-                  {
-                    "lat": 51.379250000000006,
-                    "lon": 12.48498
-                  },
-                  {
-                    "lat": 51.379340000000006,
-                    "lon": 12.48521
-                  },
-                  {
-                    "lat": 51.379360000000005,
-                    "lon": 12.485190000000001
-                  },
-                  {
-                    "lat": 51.37933,
-                    "lon": 12.48512
-                  },
-                  {
-                    "lat": 51.37921000000001,
-                    "lon": 12.485230000000001
-                  },
-                  {
-                    "lat": 51.37919,
-                    "lon": 12.48526
-                  },
-                  {
-                    "lat": 51.379180000000005,
-                    "lon": 12.48529
-                  },
-                  {
-                    "lat": 51.379160000000006,
-                    "lon": 12.48545
-                  },
-                  {
-                    "lat": 51.379160000000006,
-                    "lon": 12.48558
-                  },
-                  {
-                    "lat": 51.379160000000006,
-                    "lon": 12.48573
-                  },
-                  {
-                    "lat": 51.37912000000001,
-                    "lon": 12.485790000000001
-                  },
-                  {
-                    "lat": 51.37894000000001,
-                    "lon": 12.485970000000002
-                  },
-                  {
-                    "lat": 51.37903000000001,
-                    "lon": 12.48619
-                  },
-                  {
-                    "lat": 51.37897,
-                    "lon": 12.48629
-                  },
-                  {
-                    "lat": 51.378420000000006,
-                    "lon": 12.4868
-                  },
-                  {
-                    "lat": 51.378350000000005,
-                    "lon": 12.48685
-                  },
-                  {
-                    "lat": 51.378220000000006,
-                    "lon": 12.486960000000002
-                  },
-                  {
-                    "lat": 51.378080000000004,
-                    "lon": 12.487100000000002
-                  },
-                  {
-                    "lat": 51.37776,
-                    "lon": 12.487400000000001
-                  },
-                  {
-                    "lat": 51.37726000000001,
-                    "lon": 12.487850000000002
-                  },
-                  {
-                    "lat": 51.37722,
-                    "lon": 12.48789
-                  },
-                  {
-                    "lat": 51.37716,
-                    "lon": 12.487940000000002
-                  },
-                  {
-                    "lat": 51.377120000000005,
-                    "lon": 12.48783
-                  },
-                  {
-                    "lat": 51.37708000000001,
-                    "lon": 12.48788
-                  },
-                  {
-                    "lat": 51.377030000000005,
-                    "lon": 12.48792
-                  },
-                  {
-                    "lat": 51.376900000000006,
-                    "lon": 12.488040000000002
-                  },
-                  {
-                    "lat": 51.37624,
-                    "lon": 12.488660000000001
-                  },
-                  {
-                    "lat": 51.375620000000005,
-                    "lon": 12.489230000000001
-                  },
-                  {
-                    "lat": 51.375600000000006,
-                    "lon": 12.489260000000002
-                  },
-                  {
-                    "lat": 51.37559,
-                    "lon": 12.489260000000002
-                  },
-                  {
-                    "lat": 51.37541,
-                    "lon": 12.48943
-                  },
-                  {
-                    "lat": 51.37505,
-                    "lon": 12.48845
-                  },
-                  {
-                    "lat": 51.374930000000006,
-                    "lon": 12.488560000000001
-                  },
-                  {
-                    "lat": 51.37489000000001,
-                    "lon": 12.48863
-                  },
-                  {
-                    "lat": 51.37436,
-                    "lon": 12.489120000000002
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.489160000000002
-                  }
-                ],
-                "length": 39
-              },
-              "steps": [
-                {
-                  "distance": 46,
-                  "relativeDirection": "DEPART",
-                  "streetName": "Taucha (Leipzig)",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4844547,
-                  "lat": 51.3790332
-                },
-                {
-                  "distance": 22,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4849877,
-                  "lat": 51.3792561
-                },
-                {
-                  "distance": 58,
-                  "relativeDirection": "HARD_LEFT",
-                  "streetName": "underpass",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.4851939,
-                  "lat": 51.3793657
-                },
-                {
-                  "distance": 30,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Bahnhofstraße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4857308,
-                  "lat": 51.3791677
-                },
-                {
-                  "distance": 19,
-                  "relativeDirection": "LEFT",
-                  "streetName": "Weststraße",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4859759,
-                  "lat": 51.3789482
-                },
-                {
-                  "distance": 242,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Südstraße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4861973,
-                  "lat": 51.3790364
-                },
-                {
-                  "distance": 9,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Leipziger Straße",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.4879439,
-                  "lat": 51.377163
-                },
-                {
-                  "distance": 220,
-                  "relativeDirection": "LEFT",
-                  "streetName": "Karl-Marx-Straße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4878382,
-                  "lat": 51.3771249
-                },
-                {
-                  "distance": 79,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Friedrich-Engels-Straße",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.4894307,
-                  "lat": 51.3754185
-                },
-                {
-                  "distance": 95,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4884558,
-                  "lat": 51.3750563,
-                  "alerts": []
-                }
-              ],
-              "alerts": [],
-              "rentedBike": false,
-              "duration": 720,
-              "departureDelayedTime": 1740064320000,
-              "arrivalDelayedTime": 1740065040000,
-              "departureDelayedTimeHHMM": "16:12",
-              "arrivalDelayedTimeHHMM": "16:24",
-              "startTimeHHMM": "16:12",
-              "endTimeHHMM": "16:24",
-              "cancelled": false
-            }
-          ],
-          "otpVersion": "2.1",
-          "startTimeHHMM": "15:49",
-          "endTimeHHMM": "16:23",
-          "durationHHMM": "00:35",
-          "zoneInfo": {
-            "zones": [
-              "110",
-              "168"
-            ],
-            "orderedZones": [
-              "110",
-              "168"
-            ],
-            "shortDistanceTicket": false
-          },
-          "index": 2
-        },
-        {
-          "duration": 2640,
-          "startTime": 1740063540000,
-          "endTime": 1740066180000,
-          "walkTime": 840,
-          "transitTime": 1800,
-          "waitingTime": 0,
-          "walkDistance": 889,
-          "transfers": 1,
-          "legs": [
-            {
-              "startTime": 1740063540000,
-              "endTime": 1740063780000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 181,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Origin",
-                "lon": 12.3749,
-                "lat": 51.33394,
-                "departure": 1740063540000,
-                "departureDelayedTime": 1740063540000,
-                "departureDelayedTimeHHMM": "15:59",
-                "arrivalHHMM": "15:59",
-                "departureHHMM": "15:59",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Leipzig, Wilhelm-Leuschner-Platz (S-Bahn)",
-                "stopId": "8012202",
-                "lon": 12.375394,
-                "lat": 51.335396,
-                "arrival": 1740063780000,
-                "departure": 1740063780000,
-                "zoneId": "110",
-                "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740063780000,
-                "arrivalDelayedTime": 1740063780000,
-                "departureDelayedTimeHHMM": "16:03",
-                "arrivalDelayedTimeHHMM": "16:03",
-                "arrivalHHMM": "16:03",
-                "departureHHMM": "16:03",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.333940000000005,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.334010000000006,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.33402,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.33413,
-                    "lon": 12.375210000000001
-                  },
-                  {
-                    "lat": 51.334160000000004,
-                    "lon": 12.37536
-                  },
-                  {
-                    "lat": 51.3342,
-                    "lon": 12.37536
-                  },
-                  {
-                    "lat": 51.334250000000004,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.33431,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37541
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37545
-                  },
-                  {
-                    "lat": 51.334450000000004,
-                    "lon": 12.37551
-                  },
-                  {
-                    "lat": 51.33455000000001,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.33457000000001,
-                    "lon": 12.375610000000002
-                  },
-                  {
-                    "lat": 51.33467,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.334700000000005,
-                    "lon": 12.375630000000001
-                  },
-                  {
-                    "lat": 51.334860000000006,
-                    "lon": 12.375560000000002
-                  },
-                  {
-                    "lat": 51.33487,
-                    "lon": 12.375560000000002
-                  },
-                  {
-                    "lat": 51.33487,
-                    "lon": 12.375580000000001
-                  },
-                  {
-                    "lat": 51.334880000000005,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.335040000000006,
-                    "lon": 12.375530000000001
-                  },
-                  {
-                    "lat": 51.33514,
-                    "lon": 12.3755
-                  },
-                  {
-                    "lat": 51.33540000000001,
-                    "lon": 12.375440000000001
-                  },
-                  {
-                    "lat": 51.335390000000004,
-                    "lon": 12.375390000000001
-                  }
-                ],
-                "length": 24
-              },
-              "steps": [
-                {
-                  "distance": 22,
-                  "relativeDirection": "DEPART",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTH",
-                  "lon": 12.3752261,
-                  "lat": 51.3339461
-                },
-                {
-                  "distance": 64,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "path",
-                  "absoluteDirection": "EAST",
-                  "lon": 12.3752174,
-                  "lat": 51.3341368
-                },
-                {
-                  "distance": 17,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTH",
-                  "lon": 12.3756108,
-                  "lat": 51.3345729
-                },
-                {
-                  "distance": 62,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Leipzig Wilhelm-Leuschner-Platz",
-                  "absoluteDirection": "EAST",
-                  "lon": 12.3755624,
-                  "lat": 51.3348753
-                }
-              ],
-              "rentedBike": false,
-              "duration": 240,
-              "alerts": [],
-              "departureDelayedTime": 1740063540000,
-              "arrivalDelayedTime": 1740063780000,
-              "departureDelayedTimeHHMM": "15:59",
-              "arrivalDelayedTimeHHMM": "16:03",
-              "startTimeHHMM": "15:59",
-              "endTimeHHMM": "16:03",
-              "cancelled": false
-            },
-            {
-              "startTime": 1740063780000,
-              "endTime": 1740063960000,
-              "departureDelay": 60,
-              "arrivalDelay": 0,
-              "realTime": true,
-              "distance": 1252,
-              "mode": "SUBURB",
-              "transitLeg": true,
-              "route": "S6",
-              "agencyName": "800486",
-              "agencyUrl": "https://www.mdv.de/partner/",
-              "routeColor": "139640",
-              "routeType": 109,
-              "routeId": "800486S6",
-              "headsign": "Leipzig Hbf (tief)",
-              "agencyId": "1:800486",
-              "tripId": "2760",
-              "serviceDate": "20250220",
-              "from": {
-                "name": "Leipzig, Wilhelm-Leuschner-Platz (S-Bahn)",
-                "stopId": "8012202",
-                "lon": 12.375394,
-                "lat": 51.335396,
-                "arrival": 1740063780000,
-                "departure": 1740063780000,
-                "zoneId": "110",
-                "stopSequence": 18,
-                "wheelchairBoarding": 1,
-                "track": "2",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740063840000,
-                "arrivalDelayedTime": 1740063780000,
-                "departureDelayedTimeHHMM": "16:04",
-                "arrivalDelayedTimeHHMM": "16:03",
-                "arrivalHHMM": "16:03",
-                "departureHHMM": "16:03",
+                "departureDelayedTime": 1740670800000,
+                "arrivalDelayedTime": 1740670740000,
+                "departureDelayedTimeHHMM": "16:40",
+                "arrivalDelayedTimeHHMM": "16:39",
+                "arrivalHHMM": "16:39",
+                "departureHHMM": "16:39",
                 "arrivalDelay": 0,
                 "departureDelay": 60,
                 "cancelled": false
               },
-              "to": {
-                "name": "Leipzig, Hbf (tief) (S-Bahn)",
-                "stopId": "8098205",
-                "lon": 12.380428,
-                "lat": 51.345696,
-                "arrival": 1740063960000,
-                "departure": 1740063960000,
+              {
+                "name": "Leipzig, MDR (S-Bahn)",
+                "stopId": "8012187",
+                "lon": 12.386318,
+                "lat": 51.320067,
+                "arrival": 1740670860000,
+                "departure": 1740670860000,
                 "zoneId": "110",
+                "stopSequence": 17,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670920000,
+                "arrivalDelayedTime": 1740670860000,
+                "departureDelayedTimeHHMM": "16:42",
+                "arrivalDelayedTimeHHMM": "16:41",
+                "arrivalHHMM": "16:41",
+                "departureHHMM": "16:41",
+                "arrivalDelay": 0,
+                "departureDelay": 60,
+                "cancelled": false
+              },
+              {
+                "name": "Leipzig, Connewitz (S-Bahn)",
+                "stopId": "8010206",
+                "lon": 12.386313,
+                "lat": 51.300717,
+                "arrival": 1740671040000,
+                "departure": 1740671040000,
+                "zoneId": "110",
+                "stopSequence": 18,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671100000,
+                "arrivalDelayedTime": 1740671040000,
+                "departureDelayedTimeHHMM": "16:45",
+                "arrivalDelayedTimeHHMM": "16:44",
+                "arrivalHHMM": "16:44",
+                "departureHHMM": "16:44",
+                "arrivalDelay": 0,
+                "departureDelay": 60,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg Nord",
+                "stopId": "8012304",
+                "lon": 12.372204,
+                "lat": 51.287998,
+                "arrival": 1740671160000,
+                "departure": 1740671160000,
+                "zoneId": "110",
+                "stopSequence": 19,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671220000,
+                "arrivalDelayedTime": 1740671160000,
+                "departureDelayedTimeHHMM": "16:47",
+                "arrivalDelayedTimeHHMM": "16:46",
+                "arrivalHHMM": "16:46",
+                "departureHHMM": "16:46",
+                "arrivalDelay": 0,
+                "departureDelay": 60,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg",
+                "stopId": "8012308",
+                "lon": 12.372615,
+                "lat": 51.279029,
+                "arrival": 1740671280000,
+                "departure": 1740671280000,
+                "zoneId": "151",
                 "stopSequence": 20,
                 "wheelchairBoarding": 1,
-                "track": "2",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740063960000,
-                "arrivalDelayedTime": 1740063960000,
-                "departureDelayedTimeHHMM": "16:06",
-                "arrivalDelayedTimeHHMM": "16:06",
-                "arrivalHHMM": "16:06",
-                "departureHHMM": "16:06",
+                "departureDelayedTime": 1740671340000,
+                "arrivalDelayedTime": 1740671280000,
+                "departureDelayedTimeHHMM": "16:49",
+                "arrivalDelayedTimeHHMM": "16:48",
+                "arrivalHHMM": "16:48",
+                "departureHHMM": "16:48",
+                "arrivalDelay": 0,
+                "departureDelay": 60,
+                "cancelled": false
+              }
+            ],
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.345710000000004,
+                  "lon": 12.38038
+                },
+                {
+                  "lat": 51.345710000000004,
+                  "lon": 12.38038
+                },
+                {
+                  "lat": 51.34544,
+                  "lon": 12.380080000000001
+                },
+                {
+                  "lat": 51.344800000000006,
+                  "lon": 12.379380000000001
+                },
+                {
+                  "lat": 51.34452,
+                  "lon": 12.379000000000001
+                },
+                {
+                  "lat": 51.344240000000006,
+                  "lon": 12.37856
+                },
+                {
+                  "lat": 51.34393000000001,
+                  "lon": 12.378070000000001
+                },
+                {
+                  "lat": 51.34344,
+                  "lon": 12.37724
+                },
+                {
+                  "lat": 51.342940000000006,
+                  "lon": 12.37644
+                },
+                {
+                  "lat": 51.342670000000005,
+                  "lon": 12.376050000000001
+                },
+                {
+                  "lat": 51.34241,
+                  "lon": 12.3757
+                },
+                {
+                  "lat": 51.34212,
+                  "lon": 12.37536
+                },
+                {
+                  "lat": 51.34174,
+                  "lon": 12.37503
+                },
+                {
+                  "lat": 51.341370000000005,
+                  "lon": 12.374780000000001
+                },
+                {
+                  "lat": 51.340900000000005,
+                  "lon": 12.374550000000001
+                },
+                {
+                  "lat": 51.34071,
+                  "lon": 12.374490000000002
+                },
+                {
+                  "lat": 51.340650000000004,
+                  "lon": 12.37448
+                },
+                {
+                  "lat": 51.340650000000004,
+                  "lon": 12.37448
+                },
+                {
+                  "lat": 51.34033,
+                  "lon": 12.374390000000002
+                },
+                {
+                  "lat": 51.33973,
+                  "lon": 12.37432
+                },
+                {
+                  "lat": 51.33917,
+                  "lon": 12.374350000000002
+                },
+                {
+                  "lat": 51.33818,
+                  "lon": 12.374460000000001
+                },
+                {
+                  "lat": 51.33775000000001,
+                  "lon": 12.37456
+                },
+                {
+                  "lat": 51.3374,
+                  "lon": 12.374690000000001
+                },
+                {
+                  "lat": 51.336920000000006,
+                  "lon": 12.374950000000002
+                },
+                {
+                  "lat": 51.336670000000005,
+                  "lon": 12.375020000000001
+                },
+                {
+                  "lat": 51.335420000000006,
+                  "lon": 12.37523
+                },
+                {
+                  "lat": 51.33538,
+                  "lon": 12.375240000000002
+                },
+                {
+                  "lat": 51.33538,
+                  "lon": 12.375240000000002
+                },
+                {
+                  "lat": 51.335100000000004,
+                  "lon": 12.37531
+                },
+                {
+                  "lat": 51.33485,
+                  "lon": 12.3754
+                },
+                {
+                  "lat": 51.33466000000001,
+                  "lon": 12.375490000000001
+                },
+                {
+                  "lat": 51.33451,
+                  "lon": 12.375580000000001
+                },
+                {
+                  "lat": 51.334320000000005,
+                  "lon": 12.375710000000002
+                },
+                {
+                  "lat": 51.33419000000001,
+                  "lon": 12.375810000000001
+                },
+                {
+                  "lat": 51.333740000000006,
+                  "lon": 12.37625
+                },
+                {
+                  "lat": 51.333380000000005,
+                  "lon": 12.37663
+                },
+                {
+                  "lat": 51.33303,
+                  "lon": 12.3771
+                },
+                {
+                  "lat": 51.331790000000005,
+                  "lon": 12.37911
+                },
+                {
+                  "lat": 51.330960000000005,
+                  "lon": 12.38029
+                },
+                {
+                  "lat": 51.33046,
+                  "lon": 12.380770000000002
+                },
+                {
+                  "lat": 51.330180000000006,
+                  "lon": 12.381010000000002
+                },
+                {
+                  "lat": 51.32972,
+                  "lon": 12.38133
+                },
+                {
+                  "lat": 51.3295,
+                  "lon": 12.381440000000001
+                },
+                {
+                  "lat": 51.32925,
+                  "lon": 12.381570000000002
+                },
+                {
+                  "lat": 51.32925,
+                  "lon": 12.381570000000002
+                },
+                {
+                  "lat": 51.328880000000005,
+                  "lon": 12.381760000000002
+                },
+                {
+                  "lat": 51.32846000000001,
+                  "lon": 12.382010000000001
+                },
+                {
+                  "lat": 51.32589,
+                  "lon": 12.383280000000001
+                },
+                {
+                  "lat": 51.32511,
+                  "lon": 12.383650000000001
+                },
+                {
+                  "lat": 51.32305,
+                  "lon": 12.38469
+                },
+                {
+                  "lat": 51.32005,
+                  "lon": 12.38624
+                },
+                {
+                  "lat": 51.32005,
+                  "lon": 12.38624
+                },
+                {
+                  "lat": 51.31992,
+                  "lon": 12.386310000000002
+                },
+                {
+                  "lat": 51.31732,
+                  "lon": 12.38765
+                },
+                {
+                  "lat": 51.31720000000001,
+                  "lon": 12.38771
+                },
+                {
+                  "lat": 51.3164,
+                  "lon": 12.38813
+                },
+                {
+                  "lat": 51.31541000000001,
+                  "lon": 12.38864
+                },
+                {
+                  "lat": 51.3147,
+                  "lon": 12.38902
+                },
+                {
+                  "lat": 51.31416,
+                  "lon": 12.38929
+                },
+                {
+                  "lat": 51.31342,
+                  "lon": 12.389640000000002
+                },
+                {
+                  "lat": 51.31288000000001,
+                  "lon": 12.38986
+                },
+                {
+                  "lat": 51.31195,
+                  "lon": 12.39015
+                },
+                {
+                  "lat": 51.311510000000006,
+                  "lon": 12.390250000000002
+                },
+                {
+                  "lat": 51.310880000000004,
+                  "lon": 12.390350000000002
+                },
+                {
+                  "lat": 51.310230000000004,
+                  "lon": 12.39043
+                },
+                {
+                  "lat": 51.309180000000005,
+                  "lon": 12.39052
+                },
+                {
+                  "lat": 51.30888,
+                  "lon": 12.390530000000002
+                },
+                {
+                  "lat": 51.308530000000005,
+                  "lon": 12.39052
+                },
+                {
+                  "lat": 51.308020000000006,
+                  "lon": 12.39047
+                },
+                {
+                  "lat": 51.307860000000005,
+                  "lon": 12.390440000000002
+                },
+                {
+                  "lat": 51.30762000000001,
+                  "lon": 12.390390000000002
+                },
+                {
+                  "lat": 51.3074,
+                  "lon": 12.39033
+                },
+                {
+                  "lat": 51.307140000000004,
+                  "lon": 12.390250000000002
+                },
+                {
+                  "lat": 51.30687,
+                  "lon": 12.39014
+                },
+                {
+                  "lat": 51.305690000000006,
+                  "lon": 12.389660000000001
+                },
+                {
+                  "lat": 51.305200000000006,
+                  "lon": 12.38944
+                },
+                {
+                  "lat": 51.30456,
+                  "lon": 12.389130000000002
+                },
+                {
+                  "lat": 51.304010000000005,
+                  "lon": 12.38882
+                },
+                {
+                  "lat": 51.303470000000004,
+                  "lon": 12.388480000000001
+                },
+                {
+                  "lat": 51.30306,
+                  "lon": 12.388200000000001
+                },
+                {
+                  "lat": 51.30254000000001,
+                  "lon": 12.3878
+                },
+                {
+                  "lat": 51.302260000000004,
+                  "lon": 12.387580000000002
+                },
+                {
+                  "lat": 51.30199,
+                  "lon": 12.387350000000001
+                },
+                {
+                  "lat": 51.30147,
+                  "lon": 12.386880000000001
+                },
+                {
+                  "lat": 51.300990000000006,
+                  "lon": 12.386410000000001
+                },
+                {
+                  "lat": 51.30077000000001,
+                  "lon": 12.386180000000001
+                },
+                {
+                  "lat": 51.30077000000001,
+                  "lon": 12.386180000000001
+                },
+                {
+                  "lat": 51.30073,
+                  "lon": 12.38615
+                },
+                {
+                  "lat": 51.300340000000006,
+                  "lon": 12.385720000000001
+                },
+                {
+                  "lat": 51.299870000000006,
+                  "lon": 12.38516
+                },
+                {
+                  "lat": 51.299670000000006,
+                  "lon": 12.384900000000002
+                },
+                {
+                  "lat": 51.29943,
+                  "lon": 12.384580000000001
+                },
+                {
+                  "lat": 51.299350000000004,
+                  "lon": 12.38446
+                },
+                {
+                  "lat": 51.29892,
+                  "lon": 12.383820000000002
+                },
+                {
+                  "lat": 51.29874,
+                  "lon": 12.38352
+                },
+                {
+                  "lat": 51.29793,
+                  "lon": 12.382190000000001
+                },
+                {
+                  "lat": 51.295950000000005,
+                  "lon": 12.37897
+                },
+                {
+                  "lat": 51.29549,
+                  "lon": 12.378240000000002
+                },
+                {
+                  "lat": 51.29507,
+                  "lon": 12.377630000000002
+                },
+                {
+                  "lat": 51.294830000000005,
+                  "lon": 12.377310000000001
+                },
+                {
+                  "lat": 51.29431,
+                  "lon": 12.376650000000001
+                },
+                {
+                  "lat": 51.293620000000004,
+                  "lon": 12.375860000000001
+                },
+                {
+                  "lat": 51.29309000000001,
+                  "lon": 12.37532
+                },
+                {
+                  "lat": 51.29262000000001,
+                  "lon": 12.374880000000001
+                },
+                {
+                  "lat": 51.292210000000004,
+                  "lon": 12.374500000000001
+                },
+                {
+                  "lat": 51.29186000000001,
+                  "lon": 12.374210000000001
+                },
+                {
+                  "lat": 51.2916,
+                  "lon": 12.374
+                },
+                {
+                  "lat": 51.29126,
+                  "lon": 12.373750000000001
+                },
+                {
+                  "lat": 51.290760000000006,
+                  "lon": 12.3734
+                },
+                {
+                  "lat": 51.29052,
+                  "lon": 12.37325
+                },
+                {
+                  "lat": 51.29019,
+                  "lon": 12.373050000000001
+                },
+                {
+                  "lat": 51.289730000000006,
+                  "lon": 12.372800000000002
+                },
+                {
+                  "lat": 51.28887,
+                  "lon": 12.372370000000002
+                },
+                {
+                  "lat": 51.288470000000004,
+                  "lon": 12.372200000000001
+                },
+                {
+                  "lat": 51.28810000000001,
+                  "lon": 12.37207
+                },
+                {
+                  "lat": 51.28801000000001,
+                  "lon": 12.37204
+                },
+                {
+                  "lat": 51.28801000000001,
+                  "lon": 12.37204
+                },
+                {
+                  "lat": 51.28781000000001,
+                  "lon": 12.37198
+                },
+                {
+                  "lat": 51.28723,
+                  "lon": 12.371820000000001
+                },
+                {
+                  "lat": 51.28669000000001,
+                  "lon": 12.371720000000002
+                },
+                {
+                  "lat": 51.2862,
+                  "lon": 12.37165
+                },
+                {
+                  "lat": 51.28551,
+                  "lon": 12.371590000000001
+                },
+                {
+                  "lat": 51.28508,
+                  "lon": 12.371580000000002
+                },
+                {
+                  "lat": 51.28461,
+                  "lon": 12.371580000000002
+                },
+                {
+                  "lat": 51.28414,
+                  "lon": 12.3716
+                },
+                {
+                  "lat": 51.28358000000001,
+                  "lon": 12.37165
+                },
+                {
+                  "lat": 51.28302000000001,
+                  "lon": 12.371730000000001
+                },
+                {
+                  "lat": 51.28094,
+                  "lon": 12.372140000000002
+                },
+                {
+                  "lat": 51.280060000000006,
+                  "lon": 12.37226
+                },
+                {
+                  "lat": 51.27958,
+                  "lon": 12.37236
+                },
+                {
+                  "lat": 51.27901000000001,
+                  "lon": 12.372480000000001
+                },
+                {
+                  "lat": 51.27901000000001,
+                  "lon": 12.372480000000001
+                },
+                {
+                  "lat": 51.27901000000001,
+                  "lon": 12.372480000000001
+                },
+                {
+                  "lat": 51.278620000000004,
+                  "lon": 12.372570000000001
+                },
+                {
+                  "lat": 51.277860000000004,
+                  "lon": 12.37273
+                },
+                {
+                  "lat": 51.27751000000001,
+                  "lon": 12.372810000000001
+                },
+                {
+                  "lat": 51.27601000000001,
+                  "lon": 12.373240000000001
+                },
+                {
+                  "lat": 51.275360000000006,
+                  "lon": 12.373420000000001
+                },
+                {
+                  "lat": 51.26718,
+                  "lon": 12.375240000000002
+                },
+                {
+                  "lat": 51.26594000000001,
+                  "lon": 12.375490000000001
+                },
+                {
+                  "lat": 51.264880000000005,
+                  "lon": 12.375660000000002
+                },
+                {
+                  "lat": 51.26395,
+                  "lon": 12.37584
+                },
+                {
+                  "lat": 51.26361000000001,
+                  "lon": 12.37592
+                },
+                {
+                  "lat": 51.262600000000006,
+                  "lon": 12.376190000000001
+                },
+                {
+                  "lat": 51.26245,
+                  "lon": 12.376230000000001
+                }
+              ],
+              "length": 146
+            },
+            "steps": [],
+            "routeShortName": "S4",
+            "routeLongName": "S-Bahn S4",
+            "wheelchairAccessible": 1,
+            "duration": 960,
+            "alerts": [],
+            "departureDelayedTime": 1740670500000,
+            "arrivalDelayedTime": 1740671460000,
+            "departureDelayedTimeHHMM": "16:35",
+            "arrivalDelayedTimeHHMM": "16:51",
+            "startTimeHHMM": "16:34",
+            "endTimeHHMM": "16:50",
+            "cancelled": false,
+            "wheelchairBoardingVehicle": null
+          },
+          {
+            "startTime": 1740671400000,
+            "endTime": 1740672720000,
+            "departureDelay": 60,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 97,
+            "mode": "WALK",
+            "transitLeg": false,
+            "route": "",
+            "from": {
+              "name": "Markkleeberg-Großstädteln",
+              "stopId": "8010228",
+              "lon": 12.376329,
+              "lat": 51.262469,
+              "arrival": 1740671400000,
+              "departure": 1740671400000,
+              "zoneId": "151",
+              "wheelchairBoarding": 1,
+              "departureDelayedTime": 1740671460000,
+              "arrivalDelayedTime": 1740671460000,
+              "departureDelayedTimeHHMM": "16:51",
+              "arrivalDelayedTimeHHMM": "16:51",
+              "arrivalHHMM": "16:50",
+              "departureHHMM": "16:50",
+              "arrivalDelay": 60,
+              "departureDelay": 60,
+              "cancelled": false
+            },
+            "to": {
+              "name": "Großstädteln (Markkleeberg), S-Bahnhof/ZöbigkerStr.",
+              "stopId": "0012997",
+              "lon": 12.377051,
+              "lat": 51.262094,
+              "arrival": 1740672720000,
+              "departure": 1740672720000,
+              "zoneId": "151",
+              "wheelchairBoarding": 0,
+              "departureDelayedTime": 1740672720000,
+              "arrivalDelayedTime": 1740672720000,
+              "departureDelayedTimeHHMM": "17:12",
+              "arrivalDelayedTimeHHMM": "17:12",
+              "arrivalHHMM": "17:12",
+              "departureHHMM": "17:12",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.262460000000004,
+                  "lon": 12.376320000000002
+                },
+                {
+                  "lat": 51.26247000000001,
+                  "lon": 12.37639
+                },
+                {
+                  "lat": 51.262260000000005,
+                  "lon": 12.37644
+                },
+                {
+                  "lat": 51.262260000000005,
+                  "lon": 12.376410000000002
+                },
+                {
+                  "lat": 51.262260000000005,
+                  "lon": 12.376370000000001
+                },
+                {
+                  "lat": 51.26223,
+                  "lon": 12.376370000000001
+                },
+                {
+                  "lat": 51.26209000000001,
+                  "lon": 12.3764
+                },
+                {
+                  "lat": 51.26207,
+                  "lon": 12.376410000000002
+                },
+                {
+                  "lat": 51.26205,
+                  "lon": 12.376410000000002
+                },
+                {
+                  "lat": 51.26207,
+                  "lon": 12.37662
+                },
+                {
+                  "lat": 51.26209000000001,
+                  "lon": 12.37681
+                },
+                {
+                  "lat": 51.262100000000004,
+                  "lon": 12.376940000000001
+                },
+                {
+                  "lat": 51.26209000000001,
+                  "lon": 12.376980000000001
+                },
+                {
+                  "lat": 51.262080000000005,
+                  "lon": 12.376990000000001
+                },
+                {
+                  "lat": 51.262080000000005,
+                  "lon": 12.37705
+                },
+                {
+                  "lat": 51.26209000000001,
+                  "lon": 12.37705
+                }
+              ],
+              "length": 16
+            },
+            "steps": [
+              {
+                "distance": 24,
+                "relativeDirection": "DEPART",
+                "streetName": "Markkleeberg-Großstädteln",
+                "absoluteDirection": "SOUTH",
+                "lon": 12.3763955,
+                "lat": 51.262475
+              },
+              {
+                "distance": 69,
+                "relativeDirection": "RIGHT",
+                "streetName": "path",
+                "absoluteDirection": "WEST",
+                "lon": 12.3764433,
+                "lat": 51.2622693
+              },
+              {
+                "distance": 6,
+                "relativeDirection": "RIGHT",
+                "streetName": "Großstädteln, S-Bahnhof",
+                "absoluteDirection": "SOUTH",
+                "lon": 12.3769891,
+                "lat": 51.2620968
+              }
+            ],
+            "rentedBike": false,
+            "duration": 1260,
+            "alerts": [],
+            "departureDelayedTime": 1740671460000,
+            "arrivalDelayedTime": 1740672720000,
+            "departureDelayedTimeHHMM": "16:51",
+            "arrivalDelayedTimeHHMM": "17:12",
+            "startTimeHHMM": "16:50",
+            "endTimeHHMM": "17:12",
+            "cancelled": false,
+            "durationOriginal": 1320
+          },
+          {
+            "startTime": 1740672720000,
+            "endTime": 1740672960000,
+            "departureDelay": 0,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 2093,
+            "mode": "BUS",
+            "transitLeg": true,
+            "route": "106",
+            "agencyName": "Regionalbus Leipzig GmbH",
+            "agencyUrl": "https://www.mdv.de/partner/",
+            "routeColor": "9b2986",
+            "routeType": 3,
+            "routeId": "RL____106",
+            "tripShortName": "106053",
+            "headsign": "Leipzig, Probstheida, Buswendestelle",
+            "agencyId": "1:00704",
+            "tripId": "61006",
+            "serviceDate": "20250227",
+            "from": {
+              "name": "Großstädteln (Markkleeberg), S-Bahnhof/ZöbigkerStr.",
+              "stopId": "0012997",
+              "lon": 12.377051,
+              "lat": 51.262094,
+              "arrival": 1740672720000,
+              "departure": 1740672720000,
+              "zoneId": "151",
+              "stopSequence": 1,
+              "wheelchairBoarding": 0,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740672720000,
+              "arrivalDelayedTime": 1740672720000,
+              "departureDelayedTimeHHMM": "17:12",
+              "arrivalDelayedTimeHHMM": "17:12",
+              "arrivalHHMM": "17:12",
+              "departureHHMM": "17:12",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "to": {
+              "name": "Zöbigker (Markkleeberg), Schmiede",
+              "stopId": "0012987",
+              "lon": 12.351914,
+              "lat": 51.26663,
+              "arrival": 1740672960000,
+              "departure": 1740672960000,
+              "zoneId": "151",
+              "stopSequence": 5,
+              "wheelchairBoarding": 0,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740672960000,
+              "arrivalDelayedTime": 1740672960000,
+              "departureDelayedTimeHHMM": "17:16",
+              "arrivalDelayedTimeHHMM": "17:16",
+              "arrivalHHMM": "17:16",
+              "departureHHMM": "17:16",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "intermediateStops": [
+              {
+                "name": "Zöbigker (Markkleeberg), Meisenweg",
+                "stopId": "0012985",
+                "lon": 12.368028,
+                "lat": 51.262046,
+                "arrival": 1740672780000,
+                "departure": 1740672780000,
+                "zoneId": "151",
+                "stopSequence": 2,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672780000,
+                "arrivalDelayedTime": 1740672780000,
+                "departureDelayedTimeHHMM": "17:13",
+                "arrivalDelayedTimeHHMM": "17:13",
+                "arrivalHHMM": "17:13",
+                "departureHHMM": "17:13",
                 "arrivalDelay": 0,
                 "departureDelay": 0,
                 "cancelled": false
               },
-              "intermediateStops": [
-                {
-                  "name": "Leipzig, Markt (S-Bahn)",
-                  "stopId": "8012186",
-                  "lon": 12.374612,
-                  "lat": 51.34064,
-                  "arrival": 1740063840000,
-                  "departure": 1740063900000,
-                  "zoneId": "110",
-                  "stopSequence": 19,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740063960000,
-                  "arrivalDelayedTime": 1740063840000,
-                  "departureDelayedTimeHHMM": "16:06",
-                  "arrivalDelayedTimeHHMM": "16:04",
-                  "arrivalHHMM": "16:04",
-                  "departureHHMM": "16:05",
-                  "arrivalDelay": 0,
-                  "departureDelay": 60,
-                  "cancelled": false
-                }
-              ],
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.33540000000001,
-                    "lon": 12.37546
-                  },
-                  {
-                    "lat": 51.335440000000006,
-                    "lon": 12.37545
-                  },
-                  {
-                    "lat": 51.33637,
-                    "lon": 12.375280000000002
-                  },
-                  {
-                    "lat": 51.336830000000006,
-                    "lon": 12.37517
-                  },
-                  {
-                    "lat": 51.33695,
-                    "lon": 12.37513
-                  },
-                  {
-                    "lat": 51.337770000000006,
-                    "lon": 12.37475
-                  },
-                  {
-                    "lat": 51.338190000000004,
-                    "lon": 12.37465
-                  },
-                  {
-                    "lat": 51.33919,
-                    "lon": 12.374600000000001
-                  },
-                  {
-                    "lat": 51.339740000000006,
-                    "lon": 12.374540000000001
-                  },
-                  {
-                    "lat": 51.34033,
-                    "lon": 12.374600000000001
-                  },
-                  {
-                    "lat": 51.340630000000004,
-                    "lon": 12.374680000000001
-                  },
-                  {
-                    "lat": 51.340630000000004,
-                    "lon": 12.374680000000001
-                  },
-                  {
-                    "lat": 51.34069,
-                    "lon": 12.3747
-                  },
-                  {
-                    "lat": 51.340880000000006,
-                    "lon": 12.374780000000001
-                  },
-                  {
-                    "lat": 51.341330000000006,
-                    "lon": 12.375010000000001
-                  },
-                  {
-                    "lat": 51.341640000000005,
-                    "lon": 12.375240000000002
-                  },
-                  {
-                    "lat": 51.34194,
-                    "lon": 12.375490000000001
-                  },
-                  {
-                    "lat": 51.3423,
-                    "lon": 12.37588
-                  },
-                  {
-                    "lat": 51.342580000000005,
-                    "lon": 12.376220000000002
-                  },
-                  {
-                    "lat": 51.342850000000006,
-                    "lon": 12.37659
-                  },
-                  {
-                    "lat": 51.34386000000001,
-                    "lon": 12.378250000000001
-                  },
-                  {
-                    "lat": 51.34416,
-                    "lon": 12.3787
-                  },
-                  {
-                    "lat": 51.34443,
-                    "lon": 12.37911
-                  },
-                  {
-                    "lat": 51.344750000000005,
-                    "lon": 12.37953
-                  },
-                  {
-                    "lat": 51.345400000000005,
-                    "lon": 12.380180000000001
-                  }
-                ],
-                "length": 25
-              },
-              "steps": [],
-              "routeShortName": "S6",
-              "routeLongName": "S-Bahn S6",
-              "wheelchairAccessible": 1,
-              "duration": 180,
-              "alerts": [],
-              "departureDelayedTime": 1740063840000,
-              "arrivalDelayedTime": 1740063960000,
-              "departureDelayedTimeHHMM": "16:04",
-              "arrivalDelayedTimeHHMM": "16:06",
-              "startTimeHHMM": "16:03",
-              "endTimeHHMM": "16:06",
-              "cancelled": false,
-              "wheelchairBoardingVehicle": null
-            },
-            {
-              "startTime": 1740063960000,
-              "endTime": 1740064200000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 338,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Leipzig, Hbf (tief) (S-Bahn)",
-                "stopId": "8098205",
-                "lon": 12.380428,
-                "lat": 51.345696,
-                "arrival": 1740063960000,
-                "departure": 1740063960000,
-                "zoneId": "110",
-                "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740063960000,
-                "arrivalDelayedTime": 1740063960000,
-                "departureDelayedTimeHHMM": "16:06",
-                "arrivalDelayedTimeHHMM": "16:06",
-                "arrivalHHMM": "16:06",
-                "departureHHMM": "16:06",
+              {
+                "name": "Zöbigker (Markkleeberg), An der Harth",
+                "stopId": "0003850",
+                "lon": 12.365164,
+                "lat": 51.262471,
+                "arrival": 1740672840000,
+                "departure": 1740672840000,
+                "zoneId": "151",
+                "stopSequence": 3,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672840000,
+                "arrivalDelayedTime": 1740672840000,
+                "departureDelayedTimeHHMM": "17:14",
+                "arrivalDelayedTimeHHMM": "17:14",
+                "arrivalHHMM": "17:14",
+                "departureHHMM": "17:14",
                 "arrivalDelay": 0,
                 "departureDelay": 0,
                 "cancelled": false
               },
-              "to": {
-                "name": "Leipzig, Hauptbahnhof (Tram/Bus)",
-                "stopId": "0013000",
-                "lon": 12.380878,
-                "lat": 51.343754,
-                "arrival": 1740064200000,
-                "departure": 1740064200000,
-                "zoneId": "110",
-                "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740064200000,
-                "arrivalDelayedTime": 1740064200000,
-                "departureDelayedTimeHHMM": "16:10",
-                "arrivalDelayedTimeHHMM": "16:10",
-                "arrivalHHMM": "16:10",
-                "departureHHMM": "16:10",
+              {
+                "name": "Zöbigker (Markkleeberg), Holunderweg",
+                "stopId": "0012984",
+                "lon": 12.357989,
+                "lat": 51.263711,
+                "arrival": 1740672900000,
+                "departure": 1740672900000,
+                "zoneId": "151",
+                "stopSequence": 4,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672900000,
+                "arrivalDelayedTime": 1740672900000,
+                "departureDelayedTimeHHMM": "17:15",
+                "arrivalDelayedTimeHHMM": "17:15",
+                "arrivalHHMM": "17:15",
+                "departureHHMM": "17:15",
                 "arrivalDelay": 0,
                 "departureDelay": 0,
-                "cancelled": false,
-                "hafas_id": "1000102",
-                "hafas_name": "Hauptbahnhof (Steig B)"
-              },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.345690000000005,
-                    "lon": 12.38042
-                  },
-                  {
-                    "lat": 51.345690000000005,
-                    "lon": 12.38042
-                  },
-                  {
-                    "lat": 51.34548,
-                    "lon": 12.3802
-                  },
-                  {
-                    "lat": 51.345490000000005,
-                    "lon": 12.380180000000001
-                  },
-                  {
-                    "lat": 51.3455,
-                    "lon": 12.380160000000002
-                  },
-                  {
-                    "lat": 51.34496000000001,
-                    "lon": 12.37958
-                  },
-                  {
-                    "lat": 51.344800000000006,
-                    "lon": 12.3794
-                  },
-                  {
-                    "lat": 51.344620000000006,
-                    "lon": 12.37916
-                  },
-                  {
-                    "lat": 51.34460000000001,
-                    "lon": 12.3792
-                  },
-                  {
-                    "lat": 51.344590000000004,
-                    "lon": 12.37916
-                  },
-                  {
-                    "lat": 51.34447,
-                    "lon": 12.379010000000001
-                  },
-                  {
-                    "lat": 51.34443,
-                    "lon": 12.37902
-                  },
-                  {
-                    "lat": 51.34434,
-                    "lon": 12.3792
-                  },
-                  {
-                    "lat": 51.344390000000004,
-                    "lon": 12.37925
-                  },
-                  {
-                    "lat": 51.344370000000005,
-                    "lon": 12.379320000000002
-                  },
-                  {
-                    "lat": 51.34431000000001,
-                    "lon": 12.37944
-                  },
-                  {
-                    "lat": 51.34431000000001,
-                    "lon": 12.37945
-                  },
-                  {
-                    "lat": 51.34429,
-                    "lon": 12.379470000000001
-                  },
-                  {
-                    "lat": 51.344280000000005,
-                    "lon": 12.3795
-                  },
-                  {
-                    "lat": 51.344260000000006,
-                    "lon": 12.379550000000002
-                  },
-                  {
-                    "lat": 51.343990000000005,
-                    "lon": 12.3802
-                  },
-                  {
-                    "lat": 51.344010000000004,
-                    "lon": 12.380220000000001
-                  },
-                  {
-                    "lat": 51.34375000000001,
-                    "lon": 12.380880000000001
-                  },
-                  {
-                    "lat": 51.34375000000001,
-                    "lon": 12.380870000000002
-                  }
-                ],
-                "length": 24
-              },
-              "steps": [
+                "cancelled": false
+              }
+            ],
+            "legGeometry": {
+              "points": [
                 {
-                  "distance": 29,
-                  "relativeDirection": "DEPART",
-                  "streetName": "steps",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.3804278,
-                  "lat": 51.3456961
+                  "lat": 51.26205,
+                  "lon": 12.37706
                 },
                 {
-                  "distance": 4,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTHWEST",
-                  "lon": 12.3802023,
-                  "lat": 51.3454855
+                  "lat": 51.26189,
+                  "lon": 12.37523
                 },
                 {
-                  "distance": 121,
-                  "relativeDirection": "LEFT",
-                  "streetName": "Platform 1;2",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.380161,
-                  "lat": 51.3455028
+                  "lat": 51.26184000000001,
+                  "lon": 12.374780000000001
                 },
                 {
-                  "distance": 7,
-                  "relativeDirection": "LEFT",
-                  "streetName": "underpass",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.3791611,
-                  "lat": 51.344622
+                  "lat": 51.261320000000005,
+                  "lon": 12.372100000000001
                 },
                 {
-                  "distance": 42,
-                  "relativeDirection": "LEFT",
-                  "streetName": "underpass",
-                  "absoluteDirection": "SOUTH",
-                  "lon": 12.3790167,
-                  "lat": 51.3444755
+                  "lat": 51.26131,
+                  "lon": 12.371970000000001
                 },
                 {
-                  "distance": 54,
-                  "relativeDirection": "CONTINUE",
-                  "streetName": "Steig C",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.3795571,
-                  "lat": 51.3442632
+                  "lat": 51.261320000000005,
+                  "lon": 12.371900000000002
                 },
                 {
-                  "distance": 3,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.3802066,
-                  "lat": 51.3439965
+                  "lat": 51.261900000000004,
+                  "lon": 12.36847
                 },
                 {
-                  "distance": 54,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Steig B",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.3802296,
-                  "lat": 51.344019
+                  "lat": 51.261990000000004,
+                  "lon": 12.36814
+                },
+                {
+                  "lat": 51.262010000000004,
+                  "lon": 12.368010000000002
+                },
+                {
+                  "lat": 51.262010000000004,
+                  "lon": 12.368010000000002
+                },
+                {
+                  "lat": 51.262040000000006,
+                  "lon": 12.36785
+                },
+                {
+                  "lat": 51.26205,
+                  "lon": 12.367820000000002
+                },
+                {
+                  "lat": 51.26203,
+                  "lon": 12.367630000000002
+                },
+                {
+                  "lat": 51.26232,
+                  "lon": 12.36594
+                },
+                {
+                  "lat": 51.26236,
+                  "lon": 12.365730000000001
+                },
+                {
+                  "lat": 51.26249000000001,
+                  "lon": 12.36518
+                },
+                {
+                  "lat": 51.26249000000001,
+                  "lon": 12.36517
+                },
+                {
+                  "lat": 51.26249000000001,
+                  "lon": 12.36517
+                },
+                {
+                  "lat": 51.26254,
+                  "lon": 12.364880000000001
+                },
+                {
+                  "lat": 51.262550000000005,
+                  "lon": 12.364820000000002
+                },
+                {
+                  "lat": 51.26256000000001,
+                  "lon": 12.364540000000002
+                },
+                {
+                  "lat": 51.263540000000006,
+                  "lon": 12.358720000000002
+                },
+                {
+                  "lat": 51.26366,
+                  "lon": 12.357970000000002
+                },
+                {
+                  "lat": 51.26366,
+                  "lon": 12.357970000000002
+                },
+                {
+                  "lat": 51.26482000000001,
+                  "lon": 12.35105
+                },
+                {
+                  "lat": 51.26485,
+                  "lon": 12.35097
+                },
+                {
+                  "lat": 51.26487,
+                  "lon": 12.350930000000002
+                },
+                {
+                  "lat": 51.26491000000001,
+                  "lon": 12.350930000000002
+                },
+                {
+                  "lat": 51.265150000000006,
+                  "lon": 12.35105
+                },
+                {
+                  "lat": 51.26545,
+                  "lon": 12.351230000000001
+                },
+                {
+                  "lat": 51.26579,
+                  "lon": 12.35153
+                },
+                {
+                  "lat": 51.26599,
+                  "lon": 12.351730000000002
+                },
+                {
+                  "lat": 51.2661,
+                  "lon": 12.35181
+                },
+                {
+                  "lat": 51.266220000000004,
+                  "lon": 12.351870000000002
+                },
+                {
+                  "lat": 51.266270000000006,
+                  "lon": 12.351890000000001
+                },
+                {
+                  "lat": 51.26635,
+                  "lon": 12.3519
+                },
+                {
+                  "lat": 51.26644,
+                  "lon": 12.351890000000001
+                },
+                {
+                  "lat": 51.26662,
+                  "lon": 12.35185
                 }
               ],
-              "rentedBike": false,
-              "duration": 240,
-              "alerts": [],
-              "departureDelayedTime": 1740063960000,
-              "arrivalDelayedTime": 1740064200000,
-              "departureDelayedTimeHHMM": "16:06",
-              "arrivalDelayedTimeHHMM": "16:10",
-              "startTimeHHMM": "16:06",
-              "endTimeHHMM": "16:10",
-              "cancelled": false,
-              "durationOriginal": 240
+              "length": 38
             },
-            {
-              "startTime": 1740064200000,
-              "endTime": 1740065820000,
-              "departureDelay": 0,
+            "steps": [],
+            "routeShortName": "106",
+            "routeLongName": "Bus 106",
+            "wheelchairAccessible": 0,
+            "duration": 240,
+            "alerts": [],
+            "departureDelayedTime": 1740672720000,
+            "arrivalDelayedTime": 1740672960000,
+            "departureDelayedTimeHHMM": "17:12",
+            "arrivalDelayedTimeHHMM": "17:16",
+            "startTimeHHMM": "17:12",
+            "endTimeHHMM": "17:16",
+            "cancelled": false,
+            "wheelchairBoardingVehicle": null
+          },
+          {
+            "startTime": 1740672960000,
+            "endTime": 1740673560000,
+            "departureDelay": 0,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 683,
+            "mode": "WALK",
+            "transitLeg": false,
+            "route": "",
+            "from": {
+              "name": "Zöbigker (Markkleeberg), Schmiede",
+              "stopId": "0012987",
+              "lon": 12.351914,
+              "lat": 51.26663,
+              "arrival": 1740672960000,
+              "departure": 1740672960000,
+              "zoneId": "151",
+              "wheelchairBoarding": 0,
+              "departureDelayedTime": 1740672960000,
+              "arrivalDelayedTime": 1740672960000,
+              "departureDelayedTimeHHMM": "17:16",
+              "arrivalDelayedTimeHHMM": "17:16",
+              "arrivalHHMM": "17:16",
+              "departureHHMM": "17:16",
               "arrivalDelay": 0,
-              "realTime": true,
-              "distance": 8583,
-              "mode": "TRAM",
-              "transitLeg": true,
-              "route": "3",
-              "agencyName": "Leipziger Verkehrsbetriebe",
-              "agencyUrl": "https://www.mdv.de/partner/",
-              "routeColor": "61993B",
-              "routeType": 0,
-              "routeId": "LVTRAM3",
-              "headsign": "Taucha",
-              "agencyId": "1:00468",
-              "tripId": "lvb01766STRB__20250219",
-              "serviceDate": "20250220",
-              "from": {
-                "name": "Leipzig, Hauptbahnhof (Tram/Bus)",
-                "stopId": "0013000",
-                "lon": 12.380878,
-                "lat": 51.343754,
-                "arrival": 1740064200000,
-                "departure": 1740064200000,
-                "zoneId": "110",
-                "stopSequence": 18,
-                "wheelchairBoarding": 1,
-                "track": "B",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740064200000,
-                "arrivalDelayedTime": 1740064200000,
-                "departureDelayedTimeHHMM": "16:10",
-                "arrivalDelayedTimeHHMM": "16:10",
-                "arrivalHHMM": "16:10",
-                "departureHHMM": "16:10",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false,
-                "hafas_id": "1000102",
-                "hafas_name": "Hauptbahnhof (Steig B)"
-              },
-              "to": {
-                "name": "Taucha (b. Leipzig), Freiligrathstr.",
-                "stopId": "0011283",
-                "lon": 12.486095,
-                "lat": 51.376567,
-                "arrival": 1740065820000,
-                "departure": 1740065820000,
-                "zoneId": "168",
-                "stopSequence": 34,
-                "wheelchairBoarding": 0,
-                "track": null,
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740065820000,
-                "arrivalDelayedTime": 1740065820000,
-                "departureDelayedTimeHHMM": "16:37",
-                "arrivalDelayedTimeHHMM": "16:37",
-                "arrivalHHMM": "16:37",
-                "departureHHMM": "16:37",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false,
-                "hafas_id": "1006202",
-                "hafas_name": "Taucha, Freiligrathstraße"
-              },
-              "intermediateStops": [
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "to": {
+              "name": "Destination",
+              "lon": 12.3451347,
+              "lat": 51.2655979,
+              "arrival": 1740673560000,
+              "departureDelayedTime": 1740673560000,
+              "arrivalDelayedTime": 1740673560000,
+              "arrivalDelayedTimeHHMM": "17:26",
+              "arrivalHHMM": "17:26",
+              "departureHHMM": "17:26",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "legGeometry": {
+              "points": [
                 {
-                  "name": "Leipzig, Hofmeisterstr.",
-                  "stopId": "0012705",
-                  "lon": 12.386214,
-                  "lat": 51.343458,
-                  "arrival": 1740064320000,
-                  "departure": 1740064320000,
-                  "zoneId": "110",
-                  "stopSequence": 19,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064320000,
-                  "arrivalDelayedTime": 1740064320000,
-                  "departureDelayedTimeHHMM": "16:12",
-                  "arrivalDelayedTimeHHMM": "16:12",
-                  "arrivalHHMM": "16:12",
-                  "departureHHMM": "16:12",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1003002",
-                  "hafas_name": "Hofmeisterstraße"
+                  "lat": 51.266630000000006,
+                  "lon": 12.35191
                 },
                 {
-                  "name": "Leipzig, Friedrich-List-Platz",
-                  "stopId": "0012706",
-                  "lon": 12.3921,
-                  "lat": 51.34529,
-                  "arrival": 1740064440000,
-                  "departure": 1740064440000,
-                  "zoneId": "110",
-                  "stopSequence": 20,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064440000,
-                  "arrivalDelayedTime": 1740064440000,
-                  "departureDelayedTimeHHMM": "16:14",
-                  "arrivalDelayedTimeHHMM": "16:14",
-                  "arrivalHHMM": "16:14",
-                  "departureHHMM": "16:14",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1003102",
-                  "hafas_name": "Friedrich-List-Platz"
+                  "lat": 51.26662,
+                  "lon": 12.35185
                 },
                 {
-                  "name": "Leipzig, Einertstr.",
-                  "stopId": "0012713",
-                  "lon": 12.400027,
-                  "lat": 51.345829,
-                  "arrival": 1740064560000,
-                  "departure": 1740064560000,
-                  "zoneId": "110",
-                  "stopSequence": 21,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064560000,
-                  "arrivalDelayedTime": 1740064560000,
-                  "departureDelayedTimeHHMM": "16:16",
-                  "arrivalDelayedTimeHHMM": "16:16",
-                  "arrivalHHMM": "16:16",
-                  "departureHHMM": "16:16",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1003202",
-                  "hafas_name": "Einertstraße"
+                  "lat": 51.26644,
+                  "lon": 12.351890000000001
                 },
                 {
-                  "name": "Leipzig, Hermann-Liebmann-/Eisenbahnstr.",
-                  "stopId": "0012714",
-                  "lon": 12.405435,
-                  "lat": 51.345541,
-                  "arrival": 1740064680000,
-                  "departure": 1740064680000,
-                  "zoneId": "110",
-                  "stopSequence": 22,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064680000,
-                  "arrivalDelayedTime": 1740064680000,
-                  "departureDelayedTimeHHMM": "16:18",
-                  "arrivalDelayedTimeHHMM": "16:18",
-                  "arrivalHHMM": "16:18",
-                  "departureHHMM": "16:18",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1003302",
-                  "hafas_name": "H.-Liebmann-/Eisenbahnstraße"
+                  "lat": 51.26635,
+                  "lon": 12.3519
                 },
                 {
-                  "name": "Leipzig, Torgauer Platz",
-                  "stopId": "0012851",
-                  "lon": 12.413498,
-                  "lat": 51.345117,
-                  "arrival": 1740064800000,
-                  "departure": 1740064800000,
-                  "zoneId": "110",
-                  "stopSequence": 23,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064800000,
-                  "arrivalDelayedTime": 1740064800000,
-                  "departureDelayedTimeHHMM": "16:20",
-                  "arrivalDelayedTimeHHMM": "16:20",
-                  "arrivalHHMM": "16:20",
-                  "departureHHMM": "16:20",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1004902",
-                  "hafas_name": "Torgauer Platz"
+                  "lat": 51.266270000000006,
+                  "lon": 12.351890000000001
                 },
                 {
-                  "name": "Leipzig, Volksgarten",
-                  "stopId": "0011280",
-                  "lon": 12.420303,
-                  "lat": 51.348518,
-                  "arrival": 1740064920000,
-                  "departure": 1740064920000,
-                  "zoneId": "110",
-                  "stopSequence": 24,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064920000,
-                  "arrivalDelayedTime": 1740064920000,
-                  "departureDelayedTimeHHMM": "16:22",
-                  "arrivalDelayedTimeHHMM": "16:22",
-                  "arrivalHHMM": "16:22",
-                  "departureHHMM": "16:22",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005102",
-                  "hafas_name": "Volksgarten"
+                  "lat": 51.26621,
+                  "lon": 12.351870000000002
                 },
                 {
-                  "name": "Leipzig, Permoser-/Torgauer Str.",
-                  "stopId": "0012829",
-                  "lon": 12.42593,
-                  "lat": 51.351688,
-                  "arrival": 1740064980000,
-                  "departure": 1740064980000,
-                  "zoneId": "110",
-                  "stopSequence": 25,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740064980000,
-                  "arrivalDelayedTime": 1740064980000,
-                  "departureDelayedTimeHHMM": "16:23",
-                  "arrivalDelayedTimeHHMM": "16:23",
-                  "arrivalHHMM": "16:23",
-                  "departureHHMM": "16:23",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005202",
-                  "hafas_name": "Permoser-/Torgauer Straße"
+                  "lat": 51.2661,
+                  "lon": 12.35181
                 },
                 {
-                  "name": "Leipzig, Schwantesstr.",
-                  "stopId": "0000696",
-                  "lon": 12.430876,
-                  "lat": 51.354052,
-                  "arrival": 1740065040000,
-                  "departure": 1740065040000,
-                  "zoneId": "110",
-                  "stopSequence": 26,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065040000,
-                  "arrivalDelayedTime": 1740065040000,
-                  "departureDelayedTimeHHMM": "16:24",
-                  "arrivalDelayedTimeHHMM": "16:24",
-                  "arrivalHHMM": "16:24",
-                  "departureHHMM": "16:24",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1016402",
-                  "hafas_name": "Schwantesstraße"
+                  "lat": 51.26599,
+                  "lon": 12.351730000000002
                 },
                 {
-                  "name": "Leipzig, Bautzner Str.",
-                  "stopId": "0011278",
-                  "lon": 12.434308,
-                  "lat": 51.355684,
-                  "arrival": 1740065100000,
-                  "departure": 1740065160000,
-                  "zoneId": "110",
-                  "stopSequence": 27,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065160000,
-                  "arrivalDelayedTime": 1740065100000,
-                  "departureDelayedTimeHHMM": "16:26",
-                  "arrivalDelayedTimeHHMM": "16:25",
-                  "arrivalHHMM": "16:25",
-                  "departureHHMM": "16:26",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005302",
-                  "hafas_name": "Bautzner Straße"
+                  "lat": 51.26579,
+                  "lon": 12.35153
                 },
                 {
-                  "name": "Leipzig, Hohentichelnstr.",
-                  "stopId": "0013282",
-                  "lon": 12.443192,
-                  "lat": 51.35993,
-                  "arrival": 1740065280000,
-                  "departure": 1740065280000,
-                  "zoneId": "110",
-                  "stopSequence": 28,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065280000,
-                  "arrivalDelayedTime": 1740065280000,
-                  "departureDelayedTimeHHMM": "16:28",
-                  "arrivalDelayedTimeHHMM": "16:28",
-                  "arrivalHHMM": "16:28",
-                  "departureHHMM": "16:28",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1006602",
-                  "hafas_name": "Hohentichelnstraße"
+                  "lat": 51.265730000000005,
+                  "lon": 12.35148
                 },
                 {
-                  "name": "Leipzig, Arcus Park",
-                  "stopId": "0000145",
-                  "lon": 12.446856,
-                  "lat": 51.361686,
-                  "arrival": 1740065340000,
-                  "departure": 1740065340000,
-                  "zoneId": "110",
-                  "stopSequence": 29,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065340000,
-                  "arrivalDelayedTime": 1740065340000,
-                  "departureDelayedTimeHHMM": "16:29",
-                  "arrivalDelayedTimeHHMM": "16:29",
-                  "arrivalHHMM": "16:29",
-                  "departureHHMM": "16:29",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005502",
-                  "hafas_name": "Arcus Park"
+                  "lat": 51.2657,
+                  "lon": 12.351450000000002
                 },
                 {
-                  "name": "Leipzig, Heiterblick, Teslastr.",
-                  "stopId": "0011276",
-                  "lon": 12.452323,
-                  "lat": 51.36429,
-                  "arrival": 1740065400000,
-                  "departure": 1740065400000,
-                  "zoneId": "110",
-                  "stopSequence": 30,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065400000,
-                  "arrivalDelayedTime": 1740065400000,
-                  "departureDelayedTimeHHMM": "16:30",
-                  "arrivalDelayedTimeHHMM": "16:30",
-                  "arrivalHHMM": "16:30",
-                  "departureHHMM": "16:30",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005602",
-                  "hafas_name": "Heiterblick, Teslastraße"
+                  "lat": 51.26559,
+                  "lon": 12.351350000000002
                 },
                 {
-                  "name": "Leipzig, Portitzer Allee/S-Bahnhof Heiterblick",
-                  "stopId": "0011277",
-                  "lon": 12.460293,
-                  "lat": 51.36727,
-                  "arrival": 1740065520000,
-                  "departure": 1740065520000,
-                  "zoneId": "110",
-                  "stopSequence": 31,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065520000,
-                  "arrivalDelayedTime": 1740065520000,
-                  "departureDelayedTimeHHMM": "16:32",
-                  "arrivalDelayedTimeHHMM": "16:32",
-                  "arrivalHHMM": "16:32",
-                  "departureHHMM": "16:32",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1005702",
-                  "hafas_name": "Portitzer A., S-Bf.Heiterblick"
+                  "lat": 51.265440000000005,
+                  "lon": 12.351230000000001
                 },
                 {
-                  "name": "Taucha (b. Leipzig), Otto-Schmidt-Str.",
-                  "stopId": "0011275",
-                  "lon": 12.475442,
-                  "lat": 51.372728,
-                  "arrival": 1740065700000,
-                  "departure": 1740065700000,
-                  "zoneId": "168",
-                  "stopSequence": 32,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065700000,
-                  "arrivalDelayedTime": 1740065700000,
-                  "departureDelayedTimeHHMM": "16:35",
-                  "arrivalDelayedTimeHHMM": "16:35",
-                  "arrivalHHMM": "16:35",
-                  "departureHHMM": "16:35",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1006002",
-                  "hafas_name": "Taucha, O.-Schmidt-Str."
+                  "lat": 51.2653,
+                  "lon": 12.351140000000001
                 },
                 {
-                  "name": "Taucha (b. Leipzig), Theodor-Körner-Str.",
-                  "stopId": "0011282",
-                  "lon": 12.481366,
-                  "lat": 51.37487,
-                  "arrival": 1740065760000,
-                  "departure": 1740065760000,
-                  "zoneId": "168",
-                  "stopSequence": 33,
-                  "wheelchairBoarding": 0,
-                  "departureDelayedTime": 1740065760000,
-                  "arrivalDelayedTime": 1740065760000,
-                  "departureDelayedTimeHHMM": "16:36",
-                  "arrivalDelayedTimeHHMM": "16:36",
-                  "arrivalHHMM": "16:36",
-                  "departureHHMM": "16:36",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false,
-                  "hafas_id": "1006102",
-                  "hafas_name": "Taucha, Theodor-Körner-Str."
+                  "lat": 51.265150000000006,
+                  "lon": 12.35105
+                },
+                {
+                  "lat": 51.26484000000001,
+                  "lon": 12.350900000000001
+                },
+                {
+                  "lat": 51.26483,
+                  "lon": 12.350700000000002
+                },
+                {
+                  "lat": 51.26483,
+                  "lon": 12.350510000000002
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.3495
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.349390000000001
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.34894
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.348170000000001
+                },
+                {
+                  "lat": 51.26500000000001,
+                  "lon": 12.34693
+                },
+                {
+                  "lat": 51.26500000000001,
+                  "lon": 12.346910000000001
+                },
+                {
+                  "lat": 51.265010000000004,
+                  "lon": 12.346860000000001
+                },
+                {
+                  "lat": 51.265010000000004,
+                  "lon": 12.346770000000001
+                },
+                {
+                  "lat": 51.26505,
+                  "lon": 12.346380000000002
+                },
+                {
+                  "lat": 51.26507,
+                  "lon": 12.34622
+                },
+                {
+                  "lat": 51.26512,
+                  "lon": 12.345690000000001
+                },
+                {
+                  "lat": 51.26516,
+                  "lon": 12.345250000000002
+                },
+                {
+                  "lat": 51.265150000000006,
+                  "lon": 12.345180000000001
+                },
+                {
+                  "lat": 51.265170000000005,
+                  "lon": 12.34514
+                },
+                {
+                  "lat": 51.265370000000004,
+                  "lon": 12.344890000000001
+                },
+                {
+                  "lat": 51.265420000000006,
+                  "lon": 12.344840000000001
+                },
+                {
+                  "lat": 51.26547000000001,
+                  "lon": 12.344800000000001
+                },
+                {
+                  "lat": 51.26552,
+                  "lon": 12.344780000000002
+                },
+                {
+                  "lat": 51.26559,
+                  "lon": 12.344790000000001
+                },
+                {
+                  "lat": 51.265640000000005,
+                  "lon": 12.344800000000001
+                },
+                {
+                  "lat": 51.26568,
+                  "lon": 12.344830000000002
                 }
               ],
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.34376,
-                    "lon": 12.380880000000001
-                  },
-                  {
-                    "lat": 51.34375000000001,
-                    "lon": 12.3809
-                  },
-                  {
-                    "lat": 51.34376,
-                    "lon": 12.380910000000002
-                  },
-                  {
-                    "lat": 51.34375000000001,
-                    "lon": 12.3809
-                  },
-                  {
-                    "lat": 51.34364000000001,
-                    "lon": 12.381160000000001
-                  },
-                  {
-                    "lat": 51.343540000000004,
-                    "lon": 12.38141
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.38161
-                  },
-                  {
-                    "lat": 51.34344,
-                    "lon": 12.381670000000002
-                  },
-                  {
-                    "lat": 51.343410000000006,
-                    "lon": 12.38184
-                  },
-                  {
-                    "lat": 51.3434,
-                    "lon": 12.38197
-                  },
-                  {
-                    "lat": 51.34337000000001,
-                    "lon": 12.38231
-                  },
-                  {
-                    "lat": 51.343320000000006,
-                    "lon": 12.38282
-                  },
-                  {
-                    "lat": 51.34331,
-                    "lon": 12.383030000000002
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.38319
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.38324
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.38333
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.383350000000002
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.38344
-                  },
-                  {
-                    "lat": 51.343300000000006,
-                    "lon": 12.38348
-                  },
-                  {
-                    "lat": 51.34333,
-                    "lon": 12.38367
-                  },
-                  {
-                    "lat": 51.34342,
-                    "lon": 12.38452
-                  },
-                  {
-                    "lat": 51.343430000000005,
-                    "lon": 12.38466
-                  },
-                  {
-                    "lat": 51.34349,
-                    "lon": 12.384970000000001
-                  },
-                  {
-                    "lat": 51.34351,
-                    "lon": 12.38507
-                  },
-                  {
-                    "lat": 51.34351,
-                    "lon": 12.385150000000001
-                  },
-                  {
-                    "lat": 51.343520000000005,
-                    "lon": 12.38527
-                  },
-                  {
-                    "lat": 51.343520000000005,
-                    "lon": 12.385390000000001
-                  },
-                  {
-                    "lat": 51.34351,
-                    "lon": 12.38559
-                  },
-                  {
-                    "lat": 51.34349,
-                    "lon": 12.385840000000002
-                  },
-                  {
-                    "lat": 51.34348000000001,
-                    "lon": 12.385980000000002
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.386220000000002
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.386220000000002
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.386220000000002
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.386220000000002
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.38624
-                  },
-                  {
-                    "lat": 51.343450000000004,
-                    "lon": 12.38635
-                  },
-                  {
-                    "lat": 51.34346000000001,
-                    "lon": 12.386450000000002
-                  },
-                  {
-                    "lat": 51.34348000000001,
-                    "lon": 12.386560000000001
-                  },
-                  {
-                    "lat": 51.34353,
-                    "lon": 12.386740000000001
-                  },
-                  {
-                    "lat": 51.343770000000006,
-                    "lon": 12.38746
-                  },
-                  {
-                    "lat": 51.343810000000005,
-                    "lon": 12.387580000000002
-                  },
-                  {
-                    "lat": 51.34442000000001,
-                    "lon": 12.38944
-                  },
-                  {
-                    "lat": 51.34526,
-                    "lon": 12.392000000000001
-                  },
-                  {
-                    "lat": 51.345290000000006,
-                    "lon": 12.392080000000002
-                  },
-                  {
-                    "lat": 51.345290000000006,
-                    "lon": 12.392090000000001
-                  },
-                  {
-                    "lat": 51.345290000000006,
-                    "lon": 12.392100000000001
-                  },
-                  {
-                    "lat": 51.345290000000006,
-                    "lon": 12.392100000000001
-                  },
-                  {
-                    "lat": 51.345290000000006,
-                    "lon": 12.392090000000001
-                  },
-                  {
-                    "lat": 51.345330000000004,
-                    "lon": 12.39221
-                  },
-                  {
-                    "lat": 51.34535,
-                    "lon": 12.392280000000001
-                  },
-                  {
-                    "lat": 51.34537,
-                    "lon": 12.392330000000001
-                  },
-                  {
-                    "lat": 51.34539,
-                    "lon": 12.392380000000001
-                  },
-                  {
-                    "lat": 51.34541,
-                    "lon": 12.39245
-                  },
-                  {
-                    "lat": 51.345420000000004,
-                    "lon": 12.392460000000002
-                  },
-                  {
-                    "lat": 51.34546,
-                    "lon": 12.392570000000001
-                  },
-                  {
-                    "lat": 51.345510000000004,
-                    "lon": 12.392700000000001
-                  },
-                  {
-                    "lat": 51.345890000000004,
-                    "lon": 12.39375
-                  },
-                  {
-                    "lat": 51.34601000000001,
-                    "lon": 12.394100000000002
-                  },
-                  {
-                    "lat": 51.346090000000004,
-                    "lon": 12.394350000000001
-                  },
-                  {
-                    "lat": 51.34611,
-                    "lon": 12.394470000000002
-                  },
-                  {
-                    "lat": 51.34611,
-                    "lon": 12.39461
-                  },
-                  {
-                    "lat": 51.34611,
-                    "lon": 12.3947
-                  },
-                  {
-                    "lat": 51.34595,
-                    "lon": 12.3977
-                  },
-                  {
-                    "lat": 51.34586,
-                    "lon": 12.39944
-                  },
-                  {
-                    "lat": 51.345850000000006,
-                    "lon": 12.39967
-                  },
-                  {
-                    "lat": 51.34584,
-                    "lon": 12.399830000000001
-                  },
-                  {
-                    "lat": 51.34583000000001,
-                    "lon": 12.400020000000001
-                  },
-                  {
-                    "lat": 51.34583000000001,
-                    "lon": 12.400020000000001
-                  },
-                  {
-                    "lat": 51.34583000000001,
-                    "lon": 12.400020000000001
-                  },
-                  {
-                    "lat": 51.34583000000001,
-                    "lon": 12.400020000000001
-                  },
-                  {
-                    "lat": 51.34583000000001,
-                    "lon": 12.400020000000001
-                  },
-                  {
-                    "lat": 51.34582,
-                    "lon": 12.400160000000001
-                  },
-                  {
-                    "lat": 51.34573,
-                    "lon": 12.40173
-                  },
-                  {
-                    "lat": 51.34566,
-                    "lon": 12.40314
-                  },
-                  {
-                    "lat": 51.345580000000005,
-                    "lon": 12.4046
-                  },
-                  {
-                    "lat": 51.34554000000001,
-                    "lon": 12.405330000000001
-                  },
-                  {
-                    "lat": 51.345530000000004,
-                    "lon": 12.4054
-                  },
-                  {
-                    "lat": 51.345530000000004,
-                    "lon": 12.40543
-                  },
-                  {
-                    "lat": 51.34554000000001,
-                    "lon": 12.40544
-                  },
-                  {
-                    "lat": 51.34554000000001,
-                    "lon": 12.40544
-                  },
-                  {
-                    "lat": 51.345530000000004,
-                    "lon": 12.40543
-                  },
-                  {
-                    "lat": 51.34552000000001,
-                    "lon": 12.405660000000001
-                  },
-                  {
-                    "lat": 51.3455,
-                    "lon": 12.405930000000001
-                  },
-                  {
-                    "lat": 51.3455,
-                    "lon": 12.406060000000002
-                  },
-                  {
-                    "lat": 51.34543000000001,
-                    "lon": 12.40732
-                  },
-                  {
-                    "lat": 51.34532,
-                    "lon": 12.40915
-                  },
-                  {
-                    "lat": 51.345310000000005,
-                    "lon": 12.409370000000001
-                  },
-                  {
-                    "lat": 51.34523,
-                    "lon": 12.41097
-                  },
-                  {
-                    "lat": 51.34512,
-                    "lon": 12.413390000000001
-                  },
-                  {
-                    "lat": 51.345110000000005,
-                    "lon": 12.413490000000001
-                  },
-                  {
-                    "lat": 51.345110000000005,
-                    "lon": 12.413490000000001
-                  },
-                  {
-                    "lat": 51.345110000000005,
-                    "lon": 12.4135
-                  },
-                  {
-                    "lat": 51.34512,
-                    "lon": 12.4135
-                  },
-                  {
-                    "lat": 51.345110000000005,
-                    "lon": 12.4135
-                  },
-                  {
-                    "lat": 51.345090000000006,
-                    "lon": 12.41397
-                  },
-                  {
-                    "lat": 51.34508,
-                    "lon": 12.41412
-                  },
-                  {
-                    "lat": 51.34508,
-                    "lon": 12.414140000000002
-                  },
-                  {
-                    "lat": 51.34508,
-                    "lon": 12.414250000000001
-                  },
-                  {
-                    "lat": 51.34508,
-                    "lon": 12.414320000000002
-                  },
-                  {
-                    "lat": 51.345090000000006,
-                    "lon": 12.41441
-                  },
-                  {
-                    "lat": 51.34512,
-                    "lon": 12.4145
-                  },
-                  {
-                    "lat": 51.34514,
-                    "lon": 12.414560000000002
-                  },
-                  {
-                    "lat": 51.345240000000004,
-                    "lon": 12.41472
-                  },
-                  {
-                    "lat": 51.345380000000006,
-                    "lon": 12.41496
-                  },
-                  {
-                    "lat": 51.34597,
-                    "lon": 12.41594
-                  },
-                  {
-                    "lat": 51.34637000000001,
-                    "lon": 12.416640000000001
-                  },
-                  {
-                    "lat": 51.3464,
-                    "lon": 12.416690000000001
-                  },
-                  {
-                    "lat": 51.346500000000006,
-                    "lon": 12.41685
-                  },
-                  {
-                    "lat": 51.34655000000001,
-                    "lon": 12.41693
-                  },
-                  {
-                    "lat": 51.3466,
-                    "lon": 12.41702
-                  },
-                  {
-                    "lat": 51.34667,
-                    "lon": 12.41713
-                  },
-                  {
-                    "lat": 51.34707,
-                    "lon": 12.417810000000001
-                  },
-                  {
-                    "lat": 51.34731000000001,
-                    "lon": 12.41821
-                  },
-                  {
-                    "lat": 51.347680000000004,
-                    "lon": 12.41882
-                  },
-                  {
-                    "lat": 51.348020000000005,
-                    "lon": 12.419390000000002
-                  },
-                  {
-                    "lat": 51.34808,
-                    "lon": 12.419490000000001
-                  },
-                  {
-                    "lat": 51.348290000000006,
-                    "lon": 12.419880000000001
-                  },
-                  {
-                    "lat": 51.348530000000004,
-                    "lon": 12.420280000000002
-                  },
-                  {
-                    "lat": 51.34852000000001,
-                    "lon": 12.420300000000001
-                  },
-                  {
-                    "lat": 51.34852000000001,
-                    "lon": 12.420300000000001
-                  },
-                  {
-                    "lat": 51.34852000000001,
-                    "lon": 12.42031
-                  },
-                  {
-                    "lat": 51.348530000000004,
-                    "lon": 12.420280000000002
-                  },
-                  {
-                    "lat": 51.348710000000004,
-                    "lon": 12.420570000000001
-                  },
-                  {
-                    "lat": 51.34893,
-                    "lon": 12.420940000000002
-                  },
-                  {
-                    "lat": 51.34908,
-                    "lon": 12.4212
-                  },
-                  {
-                    "lat": 51.349270000000004,
-                    "lon": 12.42153
-                  },
-                  {
-                    "lat": 51.349720000000005,
-                    "lon": 12.42228
-                  },
-                  {
-                    "lat": 51.35031000000001,
-                    "lon": 12.423280000000002
-                  },
-                  {
-                    "lat": 51.3507,
-                    "lon": 12.42387
-                  },
-                  {
-                    "lat": 51.350840000000005,
-                    "lon": 12.424080000000002
-                  },
-                  {
-                    "lat": 51.35096000000001,
-                    "lon": 12.42431
-                  },
-                  {
-                    "lat": 51.351710000000004,
-                    "lon": 12.425880000000001
-                  },
-                  {
-                    "lat": 51.35168,
-                    "lon": 12.425920000000001
-                  },
-                  {
-                    "lat": 51.35168,
-                    "lon": 12.425920000000001
-                  },
-                  {
-                    "lat": 51.351710000000004,
-                    "lon": 12.425880000000001
-                  },
-                  {
-                    "lat": 51.35175,
-                    "lon": 12.42595
-                  },
-                  {
-                    "lat": 51.351780000000005,
-                    "lon": 12.42604
-                  },
-                  {
-                    "lat": 51.35184,
-                    "lon": 12.426160000000001
-                  },
-                  {
-                    "lat": 51.35192000000001,
-                    "lon": 12.42631
-                  },
-                  {
-                    "lat": 51.351940000000006,
-                    "lon": 12.42636
-                  },
-                  {
-                    "lat": 51.351980000000005,
-                    "lon": 12.426440000000001
-                  },
-                  {
-                    "lat": 51.35204,
-                    "lon": 12.42656
-                  },
-                  {
-                    "lat": 51.35230000000001,
-                    "lon": 12.42712
-                  },
-                  {
-                    "lat": 51.35372,
-                    "lon": 12.430090000000002
-                  },
-                  {
-                    "lat": 51.35380000000001,
-                    "lon": 12.430280000000002
-                  },
-                  {
-                    "lat": 51.35407000000001,
-                    "lon": 12.430840000000002
-                  },
-                  {
-                    "lat": 51.35405,
-                    "lon": 12.43087
-                  },
-                  {
-                    "lat": 51.35405,
-                    "lon": 12.43087
-                  },
-                  {
-                    "lat": 51.354040000000005,
-                    "lon": 12.43087
-                  },
-                  {
-                    "lat": 51.35407000000001,
-                    "lon": 12.430840000000002
-                  },
-                  {
-                    "lat": 51.354130000000005,
-                    "lon": 12.430950000000001
-                  },
-                  {
-                    "lat": 51.35517,
-                    "lon": 12.43313
-                  },
-                  {
-                    "lat": 51.35530000000001,
-                    "lon": 12.43341
-                  },
-                  {
-                    "lat": 51.355410000000006,
-                    "lon": 12.433650000000002
-                  },
-                  {
-                    "lat": 51.35546,
-                    "lon": 12.433750000000002
-                  },
-                  {
-                    "lat": 51.35571,
-                    "lon": 12.434260000000002
-                  },
-                  {
-                    "lat": 51.35568000000001,
-                    "lon": 12.4343
-                  },
-                  {
-                    "lat": 51.35568000000001,
-                    "lon": 12.4343
-                  },
-                  {
-                    "lat": 51.35568000000001,
-                    "lon": 12.4343
-                  },
-                  {
-                    "lat": 51.35571,
-                    "lon": 12.434260000000002
-                  },
-                  {
-                    "lat": 51.35573,
-                    "lon": 12.434320000000001
-                  },
-                  {
-                    "lat": 51.35925,
-                    "lon": 12.441680000000002
-                  },
-                  {
-                    "lat": 51.35961,
-                    "lon": 12.442440000000001
-                  },
-                  {
-                    "lat": 51.359840000000005,
-                    "lon": 12.44293
-                  },
-                  {
-                    "lat": 51.359950000000005,
-                    "lon": 12.44316
-                  },
-                  {
-                    "lat": 51.359930000000006,
-                    "lon": 12.443190000000001
-                  },
-                  {
-                    "lat": 51.359930000000006,
-                    "lon": 12.443190000000001
-                  },
-                  {
-                    "lat": 51.359950000000005,
-                    "lon": 12.44316
-                  },
-                  {
-                    "lat": 51.360020000000006,
-                    "lon": 12.4433
-                  },
-                  {
-                    "lat": 51.36012,
-                    "lon": 12.443520000000001
-                  },
-                  {
-                    "lat": 51.36019,
-                    "lon": 12.443670000000001
-                  },
-                  {
-                    "lat": 51.360290000000006,
-                    "lon": 12.44387
-                  },
-                  {
-                    "lat": 51.36124,
-                    "lon": 12.445870000000001
-                  },
-                  {
-                    "lat": 51.36133,
-                    "lon": 12.446050000000001
-                  },
-                  {
-                    "lat": 51.36142,
-                    "lon": 12.446240000000001
-                  },
-                  {
-                    "lat": 51.361470000000004,
-                    "lon": 12.44635
-                  },
-                  {
-                    "lat": 51.361700000000006,
-                    "lon": 12.44682
-                  },
-                  {
-                    "lat": 51.36168000000001,
-                    "lon": 12.446850000000001
-                  },
-                  {
-                    "lat": 51.36168000000001,
-                    "lon": 12.446850000000001
-                  },
-                  {
-                    "lat": 51.36168000000001,
-                    "lon": 12.446850000000001
-                  },
-                  {
-                    "lat": 51.361700000000006,
-                    "lon": 12.44682
-                  },
-                  {
-                    "lat": 51.363780000000006,
-                    "lon": 12.45119
-                  },
-                  {
-                    "lat": 51.3639,
-                    "lon": 12.451450000000001
-                  },
-                  {
-                    "lat": 51.36408,
-                    "lon": 12.451810000000002
-                  },
-                  {
-                    "lat": 51.36431,
-                    "lon": 12.452290000000001
-                  },
-                  {
-                    "lat": 51.36428,
-                    "lon": 12.45232
-                  },
-                  {
-                    "lat": 51.364290000000004,
-                    "lon": 12.45232
-                  },
-                  {
-                    "lat": 51.364290000000004,
-                    "lon": 12.45232
-                  },
-                  {
-                    "lat": 51.367270000000005,
-                    "lon": 12.46029
-                  },
-                  {
-                    "lat": 51.367270000000005,
-                    "lon": 12.46029
-                  },
-                  {
-                    "lat": 51.36726,
-                    "lon": 12.460280000000001
-                  },
-                  {
-                    "lat": 51.36726,
-                    "lon": 12.460280000000001
-                  },
-                  {
-                    "lat": 51.367290000000004,
-                    "lon": 12.460360000000001
-                  },
-                  {
-                    "lat": 51.36732000000001,
-                    "lon": 12.460450000000002
-                  },
-                  {
-                    "lat": 51.36732000000001,
-                    "lon": 12.460460000000001
-                  },
-                  {
-                    "lat": 51.367380000000004,
-                    "lon": 12.46062
-                  },
-                  {
-                    "lat": 51.36741000000001,
-                    "lon": 12.460700000000001
-                  },
-                  {
-                    "lat": 51.36746,
-                    "lon": 12.46085
-                  },
-                  {
-                    "lat": 51.36750000000001,
-                    "lon": 12.46094
-                  },
-                  {
-                    "lat": 51.36757000000001,
-                    "lon": 12.46114
-                  },
-                  {
-                    "lat": 51.367580000000004,
-                    "lon": 12.461160000000001
-                  },
-                  {
-                    "lat": 51.36766,
-                    "lon": 12.461400000000001
-                  },
-                  {
-                    "lat": 51.36851000000001,
-                    "lon": 12.463780000000002
-                  },
-                  {
-                    "lat": 51.369150000000005,
-                    "lon": 12.46549
-                  },
-                  {
-                    "lat": 51.369400000000006,
-                    "lon": 12.4662
-                  },
-                  {
-                    "lat": 51.36985000000001,
-                    "lon": 12.46743
-                  },
-                  {
-                    "lat": 51.36994000000001,
-                    "lon": 12.467680000000001
-                  },
-                  {
-                    "lat": 51.370110000000004,
-                    "lon": 12.46817
-                  },
-                  {
-                    "lat": 51.370490000000004,
-                    "lon": 12.469220000000002
-                  },
-                  {
-                    "lat": 51.37050000000001,
-                    "lon": 12.46925
-                  },
-                  {
-                    "lat": 51.37107,
-                    "lon": 12.4708
-                  },
-                  {
-                    "lat": 51.37118,
-                    "lon": 12.471110000000001
-                  },
-                  {
-                    "lat": 51.37122,
-                    "lon": 12.471240000000002
-                  },
-                  {
-                    "lat": 51.37131,
-                    "lon": 12.471490000000001
-                  },
-                  {
-                    "lat": 51.372130000000006,
-                    "lon": 12.473770000000002
-                  },
-                  {
-                    "lat": 51.372310000000006,
-                    "lon": 12.474290000000002
-                  },
-                  {
-                    "lat": 51.372440000000005,
-                    "lon": 12.474660000000002
-                  },
-                  {
-                    "lat": 51.372710000000005,
-                    "lon": 12.475430000000001
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.47544
-                  },
-                  {
-                    "lat": 51.372730000000004,
-                    "lon": 12.47544
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.47544
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.47544
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.47544
-                  },
-                  {
-                    "lat": 51.37276000000001,
-                    "lon": 12.475560000000002
-                  },
-                  {
-                    "lat": 51.372820000000004,
-                    "lon": 12.475740000000002
-                  },
-                  {
-                    "lat": 51.372890000000005,
-                    "lon": 12.47592
-                  },
-                  {
-                    "lat": 51.372910000000005,
-                    "lon": 12.47597
-                  },
-                  {
-                    "lat": 51.373650000000005,
-                    "lon": 12.47803
-                  },
-                  {
-                    "lat": 51.37483,
-                    "lon": 12.48127
-                  },
-                  {
-                    "lat": 51.374860000000005,
-                    "lon": 12.48136
-                  },
-                  {
-                    "lat": 51.374860000000005,
-                    "lon": 12.48136
-                  },
-                  {
-                    "lat": 51.37487,
-                    "lon": 12.481370000000002
-                  },
-                  {
-                    "lat": 51.37487,
-                    "lon": 12.481370000000002
-                  },
-                  {
-                    "lat": 51.37487,
-                    "lon": 12.481370000000002
-                  },
-                  {
-                    "lat": 51.37489000000001,
-                    "lon": 12.481430000000001
-                  },
-                  {
-                    "lat": 51.37492,
-                    "lon": 12.481510000000002
-                  },
-                  {
-                    "lat": 51.37494,
-                    "lon": 12.481580000000001
-                  },
-                  {
-                    "lat": 51.37498,
-                    "lon": 12.48168
-                  },
-                  {
-                    "lat": 51.37507,
-                    "lon": 12.48192
-                  },
-                  {
-                    "lat": 51.37519,
-                    "lon": 12.482270000000002
-                  },
-                  {
-                    "lat": 51.37538000000001,
-                    "lon": 12.482790000000001
-                  },
-                  {
-                    "lat": 51.376050000000006,
-                    "lon": 12.48465
-                  },
-                  {
-                    "lat": 51.37623000000001,
-                    "lon": 12.485170000000002
-                  },
-                  {
-                    "lat": 51.37644,
-                    "lon": 12.48576
-                  },
-                  {
-                    "lat": 51.376560000000005,
-                    "lon": 12.48609
-                  },
-                  {
-                    "lat": 51.37657,
-                    "lon": 12.48609
-                  },
-                  {
-                    "lat": 51.376560000000005,
-                    "lon": 12.48609
-                  },
-                  {
-                    "lat": 51.376560000000005,
-                    "lon": 12.48609
-                  }
-                ],
-                "length": 248
-              },
-              "steps": [],
-              "routeShortName": "3",
-              "routeLongName": "Tram 3",
-              "wheelchairAccessible": 1,
-              "duration": 1620,
-              "alerts": [],
-              "departureDelayedTime": 1740064200000,
-              "arrivalDelayedTime": 1740065820000,
-              "departureDelayedTimeHHMM": "16:10",
-              "arrivalDelayedTimeHHMM": "16:37",
-              "startTimeHHMM": "16:10",
-              "endTimeHHMM": "16:37",
-              "cancelled": false,
-              "wheelchairBoardingVehicle": null
+              "length": 39
             },
-            {
-              "startTime": 1740065820000,
-              "endTime": 1740066180000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 370,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Taucha (b. Leipzig), Freiligrathstr.",
-                "stopId": "0011283",
-                "lon": 12.486095,
-                "lat": 51.376567,
-                "arrival": 1740065820000,
-                "departure": 1740065820000,
-                "zoneId": "168",
-                "wheelchairBoarding": 0,
-                "departureDelayedTime": 1740065820000,
-                "arrivalDelayedTime": 1740065820000,
-                "departureDelayedTimeHHMM": "16:37",
-                "arrivalDelayedTimeHHMM": "16:37",
-                "arrivalHHMM": "16:37",
-                "departureHHMM": "16:37",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false,
-                "hafas_id": "1006202",
-                "hafas_name": "Taucha, Freiligrathstraße"
+            "steps": [
+              {
+                "distance": 214,
+                "relativeDirection": "DEPART",
+                "streetName": "Koburger Straße",
+                "absoluteDirection": "SOUTH",
+                "lon": 12.3518514,
+                "lat": 51.2666239
               },
-              "to": {
-                "name": "Destination",
-                "lon": 12.48922,
-                "lat": 51.37435,
-                "arrival": 1740066180000,
-                "departureDelayedTime": 1740066180000,
-                "arrivalDelayedTime": 1740066180000,
+              {
+                "distance": 283,
+                "relativeDirection": "RIGHT",
+                "streetName": "Cospudener Straße",
+                "absoluteDirection": "WEST",
+                "lon": 12.3509008,
+                "lat": 51.2648417
+              },
+              {
+                "distance": 119,
+                "relativeDirection": "CONTINUE",
+                "streetName": "path",
+                "absoluteDirection": "WEST",
+                "lon": 12.3468632,
+                "lat": 51.2650104
+              },
+              {
+                "distance": 69,
+                "relativeDirection": "RIGHT",
+                "streetName": "Ostuferweg",
+                "absoluteDirection": "NORTHWEST",
+                "lon": 12.345181,
+                "lat": 51.265154
+              }
+            ],
+            "rentedBike": false,
+            "duration": 600,
+            "alerts": [],
+            "departureDelayedTime": 1740672960000,
+            "arrivalDelayedTime": 1740673560000,
+            "departureDelayedTimeHHMM": "17:16",
+            "arrivalDelayedTimeHHMM": "17:26",
+            "startTimeHHMM": "17:16",
+            "endTimeHHMM": "17:26",
+            "cancelled": false
+          }
+        ],
+        "otpVersion": "2.1",
+        "startTimeHHMM": "16:25",
+        "endTimeHHMM": "17:25",
+        "durationHHMM": "01:01",
+        "zoneInfo": {
+          "zones": [
+            "110",
+            "151"
+          ],
+          "orderedZones": [
+            "110",
+            "151"
+          ],
+          "shortDistanceTicket": false
+        },
+        "index": 0
+      },
+      {
+        "duration": 4320,
+        "startTime": 1740670080000,
+        "endTime": 1740674400000,
+        "walkTime": 1140,
+        "transitTime": 3180,
+        "waitingTime": 0,
+        "walkDistance": 911,
+        "transfers": 1,
+        "legs": [
+          {
+            "startTime": 1740670080000,
+            "endTime": 1740670320000,
+            "departureDelay": 0,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 195,
+            "mode": "WALK",
+            "transitLeg": false,
+            "route": "",
+            "from": {
+              "name": "Origin",
+              "lon": 12.3835184,
+              "lat": 51.3382187,
+              "departure": 1740670080000,
+              "departureDelayedTime": 1740670080000,
+              "departureDelayedTimeHHMM": "16:28",
+              "arrivalHHMM": "16:28",
+              "departureHHMM": "16:28",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "to": {
+              "name": "Leipzig, Augustusplatz",
+              "stopId": "0013002",
+              "lon": 12.381555,
+              "lat": 51.338844,
+              "arrival": 1740670320000,
+              "departure": 1740670320000,
+              "zoneId": "110",
+              "wheelchairBoarding": 0,
+              "departureDelayedTime": 1740670320000,
+              "arrivalDelayedTime": 1740670320000,
+              "departureDelayedTimeHHMM": "16:32",
+              "arrivalDelayedTimeHHMM": "16:32",
+              "arrivalHHMM": "16:32",
+              "departureHHMM": "16:32",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false,
+              "hafas_id": "1000902",
+              "hafas_name": "Augustusplatz"
+            },
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.338210000000004,
+                  "lon": 12.38353
+                },
+                {
+                  "lat": 51.338280000000005,
+                  "lon": 12.383560000000001
+                },
+                {
+                  "lat": 51.33829000000001,
+                  "lon": 12.383490000000002
+                },
+                {
+                  "lat": 51.338350000000005,
+                  "lon": 12.383180000000001
+                },
+                {
+                  "lat": 51.338440000000006,
+                  "lon": 12.38272
+                },
+                {
+                  "lat": 51.338530000000006,
+                  "lon": 12.382340000000001
+                },
+                {
+                  "lat": 51.338550000000005,
+                  "lon": 12.38226
+                },
+                {
+                  "lat": 51.338550000000005,
+                  "lon": 12.38225
+                },
+                {
+                  "lat": 51.33861,
+                  "lon": 12.382040000000002
+                },
+                {
+                  "lat": 51.33865,
+                  "lon": 12.38189
+                },
+                {
+                  "lat": 51.338660000000004,
+                  "lon": 12.381850000000002
+                },
+                {
+                  "lat": 51.33869000000001,
+                  "lon": 12.381730000000001
+                },
+                {
+                  "lat": 51.338730000000005,
+                  "lon": 12.381590000000001
+                },
+                {
+                  "lat": 51.338750000000005,
+                  "lon": 12.381490000000001
+                },
+                {
+                  "lat": 51.338800000000006,
+                  "lon": 12.381350000000001
+                },
+                {
+                  "lat": 51.33883,
+                  "lon": 12.381350000000001
+                },
+                {
+                  "lat": 51.33881,
+                  "lon": 12.381400000000001
+                },
+                {
+                  "lat": 51.33878000000001,
+                  "lon": 12.3815
+                },
+                {
+                  "lat": 51.338770000000004,
+                  "lon": 12.381520000000002
+                },
+                {
+                  "lat": 51.338820000000005,
+                  "lon": 12.381530000000001
+                },
+                {
+                  "lat": 51.338840000000005,
+                  "lon": 12.38155
+                }
+              ],
+              "length": 21
+            },
+            "steps": [
+              {
+                "distance": 9,
+                "relativeDirection": "DEPART",
+                "streetName": "parking aisle",
+                "absoluteDirection": "NORTH",
+                "lon": 12.3835323,
+                "lat": 51.338216
+              },
+              {
+                "distance": 136,
+                "relativeDirection": "LEFT",
+                "streetName": "Grimmaischer Steinweg",
+                "absoluteDirection": "WEST",
+                "lon": 12.3835666,
+                "lat": 51.3382871
+              },
+              {
+                "distance": 30,
+                "relativeDirection": "CONTINUE",
+                "streetName": "Augustusplatz",
+                "absoluteDirection": "NORTHWEST",
+                "lon": 12.3817341,
+                "lat": 51.3386943
+              },
+              {
+                "distance": 23,
+                "relativeDirection": "UTURN_RIGHT",
+                "streetName": "Augustusplatz",
+                "absoluteDirection": "SOUTHEAST",
+                "lon": 12.381356,
+                "lat": 51.3388347
+              }
+            ],
+            "rentedBike": false,
+            "duration": 240,
+            "alerts": [],
+            "departureDelayedTime": 1740670080000,
+            "arrivalDelayedTime": 1740670320000,
+            "departureDelayedTimeHHMM": "16:28",
+            "arrivalDelayedTimeHHMM": "16:32",
+            "startTimeHHMM": "16:28",
+            "endTimeHHMM": "16:32",
+            "cancelled": false
+          },
+          {
+            "startTime": 1740670320000,
+            "endTime": 1740671220000,
+            "departureDelay": 240,
+            "arrivalDelay": 240,
+            "realTime": true,
+            "distance": 5063,
+            "mode": "TRAM",
+            "transitLeg": true,
+            "route": "15",
+            "agencyName": "Leipziger Verkehrsbetriebe",
+            "agencyUrl": "https://www.mdv.de/partner/",
+            "routeColor": "00387B",
+            "routeType": 0,
+            "routeId": "LVTRAM15",
+            "headsign": "Meusdorf",
+            "agencyId": "1:00468",
+            "tripId": "lvb11412STRB__20250226",
+            "serviceDate": "20250227",
+            "from": {
+              "name": "Leipzig, Augustusplatz",
+              "stopId": "0013002",
+              "lon": 12.381555,
+              "lat": 51.338844,
+              "arrival": 1740670320000,
+              "departure": 1740670320000,
+              "zoneId": "110",
+              "stopSequence": 22,
+              "wheelchairBoarding": 0,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740670560000,
+              "arrivalDelayedTime": 1740670560000,
+              "departureDelayedTimeHHMM": "16:36",
+              "arrivalDelayedTimeHHMM": "16:36",
+              "arrivalHHMM": "16:32",
+              "departureHHMM": "16:32",
+              "arrivalDelay": 240,
+              "departureDelay": 240,
+              "cancelled": false,
+              "hafas_id": "1000902",
+              "hafas_name": "Augustusplatz"
+            },
+            "to": {
+              "name": "Leipzig, Probstheida",
+              "stopId": "0012073",
+              "lon": 12.425533,
+              "lat": 51.304177,
+              "arrival": 1740671220000,
+              "departure": 1740671220000,
+              "zoneId": "110",
+              "stopSequence": 33,
+              "wheelchairBoarding": 1,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740671460000,
+              "arrivalDelayedTime": 1740671460000,
+              "departureDelayedTimeHHMM": "16:51",
+              "arrivalDelayedTimeHHMM": "16:51",
+              "arrivalHHMM": "16:47",
+              "departureHHMM": "16:47",
+              "arrivalDelay": 240,
+              "departureDelay": 240,
+              "cancelled": false,
+              "hafas_id": "1012902",
+              "hafas_name": "Probstheida"
+            },
+            "intermediateStops": [
+              {
+                "name": "Leipzig, Johannisplatz",
+                "stopId": "0011063",
+                "lon": 12.387365,
+                "lat": 51.336902,
+                "arrival": 1740670440000,
+                "departure": 1740670440000,
+                "zoneId": "110",
+                "stopSequence": 23,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670680000,
+                "arrivalDelayedTime": 1740670680000,
+                "departureDelayedTimeHHMM": "16:38",
+                "arrivalDelayedTimeHHMM": "16:38",
+                "arrivalHHMM": "16:34",
+                "departureHHMM": "16:34",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1007004",
+                "hafas_name": "Johannisplatz"
+              },
+              {
+                "name": "Leipzig, Gutenbergplatz",
+                "stopId": "0011970",
+                "lon": 12.392092,
+                "lat": 51.33427,
+                "arrival": 1740670500000,
+                "departure": 1740670500000,
+                "zoneId": "110",
+                "stopSequence": 24,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670740000,
+                "arrivalDelayedTime": 1740670740000,
+                "departureDelayedTimeHHMM": "16:39",
+                "arrivalDelayedTimeHHMM": "16:39",
+                "arrivalHHMM": "16:35",
+                "departureHHMM": "16:35",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012002",
+                "hafas_name": "Gutenbergplatz"
+              },
+              {
+                "name": "Leipzig, Ostplatz",
+                "stopId": "0011972",
+                "lon": 12.396014,
+                "lat": 51.331534,
+                "arrival": 1740670560000,
+                "departure": 1740670560000,
+                "zoneId": "110",
+                "stopSequence": 25,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670800000,
+                "arrivalDelayedTime": 1740670800000,
+                "departureDelayedTimeHHMM": "16:40",
+                "arrivalDelayedTimeHHMM": "16:40",
+                "arrivalHHMM": "16:36",
+                "departureHHMM": "16:36",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012102",
+                "hafas_name": "Ostplatz"
+              },
+              {
+                "name": "Leipzig, Witzgallstr.",
+                "stopId": "0012083",
+                "lon": 12.399487,
+                "lat": 51.328313,
+                "arrival": 1740670680000,
+                "departure": 1740670680000,
+                "zoneId": "110",
+                "stopSequence": 26,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670920000,
+                "arrivalDelayedTime": 1740670920000,
+                "departureDelayedTimeHHMM": "16:42",
+                "arrivalDelayedTimeHHMM": "16:42",
+                "arrivalHHMM": "16:38",
+                "departureHHMM": "16:38",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012202",
+                "hafas_name": "Witzgallstraße"
+              },
+              {
+                "name": "Leipzig, Technisches Rathaus",
+                "stopId": "0011335",
+                "lon": 12.401051,
+                "lat": 51.325,
+                "arrival": 1740670740000,
+                "departure": 1740670740000,
+                "zoneId": "110",
+                "stopSequence": 27,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670980000,
+                "arrivalDelayedTime": 1740670980000,
+                "departureDelayedTimeHHMM": "16:43",
                 "arrivalDelayedTimeHHMM": "16:43",
+                "arrivalHHMM": "16:39",
+                "departureHHMM": "16:39",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012302",
+                "hafas_name": "Technisches Rathaus"
+              },
+              {
+                "name": "Leipzig, Altes Messegelände",
+                "stopId": "0012079",
+                "lon": 12.404742,
+                "lat": 51.320655,
+                "arrival": 1740670860000,
+                "departure": 1740670860000,
+                "zoneId": "110",
+                "stopSequence": 28,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671100000,
+                "arrivalDelayedTime": 1740671100000,
+                "departureDelayedTimeHHMM": "16:45",
+                "arrivalDelayedTimeHHMM": "16:45",
+                "arrivalHHMM": "16:41",
+                "departureHHMM": "16:41",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012402",
+                "hafas_name": "Altes Messegelände"
+              },
+              {
+                "name": "Leipzig, Naunhofer Str.",
+                "stopId": "0012080",
+                "lon": 12.408131,
+                "lat": 51.317775,
+                "arrival": 1740670920000,
+                "departure": 1740670920000,
+                "zoneId": "110",
+                "stopSequence": 29,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671160000,
+                "arrivalDelayedTime": 1740671160000,
+                "departureDelayedTimeHHMM": "16:46",
+                "arrivalDelayedTimeHHMM": "16:46",
+                "arrivalHHMM": "16:42",
+                "departureHHMM": "16:42",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012502",
+                "hafas_name": "Naunhofer Straße"
+              },
+              {
+                "name": "Leipzig, Völkerschlachtdenkmal (Tram/Bus)",
+                "stopId": "0012076",
+                "lon": 12.411561,
+                "lat": 51.314851,
+                "arrival": 1740670980000,
+                "departure": 1740670980000,
+                "zoneId": "110",
+                "stopSequence": 30,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671220000,
+                "arrivalDelayedTime": 1740671220000,
+                "departureDelayedTimeHHMM": "16:47",
+                "arrivalDelayedTimeHHMM": "16:47",
                 "arrivalHHMM": "16:43",
                 "departureHHMM": "16:43",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012602",
+                "hafas_name": "Völkerschlachtdenkmal"
               },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.376560000000005,
-                    "lon": 12.48609
-                  },
-                  {
-                    "lat": 51.37651,
-                    "lon": 12.48614
-                  },
-                  {
-                    "lat": 51.37659000000001,
-                    "lon": 12.48637
-                  },
-                  {
-                    "lat": 51.37666,
-                    "lon": 12.48657
-                  },
-                  {
-                    "lat": 51.37662,
-                    "lon": 12.48662
-                  },
-                  {
-                    "lat": 51.376580000000004,
-                    "lon": 12.48666
-                  },
-                  {
-                    "lat": 51.376450000000006,
-                    "lon": 12.486780000000001
-                  },
-                  {
-                    "lat": 51.37588,
-                    "lon": 12.48731
-                  },
-                  {
-                    "lat": 51.37581,
-                    "lon": 12.48737
-                  },
-                  {
-                    "lat": 51.375780000000006,
-                    "lon": 12.487400000000001
-                  },
-                  {
-                    "lat": 51.375870000000006,
-                    "lon": 12.487660000000002
-                  },
-                  {
-                    "lat": 51.37538000000001,
-                    "lon": 12.488130000000002
-                  },
-                  {
-                    "lat": 51.37505,
-                    "lon": 12.48845
-                  },
-                  {
-                    "lat": 51.374930000000006,
-                    "lon": 12.488560000000001
-                  },
-                  {
-                    "lat": 51.37489000000001,
-                    "lon": 12.48863
-                  },
-                  {
-                    "lat": 51.37436,
-                    "lon": 12.489120000000002
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.489160000000002
-                  }
-                ],
-                "length": 17
-              },
-              "steps": [
-                {
-                  "distance": 35,
-                  "relativeDirection": "DEPART",
-                  "streetName": "Leipziger Straße",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4861469,
-                  "lat": 51.3765115
-                },
-                {
-                  "distance": 115,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Ferdinand-Lassalle-Straße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4865794,
-                  "lat": 51.376668
-                },
-                {
-                  "distance": 222,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4874093,
-                  "lat": 51.3757811,
-                  "alerts": []
-                }
-              ],
-              "alerts": [],
-              "rentedBike": false,
-              "duration": 360,
-              "departureDelayedTime": 1740065820000,
-              "arrivalDelayedTime": 1740066180000,
-              "departureDelayedTimeHHMM": "16:37",
-              "arrivalDelayedTimeHHMM": "16:43",
-              "startTimeHHMM": "16:37",
-              "endTimeHHMM": "16:43",
-              "cancelled": false
-            }
-          ],
-          "otpVersion": "2.1",
-          "startTimeHHMM": "15:59",
-          "endTimeHHMM": "16:42",
-          "durationHHMM": "00:44",
-          "zoneInfo": {
-            "zones": [
-              "110",
-              "168"
-            ],
-            "orderedZones": [
-              "110",
-              "168"
-            ],
-            "shortDistanceTicket": false
-          },
-          "index": 3
-        },
-        {
-          "duration": 2100,
-          "startTime": 1740064740000,
-          "endTime": 1740066840000,
-          "walkTime": 960,
-          "transitTime": 1140,
-          "waitingTime": 0,
-          "walkDistance": 997,
-          "transfers": 0,
-          "legs": [
-            {
-              "startTime": 1740064740000,
-              "endTime": 1740064980000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 181,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Origin",
-                "lon": 12.3749,
-                "lat": 51.33394,
-                "departure": 1740064740000,
-                "departureDelayedTime": 1740064740000,
-                "departureDelayedTimeHHMM": "16:19",
-                "arrivalHHMM": "16:19",
-                "departureHHMM": "16:19",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Leipzig, Wilhelm-Leuschner-Platz (S-Bahn)",
-                "stopId": "8012202",
-                "lon": 12.375394,
-                "lat": 51.335396,
-                "arrival": 1740064980000,
-                "departure": 1740064980000,
+              {
+                "name": "Leipzig, Südfriedhof",
+                "stopId": "0012078",
+                "lon": 12.417136,
+                "lat": 51.311164,
+                "arrival": 1740671100000,
+                "departure": 1740671100000,
                 "zoneId": "110",
+                "stopSequence": 31,
                 "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740064980000,
-                "arrivalDelayedTime": 1740064980000,
-                "departureDelayedTimeHHMM": "16:23",
-                "arrivalDelayedTimeHHMM": "16:23",
-                "arrivalHHMM": "16:23",
-                "departureHHMM": "16:23",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
+                "departureDelayedTime": 1740671340000,
+                "arrivalDelayedTime": 1740671340000,
+                "departureDelayedTimeHHMM": "16:49",
+                "arrivalDelayedTimeHHMM": "16:49",
+                "arrivalHHMM": "16:45",
+                "departureHHMM": "16:45",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012702",
+                "hafas_name": "Südfriedhof"
               },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.333940000000005,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.334010000000006,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.33402,
-                    "lon": 12.37522
-                  },
-                  {
-                    "lat": 51.33413,
-                    "lon": 12.375210000000001
-                  },
-                  {
-                    "lat": 51.334160000000004,
-                    "lon": 12.37536
-                  },
-                  {
-                    "lat": 51.3342,
-                    "lon": 12.37536
-                  },
-                  {
-                    "lat": 51.334250000000004,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.33431,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37537
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37541
-                  },
-                  {
-                    "lat": 51.334360000000004,
-                    "lon": 12.37545
-                  },
-                  {
-                    "lat": 51.334450000000004,
-                    "lon": 12.37551
-                  },
-                  {
-                    "lat": 51.33455000000001,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.33457000000001,
-                    "lon": 12.375610000000002
-                  },
-                  {
-                    "lat": 51.33467,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.334700000000005,
-                    "lon": 12.375630000000001
-                  },
-                  {
-                    "lat": 51.334860000000006,
-                    "lon": 12.375560000000002
-                  },
-                  {
-                    "lat": 51.33487,
-                    "lon": 12.375560000000002
-                  },
-                  {
-                    "lat": 51.33487,
-                    "lon": 12.375580000000001
-                  },
-                  {
-                    "lat": 51.334880000000005,
-                    "lon": 12.37559
-                  },
-                  {
-                    "lat": 51.335040000000006,
-                    "lon": 12.375530000000001
-                  },
-                  {
-                    "lat": 51.33514,
-                    "lon": 12.3755
-                  },
-                  {
-                    "lat": 51.33540000000001,
-                    "lon": 12.375440000000001
-                  },
-                  {
-                    "lat": 51.335390000000004,
-                    "lon": 12.375390000000001
-                  }
-                ],
-                "length": 24
-              },
-              "steps": [
+              {
+                "name": "Leipzig, Prager/Russenstr.",
+                "stopId": "0012072",
+                "lon": 12.422431,
+                "lat": 51.306777,
+                "arrival": 1740671160000,
+                "departure": 1740671160000,
+                "zoneId": "110",
+                "stopSequence": 32,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671400000,
+                "arrivalDelayedTime": 1740671400000,
+                "departureDelayedTimeHHMM": "16:50",
+                "arrivalDelayedTimeHHMM": "16:50",
+                "arrivalHHMM": "16:46",
+                "departureHHMM": "16:46",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012802",
+                "hafas_name": "Prager/Russenstraße"
+              }
+            ],
+            "legGeometry": {
+              "points": [
                 {
-                  "distance": 22,
-                  "relativeDirection": "DEPART",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTH",
-                  "lon": 12.3752261,
-                  "lat": 51.3339461
+                  "lat": 51.33883,
+                  "lon": 12.38155
                 },
                 {
-                  "distance": 64,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "path",
-                  "absoluteDirection": "EAST",
-                  "lon": 12.3752174,
-                  "lat": 51.3341368
+                  "lat": 51.33883,
+                  "lon": 12.381540000000001
                 },
                 {
-                  "distance": 17,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTH",
-                  "lon": 12.3756108,
-                  "lat": 51.3345729
+                  "lat": 51.33881,
+                  "lon": 12.381620000000002
                 },
                 {
-                  "distance": 62,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Leipzig Wilhelm-Leuschner-Platz",
-                  "absoluteDirection": "EAST",
-                  "lon": 12.3755624,
-                  "lat": 51.3348753
+                  "lat": 51.338770000000004,
+                  "lon": 12.381770000000001
+                },
+                {
+                  "lat": 51.338730000000005,
+                  "lon": 12.381900000000002
+                },
+                {
+                  "lat": 51.33872,
+                  "lon": 12.38194
+                },
+                {
+                  "lat": 51.338680000000004,
+                  "lon": 12.38208
+                },
+                {
+                  "lat": 51.338640000000005,
+                  "lon": 12.38225
+                },
+                {
+                  "lat": 51.338620000000006,
+                  "lon": 12.38231
+                },
+                {
+                  "lat": 51.33859,
+                  "lon": 12.38241
+                },
+                {
+                  "lat": 51.33852,
+                  "lon": 12.38273
+                },
+                {
+                  "lat": 51.33847,
+                  "lon": 12.382980000000002
+                },
+                {
+                  "lat": 51.33843,
+                  "lon": 12.383210000000002
+                },
+                {
+                  "lat": 51.338390000000004,
+                  "lon": 12.38343
+                },
+                {
+                  "lat": 51.33834,
+                  "lon": 12.383780000000002
+                },
+                {
+                  "lat": 51.33831000000001,
+                  "lon": 12.384010000000002
+                },
+                {
+                  "lat": 51.33827,
+                  "lon": 12.38438
+                },
+                {
+                  "lat": 51.33825,
+                  "lon": 12.384530000000002
+                },
+                {
+                  "lat": 51.33822000000001,
+                  "lon": 12.38465
+                },
+                {
+                  "lat": 51.338170000000005,
+                  "lon": 12.3848
+                },
+                {
+                  "lat": 51.33814,
+                  "lon": 12.384870000000001
+                },
+                {
+                  "lat": 51.33811000000001,
+                  "lon": 12.384920000000001
+                },
+                {
+                  "lat": 51.33809,
+                  "lon": 12.38498
+                },
+                {
+                  "lat": 51.33805,
+                  "lon": 12.385050000000001
+                },
+                {
+                  "lat": 51.33798,
+                  "lon": 12.38517
+                },
+                {
+                  "lat": 51.337630000000004,
+                  "lon": 12.385750000000002
+                },
+                {
+                  "lat": 51.337540000000004,
+                  "lon": 12.38592
+                },
+                {
+                  "lat": 51.337430000000005,
+                  "lon": 12.38615
+                },
+                {
+                  "lat": 51.337180000000004,
+                  "lon": 12.386740000000001
+                },
+                {
+                  "lat": 51.33693,
+                  "lon": 12.387300000000002
+                },
+                {
+                  "lat": 51.33690000000001,
+                  "lon": 12.38737
+                },
+                {
+                  "lat": 51.33690000000001,
+                  "lon": 12.38737
+                },
+                {
+                  "lat": 51.33690000000001,
+                  "lon": 12.38737
+                },
+                {
+                  "lat": 51.33690000000001,
+                  "lon": 12.38737
+                },
+                {
+                  "lat": 51.33686,
+                  "lon": 12.38746
+                },
+                {
+                  "lat": 51.336650000000006,
+                  "lon": 12.38793
+                },
+                {
+                  "lat": 51.336580000000005,
+                  "lon": 12.388100000000001
+                },
+                {
+                  "lat": 51.3365,
+                  "lon": 12.38826
+                },
+                {
+                  "lat": 51.336420000000004,
+                  "lon": 12.388440000000001
+                },
+                {
+                  "lat": 51.336330000000004,
+                  "lon": 12.3886
+                },
+                {
+                  "lat": 51.33616000000001,
+                  "lon": 12.38892
+                },
+                {
+                  "lat": 51.33587000000001,
+                  "lon": 12.389450000000002
+                },
+                {
+                  "lat": 51.335460000000005,
+                  "lon": 12.390160000000002
+                },
+                {
+                  "lat": 51.334830000000004,
+                  "lon": 12.391240000000002
+                },
+                {
+                  "lat": 51.334720000000004,
+                  "lon": 12.391420000000002
+                },
+                {
+                  "lat": 51.33469,
+                  "lon": 12.391480000000001
+                },
+                {
+                  "lat": 51.33428000000001,
+                  "lon": 12.392100000000001
+                },
+                {
+                  "lat": 51.334270000000004,
+                  "lon": 12.392080000000002
+                },
+                {
+                  "lat": 51.334270000000004,
+                  "lon": 12.392090000000001
+                },
+                {
+                  "lat": 51.334270000000004,
+                  "lon": 12.392090000000001
+                },
+                {
+                  "lat": 51.33428000000001,
+                  "lon": 12.392100000000001
+                },
+                {
+                  "lat": 51.334210000000006,
+                  "lon": 12.39221
+                },
+                {
+                  "lat": 51.33409,
+                  "lon": 12.39239
+                },
+                {
+                  "lat": 51.33404,
+                  "lon": 12.39245
+                },
+                {
+                  "lat": 51.334010000000006,
+                  "lon": 12.392500000000002
+                },
+                {
+                  "lat": 51.33395,
+                  "lon": 12.39258
+                },
+                {
+                  "lat": 51.33390000000001,
+                  "lon": 12.392650000000001
+                },
+                {
+                  "lat": 51.332260000000005,
+                  "lon": 12.39492
+                },
+                {
+                  "lat": 51.33225,
+                  "lon": 12.39493
+                },
+                {
+                  "lat": 51.332100000000004,
+                  "lon": 12.395150000000001
+                },
+                {
+                  "lat": 51.332080000000005,
+                  "lon": 12.395190000000001
+                },
+                {
+                  "lat": 51.33194,
+                  "lon": 12.3954
+                },
+                {
+                  "lat": 51.33193000000001,
+                  "lon": 12.395410000000002
+                },
+                {
+                  "lat": 51.33176,
+                  "lon": 12.395650000000002
+                },
+                {
+                  "lat": 51.331540000000004,
+                  "lon": 12.395980000000002
+                },
+                {
+                  "lat": 51.33153,
+                  "lon": 12.396
+                },
+                {
+                  "lat": 51.33153,
+                  "lon": 12.396020000000002
+                },
+                {
+                  "lat": 51.33153,
+                  "lon": 12.39601
+                },
+                {
+                  "lat": 51.33153,
+                  "lon": 12.39601
+                },
+                {
+                  "lat": 51.33153,
+                  "lon": 12.396
+                },
+                {
+                  "lat": 51.33119000000001,
+                  "lon": 12.396510000000001
+                },
+                {
+                  "lat": 51.330850000000005,
+                  "lon": 12.39703
+                },
+                {
+                  "lat": 51.33062,
+                  "lon": 12.397340000000002
+                },
+                {
+                  "lat": 51.33024,
+                  "lon": 12.397820000000001
+                },
+                {
+                  "lat": 51.33016000000001,
+                  "lon": 12.397900000000002
+                },
+                {
+                  "lat": 51.33001,
+                  "lon": 12.39808
+                },
+                {
+                  "lat": 51.32987000000001,
+                  "lon": 12.398230000000002
+                },
+                {
+                  "lat": 51.32952,
+                  "lon": 12.398620000000001
+                },
+                {
+                  "lat": 51.329350000000005,
+                  "lon": 12.39878
+                },
+                {
+                  "lat": 51.32922000000001,
+                  "lon": 12.398890000000002
+                },
+                {
+                  "lat": 51.32887,
+                  "lon": 12.399170000000002
+                },
+                {
+                  "lat": 51.32846000000001,
+                  "lon": 12.399410000000001
+                },
+                {
+                  "lat": 51.328340000000004,
+                  "lon": 12.399460000000001
+                },
+                {
+                  "lat": 51.328300000000006,
+                  "lon": 12.39947
+                },
+                {
+                  "lat": 51.32831,
+                  "lon": 12.39948
+                },
+                {
+                  "lat": 51.32831,
+                  "lon": 12.39948
+                },
+                {
+                  "lat": 51.32831,
+                  "lon": 12.39948
+                },
+                {
+                  "lat": 51.328300000000006,
+                  "lon": 12.39947
+                },
+                {
+                  "lat": 51.328210000000006,
+                  "lon": 12.39952
+                },
+                {
+                  "lat": 51.327920000000006,
+                  "lon": 12.39963
+                },
+                {
+                  "lat": 51.327540000000006,
+                  "lon": 12.39976
+                },
+                {
+                  "lat": 51.327160000000006,
+                  "lon": 12.39991
+                },
+                {
+                  "lat": 51.32678000000001,
+                  "lon": 12.40005
+                },
+                {
+                  "lat": 51.326190000000004,
+                  "lon": 12.400340000000002
+                },
+                {
+                  "lat": 51.32592,
+                  "lon": 12.400500000000001
+                },
+                {
+                  "lat": 51.32546000000001,
+                  "lon": 12.400780000000001
+                },
+                {
+                  "lat": 51.325,
+                  "lon": 12.401060000000001
+                },
+                {
+                  "lat": 51.32499000000001,
+                  "lon": 12.401050000000001
+                },
+                {
+                  "lat": 51.32499000000001,
+                  "lon": 12.401050000000001
+                },
+                {
+                  "lat": 51.32499000000001,
+                  "lon": 12.401050000000001
+                },
+                {
+                  "lat": 51.325,
+                  "lon": 12.401060000000001
+                },
+                {
+                  "lat": 51.325,
+                  "lon": 12.401060000000001
+                },
+                {
+                  "lat": 51.32491,
+                  "lon": 12.401110000000001
+                },
+                {
+                  "lat": 51.32441000000001,
+                  "lon": 12.40141
+                },
+                {
+                  "lat": 51.32424,
+                  "lon": 12.40154
+                },
+                {
+                  "lat": 51.324200000000005,
+                  "lon": 12.401580000000001
+                },
+                {
+                  "lat": 51.324090000000005,
+                  "lon": 12.401670000000001
+                },
+                {
+                  "lat": 51.323910000000005,
+                  "lon": 12.401850000000001
+                },
+                {
+                  "lat": 51.323890000000006,
+                  "lon": 12.40187
+                },
+                {
+                  "lat": 51.32339,
+                  "lon": 12.40238
+                },
+                {
+                  "lat": 51.32217000000001,
+                  "lon": 12.40347
+                },
+                {
+                  "lat": 51.32198,
+                  "lon": 12.40361
+                },
+                {
+                  "lat": 51.321940000000005,
+                  "lon": 12.403640000000001
+                },
+                {
+                  "lat": 51.321810000000006,
+                  "lon": 12.403730000000001
+                },
+                {
+                  "lat": 51.32166,
+                  "lon": 12.403830000000001
+                },
+                {
+                  "lat": 51.321600000000004,
+                  "lon": 12.403870000000001
+                },
+                {
+                  "lat": 51.32159000000001,
+                  "lon": 12.403870000000001
+                },
+                {
+                  "lat": 51.32155,
+                  "lon": 12.4039
+                },
+                {
+                  "lat": 51.32144,
+                  "lon": 12.40399
+                },
+                {
+                  "lat": 51.320660000000004,
+                  "lon": 12.40473
+                },
+                {
+                  "lat": 51.32065000000001,
+                  "lon": 12.40474
+                },
+                {
+                  "lat": 51.32065000000001,
+                  "lon": 12.40474
+                },
+                {
+                  "lat": 51.32065000000001,
+                  "lon": 12.40474
+                },
+                {
+                  "lat": 51.32065000000001,
+                  "lon": 12.40474
+                },
+                {
+                  "lat": 51.32065000000001,
+                  "lon": 12.40474
+                },
+                {
+                  "lat": 51.320420000000006,
+                  "lon": 12.404950000000001
+                },
+                {
+                  "lat": 51.320220000000006,
+                  "lon": 12.40516
+                },
+                {
+                  "lat": 51.32003,
+                  "lon": 12.405380000000001
+                },
+                {
+                  "lat": 51.31996,
+                  "lon": 12.405460000000001
+                },
+                {
+                  "lat": 51.319900000000004,
+                  "lon": 12.40553
+                },
+                {
+                  "lat": 51.319720000000004,
+                  "lon": 12.405740000000002
+                },
+                {
+                  "lat": 51.31958,
+                  "lon": 12.405930000000001
+                },
+                {
+                  "lat": 51.31938,
+                  "lon": 12.406210000000002
+                },
+                {
+                  "lat": 51.319160000000004,
+                  "lon": 12.40648
+                },
+                {
+                  "lat": 51.31888000000001,
+                  "lon": 12.4068
+                },
+                {
+                  "lat": 51.31862,
+                  "lon": 12.407100000000002
+                },
+                {
+                  "lat": 51.3186,
+                  "lon": 12.40712
+                },
+                {
+                  "lat": 51.31855,
+                  "lon": 12.407190000000002
+                },
+                {
+                  "lat": 51.31851,
+                  "lon": 12.40723
+                },
+                {
+                  "lat": 51.318290000000005,
+                  "lon": 12.40751
+                },
+                {
+                  "lat": 51.31815,
+                  "lon": 12.407680000000001
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.40812
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.408130000000002
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.408130000000002
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.408130000000002
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.408130000000002
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.408130000000002
+                },
+                {
+                  "lat": 51.317710000000005,
+                  "lon": 12.408190000000001
+                },
+                {
+                  "lat": 51.31763,
+                  "lon": 12.408280000000001
+                },
+                {
+                  "lat": 51.31752,
+                  "lon": 12.40839
+                },
+                {
+                  "lat": 51.317400000000006,
+                  "lon": 12.408510000000001
+                },
+                {
+                  "lat": 51.31485000000001,
+                  "lon": 12.41154
+                },
+                {
+                  "lat": 51.31485000000001,
+                  "lon": 12.411550000000002
+                },
+                {
+                  "lat": 51.31485000000001,
+                  "lon": 12.411550000000002
+                },
+                {
+                  "lat": 51.31485000000001,
+                  "lon": 12.41154
+                },
+                {
+                  "lat": 51.314840000000004,
+                  "lon": 12.41154
+                },
+                {
+                  "lat": 51.31477,
+                  "lon": 12.411620000000001
+                },
+                {
+                  "lat": 51.31472,
+                  "lon": 12.41168
+                },
+                {
+                  "lat": 51.31466,
+                  "lon": 12.411760000000001
+                },
+                {
+                  "lat": 51.31452,
+                  "lon": 12.41192
+                },
+                {
+                  "lat": 51.31439,
+                  "lon": 12.41211
+                },
+                {
+                  "lat": 51.31327,
+                  "lon": 12.41383
+                },
+                {
+                  "lat": 51.312050000000006,
+                  "lon": 12.41577
+                },
+                {
+                  "lat": 51.3115,
+                  "lon": 12.41661
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41712
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41713
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41713
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41713
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41713
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41713
+                },
+                {
+                  "lat": 51.31109000000001,
+                  "lon": 12.417230000000002
+                },
+                {
+                  "lat": 51.31103,
+                  "lon": 12.417330000000002
+                },
+                {
+                  "lat": 51.309140000000006,
+                  "lon": 12.420230000000002
+                },
+                {
+                  "lat": 51.3089,
+                  "lon": 12.420610000000002
+                },
+                {
+                  "lat": 51.308620000000005,
+                  "lon": 12.421080000000002
+                },
+                {
+                  "lat": 51.30836000000001,
+                  "lon": 12.42149
+                },
+                {
+                  "lat": 51.308260000000004,
+                  "lon": 12.421640000000002
+                },
+                {
+                  "lat": 51.30814,
+                  "lon": 12.42177
+                },
+                {
+                  "lat": 51.30803,
+                  "lon": 12.42186
+                },
+                {
+                  "lat": 51.307900000000004,
+                  "lon": 12.421940000000001
+                },
+                {
+                  "lat": 51.307610000000004,
+                  "lon": 12.422070000000001
+                },
+                {
+                  "lat": 51.307410000000004,
+                  "lon": 12.42215
+                },
+                {
+                  "lat": 51.30678,
+                  "lon": 12.42243
+                },
+                {
+                  "lat": 51.30677000000001,
+                  "lon": 12.42243
+                },
+                {
+                  "lat": 51.30677000000001,
+                  "lon": 12.42242
+                },
+                {
+                  "lat": 51.30677000000001,
+                  "lon": 12.42243
+                },
+                {
+                  "lat": 51.30677000000001,
+                  "lon": 12.42243
+                },
+                {
+                  "lat": 51.30677000000001,
+                  "lon": 12.42243
+                },
+                {
+                  "lat": 51.30671,
+                  "lon": 12.422460000000001
+                },
+                {
+                  "lat": 51.306580000000004,
+                  "lon": 12.42251
+                },
+                {
+                  "lat": 51.306430000000006,
+                  "lon": 12.422550000000001
+                },
+                {
+                  "lat": 51.306270000000005,
+                  "lon": 12.42262
+                },
+                {
+                  "lat": 51.306020000000004,
+                  "lon": 12.422730000000001
+                },
+                {
+                  "lat": 51.3059,
+                  "lon": 12.42281
+                },
+                {
+                  "lat": 51.30584,
+                  "lon": 12.42285
+                },
+                {
+                  "lat": 51.30577,
+                  "lon": 12.4229
+                },
+                {
+                  "lat": 51.305690000000006,
+                  "lon": 12.42298
+                },
+                {
+                  "lat": 51.30556000000001,
+                  "lon": 12.42313
+                },
+                {
+                  "lat": 51.30547000000001,
+                  "lon": 12.42327
+                },
+                {
+                  "lat": 51.304970000000004,
+                  "lon": 12.424130000000002
+                },
+                {
+                  "lat": 51.30478,
+                  "lon": 12.424470000000001
+                },
+                {
+                  "lat": 51.304660000000005,
+                  "lon": 12.42468
+                },
+                {
+                  "lat": 51.3046,
+                  "lon": 12.424790000000002
+                },
+                {
+                  "lat": 51.304570000000005,
+                  "lon": 12.424840000000001
+                },
+                {
+                  "lat": 51.30418,
+                  "lon": 12.42552
+                },
+                {
+                  "lat": 51.30418,
+                  "lon": 12.42553
+                },
+                {
+                  "lat": 51.30418,
+                  "lon": 12.42553
                 }
               ],
-              "rentedBike": false,
-              "duration": 240,
-              "alerts": [],
-              "departureDelayedTime": 1740064740000,
-              "arrivalDelayedTime": 1740064980000,
-              "departureDelayedTimeHHMM": "16:19",
-              "arrivalDelayedTimeHHMM": "16:23",
-              "startTimeHHMM": "16:19",
-              "endTimeHHMM": "16:23",
-              "cancelled": false
+              "length": 207
             },
-            {
-              "startTime": 1740064980000,
-              "endTime": 1740066120000,
-              "departureDelay": 0,
-              "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 11298,
-              "mode": "SUBURB",
-              "transitLeg": true,
-              "route": "S4",
-              "agencyName": "800486",
-              "agencyUrl": "https://www.mdv.de/partner/",
-              "routeColor": "139640",
-              "routeType": 109,
-              "routeId": "800486S4",
-              "headsign": "Torgau",
-              "agencyId": "1:800486",
-              "tripId": "2127",
-              "serviceDate": "20250220",
-              "from": {
-                "name": "Leipzig, Wilhelm-Leuschner-Platz (S-Bahn)",
-                "stopId": "8012202",
-                "lon": 12.375394,
-                "lat": 51.335396,
-                "arrival": 1740064980000,
-                "departure": 1740064980000,
-                "zoneId": "110",
-                "stopSequence": 8,
-                "wheelchairBoarding": 1,
-                "track": "2",
-                "scheduledTrack": "2",
-                "departureDelayedTime": 1740064980000,
-                "arrivalDelayedTime": 1740064980000,
-                "departureDelayedTimeHHMM": "16:23",
-                "arrivalDelayedTimeHHMM": "16:23",
-                "arrivalHHMM": "16:23",
-                "departureHHMM": "16:23",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Taucha (Leipzig)",
-                "stopId": "8013093",
-                "lon": 12.484471,
-                "lat": 51.379017,
-                "arrival": 1740066120000,
-                "departure": 1740066120000,
-                "zoneId": "168",
-                "stopSequence": 15,
-                "wheelchairBoarding": 1,
-                "track": "1",
-                "scheduledTrack": null,
-                "departureDelayedTime": 1740066120000,
-                "arrivalDelayedTime": 1740066120000,
-                "departureDelayedTimeHHMM": "16:42",
-                "arrivalDelayedTimeHHMM": "16:42",
-                "arrivalHHMM": "16:42",
-                "departureHHMM": "16:42",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "intermediateStops": [
-                {
-                  "name": "Leipzig, Markt (S-Bahn)",
-                  "stopId": "8012186",
-                  "lon": 12.374612,
-                  "lat": 51.34064,
-                  "arrival": 1740065040000,
-                  "departure": 1740065100000,
-                  "zoneId": "110",
-                  "stopSequence": 9,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065100000,
-                  "arrivalDelayedTime": 1740065040000,
-                  "departureDelayedTimeHHMM": "16:25",
-                  "arrivalDelayedTimeHHMM": "16:24",
-                  "arrivalHHMM": "16:24",
-                  "departureHHMM": "16:25",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Hbf (tief) (S-Bahn)",
-                  "stopId": "8098205",
-                  "lon": 12.380428,
-                  "lat": 51.345696,
-                  "arrival": 1740065160000,
-                  "departure": 1740065280000,
-                  "zoneId": "110",
-                  "stopSequence": 10,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065280000,
-                  "arrivalDelayedTime": 1740065160000,
-                  "departureDelayedTimeHHMM": "16:28",
-                  "arrivalDelayedTimeHHMM": "16:26",
-                  "arrivalHHMM": "16:26",
-                  "departureHHMM": "16:28",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Nord (S-Bahn)",
-                  "stopId": "8012196",
-                  "lon": 12.40106,
-                  "lat": 51.364162,
-                  "arrival": 1740065460000,
-                  "departure": 1740065460000,
-                  "zoneId": "110",
-                  "stopSequence": 11,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065460000,
-                  "arrivalDelayedTime": 1740065460000,
-                  "departureDelayedTimeHHMM": "16:31",
-                  "arrivalDelayedTimeHHMM": "16:31",
-                  "arrivalHHMM": "16:31",
-                  "departureHHMM": "16:31",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Mockauer Straße (S-Bahn)",
-                  "stopId": "8012273",
-                  "lon": 12.4121,
-                  "lat": 51.3738,
-                  "arrival": 1740065640000,
-                  "departure": 1740065640000,
-                  "zoneId": "110",
-                  "stopSequence": 12,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065640000,
-                  "arrivalDelayedTime": 1740065640000,
-                  "departureDelayedTimeHHMM": "16:34",
-                  "arrivalDelayedTimeHHMM": "16:34",
-                  "arrivalHHMM": "16:34",
-                  "departureHHMM": "16:34",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Thekla (S-Bahn)",
-                  "stopId": "8012195",
-                  "lon": 12.430751,
-                  "lat": 51.371626,
-                  "arrival": 1740065760000,
-                  "departure": 1740065760000,
-                  "zoneId": "110",
-                  "stopSequence": 13,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740065760000,
-                  "arrivalDelayedTime": 1740065760000,
-                  "departureDelayedTimeHHMM": "16:36",
-                  "arrivalDelayedTimeHHMM": "16:36",
-                  "arrivalHHMM": "16:36",
-                  "departureHHMM": "16:36",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false
-                },
-                {
-                  "name": "Leipzig, Heiterblick (S-Bahn)",
-                  "stopId": "8012190",
-                  "lon": 12.459979,
-                  "lat": 51.369339,
-                  "arrival": 1740065940000,
-                  "departure": 1740066000000,
-                  "zoneId": "110",
-                  "stopSequence": 14,
-                  "wheelchairBoarding": 1,
-                  "departureDelayedTime": 1740066000000,
-                  "arrivalDelayedTime": 1740065940000,
-                  "departureDelayedTimeHHMM": "16:40",
-                  "arrivalDelayedTimeHHMM": "16:39",
-                  "arrivalHHMM": "16:39",
-                  "departureHHMM": "16:40",
-                  "arrivalDelay": 0,
-                  "departureDelay": 0,
-                  "cancelled": false
-                }
-              ],
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.33540000000001,
-                    "lon": 12.37546
-                  },
-                  {
-                    "lat": 51.335440000000006,
-                    "lon": 12.37545
-                  },
-                  {
-                    "lat": 51.33637,
-                    "lon": 12.375280000000002
-                  },
-                  {
-                    "lat": 51.336830000000006,
-                    "lon": 12.37517
-                  },
-                  {
-                    "lat": 51.33695,
-                    "lon": 12.37513
-                  },
-                  {
-                    "lat": 51.337770000000006,
-                    "lon": 12.37475
-                  },
-                  {
-                    "lat": 51.338190000000004,
-                    "lon": 12.37465
-                  },
-                  {
-                    "lat": 51.33919,
-                    "lon": 12.374600000000001
-                  },
-                  {
-                    "lat": 51.339740000000006,
-                    "lon": 12.374540000000001
-                  },
-                  {
-                    "lat": 51.34033,
-                    "lon": 12.374600000000001
-                  },
-                  {
-                    "lat": 51.340630000000004,
-                    "lon": 12.374680000000001
-                  },
-                  {
-                    "lat": 51.340630000000004,
-                    "lon": 12.374680000000001
-                  },
-                  {
-                    "lat": 51.34069,
-                    "lon": 12.3747
-                  },
-                  {
-                    "lat": 51.340880000000006,
-                    "lon": 12.374780000000001
-                  },
-                  {
-                    "lat": 51.341330000000006,
-                    "lon": 12.375010000000001
-                  },
-                  {
-                    "lat": 51.341640000000005,
-                    "lon": 12.375240000000002
-                  },
-                  {
-                    "lat": 51.34194,
-                    "lon": 12.375490000000001
-                  },
-                  {
-                    "lat": 51.3423,
-                    "lon": 12.37588
-                  },
-                  {
-                    "lat": 51.342580000000005,
-                    "lon": 12.376220000000002
-                  },
-                  {
-                    "lat": 51.342850000000006,
-                    "lon": 12.37659
-                  },
-                  {
-                    "lat": 51.34386000000001,
-                    "lon": 12.378250000000001
-                  },
-                  {
-                    "lat": 51.34416,
-                    "lon": 12.3787
-                  },
-                  {
-                    "lat": 51.34443,
-                    "lon": 12.37911
-                  },
-                  {
-                    "lat": 51.344750000000005,
-                    "lon": 12.37953
-                  },
-                  {
-                    "lat": 51.345400000000005,
-                    "lon": 12.380180000000001
-                  },
-                  {
-                    "lat": 51.345670000000005,
-                    "lon": 12.38047
-                  },
-                  {
-                    "lat": 51.345670000000005,
-                    "lon": 12.38047
-                  },
-                  {
-                    "lat": 51.345670000000005,
-                    "lon": 12.38047
-                  },
-                  {
-                    "lat": 51.346360000000004,
-                    "lon": 12.381210000000001
-                  },
-                  {
-                    "lat": 51.34713000000001,
-                    "lon": 12.382040000000002
-                  },
-                  {
-                    "lat": 51.350440000000006,
-                    "lon": 12.386370000000001
-                  },
-                  {
-                    "lat": 51.351710000000004,
-                    "lon": 12.38807
-                  },
-                  {
-                    "lat": 51.35183000000001,
-                    "lon": 12.388230000000002
-                  },
-                  {
-                    "lat": 51.352180000000004,
-                    "lon": 12.38868
-                  },
-                  {
-                    "lat": 51.352340000000005,
-                    "lon": 12.38887
-                  },
-                  {
-                    "lat": 51.35269,
-                    "lon": 12.38926
-                  },
-                  {
-                    "lat": 51.353060000000006,
-                    "lon": 12.389660000000001
-                  },
-                  {
-                    "lat": 51.35313000000001,
-                    "lon": 12.38973
-                  },
-                  {
-                    "lat": 51.35347,
-                    "lon": 12.39009
-                  },
-                  {
-                    "lat": 51.35421,
-                    "lon": 12.390880000000001
-                  },
-                  {
-                    "lat": 51.354580000000006,
-                    "lon": 12.391280000000002
-                  },
-                  {
-                    "lat": 51.355720000000005,
-                    "lon": 12.392640000000002
-                  },
-                  {
-                    "lat": 51.357490000000006,
-                    "lon": 12.394770000000001
-                  },
-                  {
-                    "lat": 51.357620000000004,
-                    "lon": 12.39492
-                  },
-                  {
-                    "lat": 51.35942000000001,
-                    "lon": 12.39709
-                  },
-                  {
-                    "lat": 51.360730000000004,
-                    "lon": 12.39864
-                  },
-                  {
-                    "lat": 51.360910000000004,
-                    "lon": 12.398850000000001
-                  },
-                  {
-                    "lat": 51.361290000000004,
-                    "lon": 12.399220000000001
-                  },
-                  {
-                    "lat": 51.36146,
-                    "lon": 12.399370000000001
-                  },
-                  {
-                    "lat": 51.361650000000004,
-                    "lon": 12.399510000000001
-                  },
-                  {
-                    "lat": 51.36245,
-                    "lon": 12.400110000000002
-                  },
-                  {
-                    "lat": 51.36301,
-                    "lon": 12.40052
-                  },
-                  {
-                    "lat": 51.363220000000005,
-                    "lon": 12.40066
-                  },
-                  {
-                    "lat": 51.363510000000005,
-                    "lon": 12.40085
-                  },
-                  {
-                    "lat": 51.363640000000004,
-                    "lon": 12.400910000000001
-                  },
-                  {
-                    "lat": 51.3639,
-                    "lon": 12.40103
-                  },
-                  {
-                    "lat": 51.36415,
-                    "lon": 12.40112
-                  },
-                  {
-                    "lat": 51.36415,
-                    "lon": 12.40112
-                  },
-                  {
-                    "lat": 51.36415,
-                    "lon": 12.40112
-                  },
-                  {
-                    "lat": 51.36444,
-                    "lon": 12.40121
-                  },
-                  {
-                    "lat": 51.36473,
-                    "lon": 12.40126
-                  },
-                  {
-                    "lat": 51.36496,
-                    "lon": 12.401280000000002
-                  },
-                  {
-                    "lat": 51.365280000000006,
-                    "lon": 12.401290000000001
-                  },
-                  {
-                    "lat": 51.36560000000001,
-                    "lon": 12.40126
-                  },
-                  {
-                    "lat": 51.36587,
-                    "lon": 12.40122
-                  },
-                  {
-                    "lat": 51.36614,
-                    "lon": 12.401140000000002
-                  },
-                  {
-                    "lat": 51.36634,
-                    "lon": 12.40108
-                  },
-                  {
-                    "lat": 51.36663,
-                    "lon": 12.400950000000002
-                  },
-                  {
-                    "lat": 51.36695,
-                    "lon": 12.400810000000002
-                  },
-                  {
-                    "lat": 51.368190000000006,
-                    "lon": 12.40018
-                  },
-                  {
-                    "lat": 51.36836,
-                    "lon": 12.400100000000002
-                  },
-                  {
-                    "lat": 51.36957,
-                    "lon": 12.399560000000001
-                  },
-                  {
-                    "lat": 51.36977,
-                    "lon": 12.39948
-                  },
-                  {
-                    "lat": 51.36994000000001,
-                    "lon": 12.39943
-                  },
-                  {
-                    "lat": 51.37022,
-                    "lon": 12.399370000000001
-                  },
-                  {
-                    "lat": 51.37033,
-                    "lon": 12.399350000000002
-                  },
-                  {
-                    "lat": 51.37057,
-                    "lon": 12.39933
-                  },
-                  {
-                    "lat": 51.370830000000005,
-                    "lon": 12.39934
-                  },
-                  {
-                    "lat": 51.371030000000005,
-                    "lon": 12.39938
-                  },
-                  {
-                    "lat": 51.371230000000004,
-                    "lon": 12.39944
-                  },
-                  {
-                    "lat": 51.371640000000006,
-                    "lon": 12.399590000000002
-                  },
-                  {
-                    "lat": 51.37182000000001,
-                    "lon": 12.399680000000002
-                  },
-                  {
-                    "lat": 51.372110000000006,
-                    "lon": 12.399880000000001
-                  },
-                  {
-                    "lat": 51.37223,
-                    "lon": 12.399980000000001
-                  },
-                  {
-                    "lat": 51.37239,
-                    "lon": 12.400120000000001
-                  },
-                  {
-                    "lat": 51.372550000000004,
-                    "lon": 12.40027
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.40046
-                  },
-                  {
-                    "lat": 51.372870000000006,
-                    "lon": 12.40065
-                  },
-                  {
-                    "lat": 51.37299,
-                    "lon": 12.400820000000001
-                  },
-                  {
-                    "lat": 51.3731,
-                    "lon": 12.40098
-                  },
-                  {
-                    "lat": 51.37323000000001,
-                    "lon": 12.40121
-                  },
-                  {
-                    "lat": 51.37339000000001,
-                    "lon": 12.40154
-                  },
-                  {
-                    "lat": 51.373490000000004,
-                    "lon": 12.40177
-                  },
-                  {
-                    "lat": 51.37359000000001,
-                    "lon": 12.40201
-                  },
-                  {
-                    "lat": 51.37369,
-                    "lon": 12.4023
-                  },
-                  {
-                    "lat": 51.37379000000001,
-                    "lon": 12.40258
-                  },
-                  {
-                    "lat": 51.373940000000005,
-                    "lon": 12.403110000000002
-                  },
-                  {
-                    "lat": 51.374050000000004,
-                    "lon": 12.403590000000001
-                  },
-                  {
-                    "lat": 51.37418,
-                    "lon": 12.404230000000002
-                  },
-                  {
-                    "lat": 51.37422,
-                    "lon": 12.404570000000001
-                  },
-                  {
-                    "lat": 51.37427,
-                    "lon": 12.405030000000002
-                  },
-                  {
-                    "lat": 51.374300000000005,
-                    "lon": 12.405330000000001
-                  },
-                  {
-                    "lat": 51.37431,
-                    "lon": 12.405590000000002
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.40591
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.406220000000001
-                  },
-                  {
-                    "lat": 51.374300000000005,
-                    "lon": 12.4068
-                  },
-                  {
-                    "lat": 51.37424000000001,
-                    "lon": 12.407490000000001
-                  },
-                  {
-                    "lat": 51.374210000000005,
-                    "lon": 12.40788
-                  },
-                  {
-                    "lat": 51.37382,
-                    "lon": 12.4121
-                  },
-                  {
-                    "lat": 51.37382,
-                    "lon": 12.4121
-                  },
-                  {
-                    "lat": 51.37373,
-                    "lon": 12.413110000000001
-                  },
-                  {
-                    "lat": 51.373630000000006,
-                    "lon": 12.41416
-                  },
-                  {
-                    "lat": 51.37323000000001,
-                    "lon": 12.418500000000002
-                  },
-                  {
-                    "lat": 51.37312000000001,
-                    "lon": 12.41975
-                  },
-                  {
-                    "lat": 51.37286,
-                    "lon": 12.422630000000002
-                  },
-                  {
-                    "lat": 51.37272,
-                    "lon": 12.424050000000001
-                  },
-                  {
-                    "lat": 51.37268,
-                    "lon": 12.424700000000001
-                  },
-                  {
-                    "lat": 51.372580000000006,
-                    "lon": 12.42562
-                  },
-                  {
-                    "lat": 51.372510000000005,
-                    "lon": 12.42622
-                  },
-                  {
-                    "lat": 51.37239,
-                    "lon": 12.42706
-                  },
-                  {
-                    "lat": 51.37228,
-                    "lon": 12.427760000000001
-                  },
-                  {
-                    "lat": 51.372080000000004,
-                    "lon": 12.428790000000001
-                  },
-                  {
-                    "lat": 51.371970000000005,
-                    "lon": 12.429440000000001
-                  },
-                  {
-                    "lat": 51.371750000000006,
-                    "lon": 12.430470000000001
-                  },
-                  {
-                    "lat": 51.37167,
-                    "lon": 12.43078
-                  },
-                  {
-                    "lat": 51.37167,
-                    "lon": 12.43078
-                  },
-                  {
-                    "lat": 51.37153000000001,
-                    "lon": 12.43139
-                  },
-                  {
-                    "lat": 51.37138,
-                    "lon": 12.431970000000002
-                  },
-                  {
-                    "lat": 51.370940000000004,
-                    "lon": 12.433980000000002
-                  },
-                  {
-                    "lat": 51.37051,
-                    "lon": 12.43585
-                  },
-                  {
-                    "lat": 51.370360000000005,
-                    "lon": 12.436670000000001
-                  },
-                  {
-                    "lat": 51.37028,
-                    "lon": 12.43701
-                  },
-                  {
-                    "lat": 51.37017,
-                    "lon": 12.437410000000002
-                  },
-                  {
-                    "lat": 51.370000000000005,
-                    "lon": 12.43791
-                  },
-                  {
-                    "lat": 51.36981,
-                    "lon": 12.438410000000001
-                  },
-                  {
-                    "lat": 51.36957,
-                    "lon": 12.43903
-                  },
-                  {
-                    "lat": 51.3693,
-                    "lon": 12.439660000000002
-                  },
-                  {
-                    "lat": 51.369080000000004,
-                    "lon": 12.440140000000001
-                  },
-                  {
-                    "lat": 51.36838,
-                    "lon": 12.441640000000001
-                  },
-                  {
-                    "lat": 51.368140000000004,
-                    "lon": 12.442160000000001
-                  },
-                  {
-                    "lat": 51.36787,
-                    "lon": 12.442730000000001
-                  },
-                  {
-                    "lat": 51.36697,
-                    "lon": 12.44467
-                  },
-                  {
-                    "lat": 51.36648,
-                    "lon": 12.44574
-                  },
-                  {
-                    "lat": 51.366290000000006,
-                    "lon": 12.44621
-                  },
-                  {
-                    "lat": 51.366170000000004,
-                    "lon": 12.44658
-                  },
-                  {
-                    "lat": 51.36605,
-                    "lon": 12.446980000000002
-                  },
-                  {
-                    "lat": 51.36598000000001,
-                    "lon": 12.4473
-                  },
-                  {
-                    "lat": 51.365880000000004,
-                    "lon": 12.447980000000001
-                  },
-                  {
-                    "lat": 51.365840000000006,
-                    "lon": 12.448350000000001
-                  },
-                  {
-                    "lat": 51.36582000000001,
-                    "lon": 12.4487
-                  },
-                  {
-                    "lat": 51.36581,
-                    "lon": 12.449090000000002
-                  },
-                  {
-                    "lat": 51.36583,
-                    "lon": 12.449530000000001
-                  },
-                  {
-                    "lat": 51.365840000000006,
-                    "lon": 12.449660000000002
-                  },
-                  {
-                    "lat": 51.36589000000001,
-                    "lon": 12.45011
-                  },
-                  {
-                    "lat": 51.36592,
-                    "lon": 12.450380000000001
-                  },
-                  {
-                    "lat": 51.365970000000004,
-                    "lon": 12.450650000000001
-                  },
-                  {
-                    "lat": 51.3661,
-                    "lon": 12.451220000000001
-                  },
-                  {
-                    "lat": 51.366170000000004,
-                    "lon": 12.45147
-                  },
-                  {
-                    "lat": 51.36634,
-                    "lon": 12.452000000000002
-                  },
-                  {
-                    "lat": 51.366580000000006,
-                    "lon": 12.45264
-                  },
-                  {
-                    "lat": 51.367450000000005,
-                    "lon": 12.454910000000002
-                  },
-                  {
-                    "lat": 51.36751,
-                    "lon": 12.455060000000001
-                  },
-                  {
-                    "lat": 51.36806000000001,
-                    "lon": 12.45667
-                  },
-                  {
-                    "lat": 51.36867,
-                    "lon": 12.45832
-                  },
-                  {
-                    "lat": 51.368950000000005,
-                    "lon": 12.459040000000002
-                  },
-                  {
-                    "lat": 51.36932,
-                    "lon": 12.459980000000002
-                  },
-                  {
-                    "lat": 51.36932,
-                    "lon": 12.459990000000001
-                  },
-                  {
-                    "lat": 51.36932,
-                    "lon": 12.459990000000001
-                  },
-                  {
-                    "lat": 51.37236000000001,
-                    "lon": 12.4677
-                  },
-                  {
-                    "lat": 51.37312000000001,
-                    "lon": 12.46963
-                  },
-                  {
-                    "lat": 51.37595,
-                    "lon": 12.4768
-                  },
-                  {
-                    "lat": 51.376090000000005,
-                    "lon": 12.47714
-                  },
-                  {
-                    "lat": 51.378980000000006,
-                    "lon": 12.4845
-                  }
-                ],
-                "length": 173
-              },
-              "steps": [],
-              "routeShortName": "S4",
-              "routeLongName": "S-Bahn S4",
-              "wheelchairAccessible": 1,
-              "duration": 1140,
-              "alerts": [],
-              "departureDelayedTime": 1740064980000,
-              "arrivalDelayedTime": 1740066120000,
-              "departureDelayedTimeHHMM": "16:23",
-              "arrivalDelayedTimeHHMM": "16:42",
-              "startTimeHHMM": "16:23",
-              "endTimeHHMM": "16:42",
+            "steps": [],
+            "routeShortName": "15",
+            "routeLongName": "Tram 15",
+            "wheelchairAccessible": 1,
+            "duration": 900,
+            "alerts": [],
+            "departureDelayedTime": 1740670560000,
+            "arrivalDelayedTime": 1740671460000,
+            "departureDelayedTimeHHMM": "16:36",
+            "arrivalDelayedTimeHHMM": "16:51",
+            "startTimeHHMM": "16:32",
+            "endTimeHHMM": "16:47",
+            "cancelled": false,
+            "wheelchairBoardingVehicle": null
+          },
+          {
+            "startTime": 1740671220000,
+            "endTime": 1740671520000,
+            "departureDelay": 240,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 34,
+            "mode": "WALK",
+            "transitLeg": false,
+            "route": "",
+            "from": {
+              "name": "Leipzig, Probstheida",
+              "stopId": "0012073",
+              "lon": 12.425533,
+              "lat": 51.304177,
+              "arrival": 1740671220000,
+              "departure": 1740671220000,
+              "zoneId": "110",
+              "wheelchairBoarding": 1,
+              "departureDelayedTime": 1740671460000,
+              "arrivalDelayedTime": 1740671460000,
+              "departureDelayedTimeHHMM": "16:51",
+              "arrivalDelayedTimeHHMM": "16:51",
+              "arrivalHHMM": "16:47",
+              "departureHHMM": "16:47",
+              "arrivalDelay": 240,
+              "departureDelay": 240,
               "cancelled": false,
-              "wheelchairBoardingVehicle": null
+              "hafas_id": "1012902",
+              "hafas_name": "Probstheida"
             },
-            {
-              "startTime": 1740066120000,
-              "endTime": 1740066840000,
-              "departureDelay": 0,
+            "to": {
+              "name": "Leipzig, Probstheida",
+              "stopId": "0012073",
+              "lon": 12.4256479,
+              "lat": 51.3042579,
+              "arrival": 1740671520000,
+              "departure": 1740671520000,
+              "zoneId": "110",
+              "wheelchairBoarding": 0,
+              "departureDelayedTime": 1740671520000,
+              "arrivalDelayedTime": 1740671520000,
+              "departureDelayedTimeHHMM": "16:52",
+              "arrivalDelayedTimeHHMM": "16:52",
+              "arrivalHHMM": "16:52",
+              "departureHHMM": "16:52",
               "arrivalDelay": 0,
-              "realTime": false,
-              "distance": 816,
-              "mode": "WALK",
-              "transitLeg": false,
-              "route": "",
-              "from": {
-                "name": "Taucha (Leipzig)",
-                "stopId": "8013093",
-                "lon": 12.484471,
-                "lat": 51.379017,
-                "arrival": 1740066120000,
-                "departure": 1740066120000,
-                "zoneId": "168",
-                "wheelchairBoarding": 1,
-                "departureDelayedTime": 1740066120000,
-                "arrivalDelayedTime": 1740066120000,
-                "departureDelayedTimeHHMM": "16:42",
-                "arrivalDelayedTimeHHMM": "16:42",
-                "arrivalHHMM": "16:42",
-                "departureHHMM": "16:42",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "to": {
-                "name": "Destination",
-                "lon": 12.48922,
-                "lat": 51.37435,
-                "arrival": 1740066840000,
-                "departureDelayedTime": 1740066840000,
-                "arrivalDelayedTime": 1740066840000,
-                "arrivalDelayedTimeHHMM": "16:54",
-                "arrivalHHMM": "16:54",
-                "departureHHMM": "16:54",
-                "arrivalDelay": 0,
-                "departureDelay": 0,
-                "cancelled": false
-              },
-              "legGeometry": {
-                "points": [
-                  {
-                    "lat": 51.37901,
-                    "lon": 12.484470000000002
-                  },
-                  {
-                    "lat": 51.37903000000001,
-                    "lon": 12.48445
-                  },
-                  {
-                    "lat": 51.37924,
-                    "lon": 12.484990000000002
-                  },
-                  {
-                    "lat": 51.379250000000006,
-                    "lon": 12.48498
-                  },
-                  {
-                    "lat": 51.379340000000006,
-                    "lon": 12.48521
-                  },
-                  {
-                    "lat": 51.379360000000005,
-                    "lon": 12.485190000000001
-                  },
-                  {
-                    "lat": 51.37933,
-                    "lon": 12.48512
-                  },
-                  {
-                    "lat": 51.37921000000001,
-                    "lon": 12.485230000000001
-                  },
-                  {
-                    "lat": 51.37919,
-                    "lon": 12.48526
-                  },
-                  {
-                    "lat": 51.379180000000005,
-                    "lon": 12.48529
-                  },
-                  {
-                    "lat": 51.379160000000006,
-                    "lon": 12.48545
-                  },
-                  {
-                    "lat": 51.379160000000006,
-                    "lon": 12.48558
-                  },
-                  {
-                    "lat": 51.379160000000006,
-                    "lon": 12.48573
-                  },
-                  {
-                    "lat": 51.37912000000001,
-                    "lon": 12.485790000000001
-                  },
-                  {
-                    "lat": 51.37894000000001,
-                    "lon": 12.485970000000002
-                  },
-                  {
-                    "lat": 51.37903000000001,
-                    "lon": 12.48619
-                  },
-                  {
-                    "lat": 51.37897,
-                    "lon": 12.48629
-                  },
-                  {
-                    "lat": 51.378420000000006,
-                    "lon": 12.4868
-                  },
-                  {
-                    "lat": 51.378350000000005,
-                    "lon": 12.48685
-                  },
-                  {
-                    "lat": 51.378220000000006,
-                    "lon": 12.486960000000002
-                  },
-                  {
-                    "lat": 51.378080000000004,
-                    "lon": 12.487100000000002
-                  },
-                  {
-                    "lat": 51.37776,
-                    "lon": 12.487400000000001
-                  },
-                  {
-                    "lat": 51.37726000000001,
-                    "lon": 12.487850000000002
-                  },
-                  {
-                    "lat": 51.37722,
-                    "lon": 12.48789
-                  },
-                  {
-                    "lat": 51.37716,
-                    "lon": 12.487940000000002
-                  },
-                  {
-                    "lat": 51.377120000000005,
-                    "lon": 12.48783
-                  },
-                  {
-                    "lat": 51.37708000000001,
-                    "lon": 12.48788
-                  },
-                  {
-                    "lat": 51.377030000000005,
-                    "lon": 12.48792
-                  },
-                  {
-                    "lat": 51.376900000000006,
-                    "lon": 12.488040000000002
-                  },
-                  {
-                    "lat": 51.37624,
-                    "lon": 12.488660000000001
-                  },
-                  {
-                    "lat": 51.375620000000005,
-                    "lon": 12.489230000000001
-                  },
-                  {
-                    "lat": 51.375600000000006,
-                    "lon": 12.489260000000002
-                  },
-                  {
-                    "lat": 51.37559,
-                    "lon": 12.489260000000002
-                  },
-                  {
-                    "lat": 51.37541,
-                    "lon": 12.48943
-                  },
-                  {
-                    "lat": 51.37505,
-                    "lon": 12.48845
-                  },
-                  {
-                    "lat": 51.374930000000006,
-                    "lon": 12.488560000000001
-                  },
-                  {
-                    "lat": 51.37489000000001,
-                    "lon": 12.48863
-                  },
-                  {
-                    "lat": 51.37436,
-                    "lon": 12.489120000000002
-                  },
-                  {
-                    "lat": 51.374320000000004,
-                    "lon": 12.489160000000002
-                  }
-                ],
-                "length": 39
-              },
-              "steps": [
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "legGeometry": {
+              "points": [
                 {
-                  "distance": 46,
-                  "relativeDirection": "DEPART",
-                  "streetName": "Taucha (Leipzig)",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4844547,
-                  "lat": 51.3790332
+                  "lat": 51.304170000000006,
+                  "lon": 12.42553
                 },
                 {
-                  "distance": 22,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "path",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4849877,
-                  "lat": 51.3792561
+                  "lat": 51.304170000000006,
+                  "lon": 12.42552
                 },
                 {
-                  "distance": 58,
-                  "relativeDirection": "HARD_LEFT",
-                  "streetName": "underpass",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.4851939,
-                  "lat": 51.3793657
+                  "lat": 51.30416,
+                  "lon": 12.425540000000002
                 },
                 {
-                  "distance": 30,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Bahnhofstraße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4857308,
-                  "lat": 51.3791677
+                  "lat": 51.304140000000004,
+                  "lon": 12.42557
                 },
                 {
-                  "distance": 19,
-                  "relativeDirection": "LEFT",
-                  "streetName": "Weststraße",
-                  "absoluteDirection": "NORTHEAST",
-                  "lon": 12.4859759,
-                  "lat": 51.3789482
+                  "lat": 51.30413,
+                  "lon": 12.42556
                 },
                 {
-                  "distance": 242,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Südstraße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4861973,
-                  "lat": 51.3790364
+                  "lat": 51.30411,
+                  "lon": 12.425580000000002
                 },
                 {
-                  "distance": 9,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Leipziger Straße",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.4879439,
-                  "lat": 51.377163
+                  "lat": 51.30413,
+                  "lon": 12.42561
                 },
                 {
-                  "distance": 220,
-                  "relativeDirection": "LEFT",
-                  "streetName": "Karl-Marx-Straße",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4878382,
-                  "lat": 51.3771249
+                  "lat": 51.30416,
+                  "lon": 12.425650000000001
                 },
                 {
-                  "distance": 79,
-                  "relativeDirection": "RIGHT",
-                  "streetName": "Friedrich-Engels-Straße",
-                  "absoluteDirection": "SOUTHWEST",
-                  "lon": 12.4894307,
-                  "lat": 51.3754185
+                  "lat": 51.30418,
+                  "lon": 12.42567
                 },
                 {
-                  "distance": 95,
-                  "relativeDirection": "LEFT",
-                  "streetName": "path",
-                  "absoluteDirection": "SOUTHEAST",
-                  "lon": 12.4884558,
-                  "lat": 51.3750563,
-                  "alerts": []
+                  "lat": 51.304230000000004,
+                  "lon": 12.425580000000002
+                },
+                {
+                  "lat": 51.304260000000006,
+                  "lon": 12.425630000000002
+                },
+                {
+                  "lat": 51.30425,
+                  "lon": 12.425640000000001
+                },
+                {
+                  "lat": 51.30425,
+                  "lon": 12.425640000000001
                 }
               ],
-              "alerts": [],
-              "rentedBike": false,
-              "duration": 720,
-              "departureDelayedTime": 1740066120000,
-              "arrivalDelayedTime": 1740066840000,
-              "departureDelayedTimeHHMM": "16:42",
-              "arrivalDelayedTimeHHMM": "16:54",
-              "startTimeHHMM": "16:42",
-              "endTimeHHMM": "16:54",
-              "cancelled": false
-            }
-          ],
-          "otpVersion": "2.1",
-          "startTimeHHMM": "16:19",
-          "endTimeHHMM": "16:53",
-          "durationHHMM": "00:35",
-          "zoneInfo": {
-            "zones": [
-              "110",
-              "168"
+              "length": 13
+            },
+            "steps": [
+              {
+                "distance": 7,
+                "relativeDirection": "DEPART",
+                "streetName": "Probstheida",
+                "absoluteDirection": "SOUTHEAST",
+                "lon": 12.425528,
+                "lat": 51.3041736
+              },
+              {
+                "distance": 26,
+                "relativeDirection": "LEFT",
+                "streetName": "path",
+                "absoluteDirection": "SOUTHEAST",
+                "lon": 12.4255631,
+                "lat": 51.3041328
+              },
+              {
+                "distance": 2,
+                "relativeDirection": "RIGHT",
+                "streetName": "Prager Straße",
+                "absoluteDirection": "SOUTHEAST",
+                "lon": 12.4256314,
+                "lat": 51.3042675
+              }
             ],
-            "orderedZones": [
-              "110",
-              "168"
-            ],
-            "shortDistanceTicket": false
+            "rentedBike": false,
+            "duration": 60,
+            "alerts": [],
+            "departureDelayedTime": 1740671460000,
+            "arrivalDelayedTime": 1740671520000,
+            "departureDelayedTimeHHMM": "16:51",
+            "arrivalDelayedTimeHHMM": "16:52",
+            "startTimeHHMM": "16:47",
+            "endTimeHHMM": "16:52",
+            "cancelled": false,
+            "durationOriginal": 300
           },
-          "index": 4
-        }
-      ]
-    }
+          {
+            "startTime": 1740671520000,
+            "endTime": 1740673800000,
+            "departureDelay": 0,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 14363,
+            "mode": "BUS",
+            "transitLeg": true,
+            "route": "106",
+            "agencyName": "Regionalbus Leipzig GmbH",
+            "agencyUrl": "https://www.mdv.de/partner/",
+            "routeColor": "9b2986",
+            "routeType": 3,
+            "routeId": "RL____106",
+            "tripShortName": "106048",
+            "headsign": "Großstädteln (Markkleeberg), S-Bahnhof/ZöbigkerStr.",
+            "agencyId": "1:00704",
+            "tripId": "61085",
+            "serviceDate": "20250227",
+            "from": {
+              "name": "Leipzig, Probstheida",
+              "stopId": "0012073",
+              "lon": 12.4256479,
+              "lat": 51.3042579,
+              "arrival": 1740671520000,
+              "departure": 1740671520000,
+              "zoneId": "110",
+              "stopSequence": 2,
+              "wheelchairBoarding": 0,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740671520000,
+              "arrivalDelayedTime": 1740671520000,
+              "departureDelayedTimeHHMM": "16:52",
+              "arrivalDelayedTimeHHMM": "16:52",
+              "arrivalHHMM": "16:52",
+              "departureHHMM": "16:52",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "to": {
+              "name": "Zöbigker (Markkleeberg), Schmiede",
+              "stopId": "0012987",
+              "lon": 12.351914,
+              "lat": 51.26663,
+              "arrival": 1740673800000,
+              "departure": 1740673800000,
+              "zoneId": "151",
+              "stopSequence": 24,
+              "wheelchairBoarding": 0,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740673800000,
+              "arrivalDelayedTime": 1740673800000,
+              "departureDelayedTimeHHMM": "17:30",
+              "arrivalDelayedTimeHHMM": "17:30",
+              "arrivalHHMM": "17:30",
+              "departureHHMM": "17:30",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "intermediateStops": [
+              {
+                "name": "Leipzig, Pahlenweg",
+                "stopId": "0011831",
+                "lon": 12.4281226,
+                "lat": 51.2919373,
+                "arrival": 1740671700000,
+                "departure": 1740671700000,
+                "zoneId": "110",
+                "stopSequence": 3,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740671700000,
+                "arrivalDelayedTime": 1740671700000,
+                "departureDelayedTimeHHMM": "16:55",
+                "arrivalDelayedTimeHHMM": "16:55",
+                "arrivalHHMM": "16:55",
+                "departureHHMM": "16:55",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Leipzig, Schwarzenbergweg",
+                "stopId": "0011916",
+                "lon": 12.4294593,
+                "lat": 51.2868965,
+                "arrival": 1740671760000,
+                "departure": 1740671760000,
+                "zoneId": "110",
+                "stopSequence": 4,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740671760000,
+                "arrivalDelayedTime": 1740671760000,
+                "departureDelayedTimeHHMM": "16:56",
+                "arrivalDelayedTimeHHMM": "16:56",
+                "arrivalHHMM": "16:56",
+                "departureHHMM": "16:56",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Wachau (b. Leipzig), Gewerbepark",
+                "stopId": "0011917",
+                "lon": 12.4255217,
+                "lat": 51.2842431,
+                "arrival": 1740671880000,
+                "departure": 1740671880000,
+                "zoneId": "110",
+                "stopSequence": 5,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740671880000,
+                "arrivalDelayedTime": 1740671880000,
+                "departureDelayedTimeHHMM": "16:58",
+                "arrivalDelayedTimeHHMM": "16:58",
+                "arrivalHHMM": "16:58",
+                "departureHHMM": "16:58",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Wachau (b. Leipzig), Atlanta Hotel",
+                "stopId": "0011214",
+                "lon": 12.4271814,
+                "lat": 51.2810899,
+                "arrival": 1740671940000,
+                "departure": 1740671940000,
+                "zoneId": "110",
+                "stopSequence": 6,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740671940000,
+                "arrivalDelayedTime": 1740671940000,
+                "departureDelayedTimeHHMM": "16:59",
+                "arrivalDelayedTimeHHMM": "16:59",
+                "arrivalHHMM": "16:59",
+                "departureHHMM": "16:59",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Wachau (b. Leipzig), An der Hohle",
+                "stopId": "0011914",
+                "lon": 12.4315459,
+                "lat": 51.2776866,
+                "arrival": 1740672060000,
+                "departure": 1740672060000,
+                "zoneId": "151",
+                "stopSequence": 7,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672060000,
+                "arrivalDelayedTime": 1740672060000,
+                "departureDelayedTimeHHMM": "17:01",
+                "arrivalDelayedTimeHHMM": "17:01",
+                "arrivalHHMM": "17:01",
+                "departureHHMM": "17:01",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Wachau (b. Leipzig), Am Bach",
+                "stopId": "0011915",
+                "lon": 12.4278392,
+                "lat": 51.2758072,
+                "arrival": 1740672180000,
+                "departure": 1740672180000,
+                "zoneId": "151",
+                "stopSequence": 8,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672180000,
+                "arrivalDelayedTime": 1740672180000,
+                "departureDelayedTimeHHMM": "17:03",
+                "arrivalDelayedTimeHHMM": "17:03",
+                "arrivalHHMM": "17:03",
+                "departureHHMM": "17:03",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Wachau (b. Leipzig), Crostewitzer Str.",
+                "stopId": "0011912",
+                "lon": 12.423214,
+                "lat": 51.273527,
+                "arrival": 1740672240000,
+                "departure": 1740672240000,
+                "zoneId": "151",
+                "stopSequence": 9,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672240000,
+                "arrivalDelayedTime": 1740672240000,
+                "departureDelayedTimeHHMM": "17:04",
+                "arrivalDelayedTimeHHMM": "17:04",
+                "arrivalHHMM": "17:04",
+                "departureHHMM": "17:04",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Goldene Höhe",
+                "stopId": "0011913",
+                "lon": 12.41247,
+                "lat": 51.273041,
+                "arrival": 1740672300000,
+                "departure": 1740672300000,
+                "zoneId": "151",
+                "stopSequence": 10,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672300000,
+                "arrivalDelayedTime": 1740672300000,
+                "departureDelayedTimeHHMM": "17:05",
+                "arrivalDelayedTimeHHMM": "17:05",
+                "arrivalHHMM": "17:05",
+                "departureHHMM": "17:05",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Heinrich-Heine-Str.",
+                "stopId": "0011910",
+                "lon": 12.400316,
+                "lat": 51.272685,
+                "arrival": 1740672360000,
+                "departure": 1740672360000,
+                "zoneId": "151",
+                "stopSequence": 11,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672360000,
+                "arrivalDelayedTime": 1740672360000,
+                "departureDelayedTimeHHMM": "17:06",
+                "arrivalDelayedTimeHHMM": "17:06",
+                "arrivalHHMM": "17:06",
+                "departureHHMM": "17:06",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Ost, Seepromenade",
+                "stopId": "0022383",
+                "lon": 12.398439,
+                "lat": 51.271921,
+                "arrival": 1740672420000,
+                "departure": 1740672420000,
+                "zoneId": "151",
+                "stopSequence": 12,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672420000,
+                "arrivalDelayedTime": 1740672420000,
+                "departureDelayedTimeHHMM": "17:07",
+                "arrivalDelayedTimeHHMM": "17:07",
+                "arrivalHHMM": "17:07",
+                "departureHHMM": "17:07",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Ost, Schillerplatz",
+                "stopId": "0011911",
+                "lon": 12.3971824,
+                "lat": 51.2759523,
+                "arrival": 1740672480000,
+                "departure": 1740672480000,
+                "zoneId": "151",
+                "stopSequence": 13,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672480000,
+                "arrivalDelayedTime": 1740672480000,
+                "departureDelayedTimeHHMM": "17:08",
+                "arrivalDelayedTimeHHMM": "17:08",
+                "arrivalHHMM": "17:08",
+                "departureHHMM": "17:08",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Ost, Auenplatz",
+                "stopId": "0003851",
+                "lon": 12.3928535,
+                "lat": 51.2771143,
+                "arrival": 1740672600000,
+                "departure": 1740672600000,
+                "zoneId": "151",
+                "stopSequence": 14,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672600000,
+                "arrivalDelayedTime": 1740672600000,
+                "departureDelayedTimeHHMM": "17:10",
+                "arrivalDelayedTimeHHMM": "17:10",
+                "arrivalHHMM": "17:10",
+                "departureHHMM": "17:10",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Seenallee",
+                "stopId": "0019940",
+                "lon": 12.3771924,
+                "lat": 51.2731332,
+                "arrival": 1740672780000,
+                "departure": 1740672780000,
+                "zoneId": "151",
+                "stopSequence": 15,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672780000,
+                "arrivalDelayedTime": 1740672780000,
+                "departureDelayedTimeHHMM": "17:13",
+                "arrivalDelayedTimeHHMM": "17:13",
+                "arrivalHHMM": "17:13",
+                "departureHHMM": "17:13",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Schulstr.",
+                "stopId": "0011918",
+                "lon": 12.374816,
+                "lat": 51.2788288,
+                "arrival": 1740672840000,
+                "departure": 1740672840000,
+                "zoneId": "151",
+                "stopSequence": 16,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672840000,
+                "arrivalDelayedTime": 1740672840000,
+                "departureDelayedTimeHHMM": "17:14",
+                "arrivalDelayedTimeHHMM": "17:14",
+                "arrivalHHMM": "17:14",
+                "departureHHMM": "17:14",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, S-Bahnhof (Bus)",
+                "stopId": "0010998",
+                "lon": 12.3704606,
+                "lat": 51.2791446,
+                "arrival": 1740672960000,
+                "departure": 1740673080000,
+                "zoneId": "151",
+                "stopSequence": 17,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673080000,
+                "arrivalDelayedTime": 1740672960000,
+                "departureDelayedTimeHHMM": "17:18",
+                "arrivalDelayedTimeHHMM": "17:16",
+                "arrivalHHMM": "17:16",
+                "departureHHMM": "17:18",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Sonnesiedlung",
+                "stopId": "0012037",
+                "lon": 12.3635871,
+                "lat": 51.2831441,
+                "arrival": 1740673200000,
+                "departure": 1740673200000,
+                "zoneId": "151",
+                "stopSequence": 18,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673200000,
+                "arrivalDelayedTime": 1740673200000,
+                "departureDelayedTimeHHMM": "17:20",
+                "arrivalDelayedTimeHHMM": "17:20",
+                "arrivalHHMM": "17:20",
+                "departureHHMM": "17:20",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Gautzscher Platz",
+                "stopId": "0012988",
+                "lon": 12.3592058,
+                "lat": 51.2788496,
+                "arrival": 1740673320000,
+                "departure": 1740673320000,
+                "zoneId": "151",
+                "stopSequence": 19,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673320000,
+                "arrivalDelayedTime": 1740673320000,
+                "departureDelayedTimeHHMM": "17:22",
+                "arrivalDelayedTimeHHMM": "17:22",
+                "arrivalHHMM": "17:22",
+                "departureHHMM": "17:22",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Am Eulenberg",
+                "stopId": "0012986",
+                "lon": 12.356505,
+                "lat": 51.272458,
+                "arrival": 1740673440000,
+                "departure": 1740673440000,
+                "zoneId": "151",
+                "stopSequence": 20,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673440000,
+                "arrivalDelayedTime": 1740673440000,
+                "departureDelayedTimeHHMM": "17:24",
+                "arrivalDelayedTimeHHMM": "17:24",
+                "arrivalHHMM": "17:24",
+                "departureHHMM": "17:24",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Sonnenweg",
+                "stopId": "0012767",
+                "lon": 12.360237,
+                "lat": 51.270957,
+                "arrival": 1740673500000,
+                "departure": 1740673500000,
+                "zoneId": "151",
+                "stopSequence": 21,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673500000,
+                "arrivalDelayedTime": 1740673500000,
+                "departureDelayedTimeHHMM": "17:25",
+                "arrivalDelayedTimeHHMM": "17:25",
+                "arrivalHHMM": "17:25",
+                "departureHHMM": "17:25",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Seniorenzentrum",
+                "stopId": "0012768",
+                "lon": 12.363897,
+                "lat": 51.270618,
+                "arrival": 1740673560000,
+                "departure": 1740673560000,
+                "zoneId": "151",
+                "stopSequence": 22,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673560000,
+                "arrivalDelayedTime": 1740673560000,
+                "departureDelayedTimeHHMM": "17:26",
+                "arrivalDelayedTimeHHMM": "17:26",
+                "arrivalHHMM": "17:26",
+                "departureHHMM": "17:26",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Freiburger Allee",
+                "stopId": "0012769",
+                "lon": 12.355647,
+                "lat": 51.27065,
+                "arrival": 1740673680000,
+                "departure": 1740673680000,
+                "zoneId": "151",
+                "stopSequence": 23,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673680000,
+                "arrivalDelayedTime": 1740673680000,
+                "departureDelayedTimeHHMM": "17:28",
+                "arrivalDelayedTimeHHMM": "17:28",
+                "arrivalHHMM": "17:28",
+                "departureHHMM": "17:28",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              }
+            ],
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.30418,
+                  "lon": 12.42553
+                },
+                {
+                  "lat": 51.30406000000001,
+                  "lon": 12.425740000000001
+                },
+                {
+                  "lat": 51.303920000000005,
+                  "lon": 12.425870000000002
+                },
+                {
+                  "lat": 51.30346,
+                  "lon": 12.426680000000001
+                },
+                {
+                  "lat": 51.303250000000006,
+                  "lon": 12.426680000000001
+                },
+                {
+                  "lat": 51.302670000000006,
+                  "lon": 12.426720000000001
+                },
+                {
+                  "lat": 51.302550000000004,
+                  "lon": 12.42669
+                },
+                {
+                  "lat": 51.301860000000005,
+                  "lon": 12.426730000000001
+                },
+                {
+                  "lat": 51.301500000000004,
+                  "lon": 12.426730000000001
+                },
+                {
+                  "lat": 51.301370000000006,
+                  "lon": 12.426730000000001
+                },
+                {
+                  "lat": 51.300850000000004,
+                  "lon": 12.426770000000001
+                },
+                {
+                  "lat": 51.3006,
+                  "lon": 12.426800000000002
+                },
+                {
+                  "lat": 51.30004,
+                  "lon": 12.42684
+                },
+                {
+                  "lat": 51.29708,
+                  "lon": 12.42702
+                },
+                {
+                  "lat": 51.295730000000006,
+                  "lon": 12.42712
+                },
+                {
+                  "lat": 51.295390000000005,
+                  "lon": 12.427200000000001
+                },
+                {
+                  "lat": 51.294830000000005,
+                  "lon": 12.42736
+                },
+                {
+                  "lat": 51.29229,
+                  "lon": 12.428020000000002
+                },
+                {
+                  "lat": 51.29193,
+                  "lon": 12.428120000000002
+                },
+                {
+                  "lat": 51.29193,
+                  "lon": 12.428120000000002
+                },
+                {
+                  "lat": 51.291470000000004,
+                  "lon": 12.42825
+                },
+                {
+                  "lat": 51.28895000000001,
+                  "lon": 12.428920000000002
+                },
+                {
+                  "lat": 51.28689000000001,
+                  "lon": 12.429450000000001
+                },
+                {
+                  "lat": 51.28689000000001,
+                  "lon": 12.429450000000001
+                },
+                {
+                  "lat": 51.28669000000001,
+                  "lon": 12.4295
+                },
+                {
+                  "lat": 51.28614,
+                  "lon": 12.429640000000001
+                },
+                {
+                  "lat": 51.28613000000001,
+                  "lon": 12.429590000000001
+                },
+                {
+                  "lat": 51.286100000000005,
+                  "lon": 12.429530000000002
+                },
+                {
+                  "lat": 51.286060000000006,
+                  "lon": 12.429490000000001
+                },
+                {
+                  "lat": 51.28604000000001,
+                  "lon": 12.429490000000001
+                },
+                {
+                  "lat": 51.286010000000005,
+                  "lon": 12.429490000000001
+                },
+                {
+                  "lat": 51.28555000000001,
+                  "lon": 12.425160000000002
+                },
+                {
+                  "lat": 51.28428,
+                  "lon": 12.425510000000001
+                },
+                {
+                  "lat": 51.284240000000004,
+                  "lon": 12.42552
+                },
+                {
+                  "lat": 51.284240000000004,
+                  "lon": 12.42552
+                },
+                {
+                  "lat": 51.2811,
+                  "lon": 12.42637
+                },
+                {
+                  "lat": 51.280840000000005,
+                  "lon": 12.42645
+                },
+                {
+                  "lat": 51.28078000000001,
+                  "lon": 12.426530000000001
+                },
+                {
+                  "lat": 51.280750000000005,
+                  "lon": 12.42664
+                },
+                {
+                  "lat": 51.280750000000005,
+                  "lon": 12.426760000000002
+                },
+                {
+                  "lat": 51.280800000000006,
+                  "lon": 12.42725
+                },
+                {
+                  "lat": 51.280800000000006,
+                  "lon": 12.42725
+                },
+                {
+                  "lat": 51.281130000000005,
+                  "lon": 12.430460000000002
+                },
+                {
+                  "lat": 51.281130000000005,
+                  "lon": 12.430790000000002
+                },
+                {
+                  "lat": 51.281130000000005,
+                  "lon": 12.430940000000001
+                },
+                {
+                  "lat": 51.28036,
+                  "lon": 12.431140000000001
+                },
+                {
+                  "lat": 51.28023,
+                  "lon": 12.43119
+                },
+                {
+                  "lat": 51.279300000000006,
+                  "lon": 12.431450000000002
+                },
+                {
+                  "lat": 51.27798000000001,
+                  "lon": 12.431790000000001
+                },
+                {
+                  "lat": 51.277750000000005,
+                  "lon": 12.43186
+                },
+                {
+                  "lat": 51.277680000000004,
+                  "lon": 12.431540000000002
+                },
+                {
+                  "lat": 51.277680000000004,
+                  "lon": 12.431540000000002
+                },
+                {
+                  "lat": 51.27767000000001,
+                  "lon": 12.431460000000001
+                },
+                {
+                  "lat": 51.27747,
+                  "lon": 12.430430000000001
+                },
+                {
+                  "lat": 51.27745,
+                  "lon": 12.43035
+                },
+                {
+                  "lat": 51.27741,
+                  "lon": 12.430290000000001
+                },
+                {
+                  "lat": 51.27736,
+                  "lon": 12.43022
+                },
+                {
+                  "lat": 51.277300000000004,
+                  "lon": 12.43017
+                },
+                {
+                  "lat": 51.277240000000006,
+                  "lon": 12.430140000000002
+                },
+                {
+                  "lat": 51.27718,
+                  "lon": 12.430140000000002
+                },
+                {
+                  "lat": 51.27669,
+                  "lon": 12.43021
+                },
+                {
+                  "lat": 51.276610000000005,
+                  "lon": 12.430190000000001
+                },
+                {
+                  "lat": 51.276540000000004,
+                  "lon": 12.43016
+                },
+                {
+                  "lat": 51.27648000000001,
+                  "lon": 12.430090000000002
+                },
+                {
+                  "lat": 51.27644,
+                  "lon": 12.429990000000002
+                },
+                {
+                  "lat": 51.27635,
+                  "lon": 12.429630000000001
+                },
+                {
+                  "lat": 51.27619000000001,
+                  "lon": 12.429070000000001
+                },
+                {
+                  "lat": 51.275800000000004,
+                  "lon": 12.42783
+                },
+                {
+                  "lat": 51.275800000000004,
+                  "lon": 12.42783
+                },
+                {
+                  "lat": 51.275760000000005,
+                  "lon": 12.427710000000001
+                },
+                {
+                  "lat": 51.27564,
+                  "lon": 12.42731
+                },
+                {
+                  "lat": 51.275580000000005,
+                  "lon": 12.42721
+                },
+                {
+                  "lat": 51.27553,
+                  "lon": 12.42716
+                },
+                {
+                  "lat": 51.275420000000004,
+                  "lon": 12.42711
+                },
+                {
+                  "lat": 51.275310000000005,
+                  "lon": 12.42711
+                },
+                {
+                  "lat": 51.2749,
+                  "lon": 12.42722
+                },
+                {
+                  "lat": 51.27412,
+                  "lon": 12.42753
+                },
+                {
+                  "lat": 51.27403,
+                  "lon": 12.42753
+                },
+                {
+                  "lat": 51.27398,
+                  "lon": 12.427480000000001
+                },
+                {
+                  "lat": 51.273950000000006,
+                  "lon": 12.42739
+                },
+                {
+                  "lat": 51.27391,
+                  "lon": 12.427200000000001
+                },
+                {
+                  "lat": 51.27353,
+                  "lon": 12.42467
+                },
+                {
+                  "lat": 51.273500000000006,
+                  "lon": 12.424330000000001
+                },
+                {
+                  "lat": 51.27349,
+                  "lon": 12.42392
+                },
+                {
+                  "lat": 51.273500000000006,
+                  "lon": 12.423210000000001
+                },
+                {
+                  "lat": 51.273500000000006,
+                  "lon": 12.423210000000001
+                },
+                {
+                  "lat": 51.273500000000006,
+                  "lon": 12.423140000000002
+                },
+                {
+                  "lat": 51.27355000000001,
+                  "lon": 12.419270000000001
+                },
+                {
+                  "lat": 51.27365,
+                  "lon": 12.417810000000001
+                },
+                {
+                  "lat": 51.27366000000001,
+                  "lon": 12.417390000000001
+                },
+                {
+                  "lat": 51.27364000000001,
+                  "lon": 12.417000000000002
+                },
+                {
+                  "lat": 51.27356,
+                  "lon": 12.416540000000001
+                },
+                {
+                  "lat": 51.27351,
+                  "lon": 12.41627
+                },
+                {
+                  "lat": 51.273360000000004,
+                  "lon": 12.41558
+                },
+                {
+                  "lat": 51.2732,
+                  "lon": 12.414930000000002
+                },
+                {
+                  "lat": 51.27313,
+                  "lon": 12.414530000000001
+                },
+                {
+                  "lat": 51.27310000000001,
+                  "lon": 12.41422
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.412820000000002
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.412600000000001
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.41247
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.41247
+                },
+                {
+                  "lat": 51.273050000000005,
+                  "lon": 12.40985
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.409370000000001
+                },
+                {
+                  "lat": 51.27295,
+                  "lon": 12.408470000000001
+                },
+                {
+                  "lat": 51.27286,
+                  "lon": 12.4077
+                },
+                {
+                  "lat": 51.272800000000004,
+                  "lon": 12.40727
+                },
+                {
+                  "lat": 51.27244,
+                  "lon": 12.40515
+                },
+                {
+                  "lat": 51.272380000000005,
+                  "lon": 12.404530000000001
+                },
+                {
+                  "lat": 51.272360000000006,
+                  "lon": 12.404020000000001
+                },
+                {
+                  "lat": 51.272360000000006,
+                  "lon": 12.403350000000001
+                },
+                {
+                  "lat": 51.27239,
+                  "lon": 12.402660000000001
+                },
+                {
+                  "lat": 51.272650000000006,
+                  "lon": 12.40033
+                },
+                {
+                  "lat": 51.27266,
+                  "lon": 12.400300000000001
+                },
+                {
+                  "lat": 51.27266,
+                  "lon": 12.400300000000001
+                },
+                {
+                  "lat": 51.27286,
+                  "lon": 12.398660000000001
+                },
+                {
+                  "lat": 51.27290000000001,
+                  "lon": 12.39835
+                },
+                {
+                  "lat": 51.27290000000001,
+                  "lon": 12.398140000000001
+                },
+                {
+                  "lat": 51.27291,
+                  "lon": 12.398060000000001
+                },
+                {
+                  "lat": 51.272740000000006,
+                  "lon": 12.39802
+                },
+                {
+                  "lat": 51.272380000000005,
+                  "lon": 12.39817
+                },
+                {
+                  "lat": 51.27205000000001,
+                  "lon": 12.398270000000002
+                },
+                {
+                  "lat": 51.271710000000006,
+                  "lon": 12.398320000000002
+                },
+                {
+                  "lat": 51.27165,
+                  "lon": 12.398460000000002
+                },
+                {
+                  "lat": 51.27165,
+                  "lon": 12.398510000000002
+                },
+                {
+                  "lat": 51.27168,
+                  "lon": 12.39858
+                },
+                {
+                  "lat": 51.27172,
+                  "lon": 12.398620000000001
+                },
+                {
+                  "lat": 51.271770000000004,
+                  "lon": 12.398610000000001
+                },
+                {
+                  "lat": 51.271800000000006,
+                  "lon": 12.39858
+                },
+                {
+                  "lat": 51.271860000000004,
+                  "lon": 12.398460000000002
+                },
+                {
+                  "lat": 51.27188,
+                  "lon": 12.3984
+                },
+                {
+                  "lat": 51.27188,
+                  "lon": 12.3984
+                },
+                {
+                  "lat": 51.271930000000005,
+                  "lon": 12.398290000000001
+                },
+                {
+                  "lat": 51.27205000000001,
+                  "lon": 12.398270000000002
+                },
+                {
+                  "lat": 51.272380000000005,
+                  "lon": 12.39817
+                },
+                {
+                  "lat": 51.272740000000006,
+                  "lon": 12.39802
+                },
+                {
+                  "lat": 51.27291,
+                  "lon": 12.398060000000001
+                },
+                {
+                  "lat": 51.27293,
+                  "lon": 12.397920000000001
+                },
+                {
+                  "lat": 51.27297,
+                  "lon": 12.39784
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.39783
+                },
+                {
+                  "lat": 51.27317000000001,
+                  "lon": 12.39779
+                },
+                {
+                  "lat": 51.2732,
+                  "lon": 12.397760000000002
+                },
+                {
+                  "lat": 51.273500000000006,
+                  "lon": 12.397730000000001
+                },
+                {
+                  "lat": 51.27362,
+                  "lon": 12.39774
+                },
+                {
+                  "lat": 51.27391,
+                  "lon": 12.3978
+                },
+                {
+                  "lat": 51.27443,
+                  "lon": 12.39793
+                },
+                {
+                  "lat": 51.27452,
+                  "lon": 12.39794
+                },
+                {
+                  "lat": 51.27463,
+                  "lon": 12.397950000000002
+                },
+                {
+                  "lat": 51.27481,
+                  "lon": 12.397920000000001
+                },
+                {
+                  "lat": 51.27494,
+                  "lon": 12.397870000000001
+                },
+                {
+                  "lat": 51.27506,
+                  "lon": 12.3978
+                },
+                {
+                  "lat": 51.27512,
+                  "lon": 12.39779
+                },
+                {
+                  "lat": 51.275180000000006,
+                  "lon": 12.397760000000002
+                },
+                {
+                  "lat": 51.27525000000001,
+                  "lon": 12.39769
+                },
+                {
+                  "lat": 51.275290000000005,
+                  "lon": 12.397630000000001
+                },
+                {
+                  "lat": 51.27532,
+                  "lon": 12.397540000000001
+                },
+                {
+                  "lat": 51.2755,
+                  "lon": 12.397260000000001
+                },
+                {
+                  "lat": 51.275760000000005,
+                  "lon": 12.3969
+                },
+                {
+                  "lat": 51.27579,
+                  "lon": 12.39686
+                },
+                {
+                  "lat": 51.27579,
+                  "lon": 12.39686
+                },
+                {
+                  "lat": 51.27599000000001,
+                  "lon": 12.39662
+                },
+                {
+                  "lat": 51.27606,
+                  "lon": 12.396560000000001
+                },
+                {
+                  "lat": 51.27615,
+                  "lon": 12.39652
+                },
+                {
+                  "lat": 51.277350000000006,
+                  "lon": 12.3961
+                },
+                {
+                  "lat": 51.27732,
+                  "lon": 12.395760000000001
+                },
+                {
+                  "lat": 51.27722000000001,
+                  "lon": 12.39375
+                },
+                {
+                  "lat": 51.27716,
+                  "lon": 12.39319
+                },
+                {
+                  "lat": 51.277120000000004,
+                  "lon": 12.392900000000001
+                },
+                {
+                  "lat": 51.27711000000001,
+                  "lon": 12.392850000000001
+                },
+                {
+                  "lat": 51.27711000000001,
+                  "lon": 12.392850000000001
+                },
+                {
+                  "lat": 51.27704000000001,
+                  "lon": 12.392470000000001
+                },
+                {
+                  "lat": 51.27704000000001,
+                  "lon": 12.39235
+                },
+                {
+                  "lat": 51.277,
+                  "lon": 12.39217
+                },
+                {
+                  "lat": 51.27695000000001,
+                  "lon": 12.39211
+                },
+                {
+                  "lat": 51.276880000000006,
+                  "lon": 12.391850000000002
+                },
+                {
+                  "lat": 51.27667,
+                  "lon": 12.391250000000001
+                },
+                {
+                  "lat": 51.276410000000006,
+                  "lon": 12.390680000000001
+                },
+                {
+                  "lat": 51.276230000000005,
+                  "lon": 12.390320000000001
+                },
+                {
+                  "lat": 51.27584,
+                  "lon": 12.389640000000002
+                },
+                {
+                  "lat": 51.27564,
+                  "lon": 12.389320000000001
+                },
+                {
+                  "lat": 51.27559,
+                  "lon": 12.389180000000001
+                },
+                {
+                  "lat": 51.27537,
+                  "lon": 12.388810000000001
+                },
+                {
+                  "lat": 51.27525000000001,
+                  "lon": 12.388630000000001
+                },
+                {
+                  "lat": 51.27516000000001,
+                  "lon": 12.388530000000001
+                },
+                {
+                  "lat": 51.27409,
+                  "lon": 12.38677
+                },
+                {
+                  "lat": 51.273950000000006,
+                  "lon": 12.38653
+                },
+                {
+                  "lat": 51.27382000000001,
+                  "lon": 12.386260000000002
+                },
+                {
+                  "lat": 51.27362,
+                  "lon": 12.385800000000001
+                },
+                {
+                  "lat": 51.273540000000004,
+                  "lon": 12.38559
+                },
+                {
+                  "lat": 51.273430000000005,
+                  "lon": 12.38526
+                },
+                {
+                  "lat": 51.27326000000001,
+                  "lon": 12.38461
+                },
+                {
+                  "lat": 51.27317000000001,
+                  "lon": 12.38414
+                },
+                {
+                  "lat": 51.27311,
+                  "lon": 12.38371
+                },
+                {
+                  "lat": 51.272960000000005,
+                  "lon": 12.381920000000001
+                },
+                {
+                  "lat": 51.272650000000006,
+                  "lon": 12.37817
+                },
+                {
+                  "lat": 51.27262,
+                  "lon": 12.377650000000001
+                },
+                {
+                  "lat": 51.27261000000001,
+                  "lon": 12.377350000000002
+                },
+                {
+                  "lat": 51.27293,
+                  "lon": 12.377260000000001
+                },
+                {
+                  "lat": 51.27311,
+                  "lon": 12.3772
+                },
+                {
+                  "lat": 51.27313,
+                  "lon": 12.37719
+                },
+                {
+                  "lat": 51.27313,
+                  "lon": 12.37719
+                },
+                {
+                  "lat": 51.27322,
+                  "lon": 12.377160000000002
+                },
+                {
+                  "lat": 51.27347,
+                  "lon": 12.377160000000002
+                },
+                {
+                  "lat": 51.274570000000004,
+                  "lon": 12.377120000000001
+                },
+                {
+                  "lat": 51.274930000000005,
+                  "lon": 12.377110000000002
+                },
+                {
+                  "lat": 51.2755,
+                  "lon": 12.377160000000002
+                },
+                {
+                  "lat": 51.275580000000005,
+                  "lon": 12.37715
+                },
+                {
+                  "lat": 51.275650000000006,
+                  "lon": 12.377130000000001
+                },
+                {
+                  "lat": 51.27678,
+                  "lon": 12.376610000000001
+                },
+                {
+                  "lat": 51.27698,
+                  "lon": 12.376500000000002
+                },
+                {
+                  "lat": 51.277080000000005,
+                  "lon": 12.37639
+                },
+                {
+                  "lat": 51.278000000000006,
+                  "lon": 12.375280000000002
+                },
+                {
+                  "lat": 51.27807000000001,
+                  "lon": 12.375210000000001
+                },
+                {
+                  "lat": 51.278130000000004,
+                  "lon": 12.375160000000001
+                },
+                {
+                  "lat": 51.27857,
+                  "lon": 12.37493
+                },
+                {
+                  "lat": 51.278690000000005,
+                  "lon": 12.37489
+                },
+                {
+                  "lat": 51.27882,
+                  "lon": 12.374810000000002
+                },
+                {
+                  "lat": 51.27882,
+                  "lon": 12.374810000000002
+                },
+                {
+                  "lat": 51.27882,
+                  "lon": 12.374810000000002
+                },
+                {
+                  "lat": 51.27919000000001,
+                  "lon": 12.37462
+                },
+                {
+                  "lat": 51.2798,
+                  "lon": 12.374260000000001
+                },
+                {
+                  "lat": 51.279610000000005,
+                  "lon": 12.37339
+                },
+                {
+                  "lat": 51.27949,
+                  "lon": 12.37278
+                },
+                {
+                  "lat": 51.27929,
+                  "lon": 12.371450000000001
+                },
+                {
+                  "lat": 51.27910000000001,
+                  "lon": 12.37152
+                },
+                {
+                  "lat": 51.278850000000006,
+                  "lon": 12.371630000000001
+                },
+                {
+                  "lat": 51.27852000000001,
+                  "lon": 12.3717
+                },
+                {
+                  "lat": 51.27844,
+                  "lon": 12.371730000000001
+                },
+                {
+                  "lat": 51.27816000000001,
+                  "lon": 12.37199
+                },
+                {
+                  "lat": 51.27803,
+                  "lon": 12.37208
+                },
+                {
+                  "lat": 51.27792,
+                  "lon": 12.37218
+                },
+                {
+                  "lat": 51.277890000000006,
+                  "lon": 12.37222
+                },
+                {
+                  "lat": 51.27788,
+                  "lon": 12.372290000000001
+                },
+                {
+                  "lat": 51.2779,
+                  "lon": 12.37236
+                },
+                {
+                  "lat": 51.277930000000005,
+                  "lon": 12.3724
+                },
+                {
+                  "lat": 51.27796000000001,
+                  "lon": 12.37241
+                },
+                {
+                  "lat": 51.27801,
+                  "lon": 12.372390000000001
+                },
+                {
+                  "lat": 51.278040000000004,
+                  "lon": 12.37231
+                },
+                {
+                  "lat": 51.27806,
+                  "lon": 12.37221
+                },
+                {
+                  "lat": 51.2781,
+                  "lon": 12.372110000000001
+                },
+                {
+                  "lat": 51.27816000000001,
+                  "lon": 12.37199
+                },
+                {
+                  "lat": 51.27844,
+                  "lon": 12.371730000000001
+                },
+                {
+                  "lat": 51.27852000000001,
+                  "lon": 12.3717
+                },
+                {
+                  "lat": 51.278850000000006,
+                  "lon": 12.371630000000001
+                },
+                {
+                  "lat": 51.27929,
+                  "lon": 12.371450000000001
+                },
+                {
+                  "lat": 51.279160000000005,
+                  "lon": 12.37057
+                },
+                {
+                  "lat": 51.27915,
+                  "lon": 12.370450000000002
+                },
+                {
+                  "lat": 51.27915,
+                  "lon": 12.370450000000002
+                },
+                {
+                  "lat": 51.27910000000001,
+                  "lon": 12.37006
+                },
+                {
+                  "lat": 51.279070000000004,
+                  "lon": 12.369800000000001
+                },
+                {
+                  "lat": 51.279070000000004,
+                  "lon": 12.369670000000001
+                },
+                {
+                  "lat": 51.279090000000004,
+                  "lon": 12.369320000000002
+                },
+                {
+                  "lat": 51.279160000000005,
+                  "lon": 12.368540000000001
+                },
+                {
+                  "lat": 51.27924,
+                  "lon": 12.36855
+                },
+                {
+                  "lat": 51.27928000000001,
+                  "lon": 12.368530000000002
+                },
+                {
+                  "lat": 51.28061,
+                  "lon": 12.367080000000001
+                },
+                {
+                  "lat": 51.28237000000001,
+                  "lon": 12.365870000000001
+                },
+                {
+                  "lat": 51.28298,
+                  "lon": 12.36438
+                },
+                {
+                  "lat": 51.283260000000006,
+                  "lon": 12.363710000000001
+                },
+                {
+                  "lat": 51.28314,
+                  "lon": 12.36358
+                },
+                {
+                  "lat": 51.28314,
+                  "lon": 12.36358
+                },
+                {
+                  "lat": 51.27982,
+                  "lon": 12.360080000000002
+                },
+                {
+                  "lat": 51.27948000000001,
+                  "lon": 12.3597
+                },
+                {
+                  "lat": 51.279230000000005,
+                  "lon": 12.359470000000002
+                },
+                {
+                  "lat": 51.278850000000006,
+                  "lon": 12.359210000000001
+                },
+                {
+                  "lat": 51.27884,
+                  "lon": 12.359200000000001
+                },
+                {
+                  "lat": 51.27884,
+                  "lon": 12.359200000000001
+                },
+                {
+                  "lat": 51.276650000000004,
+                  "lon": 12.357740000000002
+                },
+                {
+                  "lat": 51.27577,
+                  "lon": 12.357140000000001
+                },
+                {
+                  "lat": 51.274950000000004,
+                  "lon": 12.356570000000001
+                },
+                {
+                  "lat": 51.274680000000004,
+                  "lon": 12.3564
+                },
+                {
+                  "lat": 51.273830000000004,
+                  "lon": 12.35585
+                },
+                {
+                  "lat": 51.27310000000001,
+                  "lon": 12.355310000000001
+                },
+                {
+                  "lat": 51.27257,
+                  "lon": 12.354980000000001
+                },
+                {
+                  "lat": 51.272400000000005,
+                  "lon": 12.35565
+                },
+                {
+                  "lat": 51.272310000000004,
+                  "lon": 12.35603
+                },
+                {
+                  "lat": 51.27232000000001,
+                  "lon": 12.35612
+                },
+                {
+                  "lat": 51.272420000000004,
+                  "lon": 12.356520000000002
+                },
+                {
+                  "lat": 51.272420000000004,
+                  "lon": 12.356520000000002
+                },
+                {
+                  "lat": 51.272420000000004,
+                  "lon": 12.356530000000001
+                },
+                {
+                  "lat": 51.27248,
+                  "lon": 12.35679
+                },
+                {
+                  "lat": 51.2725,
+                  "lon": 12.35697
+                },
+                {
+                  "lat": 51.2725,
+                  "lon": 12.357140000000001
+                },
+                {
+                  "lat": 51.27246,
+                  "lon": 12.357370000000001
+                },
+                {
+                  "lat": 51.27244,
+                  "lon": 12.357920000000002
+                },
+                {
+                  "lat": 51.27176000000001,
+                  "lon": 12.357890000000001
+                },
+                {
+                  "lat": 51.271620000000006,
+                  "lon": 12.35782
+                },
+                {
+                  "lat": 51.27112,
+                  "lon": 12.357800000000001
+                },
+                {
+                  "lat": 51.27105,
+                  "lon": 12.357850000000001
+                },
+                {
+                  "lat": 51.271080000000005,
+                  "lon": 12.358020000000002
+                },
+                {
+                  "lat": 51.271040000000006,
+                  "lon": 12.359430000000001
+                },
+                {
+                  "lat": 51.27103,
+                  "lon": 12.359990000000002
+                },
+                {
+                  "lat": 51.270990000000005,
+                  "lon": 12.3602
+                },
+                {
+                  "lat": 51.270990000000005,
+                  "lon": 12.360230000000001
+                },
+                {
+                  "lat": 51.270990000000005,
+                  "lon": 12.360230000000001
+                },
+                {
+                  "lat": 51.27096,
+                  "lon": 12.361870000000001
+                },
+                {
+                  "lat": 51.270950000000006,
+                  "lon": 12.361970000000001
+                },
+                {
+                  "lat": 51.27091,
+                  "lon": 12.362060000000001
+                },
+                {
+                  "lat": 51.270790000000005,
+                  "lon": 12.362260000000001
+                },
+                {
+                  "lat": 51.270720000000004,
+                  "lon": 12.362380000000002
+                },
+                {
+                  "lat": 51.27069,
+                  "lon": 12.362480000000001
+                },
+                {
+                  "lat": 51.27067,
+                  "lon": 12.3626
+                },
+                {
+                  "lat": 51.27065,
+                  "lon": 12.363760000000001
+                },
+                {
+                  "lat": 51.270630000000004,
+                  "lon": 12.363880000000002
+                },
+                {
+                  "lat": 51.270630000000004,
+                  "lon": 12.363890000000001
+                },
+                {
+                  "lat": 51.270630000000004,
+                  "lon": 12.363890000000001
+                },
+                {
+                  "lat": 51.270630000000004,
+                  "lon": 12.364180000000001
+                },
+                {
+                  "lat": 51.27062,
+                  "lon": 12.364270000000001
+                },
+                {
+                  "lat": 51.270590000000006,
+                  "lon": 12.36434
+                },
+                {
+                  "lat": 51.27056,
+                  "lon": 12.364370000000001
+                },
+                {
+                  "lat": 51.270540000000004,
+                  "lon": 12.36443
+                },
+                {
+                  "lat": 51.27053,
+                  "lon": 12.364500000000001
+                },
+                {
+                  "lat": 51.270540000000004,
+                  "lon": 12.36458
+                },
+                {
+                  "lat": 51.27056,
+                  "lon": 12.364630000000002
+                },
+                {
+                  "lat": 51.2706,
+                  "lon": 12.36466
+                },
+                {
+                  "lat": 51.27064000000001,
+                  "lon": 12.36467
+                },
+                {
+                  "lat": 51.270680000000006,
+                  "lon": 12.36466
+                },
+                {
+                  "lat": 51.270720000000004,
+                  "lon": 12.364600000000001
+                },
+                {
+                  "lat": 51.27074,
+                  "lon": 12.36456
+                },
+                {
+                  "lat": 51.27074,
+                  "lon": 12.364500000000001
+                },
+                {
+                  "lat": 51.27073000000001,
+                  "lon": 12.364400000000002
+                },
+                {
+                  "lat": 51.27071,
+                  "lon": 12.364370000000001
+                },
+                {
+                  "lat": 51.270680000000006,
+                  "lon": 12.36434
+                },
+                {
+                  "lat": 51.27067,
+                  "lon": 12.363890000000001
+                },
+                {
+                  "lat": 51.27065,
+                  "lon": 12.363760000000001
+                },
+                {
+                  "lat": 51.27067,
+                  "lon": 12.3626
+                },
+                {
+                  "lat": 51.27069,
+                  "lon": 12.362480000000001
+                },
+                {
+                  "lat": 51.270720000000004,
+                  "lon": 12.362380000000002
+                },
+                {
+                  "lat": 51.270790000000005,
+                  "lon": 12.362260000000001
+                },
+                {
+                  "lat": 51.27091,
+                  "lon": 12.362060000000001
+                },
+                {
+                  "lat": 51.270950000000006,
+                  "lon": 12.361970000000001
+                },
+                {
+                  "lat": 51.27096,
+                  "lon": 12.361870000000001
+                },
+                {
+                  "lat": 51.270990000000005,
+                  "lon": 12.3602
+                },
+                {
+                  "lat": 51.27103,
+                  "lon": 12.359990000000002
+                },
+                {
+                  "lat": 51.271080000000005,
+                  "lon": 12.358020000000002
+                },
+                {
+                  "lat": 51.27105,
+                  "lon": 12.357850000000001
+                },
+                {
+                  "lat": 51.27096,
+                  "lon": 12.357650000000001
+                },
+                {
+                  "lat": 51.270610000000005,
+                  "lon": 12.357030000000002
+                },
+                {
+                  "lat": 51.270590000000006,
+                  "lon": 12.356890000000002
+                },
+                {
+                  "lat": 51.270700000000005,
+                  "lon": 12.35565
+                },
+                {
+                  "lat": 51.270700000000005,
+                  "lon": 12.35565
+                },
+                {
+                  "lat": 51.270700000000005,
+                  "lon": 12.355620000000002
+                },
+                {
+                  "lat": 51.27074,
+                  "lon": 12.355
+                },
+                {
+                  "lat": 51.270990000000005,
+                  "lon": 12.35391
+                },
+                {
+                  "lat": 51.27026000000001,
+                  "lon": 12.3534
+                },
+                {
+                  "lat": 51.269560000000006,
+                  "lon": 12.352920000000001
+                },
+                {
+                  "lat": 51.26887000000001,
+                  "lon": 12.35247
+                },
+                {
+                  "lat": 51.268280000000004,
+                  "lon": 12.35204
+                },
+                {
+                  "lat": 51.268150000000006,
+                  "lon": 12.35195
+                },
+                {
+                  "lat": 51.268100000000004,
+                  "lon": 12.35186
+                },
+                {
+                  "lat": 51.267950000000006,
+                  "lon": 12.35176
+                },
+                {
+                  "lat": 51.267880000000005,
+                  "lon": 12.351750000000001
+                },
+                {
+                  "lat": 51.26782000000001,
+                  "lon": 12.35171
+                },
+                {
+                  "lat": 51.26771,
+                  "lon": 12.351680000000002
+                },
+                {
+                  "lat": 51.2676,
+                  "lon": 12.35166
+                },
+                {
+                  "lat": 51.26737000000001,
+                  "lon": 12.35167
+                },
+                {
+                  "lat": 51.26709,
+                  "lon": 12.35172
+                },
+                {
+                  "lat": 51.26662,
+                  "lon": 12.351840000000001
+                }
+              ],
+              "length": 357
+            },
+            "steps": [],
+            "routeShortName": "106",
+            "routeLongName": "Bus 106",
+            "wheelchairAccessible": 0,
+            "duration": 2280,
+            "alerts": [
+              {
+                "alertUrl": "",
+                "effectiveStartDate": 1740671520000,
+                "alertHeaderText": "",
+                "alertDescriptionText": "Der Anschluss kann voraussichtlich nicht erreicht werden",
+                "alertCategory": 6
+              }
+            ],
+            "departureDelayedTime": 1740671520000,
+            "arrivalDelayedTime": 1740673800000,
+            "departureDelayedTimeHHMM": "16:52",
+            "arrivalDelayedTimeHHMM": "17:30",
+            "startTimeHHMM": "16:52",
+            "endTimeHHMM": "17:30",
+            "cancelled": false,
+            "wheelchairBoardingVehicle": null
+          },
+          {
+            "startTime": 1740673800000,
+            "endTime": 1740674400000,
+            "departureDelay": 0,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 683,
+            "mode": "WALK",
+            "transitLeg": false,
+            "route": "",
+            "from": {
+              "name": "Zöbigker (Markkleeberg), Schmiede",
+              "stopId": "0012987",
+              "lon": 12.351914,
+              "lat": 51.26663,
+              "arrival": 1740673800000,
+              "departure": 1740673800000,
+              "zoneId": "151",
+              "wheelchairBoarding": 0,
+              "departureDelayedTime": 1740673800000,
+              "arrivalDelayedTime": 1740673800000,
+              "departureDelayedTimeHHMM": "17:30",
+              "arrivalDelayedTimeHHMM": "17:30",
+              "arrivalHHMM": "17:30",
+              "departureHHMM": "17:30",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "to": {
+              "name": "Destination",
+              "lon": 12.3451347,
+              "lat": 51.2655979,
+              "arrival": 1740674400000,
+              "departureDelayedTime": 1740674400000,
+              "arrivalDelayedTime": 1740674400000,
+              "arrivalDelayedTimeHHMM": "17:40",
+              "arrivalHHMM": "17:40",
+              "departureHHMM": "17:40",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.266630000000006,
+                  "lon": 12.35191
+                },
+                {
+                  "lat": 51.26662,
+                  "lon": 12.35185
+                },
+                {
+                  "lat": 51.26644,
+                  "lon": 12.351890000000001
+                },
+                {
+                  "lat": 51.26635,
+                  "lon": 12.3519
+                },
+                {
+                  "lat": 51.266270000000006,
+                  "lon": 12.351890000000001
+                },
+                {
+                  "lat": 51.26621,
+                  "lon": 12.351870000000002
+                },
+                {
+                  "lat": 51.2661,
+                  "lon": 12.35181
+                },
+                {
+                  "lat": 51.26599,
+                  "lon": 12.351730000000002
+                },
+                {
+                  "lat": 51.26579,
+                  "lon": 12.35153
+                },
+                {
+                  "lat": 51.265730000000005,
+                  "lon": 12.35148
+                },
+                {
+                  "lat": 51.2657,
+                  "lon": 12.351450000000002
+                },
+                {
+                  "lat": 51.26559,
+                  "lon": 12.351350000000002
+                },
+                {
+                  "lat": 51.265440000000005,
+                  "lon": 12.351230000000001
+                },
+                {
+                  "lat": 51.2653,
+                  "lon": 12.351140000000001
+                },
+                {
+                  "lat": 51.265150000000006,
+                  "lon": 12.35105
+                },
+                {
+                  "lat": 51.26484000000001,
+                  "lon": 12.350900000000001
+                },
+                {
+                  "lat": 51.26483,
+                  "lon": 12.350700000000002
+                },
+                {
+                  "lat": 51.26483,
+                  "lon": 12.350510000000002
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.3495
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.349390000000001
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.34894
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.348170000000001
+                },
+                {
+                  "lat": 51.26500000000001,
+                  "lon": 12.34693
+                },
+                {
+                  "lat": 51.26500000000001,
+                  "lon": 12.346910000000001
+                },
+                {
+                  "lat": 51.265010000000004,
+                  "lon": 12.346860000000001
+                },
+                {
+                  "lat": 51.265010000000004,
+                  "lon": 12.346770000000001
+                },
+                {
+                  "lat": 51.26505,
+                  "lon": 12.346380000000002
+                },
+                {
+                  "lat": 51.26507,
+                  "lon": 12.34622
+                },
+                {
+                  "lat": 51.26512,
+                  "lon": 12.345690000000001
+                },
+                {
+                  "lat": 51.26516,
+                  "lon": 12.345250000000002
+                },
+                {
+                  "lat": 51.265150000000006,
+                  "lon": 12.345180000000001
+                },
+                {
+                  "lat": 51.265170000000005,
+                  "lon": 12.34514
+                },
+                {
+                  "lat": 51.265370000000004,
+                  "lon": 12.344890000000001
+                },
+                {
+                  "lat": 51.265420000000006,
+                  "lon": 12.344840000000001
+                },
+                {
+                  "lat": 51.26547000000001,
+                  "lon": 12.344800000000001
+                },
+                {
+                  "lat": 51.26552,
+                  "lon": 12.344780000000002
+                },
+                {
+                  "lat": 51.26559,
+                  "lon": 12.344790000000001
+                },
+                {
+                  "lat": 51.265640000000005,
+                  "lon": 12.344800000000001
+                },
+                {
+                  "lat": 51.26568,
+                  "lon": 12.344830000000002
+                }
+              ],
+              "length": 39
+            },
+            "steps": [
+              {
+                "distance": 214,
+                "relativeDirection": "DEPART",
+                "streetName": "Koburger Straße",
+                "absoluteDirection": "SOUTH",
+                "lon": 12.3518514,
+                "lat": 51.2666239
+              },
+              {
+                "distance": 283,
+                "relativeDirection": "RIGHT",
+                "streetName": "Cospudener Straße",
+                "absoluteDirection": "WEST",
+                "lon": 12.3509008,
+                "lat": 51.2648417
+              },
+              {
+                "distance": 119,
+                "relativeDirection": "CONTINUE",
+                "streetName": "path",
+                "absoluteDirection": "WEST",
+                "lon": 12.3468632,
+                "lat": 51.2650104
+              },
+              {
+                "distance": 69,
+                "relativeDirection": "RIGHT",
+                "streetName": "Ostuferweg",
+                "absoluteDirection": "NORTHWEST",
+                "lon": 12.345181,
+                "lat": 51.265154
+              }
+            ],
+            "rentedBike": false,
+            "duration": 600,
+            "alerts": [],
+            "departureDelayedTime": 1740673800000,
+            "arrivalDelayedTime": 1740674400000,
+            "departureDelayedTimeHHMM": "17:30",
+            "arrivalDelayedTimeHHMM": "17:40",
+            "startTimeHHMM": "17:30",
+            "endTimeHHMM": "17:40",
+            "cancelled": false
+          }
+        ],
+        "otpVersion": "2.1",
+        "startTimeHHMM": "16:28",
+        "endTimeHHMM": "17:39",
+        "durationHHMM": "01:12",
+        "zoneInfo": {
+          "zones": [
+            "110",
+            "151"
+          ],
+          "orderedZones": [
+            "110",
+            "151"
+          ],
+          "shortDistanceTicket": false
+        },
+        "alerts": [
+          {
+            "alertUrl": "",
+            "effectiveStartDate": 1740671520000,
+            "alertHeaderText": "",
+            "alertDescriptionText": "Anschlussgefahr wegen Verspätungen",
+            "alertCategory": 6
+          }
+        ],
+        "index": 1
+      },
+      {
+        "duration": 4260,
+        "startTime": 1740670140000,
+        "endTime": 1740674400000,
+        "walkTime": 1200,
+        "transitTime": 3060,
+        "waitingTime": 0,
+        "walkDistance": 1034,
+        "transfers": 1,
+        "legs": [
+          {
+            "startTime": 1740670140000,
+            "endTime": 1740670440000,
+            "departureDelay": 0,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 318,
+            "mode": "WALK",
+            "transitLeg": false,
+            "route": "",
+            "from": {
+              "name": "Origin",
+              "lon": 12.3835184,
+              "lat": 51.3382187,
+              "departure": 1740670140000,
+              "departureDelayedTime": 1740670140000,
+              "departureDelayedTimeHHMM": "16:29",
+              "arrivalHHMM": "16:29",
+              "departureHHMM": "16:29",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "to": {
+              "name": "Leipzig, Johannisplatz",
+              "stopId": "0011063",
+              "lon": 12.387365,
+              "lat": 51.336902,
+              "arrival": 1740670440000,
+              "departure": 1740670440000,
+              "zoneId": "110",
+              "wheelchairBoarding": 1,
+              "departureDelayedTime": 1740670440000,
+              "arrivalDelayedTime": 1740670440000,
+              "departureDelayedTimeHHMM": "16:34",
+              "arrivalDelayedTimeHHMM": "16:34",
+              "arrivalHHMM": "16:34",
+              "departureHHMM": "16:34",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false,
+              "hafas_id": "1007004",
+              "hafas_name": "Johannisplatz"
+            },
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.338210000000004,
+                  "lon": 12.38353
+                },
+                {
+                  "lat": 51.338190000000004,
+                  "lon": 12.38352
+                },
+                {
+                  "lat": 51.33809,
+                  "lon": 12.383960000000002
+                },
+                {
+                  "lat": 51.337990000000005,
+                  "lon": 12.384620000000002
+                },
+                {
+                  "lat": 51.337970000000006,
+                  "lon": 12.384730000000001
+                },
+                {
+                  "lat": 51.33794,
+                  "lon": 12.38488
+                },
+                {
+                  "lat": 51.33791,
+                  "lon": 12.385090000000002
+                },
+                {
+                  "lat": 51.337900000000005,
+                  "lon": 12.38513
+                },
+                {
+                  "lat": 51.3378,
+                  "lon": 12.385290000000001
+                },
+                {
+                  "lat": 51.33778,
+                  "lon": 12.385320000000002
+                },
+                {
+                  "lat": 51.33778,
+                  "lon": 12.385420000000002
+                },
+                {
+                  "lat": 51.337630000000004,
+                  "lon": 12.385650000000002
+                },
+                {
+                  "lat": 51.3376,
+                  "lon": 12.385710000000001
+                },
+                {
+                  "lat": 51.33735,
+                  "lon": 12.386220000000002
+                },
+                {
+                  "lat": 51.33713,
+                  "lon": 12.38671
+                },
+                {
+                  "lat": 51.337140000000005,
+                  "lon": 12.38672
+                },
+                {
+                  "lat": 51.337160000000004,
+                  "lon": 12.386730000000002
+                },
+                {
+                  "lat": 51.336890000000004,
+                  "lon": 12.387360000000001
+                },
+                {
+                  "lat": 51.33690000000001,
+                  "lon": 12.387360000000001
+                }
+              ],
+              "length": 19
+            },
+            "steps": [
+              {
+                "distance": 3,
+                "relativeDirection": "DEPART",
+                "streetName": "parking aisle",
+                "absoluteDirection": "SOUTH",
+                "lon": 12.3835323,
+                "lat": 51.338216
+              },
+              {
+                "distance": 142,
+                "relativeDirection": "LEFT",
+                "streetName": "Leipzig–Elbe-Radroute",
+                "absoluteDirection": "EAST",
+                "lon": 12.3835225,
+                "lat": 51.3381957
+              },
+              {
+                "distance": 174,
+                "relativeDirection": "CONTINUE",
+                "streetName": "Johannisplatz",
+                "absoluteDirection": "SOUTHEAST",
+                "lon": 12.3854221,
+                "lat": 51.3377874
+              }
+            ],
+            "rentedBike": false,
+            "duration": 300,
+            "alerts": [],
+            "departureDelayedTime": 1740670140000,
+            "arrivalDelayedTime": 1740670440000,
+            "departureDelayedTimeHHMM": "16:29",
+            "arrivalDelayedTimeHHMM": "16:34",
+            "startTimeHHMM": "16:29",
+            "endTimeHHMM": "16:34",
+            "cancelled": false
+          },
+          {
+            "startTime": 1740670440000,
+            "endTime": 1740671220000,
+            "departureDelay": 240,
+            "arrivalDelay": 240,
+            "realTime": true,
+            "distance": 4595,
+            "mode": "TRAM",
+            "transitLeg": true,
+            "route": "15",
+            "agencyName": "Leipziger Verkehrsbetriebe",
+            "agencyUrl": "https://www.mdv.de/partner/",
+            "routeColor": "00387B",
+            "routeType": 0,
+            "routeId": "LVTRAM15",
+            "headsign": "Meusdorf",
+            "agencyId": "1:00468",
+            "tripId": "lvb11412STRB__20250226",
+            "serviceDate": "20250227",
+            "from": {
+              "name": "Leipzig, Johannisplatz",
+              "stopId": "0011063",
+              "lon": 12.387365,
+              "lat": 51.336902,
+              "arrival": 1740670440000,
+              "departure": 1740670440000,
+              "zoneId": "110",
+              "stopSequence": 23,
+              "wheelchairBoarding": 1,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740670680000,
+              "arrivalDelayedTime": 1740670680000,
+              "departureDelayedTimeHHMM": "16:38",
+              "arrivalDelayedTimeHHMM": "16:38",
+              "arrivalHHMM": "16:34",
+              "departureHHMM": "16:34",
+              "arrivalDelay": 240,
+              "departureDelay": 240,
+              "cancelled": false,
+              "hafas_id": "1007004",
+              "hafas_name": "Johannisplatz"
+            },
+            "to": {
+              "name": "Leipzig, Probstheida",
+              "stopId": "0012073",
+              "lon": 12.425533,
+              "lat": 51.304177,
+              "arrival": 1740671220000,
+              "departure": 1740671220000,
+              "zoneId": "110",
+              "stopSequence": 33,
+              "wheelchairBoarding": 1,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740671460000,
+              "arrivalDelayedTime": 1740671460000,
+              "departureDelayedTimeHHMM": "16:51",
+              "arrivalDelayedTimeHHMM": "16:51",
+              "arrivalHHMM": "16:47",
+              "departureHHMM": "16:47",
+              "arrivalDelay": 240,
+              "departureDelay": 240,
+              "cancelled": false,
+              "hafas_id": "1012902",
+              "hafas_name": "Probstheida"
+            },
+            "intermediateStops": [
+              {
+                "name": "Leipzig, Gutenbergplatz",
+                "stopId": "0011970",
+                "lon": 12.392092,
+                "lat": 51.33427,
+                "arrival": 1740670500000,
+                "departure": 1740670500000,
+                "zoneId": "110",
+                "stopSequence": 24,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670740000,
+                "arrivalDelayedTime": 1740670740000,
+                "departureDelayedTimeHHMM": "16:39",
+                "arrivalDelayedTimeHHMM": "16:39",
+                "arrivalHHMM": "16:35",
+                "departureHHMM": "16:35",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012002",
+                "hafas_name": "Gutenbergplatz"
+              },
+              {
+                "name": "Leipzig, Ostplatz",
+                "stopId": "0011972",
+                "lon": 12.396014,
+                "lat": 51.331534,
+                "arrival": 1740670560000,
+                "departure": 1740670560000,
+                "zoneId": "110",
+                "stopSequence": 25,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670800000,
+                "arrivalDelayedTime": 1740670800000,
+                "departureDelayedTimeHHMM": "16:40",
+                "arrivalDelayedTimeHHMM": "16:40",
+                "arrivalHHMM": "16:36",
+                "departureHHMM": "16:36",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012102",
+                "hafas_name": "Ostplatz"
+              },
+              {
+                "name": "Leipzig, Witzgallstr.",
+                "stopId": "0012083",
+                "lon": 12.399487,
+                "lat": 51.328313,
+                "arrival": 1740670680000,
+                "departure": 1740670680000,
+                "zoneId": "110",
+                "stopSequence": 26,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670920000,
+                "arrivalDelayedTime": 1740670920000,
+                "departureDelayedTimeHHMM": "16:42",
+                "arrivalDelayedTimeHHMM": "16:42",
+                "arrivalHHMM": "16:38",
+                "departureHHMM": "16:38",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012202",
+                "hafas_name": "Witzgallstraße"
+              },
+              {
+                "name": "Leipzig, Technisches Rathaus",
+                "stopId": "0011335",
+                "lon": 12.401051,
+                "lat": 51.325,
+                "arrival": 1740670740000,
+                "departure": 1740670740000,
+                "zoneId": "110",
+                "stopSequence": 27,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740670980000,
+                "arrivalDelayedTime": 1740670980000,
+                "departureDelayedTimeHHMM": "16:43",
+                "arrivalDelayedTimeHHMM": "16:43",
+                "arrivalHHMM": "16:39",
+                "departureHHMM": "16:39",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012302",
+                "hafas_name": "Technisches Rathaus"
+              },
+              {
+                "name": "Leipzig, Altes Messegelände",
+                "stopId": "0012079",
+                "lon": 12.404742,
+                "lat": 51.320655,
+                "arrival": 1740670860000,
+                "departure": 1740670860000,
+                "zoneId": "110",
+                "stopSequence": 28,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671100000,
+                "arrivalDelayedTime": 1740671100000,
+                "departureDelayedTimeHHMM": "16:45",
+                "arrivalDelayedTimeHHMM": "16:45",
+                "arrivalHHMM": "16:41",
+                "departureHHMM": "16:41",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012402",
+                "hafas_name": "Altes Messegelände"
+              },
+              {
+                "name": "Leipzig, Naunhofer Str.",
+                "stopId": "0012080",
+                "lon": 12.408131,
+                "lat": 51.317775,
+                "arrival": 1740670920000,
+                "departure": 1740670920000,
+                "zoneId": "110",
+                "stopSequence": 29,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671160000,
+                "arrivalDelayedTime": 1740671160000,
+                "departureDelayedTimeHHMM": "16:46",
+                "arrivalDelayedTimeHHMM": "16:46",
+                "arrivalHHMM": "16:42",
+                "departureHHMM": "16:42",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012502",
+                "hafas_name": "Naunhofer Straße"
+              },
+              {
+                "name": "Leipzig, Völkerschlachtdenkmal (Tram/Bus)",
+                "stopId": "0012076",
+                "lon": 12.411561,
+                "lat": 51.314851,
+                "arrival": 1740670980000,
+                "departure": 1740670980000,
+                "zoneId": "110",
+                "stopSequence": 30,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671220000,
+                "arrivalDelayedTime": 1740671220000,
+                "departureDelayedTimeHHMM": "16:47",
+                "arrivalDelayedTimeHHMM": "16:47",
+                "arrivalHHMM": "16:43",
+                "departureHHMM": "16:43",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012602",
+                "hafas_name": "Völkerschlachtdenkmal"
+              },
+              {
+                "name": "Leipzig, Südfriedhof",
+                "stopId": "0012078",
+                "lon": 12.417136,
+                "lat": 51.311164,
+                "arrival": 1740671100000,
+                "departure": 1740671100000,
+                "zoneId": "110",
+                "stopSequence": 31,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671340000,
+                "arrivalDelayedTime": 1740671340000,
+                "departureDelayedTimeHHMM": "16:49",
+                "arrivalDelayedTimeHHMM": "16:49",
+                "arrivalHHMM": "16:45",
+                "departureHHMM": "16:45",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012702",
+                "hafas_name": "Südfriedhof"
+              },
+              {
+                "name": "Leipzig, Prager/Russenstr.",
+                "stopId": "0012072",
+                "lon": 12.422431,
+                "lat": 51.306777,
+                "arrival": 1740671160000,
+                "departure": 1740671160000,
+                "zoneId": "110",
+                "stopSequence": 32,
+                "wheelchairBoarding": 1,
+                "departureDelayedTime": 1740671400000,
+                "arrivalDelayedTime": 1740671400000,
+                "departureDelayedTimeHHMM": "16:50",
+                "arrivalDelayedTimeHHMM": "16:50",
+                "arrivalHHMM": "16:46",
+                "departureHHMM": "16:46",
+                "arrivalDelay": 240,
+                "departureDelay": 240,
+                "cancelled": false,
+                "hafas_id": "1012802",
+                "hafas_name": "Prager/Russenstraße"
+              }
+            ],
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.33690000000001,
+                  "lon": 12.38737
+                },
+                {
+                  "lat": 51.33690000000001,
+                  "lon": 12.38737
+                },
+                {
+                  "lat": 51.33686,
+                  "lon": 12.38746
+                },
+                {
+                  "lat": 51.336650000000006,
+                  "lon": 12.38793
+                },
+                {
+                  "lat": 51.336580000000005,
+                  "lon": 12.388100000000001
+                },
+                {
+                  "lat": 51.3365,
+                  "lon": 12.38826
+                },
+                {
+                  "lat": 51.336420000000004,
+                  "lon": 12.388440000000001
+                },
+                {
+                  "lat": 51.336330000000004,
+                  "lon": 12.3886
+                },
+                {
+                  "lat": 51.33616000000001,
+                  "lon": 12.38892
+                },
+                {
+                  "lat": 51.33587000000001,
+                  "lon": 12.389450000000002
+                },
+                {
+                  "lat": 51.335460000000005,
+                  "lon": 12.390160000000002
+                },
+                {
+                  "lat": 51.334830000000004,
+                  "lon": 12.391240000000002
+                },
+                {
+                  "lat": 51.334720000000004,
+                  "lon": 12.391420000000002
+                },
+                {
+                  "lat": 51.33469,
+                  "lon": 12.391480000000001
+                },
+                {
+                  "lat": 51.33428000000001,
+                  "lon": 12.392100000000001
+                },
+                {
+                  "lat": 51.334270000000004,
+                  "lon": 12.392080000000002
+                },
+                {
+                  "lat": 51.334270000000004,
+                  "lon": 12.392090000000001
+                },
+                {
+                  "lat": 51.334270000000004,
+                  "lon": 12.392090000000001
+                },
+                {
+                  "lat": 51.33428000000001,
+                  "lon": 12.392100000000001
+                },
+                {
+                  "lat": 51.334210000000006,
+                  "lon": 12.39221
+                },
+                {
+                  "lat": 51.33409,
+                  "lon": 12.39239
+                },
+                {
+                  "lat": 51.33404,
+                  "lon": 12.39245
+                },
+                {
+                  "lat": 51.334010000000006,
+                  "lon": 12.392500000000002
+                },
+                {
+                  "lat": 51.33395,
+                  "lon": 12.39258
+                },
+                {
+                  "lat": 51.33390000000001,
+                  "lon": 12.392650000000001
+                },
+                {
+                  "lat": 51.332260000000005,
+                  "lon": 12.39492
+                },
+                {
+                  "lat": 51.33225,
+                  "lon": 12.39493
+                },
+                {
+                  "lat": 51.332100000000004,
+                  "lon": 12.395150000000001
+                },
+                {
+                  "lat": 51.332080000000005,
+                  "lon": 12.395190000000001
+                },
+                {
+                  "lat": 51.33194,
+                  "lon": 12.3954
+                },
+                {
+                  "lat": 51.33193000000001,
+                  "lon": 12.395410000000002
+                },
+                {
+                  "lat": 51.33176,
+                  "lon": 12.395650000000002
+                },
+                {
+                  "lat": 51.331540000000004,
+                  "lon": 12.395980000000002
+                },
+                {
+                  "lat": 51.33153,
+                  "lon": 12.396
+                },
+                {
+                  "lat": 51.33153,
+                  "lon": 12.396020000000002
+                },
+                {
+                  "lat": 51.33153,
+                  "lon": 12.39601
+                },
+                {
+                  "lat": 51.33153,
+                  "lon": 12.39601
+                },
+                {
+                  "lat": 51.33153,
+                  "lon": 12.396
+                },
+                {
+                  "lat": 51.33119000000001,
+                  "lon": 12.396510000000001
+                },
+                {
+                  "lat": 51.330850000000005,
+                  "lon": 12.39703
+                },
+                {
+                  "lat": 51.33062,
+                  "lon": 12.397340000000002
+                },
+                {
+                  "lat": 51.33024,
+                  "lon": 12.397820000000001
+                },
+                {
+                  "lat": 51.33016000000001,
+                  "lon": 12.397900000000002
+                },
+                {
+                  "lat": 51.33001,
+                  "lon": 12.39808
+                },
+                {
+                  "lat": 51.32987000000001,
+                  "lon": 12.398230000000002
+                },
+                {
+                  "lat": 51.32952,
+                  "lon": 12.398620000000001
+                },
+                {
+                  "lat": 51.329350000000005,
+                  "lon": 12.39878
+                },
+                {
+                  "lat": 51.32922000000001,
+                  "lon": 12.398890000000002
+                },
+                {
+                  "lat": 51.32887,
+                  "lon": 12.399170000000002
+                },
+                {
+                  "lat": 51.32846000000001,
+                  "lon": 12.399410000000001
+                },
+                {
+                  "lat": 51.328340000000004,
+                  "lon": 12.399460000000001
+                },
+                {
+                  "lat": 51.328300000000006,
+                  "lon": 12.39947
+                },
+                {
+                  "lat": 51.32831,
+                  "lon": 12.39948
+                },
+                {
+                  "lat": 51.32831,
+                  "lon": 12.39948
+                },
+                {
+                  "lat": 51.32831,
+                  "lon": 12.39948
+                },
+                {
+                  "lat": 51.328300000000006,
+                  "lon": 12.39947
+                },
+                {
+                  "lat": 51.328210000000006,
+                  "lon": 12.39952
+                },
+                {
+                  "lat": 51.327920000000006,
+                  "lon": 12.39963
+                },
+                {
+                  "lat": 51.327540000000006,
+                  "lon": 12.39976
+                },
+                {
+                  "lat": 51.327160000000006,
+                  "lon": 12.39991
+                },
+                {
+                  "lat": 51.32678000000001,
+                  "lon": 12.40005
+                },
+                {
+                  "lat": 51.326190000000004,
+                  "lon": 12.400340000000002
+                },
+                {
+                  "lat": 51.32592,
+                  "lon": 12.400500000000001
+                },
+                {
+                  "lat": 51.32546000000001,
+                  "lon": 12.400780000000001
+                },
+                {
+                  "lat": 51.325,
+                  "lon": 12.401060000000001
+                },
+                {
+                  "lat": 51.32499000000001,
+                  "lon": 12.401050000000001
+                },
+                {
+                  "lat": 51.32499000000001,
+                  "lon": 12.401050000000001
+                },
+                {
+                  "lat": 51.32499000000001,
+                  "lon": 12.401050000000001
+                },
+                {
+                  "lat": 51.325,
+                  "lon": 12.401060000000001
+                },
+                {
+                  "lat": 51.325,
+                  "lon": 12.401060000000001
+                },
+                {
+                  "lat": 51.32491,
+                  "lon": 12.401110000000001
+                },
+                {
+                  "lat": 51.32441000000001,
+                  "lon": 12.40141
+                },
+                {
+                  "lat": 51.32424,
+                  "lon": 12.40154
+                },
+                {
+                  "lat": 51.324200000000005,
+                  "lon": 12.401580000000001
+                },
+                {
+                  "lat": 51.324090000000005,
+                  "lon": 12.401670000000001
+                },
+                {
+                  "lat": 51.323910000000005,
+                  "lon": 12.401850000000001
+                },
+                {
+                  "lat": 51.323890000000006,
+                  "lon": 12.40187
+                },
+                {
+                  "lat": 51.32339,
+                  "lon": 12.40238
+                },
+                {
+                  "lat": 51.32217000000001,
+                  "lon": 12.40347
+                },
+                {
+                  "lat": 51.32198,
+                  "lon": 12.40361
+                },
+                {
+                  "lat": 51.321940000000005,
+                  "lon": 12.403640000000001
+                },
+                {
+                  "lat": 51.321810000000006,
+                  "lon": 12.403730000000001
+                },
+                {
+                  "lat": 51.32166,
+                  "lon": 12.403830000000001
+                },
+                {
+                  "lat": 51.321600000000004,
+                  "lon": 12.403870000000001
+                },
+                {
+                  "lat": 51.32159000000001,
+                  "lon": 12.403870000000001
+                },
+                {
+                  "lat": 51.32155,
+                  "lon": 12.4039
+                },
+                {
+                  "lat": 51.32144,
+                  "lon": 12.40399
+                },
+                {
+                  "lat": 51.320660000000004,
+                  "lon": 12.40473
+                },
+                {
+                  "lat": 51.32065000000001,
+                  "lon": 12.40474
+                },
+                {
+                  "lat": 51.32065000000001,
+                  "lon": 12.40474
+                },
+                {
+                  "lat": 51.32065000000001,
+                  "lon": 12.40474
+                },
+                {
+                  "lat": 51.32065000000001,
+                  "lon": 12.40474
+                },
+                {
+                  "lat": 51.32065000000001,
+                  "lon": 12.40474
+                },
+                {
+                  "lat": 51.320420000000006,
+                  "lon": 12.404950000000001
+                },
+                {
+                  "lat": 51.320220000000006,
+                  "lon": 12.40516
+                },
+                {
+                  "lat": 51.32003,
+                  "lon": 12.405380000000001
+                },
+                {
+                  "lat": 51.31996,
+                  "lon": 12.405460000000001
+                },
+                {
+                  "lat": 51.319900000000004,
+                  "lon": 12.40553
+                },
+                {
+                  "lat": 51.319720000000004,
+                  "lon": 12.405740000000002
+                },
+                {
+                  "lat": 51.31958,
+                  "lon": 12.405930000000001
+                },
+                {
+                  "lat": 51.31938,
+                  "lon": 12.406210000000002
+                },
+                {
+                  "lat": 51.319160000000004,
+                  "lon": 12.40648
+                },
+                {
+                  "lat": 51.31888000000001,
+                  "lon": 12.4068
+                },
+                {
+                  "lat": 51.31862,
+                  "lon": 12.407100000000002
+                },
+                {
+                  "lat": 51.3186,
+                  "lon": 12.40712
+                },
+                {
+                  "lat": 51.31855,
+                  "lon": 12.407190000000002
+                },
+                {
+                  "lat": 51.31851,
+                  "lon": 12.40723
+                },
+                {
+                  "lat": 51.318290000000005,
+                  "lon": 12.40751
+                },
+                {
+                  "lat": 51.31815,
+                  "lon": 12.407680000000001
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.40812
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.408130000000002
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.408130000000002
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.408130000000002
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.408130000000002
+                },
+                {
+                  "lat": 51.31777,
+                  "lon": 12.408130000000002
+                },
+                {
+                  "lat": 51.317710000000005,
+                  "lon": 12.408190000000001
+                },
+                {
+                  "lat": 51.31763,
+                  "lon": 12.408280000000001
+                },
+                {
+                  "lat": 51.31752,
+                  "lon": 12.40839
+                },
+                {
+                  "lat": 51.317400000000006,
+                  "lon": 12.408510000000001
+                },
+                {
+                  "lat": 51.31485000000001,
+                  "lon": 12.41154
+                },
+                {
+                  "lat": 51.31485000000001,
+                  "lon": 12.411550000000002
+                },
+                {
+                  "lat": 51.31485000000001,
+                  "lon": 12.411550000000002
+                },
+                {
+                  "lat": 51.31485000000001,
+                  "lon": 12.41154
+                },
+                {
+                  "lat": 51.314840000000004,
+                  "lon": 12.41154
+                },
+                {
+                  "lat": 51.31477,
+                  "lon": 12.411620000000001
+                },
+                {
+                  "lat": 51.31472,
+                  "lon": 12.41168
+                },
+                {
+                  "lat": 51.31466,
+                  "lon": 12.411760000000001
+                },
+                {
+                  "lat": 51.31452,
+                  "lon": 12.41192
+                },
+                {
+                  "lat": 51.31439,
+                  "lon": 12.41211
+                },
+                {
+                  "lat": 51.31327,
+                  "lon": 12.41383
+                },
+                {
+                  "lat": 51.312050000000006,
+                  "lon": 12.41577
+                },
+                {
+                  "lat": 51.3115,
+                  "lon": 12.41661
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41712
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41713
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41713
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41713
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41713
+                },
+                {
+                  "lat": 51.31116,
+                  "lon": 12.41713
+                },
+                {
+                  "lat": 51.31109000000001,
+                  "lon": 12.417230000000002
+                },
+                {
+                  "lat": 51.31103,
+                  "lon": 12.417330000000002
+                },
+                {
+                  "lat": 51.309140000000006,
+                  "lon": 12.420230000000002
+                },
+                {
+                  "lat": 51.3089,
+                  "lon": 12.420610000000002
+                },
+                {
+                  "lat": 51.308620000000005,
+                  "lon": 12.421080000000002
+                },
+                {
+                  "lat": 51.30836000000001,
+                  "lon": 12.42149
+                },
+                {
+                  "lat": 51.308260000000004,
+                  "lon": 12.421640000000002
+                },
+                {
+                  "lat": 51.30814,
+                  "lon": 12.42177
+                },
+                {
+                  "lat": 51.30803,
+                  "lon": 12.42186
+                },
+                {
+                  "lat": 51.307900000000004,
+                  "lon": 12.421940000000001
+                },
+                {
+                  "lat": 51.307610000000004,
+                  "lon": 12.422070000000001
+                },
+                {
+                  "lat": 51.307410000000004,
+                  "lon": 12.42215
+                },
+                {
+                  "lat": 51.30678,
+                  "lon": 12.42243
+                },
+                {
+                  "lat": 51.30677000000001,
+                  "lon": 12.42243
+                },
+                {
+                  "lat": 51.30677000000001,
+                  "lon": 12.42242
+                },
+                {
+                  "lat": 51.30677000000001,
+                  "lon": 12.42243
+                },
+                {
+                  "lat": 51.30677000000001,
+                  "lon": 12.42243
+                },
+                {
+                  "lat": 51.30677000000001,
+                  "lon": 12.42243
+                },
+                {
+                  "lat": 51.30671,
+                  "lon": 12.422460000000001
+                },
+                {
+                  "lat": 51.306580000000004,
+                  "lon": 12.42251
+                },
+                {
+                  "lat": 51.306430000000006,
+                  "lon": 12.422550000000001
+                },
+                {
+                  "lat": 51.306270000000005,
+                  "lon": 12.42262
+                },
+                {
+                  "lat": 51.306020000000004,
+                  "lon": 12.422730000000001
+                },
+                {
+                  "lat": 51.3059,
+                  "lon": 12.42281
+                },
+                {
+                  "lat": 51.30584,
+                  "lon": 12.42285
+                },
+                {
+                  "lat": 51.30577,
+                  "lon": 12.4229
+                },
+                {
+                  "lat": 51.305690000000006,
+                  "lon": 12.42298
+                },
+                {
+                  "lat": 51.30556000000001,
+                  "lon": 12.42313
+                },
+                {
+                  "lat": 51.30547000000001,
+                  "lon": 12.42327
+                },
+                {
+                  "lat": 51.304970000000004,
+                  "lon": 12.424130000000002
+                },
+                {
+                  "lat": 51.30478,
+                  "lon": 12.424470000000001
+                },
+                {
+                  "lat": 51.304660000000005,
+                  "lon": 12.42468
+                },
+                {
+                  "lat": 51.3046,
+                  "lon": 12.424790000000002
+                },
+                {
+                  "lat": 51.304570000000005,
+                  "lon": 12.424840000000001
+                },
+                {
+                  "lat": 51.30418,
+                  "lon": 12.42552
+                },
+                {
+                  "lat": 51.30418,
+                  "lon": 12.42553
+                },
+                {
+                  "lat": 51.30418,
+                  "lon": 12.42553
+                }
+              ],
+              "length": 175
+            },
+            "steps": [],
+            "routeShortName": "15",
+            "routeLongName": "Tram 15",
+            "wheelchairAccessible": 1,
+            "duration": 780,
+            "alerts": [],
+            "departureDelayedTime": 1740670680000,
+            "arrivalDelayedTime": 1740671460000,
+            "departureDelayedTimeHHMM": "16:38",
+            "arrivalDelayedTimeHHMM": "16:51",
+            "startTimeHHMM": "16:34",
+            "endTimeHHMM": "16:47",
+            "cancelled": false,
+            "wheelchairBoardingVehicle": null
+          },
+          {
+            "startTime": 1740671220000,
+            "endTime": 1740671520000,
+            "departureDelay": 240,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 34,
+            "mode": "WALK",
+            "transitLeg": false,
+            "route": "",
+            "from": {
+              "name": "Leipzig, Probstheida",
+              "stopId": "0012073",
+              "lon": 12.425533,
+              "lat": 51.304177,
+              "arrival": 1740671220000,
+              "departure": 1740671220000,
+              "zoneId": "110",
+              "wheelchairBoarding": 1,
+              "departureDelayedTime": 1740671460000,
+              "arrivalDelayedTime": 1740671460000,
+              "departureDelayedTimeHHMM": "16:51",
+              "arrivalDelayedTimeHHMM": "16:51",
+              "arrivalHHMM": "16:47",
+              "departureHHMM": "16:47",
+              "arrivalDelay": 240,
+              "departureDelay": 240,
+              "cancelled": false,
+              "hafas_id": "1012902",
+              "hafas_name": "Probstheida"
+            },
+            "to": {
+              "name": "Leipzig, Probstheida",
+              "stopId": "0012073",
+              "lon": 12.4256479,
+              "lat": 51.3042579,
+              "arrival": 1740671520000,
+              "departure": 1740671520000,
+              "zoneId": "110",
+              "wheelchairBoarding": 0,
+              "departureDelayedTime": 1740671520000,
+              "arrivalDelayedTime": 1740671520000,
+              "departureDelayedTimeHHMM": "16:52",
+              "arrivalDelayedTimeHHMM": "16:52",
+              "arrivalHHMM": "16:52",
+              "departureHHMM": "16:52",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.304170000000006,
+                  "lon": 12.42553
+                },
+                {
+                  "lat": 51.304170000000006,
+                  "lon": 12.42552
+                },
+                {
+                  "lat": 51.30416,
+                  "lon": 12.425540000000002
+                },
+                {
+                  "lat": 51.304140000000004,
+                  "lon": 12.42557
+                },
+                {
+                  "lat": 51.30413,
+                  "lon": 12.42556
+                },
+                {
+                  "lat": 51.30411,
+                  "lon": 12.425580000000002
+                },
+                {
+                  "lat": 51.30413,
+                  "lon": 12.42561
+                },
+                {
+                  "lat": 51.30416,
+                  "lon": 12.425650000000001
+                },
+                {
+                  "lat": 51.30418,
+                  "lon": 12.42567
+                },
+                {
+                  "lat": 51.304230000000004,
+                  "lon": 12.425580000000002
+                },
+                {
+                  "lat": 51.304260000000006,
+                  "lon": 12.425630000000002
+                },
+                {
+                  "lat": 51.30425,
+                  "lon": 12.425640000000001
+                },
+                {
+                  "lat": 51.30425,
+                  "lon": 12.425640000000001
+                }
+              ],
+              "length": 13
+            },
+            "steps": [
+              {
+                "distance": 7,
+                "relativeDirection": "DEPART",
+                "streetName": "Probstheida",
+                "absoluteDirection": "SOUTHEAST",
+                "lon": 12.425528,
+                "lat": 51.3041736
+              },
+              {
+                "distance": 26,
+                "relativeDirection": "LEFT",
+                "streetName": "path",
+                "absoluteDirection": "SOUTHEAST",
+                "lon": 12.4255631,
+                "lat": 51.3041328
+              },
+              {
+                "distance": 2,
+                "relativeDirection": "RIGHT",
+                "streetName": "Prager Straße",
+                "absoluteDirection": "SOUTHEAST",
+                "lon": 12.4256314,
+                "lat": 51.3042675
+              }
+            ],
+            "rentedBike": false,
+            "duration": 60,
+            "alerts": [],
+            "departureDelayedTime": 1740671460000,
+            "arrivalDelayedTime": 1740671520000,
+            "departureDelayedTimeHHMM": "16:51",
+            "arrivalDelayedTimeHHMM": "16:52",
+            "startTimeHHMM": "16:47",
+            "endTimeHHMM": "16:52",
+            "cancelled": false,
+            "durationOriginal": 300
+          },
+          {
+            "startTime": 1740671520000,
+            "endTime": 1740673800000,
+            "departureDelay": 0,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 14363,
+            "mode": "BUS",
+            "transitLeg": true,
+            "route": "106",
+            "agencyName": "Regionalbus Leipzig GmbH",
+            "agencyUrl": "https://www.mdv.de/partner/",
+            "routeColor": "9b2986",
+            "routeType": 3,
+            "routeId": "RL____106",
+            "tripShortName": "106048",
+            "headsign": "Großstädteln (Markkleeberg), S-Bahnhof/ZöbigkerStr.",
+            "agencyId": "1:00704",
+            "tripId": "61085",
+            "serviceDate": "20250227",
+            "from": {
+              "name": "Leipzig, Probstheida",
+              "stopId": "0012073",
+              "lon": 12.4256479,
+              "lat": 51.3042579,
+              "arrival": 1740671520000,
+              "departure": 1740671520000,
+              "zoneId": "110",
+              "stopSequence": 2,
+              "wheelchairBoarding": 0,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740671520000,
+              "arrivalDelayedTime": 1740671520000,
+              "departureDelayedTimeHHMM": "16:52",
+              "arrivalDelayedTimeHHMM": "16:52",
+              "arrivalHHMM": "16:52",
+              "departureHHMM": "16:52",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "to": {
+              "name": "Zöbigker (Markkleeberg), Schmiede",
+              "stopId": "0012987",
+              "lon": 12.351914,
+              "lat": 51.26663,
+              "arrival": 1740673800000,
+              "departure": 1740673800000,
+              "zoneId": "151",
+              "stopSequence": 24,
+              "wheelchairBoarding": 0,
+              "track": null,
+              "scheduledTrack": null,
+              "departureDelayedTime": 1740673800000,
+              "arrivalDelayedTime": 1740673800000,
+              "departureDelayedTimeHHMM": "17:30",
+              "arrivalDelayedTimeHHMM": "17:30",
+              "arrivalHHMM": "17:30",
+              "departureHHMM": "17:30",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "intermediateStops": [
+              {
+                "name": "Leipzig, Pahlenweg",
+                "stopId": "0011831",
+                "lon": 12.4281226,
+                "lat": 51.2919373,
+                "arrival": 1740671700000,
+                "departure": 1740671700000,
+                "zoneId": "110",
+                "stopSequence": 3,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740671700000,
+                "arrivalDelayedTime": 1740671700000,
+                "departureDelayedTimeHHMM": "16:55",
+                "arrivalDelayedTimeHHMM": "16:55",
+                "arrivalHHMM": "16:55",
+                "departureHHMM": "16:55",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Leipzig, Schwarzenbergweg",
+                "stopId": "0011916",
+                "lon": 12.4294593,
+                "lat": 51.2868965,
+                "arrival": 1740671760000,
+                "departure": 1740671760000,
+                "zoneId": "110",
+                "stopSequence": 4,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740671760000,
+                "arrivalDelayedTime": 1740671760000,
+                "departureDelayedTimeHHMM": "16:56",
+                "arrivalDelayedTimeHHMM": "16:56",
+                "arrivalHHMM": "16:56",
+                "departureHHMM": "16:56",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Wachau (b. Leipzig), Gewerbepark",
+                "stopId": "0011917",
+                "lon": 12.4255217,
+                "lat": 51.2842431,
+                "arrival": 1740671880000,
+                "departure": 1740671880000,
+                "zoneId": "110",
+                "stopSequence": 5,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740671880000,
+                "arrivalDelayedTime": 1740671880000,
+                "departureDelayedTimeHHMM": "16:58",
+                "arrivalDelayedTimeHHMM": "16:58",
+                "arrivalHHMM": "16:58",
+                "departureHHMM": "16:58",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Wachau (b. Leipzig), Atlanta Hotel",
+                "stopId": "0011214",
+                "lon": 12.4271814,
+                "lat": 51.2810899,
+                "arrival": 1740671940000,
+                "departure": 1740671940000,
+                "zoneId": "110",
+                "stopSequence": 6,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740671940000,
+                "arrivalDelayedTime": 1740671940000,
+                "departureDelayedTimeHHMM": "16:59",
+                "arrivalDelayedTimeHHMM": "16:59",
+                "arrivalHHMM": "16:59",
+                "departureHHMM": "16:59",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Wachau (b. Leipzig), An der Hohle",
+                "stopId": "0011914",
+                "lon": 12.4315459,
+                "lat": 51.2776866,
+                "arrival": 1740672060000,
+                "departure": 1740672060000,
+                "zoneId": "151",
+                "stopSequence": 7,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672060000,
+                "arrivalDelayedTime": 1740672060000,
+                "departureDelayedTimeHHMM": "17:01",
+                "arrivalDelayedTimeHHMM": "17:01",
+                "arrivalHHMM": "17:01",
+                "departureHHMM": "17:01",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Wachau (b. Leipzig), Am Bach",
+                "stopId": "0011915",
+                "lon": 12.4278392,
+                "lat": 51.2758072,
+                "arrival": 1740672180000,
+                "departure": 1740672180000,
+                "zoneId": "151",
+                "stopSequence": 8,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672180000,
+                "arrivalDelayedTime": 1740672180000,
+                "departureDelayedTimeHHMM": "17:03",
+                "arrivalDelayedTimeHHMM": "17:03",
+                "arrivalHHMM": "17:03",
+                "departureHHMM": "17:03",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Wachau (b. Leipzig), Crostewitzer Str.",
+                "stopId": "0011912",
+                "lon": 12.423214,
+                "lat": 51.273527,
+                "arrival": 1740672240000,
+                "departure": 1740672240000,
+                "zoneId": "151",
+                "stopSequence": 9,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672240000,
+                "arrivalDelayedTime": 1740672240000,
+                "departureDelayedTimeHHMM": "17:04",
+                "arrivalDelayedTimeHHMM": "17:04",
+                "arrivalHHMM": "17:04",
+                "departureHHMM": "17:04",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Goldene Höhe",
+                "stopId": "0011913",
+                "lon": 12.41247,
+                "lat": 51.273041,
+                "arrival": 1740672300000,
+                "departure": 1740672300000,
+                "zoneId": "151",
+                "stopSequence": 10,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672300000,
+                "arrivalDelayedTime": 1740672300000,
+                "departureDelayedTimeHHMM": "17:05",
+                "arrivalDelayedTimeHHMM": "17:05",
+                "arrivalHHMM": "17:05",
+                "departureHHMM": "17:05",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Heinrich-Heine-Str.",
+                "stopId": "0011910",
+                "lon": 12.400316,
+                "lat": 51.272685,
+                "arrival": 1740672360000,
+                "departure": 1740672360000,
+                "zoneId": "151",
+                "stopSequence": 11,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672360000,
+                "arrivalDelayedTime": 1740672360000,
+                "departureDelayedTimeHHMM": "17:06",
+                "arrivalDelayedTimeHHMM": "17:06",
+                "arrivalHHMM": "17:06",
+                "departureHHMM": "17:06",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Ost, Seepromenade",
+                "stopId": "0022383",
+                "lon": 12.398439,
+                "lat": 51.271921,
+                "arrival": 1740672420000,
+                "departure": 1740672420000,
+                "zoneId": "151",
+                "stopSequence": 12,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672420000,
+                "arrivalDelayedTime": 1740672420000,
+                "departureDelayedTimeHHMM": "17:07",
+                "arrivalDelayedTimeHHMM": "17:07",
+                "arrivalHHMM": "17:07",
+                "departureHHMM": "17:07",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Ost, Schillerplatz",
+                "stopId": "0011911",
+                "lon": 12.3971824,
+                "lat": 51.2759523,
+                "arrival": 1740672480000,
+                "departure": 1740672480000,
+                "zoneId": "151",
+                "stopSequence": 13,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672480000,
+                "arrivalDelayedTime": 1740672480000,
+                "departureDelayedTimeHHMM": "17:08",
+                "arrivalDelayedTimeHHMM": "17:08",
+                "arrivalHHMM": "17:08",
+                "departureHHMM": "17:08",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Ost, Auenplatz",
+                "stopId": "0003851",
+                "lon": 12.3928535,
+                "lat": 51.2771143,
+                "arrival": 1740672600000,
+                "departure": 1740672600000,
+                "zoneId": "151",
+                "stopSequence": 14,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672600000,
+                "arrivalDelayedTime": 1740672600000,
+                "departureDelayedTimeHHMM": "17:10",
+                "arrivalDelayedTimeHHMM": "17:10",
+                "arrivalHHMM": "17:10",
+                "departureHHMM": "17:10",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Seenallee",
+                "stopId": "0019940",
+                "lon": 12.3771924,
+                "lat": 51.2731332,
+                "arrival": 1740672780000,
+                "departure": 1740672780000,
+                "zoneId": "151",
+                "stopSequence": 15,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672780000,
+                "arrivalDelayedTime": 1740672780000,
+                "departureDelayedTimeHHMM": "17:13",
+                "arrivalDelayedTimeHHMM": "17:13",
+                "arrivalHHMM": "17:13",
+                "departureHHMM": "17:13",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Schulstr.",
+                "stopId": "0011918",
+                "lon": 12.374816,
+                "lat": 51.2788288,
+                "arrival": 1740672840000,
+                "departure": 1740672840000,
+                "zoneId": "151",
+                "stopSequence": 16,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740672840000,
+                "arrivalDelayedTime": 1740672840000,
+                "departureDelayedTimeHHMM": "17:14",
+                "arrivalDelayedTimeHHMM": "17:14",
+                "arrivalHHMM": "17:14",
+                "departureHHMM": "17:14",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, S-Bahnhof (Bus)",
+                "stopId": "0010998",
+                "lon": 12.3704606,
+                "lat": 51.2791446,
+                "arrival": 1740672960000,
+                "departure": 1740673080000,
+                "zoneId": "151",
+                "stopSequence": 17,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673080000,
+                "arrivalDelayedTime": 1740672960000,
+                "departureDelayedTimeHHMM": "17:18",
+                "arrivalDelayedTimeHHMM": "17:16",
+                "arrivalHHMM": "17:16",
+                "departureHHMM": "17:18",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Sonnesiedlung",
+                "stopId": "0012037",
+                "lon": 12.3635871,
+                "lat": 51.2831441,
+                "arrival": 1740673200000,
+                "departure": 1740673200000,
+                "zoneId": "151",
+                "stopSequence": 18,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673200000,
+                "arrivalDelayedTime": 1740673200000,
+                "departureDelayedTimeHHMM": "17:20",
+                "arrivalDelayedTimeHHMM": "17:20",
+                "arrivalHHMM": "17:20",
+                "departureHHMM": "17:20",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Gautzscher Platz",
+                "stopId": "0012988",
+                "lon": 12.3592058,
+                "lat": 51.2788496,
+                "arrival": 1740673320000,
+                "departure": 1740673320000,
+                "zoneId": "151",
+                "stopSequence": 19,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673320000,
+                "arrivalDelayedTime": 1740673320000,
+                "departureDelayedTimeHHMM": "17:22",
+                "arrivalDelayedTimeHHMM": "17:22",
+                "arrivalHHMM": "17:22",
+                "departureHHMM": "17:22",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Am Eulenberg",
+                "stopId": "0012986",
+                "lon": 12.356505,
+                "lat": 51.272458,
+                "arrival": 1740673440000,
+                "departure": 1740673440000,
+                "zoneId": "151",
+                "stopSequence": 20,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673440000,
+                "arrivalDelayedTime": 1740673440000,
+                "departureDelayedTimeHHMM": "17:24",
+                "arrivalDelayedTimeHHMM": "17:24",
+                "arrivalHHMM": "17:24",
+                "departureHHMM": "17:24",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Sonnenweg",
+                "stopId": "0012767",
+                "lon": 12.360237,
+                "lat": 51.270957,
+                "arrival": 1740673500000,
+                "departure": 1740673500000,
+                "zoneId": "151",
+                "stopSequence": 21,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673500000,
+                "arrivalDelayedTime": 1740673500000,
+                "departureDelayedTimeHHMM": "17:25",
+                "arrivalDelayedTimeHHMM": "17:25",
+                "arrivalHHMM": "17:25",
+                "departureHHMM": "17:25",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Seniorenzentrum",
+                "stopId": "0012768",
+                "lon": 12.363897,
+                "lat": 51.270618,
+                "arrival": 1740673560000,
+                "departure": 1740673560000,
+                "zoneId": "151",
+                "stopSequence": 22,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673560000,
+                "arrivalDelayedTime": 1740673560000,
+                "departureDelayedTimeHHMM": "17:26",
+                "arrivalDelayedTimeHHMM": "17:26",
+                "arrivalHHMM": "17:26",
+                "departureHHMM": "17:26",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              },
+              {
+                "name": "Markkleeberg, Freiburger Allee",
+                "stopId": "0012769",
+                "lon": 12.355647,
+                "lat": 51.27065,
+                "arrival": 1740673680000,
+                "departure": 1740673680000,
+                "zoneId": "151",
+                "stopSequence": 23,
+                "wheelchairBoarding": null,
+                "departureDelayedTime": 1740673680000,
+                "arrivalDelayedTime": 1740673680000,
+                "departureDelayedTimeHHMM": "17:28",
+                "arrivalDelayedTimeHHMM": "17:28",
+                "arrivalHHMM": "17:28",
+                "departureHHMM": "17:28",
+                "arrivalDelay": 0,
+                "departureDelay": 0,
+                "cancelled": false
+              }
+            ],
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.30418,
+                  "lon": 12.42553
+                },
+                {
+                  "lat": 51.30406000000001,
+                  "lon": 12.425740000000001
+                },
+                {
+                  "lat": 51.303920000000005,
+                  "lon": 12.425870000000002
+                },
+                {
+                  "lat": 51.30346,
+                  "lon": 12.426680000000001
+                },
+                {
+                  "lat": 51.303250000000006,
+                  "lon": 12.426680000000001
+                },
+                {
+                  "lat": 51.302670000000006,
+                  "lon": 12.426720000000001
+                },
+                {
+                  "lat": 51.302550000000004,
+                  "lon": 12.42669
+                },
+                {
+                  "lat": 51.301860000000005,
+                  "lon": 12.426730000000001
+                },
+                {
+                  "lat": 51.301500000000004,
+                  "lon": 12.426730000000001
+                },
+                {
+                  "lat": 51.301370000000006,
+                  "lon": 12.426730000000001
+                },
+                {
+                  "lat": 51.300850000000004,
+                  "lon": 12.426770000000001
+                },
+                {
+                  "lat": 51.3006,
+                  "lon": 12.426800000000002
+                },
+                {
+                  "lat": 51.30004,
+                  "lon": 12.42684
+                },
+                {
+                  "lat": 51.29708,
+                  "lon": 12.42702
+                },
+                {
+                  "lat": 51.295730000000006,
+                  "lon": 12.42712
+                },
+                {
+                  "lat": 51.295390000000005,
+                  "lon": 12.427200000000001
+                },
+                {
+                  "lat": 51.294830000000005,
+                  "lon": 12.42736
+                },
+                {
+                  "lat": 51.29229,
+                  "lon": 12.428020000000002
+                },
+                {
+                  "lat": 51.29193,
+                  "lon": 12.428120000000002
+                },
+                {
+                  "lat": 51.29193,
+                  "lon": 12.428120000000002
+                },
+                {
+                  "lat": 51.291470000000004,
+                  "lon": 12.42825
+                },
+                {
+                  "lat": 51.28895000000001,
+                  "lon": 12.428920000000002
+                },
+                {
+                  "lat": 51.28689000000001,
+                  "lon": 12.429450000000001
+                },
+                {
+                  "lat": 51.28689000000001,
+                  "lon": 12.429450000000001
+                },
+                {
+                  "lat": 51.28669000000001,
+                  "lon": 12.4295
+                },
+                {
+                  "lat": 51.28614,
+                  "lon": 12.429640000000001
+                },
+                {
+                  "lat": 51.28613000000001,
+                  "lon": 12.429590000000001
+                },
+                {
+                  "lat": 51.286100000000005,
+                  "lon": 12.429530000000002
+                },
+                {
+                  "lat": 51.286060000000006,
+                  "lon": 12.429490000000001
+                },
+                {
+                  "lat": 51.28604000000001,
+                  "lon": 12.429490000000001
+                },
+                {
+                  "lat": 51.286010000000005,
+                  "lon": 12.429490000000001
+                },
+                {
+                  "lat": 51.28555000000001,
+                  "lon": 12.425160000000002
+                },
+                {
+                  "lat": 51.28428,
+                  "lon": 12.425510000000001
+                },
+                {
+                  "lat": 51.284240000000004,
+                  "lon": 12.42552
+                },
+                {
+                  "lat": 51.284240000000004,
+                  "lon": 12.42552
+                },
+                {
+                  "lat": 51.2811,
+                  "lon": 12.42637
+                },
+                {
+                  "lat": 51.280840000000005,
+                  "lon": 12.42645
+                },
+                {
+                  "lat": 51.28078000000001,
+                  "lon": 12.426530000000001
+                },
+                {
+                  "lat": 51.280750000000005,
+                  "lon": 12.42664
+                },
+                {
+                  "lat": 51.280750000000005,
+                  "lon": 12.426760000000002
+                },
+                {
+                  "lat": 51.280800000000006,
+                  "lon": 12.42725
+                },
+                {
+                  "lat": 51.280800000000006,
+                  "lon": 12.42725
+                },
+                {
+                  "lat": 51.281130000000005,
+                  "lon": 12.430460000000002
+                },
+                {
+                  "lat": 51.281130000000005,
+                  "lon": 12.430790000000002
+                },
+                {
+                  "lat": 51.281130000000005,
+                  "lon": 12.430940000000001
+                },
+                {
+                  "lat": 51.28036,
+                  "lon": 12.431140000000001
+                },
+                {
+                  "lat": 51.28023,
+                  "lon": 12.43119
+                },
+                {
+                  "lat": 51.279300000000006,
+                  "lon": 12.431450000000002
+                },
+                {
+                  "lat": 51.27798000000001,
+                  "lon": 12.431790000000001
+                },
+                {
+                  "lat": 51.277750000000005,
+                  "lon": 12.43186
+                },
+                {
+                  "lat": 51.277680000000004,
+                  "lon": 12.431540000000002
+                },
+                {
+                  "lat": 51.277680000000004,
+                  "lon": 12.431540000000002
+                },
+                {
+                  "lat": 51.27767000000001,
+                  "lon": 12.431460000000001
+                },
+                {
+                  "lat": 51.27747,
+                  "lon": 12.430430000000001
+                },
+                {
+                  "lat": 51.27745,
+                  "lon": 12.43035
+                },
+                {
+                  "lat": 51.27741,
+                  "lon": 12.430290000000001
+                },
+                {
+                  "lat": 51.27736,
+                  "lon": 12.43022
+                },
+                {
+                  "lat": 51.277300000000004,
+                  "lon": 12.43017
+                },
+                {
+                  "lat": 51.277240000000006,
+                  "lon": 12.430140000000002
+                },
+                {
+                  "lat": 51.27718,
+                  "lon": 12.430140000000002
+                },
+                {
+                  "lat": 51.27669,
+                  "lon": 12.43021
+                },
+                {
+                  "lat": 51.276610000000005,
+                  "lon": 12.430190000000001
+                },
+                {
+                  "lat": 51.276540000000004,
+                  "lon": 12.43016
+                },
+                {
+                  "lat": 51.27648000000001,
+                  "lon": 12.430090000000002
+                },
+                {
+                  "lat": 51.27644,
+                  "lon": 12.429990000000002
+                },
+                {
+                  "lat": 51.27635,
+                  "lon": 12.429630000000001
+                },
+                {
+                  "lat": 51.27619000000001,
+                  "lon": 12.429070000000001
+                },
+                {
+                  "lat": 51.275800000000004,
+                  "lon": 12.42783
+                },
+                {
+                  "lat": 51.275800000000004,
+                  "lon": 12.42783
+                },
+                {
+                  "lat": 51.275760000000005,
+                  "lon": 12.427710000000001
+                },
+                {
+                  "lat": 51.27564,
+                  "lon": 12.42731
+                },
+                {
+                  "lat": 51.275580000000005,
+                  "lon": 12.42721
+                },
+                {
+                  "lat": 51.27553,
+                  "lon": 12.42716
+                },
+                {
+                  "lat": 51.275420000000004,
+                  "lon": 12.42711
+                },
+                {
+                  "lat": 51.275310000000005,
+                  "lon": 12.42711
+                },
+                {
+                  "lat": 51.2749,
+                  "lon": 12.42722
+                },
+                {
+                  "lat": 51.27412,
+                  "lon": 12.42753
+                },
+                {
+                  "lat": 51.27403,
+                  "lon": 12.42753
+                },
+                {
+                  "lat": 51.27398,
+                  "lon": 12.427480000000001
+                },
+                {
+                  "lat": 51.273950000000006,
+                  "lon": 12.42739
+                },
+                {
+                  "lat": 51.27391,
+                  "lon": 12.427200000000001
+                },
+                {
+                  "lat": 51.27353,
+                  "lon": 12.42467
+                },
+                {
+                  "lat": 51.273500000000006,
+                  "lon": 12.424330000000001
+                },
+                {
+                  "lat": 51.27349,
+                  "lon": 12.42392
+                },
+                {
+                  "lat": 51.273500000000006,
+                  "lon": 12.423210000000001
+                },
+                {
+                  "lat": 51.273500000000006,
+                  "lon": 12.423210000000001
+                },
+                {
+                  "lat": 51.273500000000006,
+                  "lon": 12.423140000000002
+                },
+                {
+                  "lat": 51.27355000000001,
+                  "lon": 12.419270000000001
+                },
+                {
+                  "lat": 51.27365,
+                  "lon": 12.417810000000001
+                },
+                {
+                  "lat": 51.27366000000001,
+                  "lon": 12.417390000000001
+                },
+                {
+                  "lat": 51.27364000000001,
+                  "lon": 12.417000000000002
+                },
+                {
+                  "lat": 51.27356,
+                  "lon": 12.416540000000001
+                },
+                {
+                  "lat": 51.27351,
+                  "lon": 12.41627
+                },
+                {
+                  "lat": 51.273360000000004,
+                  "lon": 12.41558
+                },
+                {
+                  "lat": 51.2732,
+                  "lon": 12.414930000000002
+                },
+                {
+                  "lat": 51.27313,
+                  "lon": 12.414530000000001
+                },
+                {
+                  "lat": 51.27310000000001,
+                  "lon": 12.41422
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.412820000000002
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.412600000000001
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.41247
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.41247
+                },
+                {
+                  "lat": 51.273050000000005,
+                  "lon": 12.40985
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.409370000000001
+                },
+                {
+                  "lat": 51.27295,
+                  "lon": 12.408470000000001
+                },
+                {
+                  "lat": 51.27286,
+                  "lon": 12.4077
+                },
+                {
+                  "lat": 51.272800000000004,
+                  "lon": 12.40727
+                },
+                {
+                  "lat": 51.27244,
+                  "lon": 12.40515
+                },
+                {
+                  "lat": 51.272380000000005,
+                  "lon": 12.404530000000001
+                },
+                {
+                  "lat": 51.272360000000006,
+                  "lon": 12.404020000000001
+                },
+                {
+                  "lat": 51.272360000000006,
+                  "lon": 12.403350000000001
+                },
+                {
+                  "lat": 51.27239,
+                  "lon": 12.402660000000001
+                },
+                {
+                  "lat": 51.272650000000006,
+                  "lon": 12.40033
+                },
+                {
+                  "lat": 51.27266,
+                  "lon": 12.400300000000001
+                },
+                {
+                  "lat": 51.27266,
+                  "lon": 12.400300000000001
+                },
+                {
+                  "lat": 51.27286,
+                  "lon": 12.398660000000001
+                },
+                {
+                  "lat": 51.27290000000001,
+                  "lon": 12.39835
+                },
+                {
+                  "lat": 51.27290000000001,
+                  "lon": 12.398140000000001
+                },
+                {
+                  "lat": 51.27291,
+                  "lon": 12.398060000000001
+                },
+                {
+                  "lat": 51.272740000000006,
+                  "lon": 12.39802
+                },
+                {
+                  "lat": 51.272380000000005,
+                  "lon": 12.39817
+                },
+                {
+                  "lat": 51.27205000000001,
+                  "lon": 12.398270000000002
+                },
+                {
+                  "lat": 51.271710000000006,
+                  "lon": 12.398320000000002
+                },
+                {
+                  "lat": 51.27165,
+                  "lon": 12.398460000000002
+                },
+                {
+                  "lat": 51.27165,
+                  "lon": 12.398510000000002
+                },
+                {
+                  "lat": 51.27168,
+                  "lon": 12.39858
+                },
+                {
+                  "lat": 51.27172,
+                  "lon": 12.398620000000001
+                },
+                {
+                  "lat": 51.271770000000004,
+                  "lon": 12.398610000000001
+                },
+                {
+                  "lat": 51.271800000000006,
+                  "lon": 12.39858
+                },
+                {
+                  "lat": 51.271860000000004,
+                  "lon": 12.398460000000002
+                },
+                {
+                  "lat": 51.27188,
+                  "lon": 12.3984
+                },
+                {
+                  "lat": 51.27188,
+                  "lon": 12.3984
+                },
+                {
+                  "lat": 51.271930000000005,
+                  "lon": 12.398290000000001
+                },
+                {
+                  "lat": 51.27205000000001,
+                  "lon": 12.398270000000002
+                },
+                {
+                  "lat": 51.272380000000005,
+                  "lon": 12.39817
+                },
+                {
+                  "lat": 51.272740000000006,
+                  "lon": 12.39802
+                },
+                {
+                  "lat": 51.27291,
+                  "lon": 12.398060000000001
+                },
+                {
+                  "lat": 51.27293,
+                  "lon": 12.397920000000001
+                },
+                {
+                  "lat": 51.27297,
+                  "lon": 12.39784
+                },
+                {
+                  "lat": 51.27304,
+                  "lon": 12.39783
+                },
+                {
+                  "lat": 51.27317000000001,
+                  "lon": 12.39779
+                },
+                {
+                  "lat": 51.2732,
+                  "lon": 12.397760000000002
+                },
+                {
+                  "lat": 51.273500000000006,
+                  "lon": 12.397730000000001
+                },
+                {
+                  "lat": 51.27362,
+                  "lon": 12.39774
+                },
+                {
+                  "lat": 51.27391,
+                  "lon": 12.3978
+                },
+                {
+                  "lat": 51.27443,
+                  "lon": 12.39793
+                },
+                {
+                  "lat": 51.27452,
+                  "lon": 12.39794
+                },
+                {
+                  "lat": 51.27463,
+                  "lon": 12.397950000000002
+                },
+                {
+                  "lat": 51.27481,
+                  "lon": 12.397920000000001
+                },
+                {
+                  "lat": 51.27494,
+                  "lon": 12.397870000000001
+                },
+                {
+                  "lat": 51.27506,
+                  "lon": 12.3978
+                },
+                {
+                  "lat": 51.27512,
+                  "lon": 12.39779
+                },
+                {
+                  "lat": 51.275180000000006,
+                  "lon": 12.397760000000002
+                },
+                {
+                  "lat": 51.27525000000001,
+                  "lon": 12.39769
+                },
+                {
+                  "lat": 51.275290000000005,
+                  "lon": 12.397630000000001
+                },
+                {
+                  "lat": 51.27532,
+                  "lon": 12.397540000000001
+                },
+                {
+                  "lat": 51.2755,
+                  "lon": 12.397260000000001
+                },
+                {
+                  "lat": 51.275760000000005,
+                  "lon": 12.3969
+                },
+                {
+                  "lat": 51.27579,
+                  "lon": 12.39686
+                },
+                {
+                  "lat": 51.27579,
+                  "lon": 12.39686
+                },
+                {
+                  "lat": 51.27599000000001,
+                  "lon": 12.39662
+                },
+                {
+                  "lat": 51.27606,
+                  "lon": 12.396560000000001
+                },
+                {
+                  "lat": 51.27615,
+                  "lon": 12.39652
+                },
+                {
+                  "lat": 51.277350000000006,
+                  "lon": 12.3961
+                },
+                {
+                  "lat": 51.27732,
+                  "lon": 12.395760000000001
+                },
+                {
+                  "lat": 51.27722000000001,
+                  "lon": 12.39375
+                },
+                {
+                  "lat": 51.27716,
+                  "lon": 12.39319
+                },
+                {
+                  "lat": 51.277120000000004,
+                  "lon": 12.392900000000001
+                },
+                {
+                  "lat": 51.27711000000001,
+                  "lon": 12.392850000000001
+                },
+                {
+                  "lat": 51.27711000000001,
+                  "lon": 12.392850000000001
+                },
+                {
+                  "lat": 51.27704000000001,
+                  "lon": 12.392470000000001
+                },
+                {
+                  "lat": 51.27704000000001,
+                  "lon": 12.39235
+                },
+                {
+                  "lat": 51.277,
+                  "lon": 12.39217
+                },
+                {
+                  "lat": 51.27695000000001,
+                  "lon": 12.39211
+                },
+                {
+                  "lat": 51.276880000000006,
+                  "lon": 12.391850000000002
+                },
+                {
+                  "lat": 51.27667,
+                  "lon": 12.391250000000001
+                },
+                {
+                  "lat": 51.276410000000006,
+                  "lon": 12.390680000000001
+                },
+                {
+                  "lat": 51.276230000000005,
+                  "lon": 12.390320000000001
+                },
+                {
+                  "lat": 51.27584,
+                  "lon": 12.389640000000002
+                },
+                {
+                  "lat": 51.27564,
+                  "lon": 12.389320000000001
+                },
+                {
+                  "lat": 51.27559,
+                  "lon": 12.389180000000001
+                },
+                {
+                  "lat": 51.27537,
+                  "lon": 12.388810000000001
+                },
+                {
+                  "lat": 51.27525000000001,
+                  "lon": 12.388630000000001
+                },
+                {
+                  "lat": 51.27516000000001,
+                  "lon": 12.388530000000001
+                },
+                {
+                  "lat": 51.27409,
+                  "lon": 12.38677
+                },
+                {
+                  "lat": 51.273950000000006,
+                  "lon": 12.38653
+                },
+                {
+                  "lat": 51.27382000000001,
+                  "lon": 12.386260000000002
+                },
+                {
+                  "lat": 51.27362,
+                  "lon": 12.385800000000001
+                },
+                {
+                  "lat": 51.273540000000004,
+                  "lon": 12.38559
+                },
+                {
+                  "lat": 51.273430000000005,
+                  "lon": 12.38526
+                },
+                {
+                  "lat": 51.27326000000001,
+                  "lon": 12.38461
+                },
+                {
+                  "lat": 51.27317000000001,
+                  "lon": 12.38414
+                },
+                {
+                  "lat": 51.27311,
+                  "lon": 12.38371
+                },
+                {
+                  "lat": 51.272960000000005,
+                  "lon": 12.381920000000001
+                },
+                {
+                  "lat": 51.272650000000006,
+                  "lon": 12.37817
+                },
+                {
+                  "lat": 51.27262,
+                  "lon": 12.377650000000001
+                },
+                {
+                  "lat": 51.27261000000001,
+                  "lon": 12.377350000000002
+                },
+                {
+                  "lat": 51.27293,
+                  "lon": 12.377260000000001
+                },
+                {
+                  "lat": 51.27311,
+                  "lon": 12.3772
+                },
+                {
+                  "lat": 51.27313,
+                  "lon": 12.37719
+                },
+                {
+                  "lat": 51.27313,
+                  "lon": 12.37719
+                },
+                {
+                  "lat": 51.27322,
+                  "lon": 12.377160000000002
+                },
+                {
+                  "lat": 51.27347,
+                  "lon": 12.377160000000002
+                },
+                {
+                  "lat": 51.274570000000004,
+                  "lon": 12.377120000000001
+                },
+                {
+                  "lat": 51.274930000000005,
+                  "lon": 12.377110000000002
+                },
+                {
+                  "lat": 51.2755,
+                  "lon": 12.377160000000002
+                },
+                {
+                  "lat": 51.275580000000005,
+                  "lon": 12.37715
+                },
+                {
+                  "lat": 51.275650000000006,
+                  "lon": 12.377130000000001
+                },
+                {
+                  "lat": 51.27678,
+                  "lon": 12.376610000000001
+                },
+                {
+                  "lat": 51.27698,
+                  "lon": 12.376500000000002
+                },
+                {
+                  "lat": 51.277080000000005,
+                  "lon": 12.37639
+                },
+                {
+                  "lat": 51.278000000000006,
+                  "lon": 12.375280000000002
+                },
+                {
+                  "lat": 51.27807000000001,
+                  "lon": 12.375210000000001
+                },
+                {
+                  "lat": 51.278130000000004,
+                  "lon": 12.375160000000001
+                },
+                {
+                  "lat": 51.27857,
+                  "lon": 12.37493
+                },
+                {
+                  "lat": 51.278690000000005,
+                  "lon": 12.37489
+                },
+                {
+                  "lat": 51.27882,
+                  "lon": 12.374810000000002
+                },
+                {
+                  "lat": 51.27882,
+                  "lon": 12.374810000000002
+                },
+                {
+                  "lat": 51.27882,
+                  "lon": 12.374810000000002
+                },
+                {
+                  "lat": 51.27919000000001,
+                  "lon": 12.37462
+                },
+                {
+                  "lat": 51.2798,
+                  "lon": 12.374260000000001
+                },
+                {
+                  "lat": 51.279610000000005,
+                  "lon": 12.37339
+                },
+                {
+                  "lat": 51.27949,
+                  "lon": 12.37278
+                },
+                {
+                  "lat": 51.27929,
+                  "lon": 12.371450000000001
+                },
+                {
+                  "lat": 51.27910000000001,
+                  "lon": 12.37152
+                },
+                {
+                  "lat": 51.278850000000006,
+                  "lon": 12.371630000000001
+                },
+                {
+                  "lat": 51.27852000000001,
+                  "lon": 12.3717
+                },
+                {
+                  "lat": 51.27844,
+                  "lon": 12.371730000000001
+                },
+                {
+                  "lat": 51.27816000000001,
+                  "lon": 12.37199
+                },
+                {
+                  "lat": 51.27803,
+                  "lon": 12.37208
+                },
+                {
+                  "lat": 51.27792,
+                  "lon": 12.37218
+                },
+                {
+                  "lat": 51.277890000000006,
+                  "lon": 12.37222
+                },
+                {
+                  "lat": 51.27788,
+                  "lon": 12.372290000000001
+                },
+                {
+                  "lat": 51.2779,
+                  "lon": 12.37236
+                },
+                {
+                  "lat": 51.277930000000005,
+                  "lon": 12.3724
+                },
+                {
+                  "lat": 51.27796000000001,
+                  "lon": 12.37241
+                },
+                {
+                  "lat": 51.27801,
+                  "lon": 12.372390000000001
+                },
+                {
+                  "lat": 51.278040000000004,
+                  "lon": 12.37231
+                },
+                {
+                  "lat": 51.27806,
+                  "lon": 12.37221
+                },
+                {
+                  "lat": 51.2781,
+                  "lon": 12.372110000000001
+                },
+                {
+                  "lat": 51.27816000000001,
+                  "lon": 12.37199
+                },
+                {
+                  "lat": 51.27844,
+                  "lon": 12.371730000000001
+                },
+                {
+                  "lat": 51.27852000000001,
+                  "lon": 12.3717
+                },
+                {
+                  "lat": 51.278850000000006,
+                  "lon": 12.371630000000001
+                },
+                {
+                  "lat": 51.27929,
+                  "lon": 12.371450000000001
+                },
+                {
+                  "lat": 51.279160000000005,
+                  "lon": 12.37057
+                },
+                {
+                  "lat": 51.27915,
+                  "lon": 12.370450000000002
+                },
+                {
+                  "lat": 51.27915,
+                  "lon": 12.370450000000002
+                },
+                {
+                  "lat": 51.27910000000001,
+                  "lon": 12.37006
+                },
+                {
+                  "lat": 51.279070000000004,
+                  "lon": 12.369800000000001
+                },
+                {
+                  "lat": 51.279070000000004,
+                  "lon": 12.369670000000001
+                },
+                {
+                  "lat": 51.279090000000004,
+                  "lon": 12.369320000000002
+                },
+                {
+                  "lat": 51.279160000000005,
+                  "lon": 12.368540000000001
+                },
+                {
+                  "lat": 51.27924,
+                  "lon": 12.36855
+                },
+                {
+                  "lat": 51.27928000000001,
+                  "lon": 12.368530000000002
+                },
+                {
+                  "lat": 51.28061,
+                  "lon": 12.367080000000001
+                },
+                {
+                  "lat": 51.28237000000001,
+                  "lon": 12.365870000000001
+                },
+                {
+                  "lat": 51.28298,
+                  "lon": 12.36438
+                },
+                {
+                  "lat": 51.283260000000006,
+                  "lon": 12.363710000000001
+                },
+                {
+                  "lat": 51.28314,
+                  "lon": 12.36358
+                },
+                {
+                  "lat": 51.28314,
+                  "lon": 12.36358
+                },
+                {
+                  "lat": 51.27982,
+                  "lon": 12.360080000000002
+                },
+                {
+                  "lat": 51.27948000000001,
+                  "lon": 12.3597
+                },
+                {
+                  "lat": 51.279230000000005,
+                  "lon": 12.359470000000002
+                },
+                {
+                  "lat": 51.278850000000006,
+                  "lon": 12.359210000000001
+                },
+                {
+                  "lat": 51.27884,
+                  "lon": 12.359200000000001
+                },
+                {
+                  "lat": 51.27884,
+                  "lon": 12.359200000000001
+                },
+                {
+                  "lat": 51.276650000000004,
+                  "lon": 12.357740000000002
+                },
+                {
+                  "lat": 51.27577,
+                  "lon": 12.357140000000001
+                },
+                {
+                  "lat": 51.274950000000004,
+                  "lon": 12.356570000000001
+                },
+                {
+                  "lat": 51.274680000000004,
+                  "lon": 12.3564
+                },
+                {
+                  "lat": 51.273830000000004,
+                  "lon": 12.35585
+                },
+                {
+                  "lat": 51.27310000000001,
+                  "lon": 12.355310000000001
+                },
+                {
+                  "lat": 51.27257,
+                  "lon": 12.354980000000001
+                },
+                {
+                  "lat": 51.272400000000005,
+                  "lon": 12.35565
+                },
+                {
+                  "lat": 51.272310000000004,
+                  "lon": 12.35603
+                },
+                {
+                  "lat": 51.27232000000001,
+                  "lon": 12.35612
+                },
+                {
+                  "lat": 51.272420000000004,
+                  "lon": 12.356520000000002
+                },
+                {
+                  "lat": 51.272420000000004,
+                  "lon": 12.356520000000002
+                },
+                {
+                  "lat": 51.272420000000004,
+                  "lon": 12.356530000000001
+                },
+                {
+                  "lat": 51.27248,
+                  "lon": 12.35679
+                },
+                {
+                  "lat": 51.2725,
+                  "lon": 12.35697
+                },
+                {
+                  "lat": 51.2725,
+                  "lon": 12.357140000000001
+                },
+                {
+                  "lat": 51.27246,
+                  "lon": 12.357370000000001
+                },
+                {
+                  "lat": 51.27244,
+                  "lon": 12.357920000000002
+                },
+                {
+                  "lat": 51.27176000000001,
+                  "lon": 12.357890000000001
+                },
+                {
+                  "lat": 51.271620000000006,
+                  "lon": 12.35782
+                },
+                {
+                  "lat": 51.27112,
+                  "lon": 12.357800000000001
+                },
+                {
+                  "lat": 51.27105,
+                  "lon": 12.357850000000001
+                },
+                {
+                  "lat": 51.271080000000005,
+                  "lon": 12.358020000000002
+                },
+                {
+                  "lat": 51.271040000000006,
+                  "lon": 12.359430000000001
+                },
+                {
+                  "lat": 51.27103,
+                  "lon": 12.359990000000002
+                },
+                {
+                  "lat": 51.270990000000005,
+                  "lon": 12.3602
+                },
+                {
+                  "lat": 51.270990000000005,
+                  "lon": 12.360230000000001
+                },
+                {
+                  "lat": 51.270990000000005,
+                  "lon": 12.360230000000001
+                },
+                {
+                  "lat": 51.27096,
+                  "lon": 12.361870000000001
+                },
+                {
+                  "lat": 51.270950000000006,
+                  "lon": 12.361970000000001
+                },
+                {
+                  "lat": 51.27091,
+                  "lon": 12.362060000000001
+                },
+                {
+                  "lat": 51.270790000000005,
+                  "lon": 12.362260000000001
+                },
+                {
+                  "lat": 51.270720000000004,
+                  "lon": 12.362380000000002
+                },
+                {
+                  "lat": 51.27069,
+                  "lon": 12.362480000000001
+                },
+                {
+                  "lat": 51.27067,
+                  "lon": 12.3626
+                },
+                {
+                  "lat": 51.27065,
+                  "lon": 12.363760000000001
+                },
+                {
+                  "lat": 51.270630000000004,
+                  "lon": 12.363880000000002
+                },
+                {
+                  "lat": 51.270630000000004,
+                  "lon": 12.363890000000001
+                },
+                {
+                  "lat": 51.270630000000004,
+                  "lon": 12.363890000000001
+                },
+                {
+                  "lat": 51.270630000000004,
+                  "lon": 12.364180000000001
+                },
+                {
+                  "lat": 51.27062,
+                  "lon": 12.364270000000001
+                },
+                {
+                  "lat": 51.270590000000006,
+                  "lon": 12.36434
+                },
+                {
+                  "lat": 51.27056,
+                  "lon": 12.364370000000001
+                },
+                {
+                  "lat": 51.270540000000004,
+                  "lon": 12.36443
+                },
+                {
+                  "lat": 51.27053,
+                  "lon": 12.364500000000001
+                },
+                {
+                  "lat": 51.270540000000004,
+                  "lon": 12.36458
+                },
+                {
+                  "lat": 51.27056,
+                  "lon": 12.364630000000002
+                },
+                {
+                  "lat": 51.2706,
+                  "lon": 12.36466
+                },
+                {
+                  "lat": 51.27064000000001,
+                  "lon": 12.36467
+                },
+                {
+                  "lat": 51.270680000000006,
+                  "lon": 12.36466
+                },
+                {
+                  "lat": 51.270720000000004,
+                  "lon": 12.364600000000001
+                },
+                {
+                  "lat": 51.27074,
+                  "lon": 12.36456
+                },
+                {
+                  "lat": 51.27074,
+                  "lon": 12.364500000000001
+                },
+                {
+                  "lat": 51.27073000000001,
+                  "lon": 12.364400000000002
+                },
+                {
+                  "lat": 51.27071,
+                  "lon": 12.364370000000001
+                },
+                {
+                  "lat": 51.270680000000006,
+                  "lon": 12.36434
+                },
+                {
+                  "lat": 51.27067,
+                  "lon": 12.363890000000001
+                },
+                {
+                  "lat": 51.27065,
+                  "lon": 12.363760000000001
+                },
+                {
+                  "lat": 51.27067,
+                  "lon": 12.3626
+                },
+                {
+                  "lat": 51.27069,
+                  "lon": 12.362480000000001
+                },
+                {
+                  "lat": 51.270720000000004,
+                  "lon": 12.362380000000002
+                },
+                {
+                  "lat": 51.270790000000005,
+                  "lon": 12.362260000000001
+                },
+                {
+                  "lat": 51.27091,
+                  "lon": 12.362060000000001
+                },
+                {
+                  "lat": 51.270950000000006,
+                  "lon": 12.361970000000001
+                },
+                {
+                  "lat": 51.27096,
+                  "lon": 12.361870000000001
+                },
+                {
+                  "lat": 51.270990000000005,
+                  "lon": 12.3602
+                },
+                {
+                  "lat": 51.27103,
+                  "lon": 12.359990000000002
+                },
+                {
+                  "lat": 51.271080000000005,
+                  "lon": 12.358020000000002
+                },
+                {
+                  "lat": 51.27105,
+                  "lon": 12.357850000000001
+                },
+                {
+                  "lat": 51.27096,
+                  "lon": 12.357650000000001
+                },
+                {
+                  "lat": 51.270610000000005,
+                  "lon": 12.357030000000002
+                },
+                {
+                  "lat": 51.270590000000006,
+                  "lon": 12.356890000000002
+                },
+                {
+                  "lat": 51.270700000000005,
+                  "lon": 12.35565
+                },
+                {
+                  "lat": 51.270700000000005,
+                  "lon": 12.35565
+                },
+                {
+                  "lat": 51.270700000000005,
+                  "lon": 12.355620000000002
+                },
+                {
+                  "lat": 51.27074,
+                  "lon": 12.355
+                },
+                {
+                  "lat": 51.270990000000005,
+                  "lon": 12.35391
+                },
+                {
+                  "lat": 51.27026000000001,
+                  "lon": 12.3534
+                },
+                {
+                  "lat": 51.269560000000006,
+                  "lon": 12.352920000000001
+                },
+                {
+                  "lat": 51.26887000000001,
+                  "lon": 12.35247
+                },
+                {
+                  "lat": 51.268280000000004,
+                  "lon": 12.35204
+                },
+                {
+                  "lat": 51.268150000000006,
+                  "lon": 12.35195
+                },
+                {
+                  "lat": 51.268100000000004,
+                  "lon": 12.35186
+                },
+                {
+                  "lat": 51.267950000000006,
+                  "lon": 12.35176
+                },
+                {
+                  "lat": 51.267880000000005,
+                  "lon": 12.351750000000001
+                },
+                {
+                  "lat": 51.26782000000001,
+                  "lon": 12.35171
+                },
+                {
+                  "lat": 51.26771,
+                  "lon": 12.351680000000002
+                },
+                {
+                  "lat": 51.2676,
+                  "lon": 12.35166
+                },
+                {
+                  "lat": 51.26737000000001,
+                  "lon": 12.35167
+                },
+                {
+                  "lat": 51.26709,
+                  "lon": 12.35172
+                },
+                {
+                  "lat": 51.26662,
+                  "lon": 12.351840000000001
+                }
+              ],
+              "length": 357
+            },
+            "steps": [],
+            "routeShortName": "106",
+            "routeLongName": "Bus 106",
+            "wheelchairAccessible": 0,
+            "duration": 2280,
+            "alerts": [
+              {
+                "alertUrl": "",
+                "effectiveStartDate": 1740671520000,
+                "alertHeaderText": "",
+                "alertDescriptionText": "Der Anschluss kann voraussichtlich nicht erreicht werden",
+                "alertCategory": 6
+              }
+            ],
+            "departureDelayedTime": 1740671520000,
+            "arrivalDelayedTime": 1740673800000,
+            "departureDelayedTimeHHMM": "16:52",
+            "arrivalDelayedTimeHHMM": "17:30",
+            "startTimeHHMM": "16:52",
+            "endTimeHHMM": "17:30",
+            "cancelled": false,
+            "wheelchairBoardingVehicle": null
+          },
+          {
+            "startTime": 1740673800000,
+            "endTime": 1740674400000,
+            "departureDelay": 0,
+            "arrivalDelay": 0,
+            "realTime": false,
+            "distance": 683,
+            "mode": "WALK",
+            "transitLeg": false,
+            "route": "",
+            "from": {
+              "name": "Zöbigker (Markkleeberg), Schmiede",
+              "stopId": "0012987",
+              "lon": 12.351914,
+              "lat": 51.26663,
+              "arrival": 1740673800000,
+              "departure": 1740673800000,
+              "zoneId": "151",
+              "wheelchairBoarding": 0,
+              "departureDelayedTime": 1740673800000,
+              "arrivalDelayedTime": 1740673800000,
+              "departureDelayedTimeHHMM": "17:30",
+              "arrivalDelayedTimeHHMM": "17:30",
+              "arrivalHHMM": "17:30",
+              "departureHHMM": "17:30",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "to": {
+              "name": "Destination",
+              "lon": 12.3451347,
+              "lat": 51.2655979,
+              "arrival": 1740674400000,
+              "departureDelayedTime": 1740674400000,
+              "arrivalDelayedTime": 1740674400000,
+              "arrivalDelayedTimeHHMM": "17:40",
+              "arrivalHHMM": "17:40",
+              "departureHHMM": "17:40",
+              "arrivalDelay": 0,
+              "departureDelay": 0,
+              "cancelled": false
+            },
+            "legGeometry": {
+              "points": [
+                {
+                  "lat": 51.266630000000006,
+                  "lon": 12.35191
+                },
+                {
+                  "lat": 51.26662,
+                  "lon": 12.35185
+                },
+                {
+                  "lat": 51.26644,
+                  "lon": 12.351890000000001
+                },
+                {
+                  "lat": 51.26635,
+                  "lon": 12.3519
+                },
+                {
+                  "lat": 51.266270000000006,
+                  "lon": 12.351890000000001
+                },
+                {
+                  "lat": 51.26621,
+                  "lon": 12.351870000000002
+                },
+                {
+                  "lat": 51.2661,
+                  "lon": 12.35181
+                },
+                {
+                  "lat": 51.26599,
+                  "lon": 12.351730000000002
+                },
+                {
+                  "lat": 51.26579,
+                  "lon": 12.35153
+                },
+                {
+                  "lat": 51.265730000000005,
+                  "lon": 12.35148
+                },
+                {
+                  "lat": 51.2657,
+                  "lon": 12.351450000000002
+                },
+                {
+                  "lat": 51.26559,
+                  "lon": 12.351350000000002
+                },
+                {
+                  "lat": 51.265440000000005,
+                  "lon": 12.351230000000001
+                },
+                {
+                  "lat": 51.2653,
+                  "lon": 12.351140000000001
+                },
+                {
+                  "lat": 51.265150000000006,
+                  "lon": 12.35105
+                },
+                {
+                  "lat": 51.26484000000001,
+                  "lon": 12.350900000000001
+                },
+                {
+                  "lat": 51.26483,
+                  "lon": 12.350700000000002
+                },
+                {
+                  "lat": 51.26483,
+                  "lon": 12.350510000000002
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.3495
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.349390000000001
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.34894
+                },
+                {
+                  "lat": 51.264900000000004,
+                  "lon": 12.348170000000001
+                },
+                {
+                  "lat": 51.26500000000001,
+                  "lon": 12.34693
+                },
+                {
+                  "lat": 51.26500000000001,
+                  "lon": 12.346910000000001
+                },
+                {
+                  "lat": 51.265010000000004,
+                  "lon": 12.346860000000001
+                },
+                {
+                  "lat": 51.265010000000004,
+                  "lon": 12.346770000000001
+                },
+                {
+                  "lat": 51.26505,
+                  "lon": 12.346380000000002
+                },
+                {
+                  "lat": 51.26507,
+                  "lon": 12.34622
+                },
+                {
+                  "lat": 51.26512,
+                  "lon": 12.345690000000001
+                },
+                {
+                  "lat": 51.26516,
+                  "lon": 12.345250000000002
+                },
+                {
+                  "lat": 51.265150000000006,
+                  "lon": 12.345180000000001
+                },
+                {
+                  "lat": 51.265170000000005,
+                  "lon": 12.34514
+                },
+                {
+                  "lat": 51.265370000000004,
+                  "lon": 12.344890000000001
+                },
+                {
+                  "lat": 51.265420000000006,
+                  "lon": 12.344840000000001
+                },
+                {
+                  "lat": 51.26547000000001,
+                  "lon": 12.344800000000001
+                },
+                {
+                  "lat": 51.26552,
+                  "lon": 12.344780000000002
+                },
+                {
+                  "lat": 51.26559,
+                  "lon": 12.344790000000001
+                },
+                {
+                  "lat": 51.265640000000005,
+                  "lon": 12.344800000000001
+                },
+                {
+                  "lat": 51.26568,
+                  "lon": 12.344830000000002
+                }
+              ],
+              "length": 39
+            },
+            "steps": [
+              {
+                "distance": 214,
+                "relativeDirection": "DEPART",
+                "streetName": "Koburger Straße",
+                "absoluteDirection": "SOUTH",
+                "lon": 12.3518514,
+                "lat": 51.2666239
+              },
+              {
+                "distance": 283,
+                "relativeDirection": "RIGHT",
+                "streetName": "Cospudener Straße",
+                "absoluteDirection": "WEST",
+                "lon": 12.3509008,
+                "lat": 51.2648417
+              },
+              {
+                "distance": 119,
+                "relativeDirection": "CONTINUE",
+                "streetName": "path",
+                "absoluteDirection": "WEST",
+                "lon": 12.3468632,
+                "lat": 51.2650104
+              },
+              {
+                "distance": 69,
+                "relativeDirection": "RIGHT",
+                "streetName": "Ostuferweg",
+                "absoluteDirection": "NORTHWEST",
+                "lon": 12.345181,
+                "lat": 51.265154
+              }
+            ],
+            "rentedBike": false,
+            "duration": 600,
+            "alerts": [],
+            "departureDelayedTime": 1740673800000,
+            "arrivalDelayedTime": 1740674400000,
+            "departureDelayedTimeHHMM": "17:30",
+            "arrivalDelayedTimeHHMM": "17:40",
+            "startTimeHHMM": "17:30",
+            "endTimeHHMM": "17:40",
+            "cancelled": false
+          }
+        ],
+        "otpVersion": "2.1",
+        "startTimeHHMM": "16:29",
+        "endTimeHHMM": "17:39",
+        "durationHHMM": "01:11",
+        "zoneInfo": {
+          "zones": [
+            "110",
+            "151"
+          ],
+          "orderedZones": [
+            "110",
+            "151"
+          ],
+          "shortDistanceTicket": false
+        },
+        "alerts": [
+          {
+            "alertUrl": "",
+            "effectiveStartDate": 1740671520000,
+            "alertHeaderText": "",
+            "alertDescriptionText": "Anschlussgefahr wegen Verspätungen",
+            "alertCategory": 6
+          }
+        ],
+        "index": 2
+      }
+    ]
   }
+}
