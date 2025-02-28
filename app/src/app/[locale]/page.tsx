@@ -1,3 +1,5 @@
+import "maplibre-gl/dist/maplibre-gl.css"; // Additive maplibre-gl CSS functionality
+
 import { generateStaticParams } from "./generateStaticParams";
 export { generateStaticParams };
 
