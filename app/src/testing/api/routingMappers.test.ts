@@ -129,7 +129,7 @@ describe("routingService Mappers", () => {
                 },
                 {
                     ...mockOtpResponse.requestParameters,
-                    Travelmode: [mockOtpResponse.requestParameters.Travelmode as TransportMode]
+                    Travelmode: mockOtpResponse.requestParameters.Travelmode as TransportMode
                 },
                 toPlan(mockOtpResponse.plan)
             )
