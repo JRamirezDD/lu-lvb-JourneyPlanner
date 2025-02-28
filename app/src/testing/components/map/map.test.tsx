@@ -7,6 +7,7 @@ import { MapProvider, useMapContext } from '@/contexts/mapContext';
 import maplibregl from 'maplibre-gl';
 import { StopmonitorDataProvider } from '@/contexts/DataContext/stopmonitorDataContext';
 
+
 jest.mock('maplibre-gl', () => ({
     Map: jest.fn(() => ({
       on: jest.fn((event, callback) => {

@@ -146,7 +146,7 @@ export const MapWidget: React.FC = ({ }) => {
     
     // React to changes in queryBoundsState
     useEffect(() => {
-        //console.log("queryBounds:", queryBoundsState);
+        console.log("queryBounds:", queryBoundsState);
         
         if (queryBoundsState && mapRef.current) {
             const bboxString = boundsToString(queryBoundsState);
@@ -157,9 +157,7 @@ export const MapWidget: React.FC = ({ }) => {
     // Fetch stops data
     const fetchStopsData = async () => {
         if (!currentQueryBoundsRef.current) return;
-        
-        //console.log("Stops query:", currentQueryBoundsRef.current);
-        
+                
         await fetchStops(boundsToString(currentQueryBoundsRef.current));
         
         if (errorStops) {
