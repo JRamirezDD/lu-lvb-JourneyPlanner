@@ -22,6 +22,8 @@ import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDat
 import { OtpItinerary } from "@/api/routingService/dto/otpResponse";
 import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.mock";
 import { toOtpResponse } from "@/api/routingService/mappers";
+import loadSVGImage from "@/utils/loadSVGImage";
+import useLayersManager from "./layers/layersManager";
 
 
 // --- Bounding Box Helpers ---
@@ -76,6 +78,9 @@ export const MapWidget: React.FC = ({ }) => {
     const currentQueryBoundsRef = useRef<maplibregl.LngLatBounds | null>(null);
     const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
+    const { updateSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers } = useLayersManager(mapRef);
+
+
     useEffect(() => {
         if (!mapContainerRef.current || mapRef.current) return;
     
@@ -97,6 +102,18 @@ export const MapWidget: React.FC = ({ }) => {
             setQueryBoundsState(extendedBounds); // trigger useEffect below
             //console.log("Initial query bounds:", extendedBounds);
     
+            // Load Images
+            const loadImages = () => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/haltestelle.svg").then((image) => {
+                    if (!map.hasImage("haltestelle")) {
+                        map.addImage("haltestelle", image as HTMLImageElement | ImageBitmap);
+                    }
+                }).catch((error) => {
+                    throw error;
+                });
+            };
+            loadImages();
+
             // Set up moveend listener
             map.on("moveend", () => {
                 console.log("Map moveend event");
@@ -134,7 +151,7 @@ export const MapWidget: React.FC = ({ }) => {
             });
     
             setMapLoaded(true);
-            loadLayers(viewMode);
+            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, selectedItinerary);
         });
 
         map.on("error", (e) => {
@@ -169,7 +186,7 @@ export const MapWidget: React.FC = ({ }) => {
     // React to viewmode changes
     useEffect(() => {
         if (mapRef.current) {
-            loadLayers(viewMode);
+            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, selectedItinerary);
         }
     }, [viewMode]);
 
@@ -179,160 +196,65 @@ export const MapWidget: React.FC = ({ }) => {
         
         if (!loadingStops && stopsData) {
             console.log("Stops data is available, creating layers...");
-            createStopsLayers();
+            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, selectedItinerary);
         } else {
             console.warn("Stops data not ready yet.");
         }
     }, [stopsData, loadingStops]);
 
 
-    // Update layers when view mode changes
-    const loadLayers = (_viewMode: ViewMode) => {
-        console.log("Loading layers for view mode:", _viewMode);
-
+    const loadLayers = (
+        mapRef: React.MutableRefObject<maplibregl.Map | null>,
+        layerManager: LayerManager | null,
+        viewMode: ViewMode,
+        stopsData: any,
+        itinerary: Itinerary | null
+    ) => {
         if (!mapRef.current) return;
-        if (!layerManagerRef.current) return;
-
-        // Fetch data before loading layers
-        // For all modes, we add the stops layers...
-
-        // createStopsLayers(); - now fully handled by boundingbox observer
-
-        // remove layers
-        removeItineraryLayers(mapRef.current, layerManagerRef.current);
-
-            // DELETE THIS - CURRENTLY NEEDED FOR DEMO BECAUSE CONTROL PANEL IS NOT CONNECTED TO CONTEXTS
-             const otpPlan = toOtpResponse(mockOtpResponse).plan; 
-             const itinerary = new Itinerary(
-                 otpPlan.from,
-                 otpPlan.to,
-                 otpPlan.itineraries[0]
-             )
-             setSelectedItinerary(itinerary);
-            // createItineraryLayers(mapRef.current, layerManagerRef.current, itinerary);
-            // END DELETE
-
-        // And if the view mode is ITINERARY, add itinerary layers too
-        if (_viewMode === "ITINERARY" && selectedItinerary && mapLoaded) {
-            createItineraryLayers(mapRef.current, layerManagerRef.current, selectedItinerary);
+    
+        if (["DEFAULT", "ITINERARY", "PLAN", "STATION"].includes(viewMode)) {
+            updateStopsLayers(mapRef, layerManager, stopsData);
         }
-
+    
+        if (viewMode === "ITINERARY") {
+            updateItineraryLayers(mapRef, layerManager, itinerary);
+        } else {
+            removeItineraryLayers(mapRef, layerManager);
+        }
+    
         mapRef.current.resize();
     };
 
-
     
-
-
-
-
-    // Update stops layers using the stops data from context
-    // Function to dynamically update the stops source & layers
-    const createStopsLayers = () => {
-        console.log("Updating stops layers...");
-        
-        if (!mapRef.current || !stopsData) {
-            console.warn("Map or stopsData not available.");
-            return;
-        }
-
-        // Convert stopsData into GeoJSON
+    const updateStopsLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, stopsData: any) => {
+        if (!stopsData) return;
+    
         const geojsonData = createStopsLayerData(stopsData);
-        
-        // Check if the source already exists
-        const source = mapRef.current.getSource("stops-source") as maplibregl.GeoJSONSource;
-        if (source) {
-            // updating source data
-            source.setData(geojsonData); // Update data without re-adding the source
-        } else { // If source doesn't exist, create layers and interactions. Operation should only occur once per instance, unless source is removed.
-            stopsSource.data = geojsonData;
-            console.log("Adding stops source and layers...");
-            mapRef.current.addSource("stops-source", stopsSource);
-
-            // Add layers
-            layerManagerRef.current?.addLayer(stopsLayerConfig, true, (e) => {
-                const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];
-                if (feature) {
-                    const stopId = feature.properties?.stop_id;
-                    const stopName = feature.properties?.stop_name;
-                    setSelectedStop({ stop_id: stopId, stop_name: stopName });
-                }
-            });
-
-            layerManagerRef.current?.addLayer(stopsLabelsLayerConfig);
-
-            // Register cursor events
-            mapRef.current.on("mouseenter", "stops-layer", () => {
-
-                if (mapRef.current) {
-                    mapRef.current.getCanvas().style.cursor = "pointer";
-                }
-            });
-
-            mapRef.current.on("mouseleave", "stops-layer", () => {
-                if (mapRef.current) {
-                    mapRef.current.getCanvas().style.cursor = "";
-                }
-            });
-        }
+        updateSource("stops-source", geojsonData);
+    
+        addLayerIfNotExists(stopsLayerConfig);
+        addLayerIfNotExists(stopsLabelsLayerConfig);
     };
 
-    const removeItineraryLayers = (map:maplibregl.Map, layerManager: LayerManager) => {
-        console.log("Removing itinerary layers...");
-        
-        // Remove all itinerary layers
-        const layers = [
-          walkLayerConfig,
-          suburbLayerConfig,
-          tramLayerConfig,
-          trainLayerConfig,
-          legStartEndLayerConfig,
-          intermediateStopsLayerConfig,
-          busLayerConfig,
-        ];
+    
+    const updateItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
+        if (!itinerary) return;
+    
+        const geojsonData = createItineraryLayerData(itinerary);
+        updateSource("itinerary-source", geojsonData);
+    
+        const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig];
+        layers.forEach(addLayerIfNotExists);
+    };
 
-        layers.forEach((layer) => layerManager.removeLayer(layer.id));
+    const removeItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
+        const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig];
+        layers.forEach(layer => removeLayer(layer.id));
+    
+        activeSources.delete("itinerary-source");
+    };
+    
 
-        layerManager.removeSource("itinerary-source");
-    }
-
-    // Create itinerary layers (using your existing implementation)
-    // This version assumes createItineraryLayerData accepts the current itinerary (if needed)
-    const createItineraryLayers = (map:maplibregl.Map, layerManager: LayerManager, selectedItinerary: Itinerary) => {
-        console.log("Updating itinerary layers...");
-        
-        if (!selectedItinerary) {
-          console.warn("Selected itinerary not available.");
-          return;
-        }
-      
-        // Convert itinerary data to GeoJSON
-        const geojsonData = createItineraryLayerData(selectedItinerary);
-        if (!geojsonData) return;
-      
-        // Check if source exists
-        const source = map.getSource("itinerary-source") as maplibregl.GeoJSONSource;
-        if (source) {
-          console.log("Updating existing itinerary source...");
-          source.setData(geojsonData);
-        } else {
-          console.log("Adding new itinerary source...");
-          map.addSource("itinerary-source", { type: "geojson", data: geojsonData });
-      
-          // Add all itinerary layers (once)
-          const layers = [
-            walkLayerConfig,
-            suburbLayerConfig,
-            tramLayerConfig,
-            trainLayerConfig,
-            legStartEndLayerConfig,
-            intermediateStopsLayerConfig,
-            busLayerConfig,
-          ];
-      
-          layers.forEach((layer) => layerManager.addLayer(layer));
-        }
-      };
       
 
     //console.log("Rendering MapWidget. Map container ref:", mapContainerRef.current);
