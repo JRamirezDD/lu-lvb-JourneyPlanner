@@ -12,7 +12,7 @@ import {
     toTicketSeller,
     toFlexa,
   } from "@/api/nearbysearchService/mappers";
-  import { NearBySearchResponse, SearchItemJson, Price } from "@/api/nearbysearchService/dto/nearbysearchResponse";
+  import { NearBySearchResponse, SearchItemJson, Price } from "@/api/nearbysearchService/dto/nearbySearchResponse";
   import { nearbysearchmockresponse } from "@/api/nearbysearchService/dto/__mock__/nearbysearchResponse.mock"
   describe("nearBySearchService Mappers", () => {
     // Sample mock objects for each variant

@@ -1,12 +1,9 @@
 //fetch stops info a geojson 
 
-import { mockStopsResponse } from "@/api/stopmonitorService/dto/__mock__/stopmonitorResponse.mock";
-import { toStopsResponse } from "@/api/stopmonitorService/mappers";
+// DEPRECATED - REPLACED WITH NearbySearchLayer.tsx
+
 import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse";
 import { GeoJSONSourceSpecification, SourceSpecification } from "maplibre-gl";
-
-const rawItem = mockStopsResponse;
-const mockItem = toStopsResponse(rawItem);
 
 
 // Function to generate GeoJSON dynamically from API response

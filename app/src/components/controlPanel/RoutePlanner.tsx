@@ -120,7 +120,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
           await fetchAutocompleteData({ 
             search: origin,
             format: "JSON",
-            pointType: "P,S,W"
+            pointType: "P,S,W,N"
           });
           if (autocompleteData) {
             setOriginAutocompleteData(autocompleteData);

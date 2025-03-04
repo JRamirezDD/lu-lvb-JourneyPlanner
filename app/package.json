@@ -23,6 +23,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "geojson": "^0.5.0",
+    "haversine-distance": "^1.2.3",
     "http-proxy-middleware": "^3.0.3",
     "lu-lvb-journeyplanner": "file:",
     "lucide-react": "^0.474.0",
