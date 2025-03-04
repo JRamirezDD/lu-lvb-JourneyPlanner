@@ -1,17 +1,20 @@
-const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>) => {
-    const activeSources = new Map<string, any>(); // Stores active source data
-    const activeLayers = new Set<string>(); // Tracks added layers
+import { useRef } from "react";
+import { GeoJSON } from "geojson";
 
-    const updateSource = (sourceId: string, newData: any) => {
+const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>) => {
+    const activeSources = useRef(new Map<string, any>());
+    const activeLayers = useRef(new Set<string>());
+
+    const updateSource = (sourceId: string, newData: GeoJSON) => {
         if (!mapRef.current) return;
 
-        const existingSource = activeSources.get(sourceId);
+        const existingSource = activeSources.current.get(sourceId);
         if (existingSource && JSON.stringify(existingSource) === JSON.stringify(newData)) {
             console.log(`Source ${sourceId} unchanged, skipping update.`);
             return;
         }
 
-        activeSources.set(sourceId, newData); // Store the new source data
+        activeSources.current.set(sourceId, newData);
 
         const source = mapRef.current.getSource(sourceId) as maplibregl.GeoJSONSource;
         if (source) {
@@ -22,25 +25,42 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         }
     };
 
+    const clearSource = (sourceId: string) => {
+        if (!mapRef.current) return;
+        if (activeSources.current.has(sourceId)) {
+            console.log(`Deleting source data ${sourceId}.`);
+            mapRef.current.removeSource(sourceId);
+            activeSources.current.delete(sourceId);
+        } else {
+            console.log(`Source ${sourceId} not found.`);
+        }
+    };
+
     const addLayerIfNotExists = (layerConfig: any) => {
         if (!mapRef.current) return;
-        if (!activeLayers.has(layerConfig.id)) {
+        if (!activeLayers.current.has(layerConfig.id)) {
+            console.info(`Layer ${layerConfig.id} not found in ${printActiveLayers()}, adding...`);
             mapRef.current.addLayer(layerConfig);
-            activeLayers.add(layerConfig.id);
+            activeLayers.current.add(layerConfig.id);
             console.log(`Added layer: ${layerConfig.id}`);
         }
     };
 
     const removeLayer = (layerId: string) => {
         if (!mapRef.current) return;
-        if (activeLayers.has(layerId)) {
+        if (activeLayers.current.has(layerId)) {
             mapRef.current.removeLayer(layerId);
-            activeLayers.delete(layerId);
+            activeLayers.current.delete(layerId);
             console.log(`Removed layer: ${layerId}`);
         }
     };
 
-    return { updateSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
+    const printActiveLayers = () => {
+        console.log("Active layers:");
+        activeLayers.current.forEach(layerId => console.log(layerId));
+    };
+
+    return { updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
 };
 
 export default useLayersManager;

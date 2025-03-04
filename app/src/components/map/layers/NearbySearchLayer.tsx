@@ -17,9 +17,8 @@ export const searchItemsSource: GeoJSONSourceSpecification = {
   },
 };
 
-export const stopsLayerConfig: LayerSpecification = {
-
-    id: "stops-layer",
+export const nb_stopsLayerConfig: LayerSpecification = {
+    id: "nb_stops-layer",
     type: "symbol",
     source: "nearbySearch-source",
     minzoom: 14,

@@ -19,12 +19,12 @@ import {
 } from "./layers/ItineraryLayer";
 import { Itinerary } from "@/types/Itinerary";
 import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
-import { OtpItinerary } from "@/api/routingService/dto/otpResponse";
-import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.mock";
-import { toOtpResponse } from "@/api/routingService/mappers";
 import loadSVGImage from "@/utils/loadSVGImage";
 import useLayersManager from "./utils/layersManager";
-
+import { useNearbySearchDataContext } from "@/contexts/DataContext/nearbySearchDataContext";
+import { NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto/nearbySearchRequest";
+import { createNearbySearchLayerData, nb_stopsLayerConfig } from "./layers/NearbySearchLayer";
+import { NearBySearchResponse } from "@/api/nearbysearchService/dto/nearbySearchResponse";
 
 // --- Bounding Box Helpers ---
 
@@ -71,6 +71,7 @@ export const MapWidget: React.FC = ({ }) => {
     const { setSelectedStop } = useMapContext();
     const [mapLoaded, setMapLoaded] = useState(false);
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
+    const { nearBySearchData, fetchNearbySearch, loadingNearbySearch, errorNearbySearch } = useNearbySearchDataContext();
     const { setSelectedItinerary, selectedItinerary } = useMapContext();
   
     
@@ -78,7 +79,7 @@ export const MapWidget: React.FC = ({ }) => {
     const currentQueryBoundsRef = useRef<maplibregl.LngLatBounds | null>(null);
     const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
-    const { updateSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers } = useLayersManager(mapRef);
+    const { updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers } = useLayersManager(mapRef);
 
 
     useEffect(() => {
@@ -151,7 +152,7 @@ export const MapWidget: React.FC = ({ }) => {
             });
     
             setMapLoaded(true);
-            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, selectedItinerary);
+            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
         });
 
         map.on("error", (e) => {
@@ -168,6 +169,7 @@ export const MapWidget: React.FC = ({ }) => {
         if (queryBoundsState && mapRef.current) {
             const bboxString = boundsToString(queryBoundsState);
             fetchStopsData()
+            fetchNearbySearchData();
         }
     }, [queryBoundsState]);
     
@@ -183,10 +185,24 @@ export const MapWidget: React.FC = ({ }) => {
         }
     };
 
+    // Fetch nearby search data
+    const fetchNearbySearchData = async () => {
+        if (!currentQueryBoundsRef.current) return;
+                
+        await fetchNearbySearch({ 
+            bb: boundsToString(currentQueryBoundsRef.current)
+        } as NearBySearchParamsWithBoundingBox);
+        
+        if (errorStops) {
+            console.error("Error fetching stops:", errorStops);
+            return;
+        }
+    };
+
     // React to viewmode changes
     useEffect(() => {
         if (mapRef.current) {
-            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, selectedItinerary);
+            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
         }
     }, [viewMode]);
 
@@ -196,11 +212,22 @@ export const MapWidget: React.FC = ({ }) => {
         
         if (!loadingStops && stopsData) {
             console.log("Stops data is available, creating layers...");
-            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, selectedItinerary);
+            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
         } else {
             console.warn("Stops data not ready yet.");
         }
     }, [stopsData, loadingStops]);
+
+    // React to nearbySearchData changes
+    useEffect(() => {
+
+        if (!loadingNearbySearch && nearBySearchData) {
+            console.log("Nearby Search data is available, creating layers...");
+            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
+        } else {
+            console.warn("Nearby Search data not ready yet.");
+        }
+    }, [nearBySearchData, loadingNearbySearch]);
 
 
     const loadLayers = (
@@ -208,12 +235,17 @@ export const MapWidget: React.FC = ({ }) => {
         layerManager: LayerManager | null,
         viewMode: ViewMode,
         stopsData: any,
+        nearbySearchData: any,
         itinerary: Itinerary | null
     ) => {
         if (!mapRef.current) return;
     
         if (["DEFAULT", "ITINERARY", "PLAN", "STATION"].includes(viewMode)) {
             updateStopsLayers(mapRef, layerManager, stopsData);
+        }
+
+        if (["DEFAULT", "ITINERARY", "PLAN", "STATION"].includes(viewMode)) {
+            updateNearbySearchLayers(mapRef, layerManager, stopsData);
         }
     
         if (viewMode === "ITINERARY") {
@@ -225,7 +257,7 @@ export const MapWidget: React.FC = ({ }) => {
         mapRef.current.resize();
     };
 
-    
+    // Stops Layers
     const updateStopsLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, stopsData: any) => {
         if (!stopsData) return;
     
@@ -236,11 +268,19 @@ export const MapWidget: React.FC = ({ }) => {
         addLayerIfNotExists(stopsLabelsLayerConfig);
     };
 
+    const removeStopsLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
+        removeLayer(stopsLayerConfig.id);
+        removeLayer(stopsLabelsLayerConfig.id);
+        
+        activeSources.current.delete("stops-source");
+    }
     
+    // Itinerary Layers
     const updateItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
         if (!itinerary) return;
     
         const geojsonData = createItineraryLayerData(itinerary);
+        if (!geojsonData) return;
         updateSource("itinerary-source", geojsonData);
     
         const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig];
@@ -250,8 +290,26 @@ export const MapWidget: React.FC = ({ }) => {
     const removeItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
         const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig];
         layers.forEach(layer => removeLayer(layer.id));
+        
+        clearSource("itinerary-source");
+    };
+
+    // NearbySearch Layers
+    const updateNearbySearchLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, nearbySearchData: NearBySearchResponse | null) => {
+        if (!nearbySearchData) return;
     
-        activeSources.delete("itinerary-source");
+        const geojsonData = createNearbySearchLayerData(nearbySearchData);
+        updateSource("nearbySearch-source", geojsonData);
+    
+        const layers = [nb_stopsLayerConfig];
+        layers.forEach(addLayerIfNotExists);
+    };
+
+    const removeNearbySearchLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
+        const layers = [nb_stopsLayerConfig];
+        layers.forEach(layer => removeLayer(layer.id));
+    
+        activeSources.current.delete("nearbysearch-source");
     };
     
 

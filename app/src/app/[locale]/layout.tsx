@@ -8,6 +8,7 @@ import { MapProvider } from "@/contexts/mapContext";
 import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDataContext";
 import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
 import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataContext";
+import { NearbySearchDataProvider } from "@/contexts/DataContext/nearbySearchDataContext";
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -37,12 +38,14 @@ export default async function LocaleLayout({
             <AutocompleteDataProvider>
             <OtpDataProvider>
             <StopmonitorDataProvider>
+            <NearbySearchDataProvider>
             <div className="w-full h-screen flex flex-col">
               <Navbar locale={language} />
               <div className="flex-1 overflow-hidden">
                 {children}
               </div>
             </div>
+            </NearbySearchDataProvider>
             </StopmonitorDataProvider>
             </OtpDataProvider>
             </AutocompleteDataProvider>
