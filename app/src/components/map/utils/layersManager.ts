@@ -1,20 +1,22 @@
 import { useRef } from "react";
 import { GeoJSON } from "geojson";
+import { LayerSpecification } from "maplibre-gl";
 
 const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>) => {
-    const activeSources = useRef(new Map<string, any>());
+    const sources = useRef(new Map<string, any>());
+    const activeSources = useRef(new Set<string>());
     const activeLayers = useRef(new Set<string>());
 
     const updateSource = (sourceId: string, newData: GeoJSON) => {
         if (!mapRef.current) return;
 
-        const existingSource = activeSources.current.get(sourceId);
+        const existingSource = sources.current.get(sourceId);
         if (existingSource && JSON.stringify(existingSource) === JSON.stringify(newData)) {
             console.log(`Source ${sourceId} unchanged, skipping update.`);
             return;
         }
 
-        activeSources.current.set(sourceId, newData);
+        sources.current.set(sourceId, newData);
 
         const source = mapRef.current.getSource(sourceId) as maplibregl.GeoJSONSource;
         if (source) {
@@ -25,18 +27,28 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         }
     };
 
+    const activateSource = (sourceId: string) => {
+        if (!mapRef.current) return;
+
+        if (activeSources.current.has(sourceId)) {
+            console.log(`Source ${sourceId} already active.`);
+            return;
+        }
+    }
+
     const clearSource = (sourceId: string) => {
         if (!mapRef.current) return;
-        if (activeSources.current.has(sourceId)) {
+        if (sources.current.has(sourceId)) {
             console.log(`Deleting source data ${sourceId}.`);
             mapRef.current.removeSource(sourceId);
+            sources.current.delete(sourceId);
             activeSources.current.delete(sourceId);
         } else {
             console.log(`Source ${sourceId} not found.`);
         }
     };
 
-    const addLayerIfNotExists = (layerConfig: any) => {
+    const addLayerIfNotExists = (layerConfig: LayerSpecification) => {
         if (!mapRef.current) return;
         if (!activeLayers.current.has(layerConfig.id)) {
             console.info(`Layer ${layerConfig.id} not found in ${printActiveLayers()}, adding...`);
@@ -60,7 +72,7 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         activeLayers.current.forEach(layerId => console.log(layerId));
     };
 
-    return { updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
+    return { updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
 };
 
 export default useLayersManager;
