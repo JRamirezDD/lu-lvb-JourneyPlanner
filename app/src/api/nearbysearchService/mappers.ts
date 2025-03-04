@@ -12,7 +12,7 @@ import {
     TicketSeller,
     Flexa,
     Price,
-  } from "./dto/nearbysearchResponse";
+  } from "./dto/nearbySearchResponse";
   
   /**
    * Main mapper to convert a raw JSON object into a SearchItemJson DTO.

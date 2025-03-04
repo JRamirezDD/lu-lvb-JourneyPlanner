@@ -1,4 +1,4 @@
-import { NearBySearchResponse } from "@/api/nearbysearchService/dto/nearbysearchResponse";
+import { NearBySearchResponse } from "@/api/nearbysearchService/dto/nearbySearchResponse";
 import { GeoJSONSourceSpecification, LayerSpecification, ExpressionFilterSpecification  } from "maplibre-gl";
 
 // Function to generate GeoJSON dynamically from API response

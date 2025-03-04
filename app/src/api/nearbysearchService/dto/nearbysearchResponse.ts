@@ -1,6 +1,4 @@
 import { GeoJsonConvertible } from "@/types/GeoJsonConvertible";
-import { NearBySearchParams } from "./nearbysearchRequest";
-import { TransportMode } from "@/types/TransportMode";
 import { Feature, Point, FeatureCollection, Position } from "geojson";
 
 /**

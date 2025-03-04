@@ -23,7 +23,7 @@ import { OtpItinerary } from "@/api/routingService/dto/otpResponse";
 import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.mock";
 import { toOtpResponse } from "@/api/routingService/mappers";
 import loadSVGImage from "@/utils/loadSVGImage";
-import useLayersManager from "./layers/layersManager";
+import useLayersManager from "./utils/layersManager";
 
 
 // --- Bounding Box Helpers ---
