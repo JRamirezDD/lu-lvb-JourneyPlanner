@@ -1,9 +1,31 @@
 import { GeoJsonConvertible } from "@/types/GeoJsonConvertible";
 import { NearBySearchParams } from "./nearbysearchRequest";
 import { TransportMode } from "@/types/TransportMode";
-import { Feature, Point, LineString, FeatureCollection, Position, Geometry } from "geojson";
+import { Feature, Point, FeatureCollection, Position } from "geojson";
 
-export class SearchItemJson {
+/**
+ * The overall response for a nearby search (an array of search items).
+ */
+
+export class NearBySearchResponse extends GeoJsonConvertible {
+  constructor(public searchItemsJson: SearchItemJson[]) {
+    super();
+  }
+
+  toGeoJsonFeatures(): Feature<Point>[] {
+    return this.searchItemsJson.map((item) => item.toGeoJsonFeature());
+  }
+
+  toGeoJson(): FeatureCollection<Point> {
+    const geojson: FeatureCollection<Point> = {
+      type: 'FeatureCollection',
+      features: this.toGeoJsonFeatures(),
+    };
+    return geojson;
+  }
+}
+
+export class SearchItemJson extends GeoJsonConvertible {
   constructor(
     public id: string,
     public name: string,
@@ -12,25 +34,36 @@ export class SearchItemJson {
     public type: string,
     public source: string,
     public provider: string,
-    public data:
-      | BikeFreeSearchJson
-      | BikeStationSearchJson
-      | FlinksterSearchJson
-      | Taxi
-      | Mobistation
-      | Stop
-      | EscooterFreeSearchJson
-      | EscooterStationSearchJson
-      | TicketSeller
-      | Flexa,
+    public data: any,
     public prov_id: string,
-    public mobistation_id: string
+    public mobistation_id: string,
+    public dist_to_center: number
   ) {
+    super();
   }
+
+  toGeoJsonFeature(): Feature<Point> {
+    const feature: Feature<Point> = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [this.lon, this.lat] as Position,
+      },
+      properties: {
+        name: this.name,
+        type: this.type,
+      },
+    };
+    return feature;
+  }
+
+    toGeoJson(): Feature<Point> {
+        return this.toGeoJsonFeature();
+    }
 }
 
-export type Latitude = number;    /* between -90 and 90 */
-export type Longitude = number;   /* Longitude: number between -180 and 180 */
+//export type Latitude = number;    /* between -90 and 90 */
+//export type Longitude = number;   /* Longitude: number between -180 and 180 */
 
 /* ***************************************************************
    Variant DTOs for the "data" property
@@ -264,20 +297,5 @@ export class FlexaAddress {
     public district: string,
     public postalcode: string
   ) {
-  }
-}
-
-/* ***************************************************************
-   Overall response DTO
-   *************************************************************** */
-
-/**
- * The overall response for a nearby search (an array of search items).
- */
-export class NearBySearchResponse {
-  items: SearchItemJson[];
-
-  constructor(items: SearchItemJson[]) {
-    this.items = items;
   }
 }

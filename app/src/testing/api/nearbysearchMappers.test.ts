@@ -13,7 +13,7 @@ import {
     toFlexa,
   } from "@/api/nearbysearchService/mappers";
   import { NearBySearchResponse, SearchItemJson, Price } from "@/api/nearbysearchService/dto/nearbysearchResponse";
-  
+  import { nearbysearchmockresponse } from "@/api/nearbysearchService/dto/__mock__/nearbysearchResponse.mock"
   describe("nearBySearchService Mappers", () => {
     // Sample mock objects for each variant
   
@@ -362,11 +362,22 @@ import {
   
     it("should map a complete raw nearby search response correctly", () => {
       const result: NearBySearchResponse = toNearBySearchResponse(rawNearBySearchResponse);
-      expect(result.items.length).toBe(rawNearBySearchResponse.items.length);
+      expect(result.searchItemsJson.length).toBe(rawNearBySearchResponse.items.length);
   
       // Check that the first item (bike free) is mapped as expected.
       const mappedBikeFree: SearchItemJson = toSearchItemJson(rawSearchItemBikeFree);
-      expect(result.items[0]).toEqual(mappedBikeFree);
+      expect(result.searchItemsJson[0]).toEqual(mappedBikeFree);
     });
+
+    it("Should print the geojson converted mock data", () => {
+      const raw = toNearBySearchResponse(nearbysearchmockresponse); //map to nearbysearchresponse object
+      //console.log("RAW RESPONSE" + JSON.stringify(raw, null, 2))
+
+      const geo = raw.toGeoJson();  //change object to geojson
+      //console.log("GEO" + JSON.stringify(geo, null, 2));    
+      expect(geo.features.length != 0);
+    
+
+    })
   });
   
