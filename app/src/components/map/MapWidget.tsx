@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import maplibregl, { Map } from "maplibre-gl";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
-import { LayerManager } from "./layers/ILayer";
+import { LayerManager } from "./utils/ILayer";
 import { busLayerConfig, createItineraryLayerData } from "./layers/ItineraryLayer";
 import { ViewMode } from "@/types/ViewMode";
 import { stopsLayerConfig, stopsLabelsLayerConfig, stopsSource as stopsSourceConfig, createStopsLayerData, stopsSource } from "./layers/StopsLayer";
@@ -26,6 +26,7 @@ import { NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto
 import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, mobistation_stopsLayerConfig, station_stopsLayerConfig, 
     ticketMachine_stopsLayerConfig, stop_stopsLayerConfig } from "./layers/NearbySearchLayer";
 import { NearBySearchResponse } from "@/api/nearbysearchService/dto/nearbysearchResponse";
+import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse";
 
 // --- Bounding Box Helpers ---
 
@@ -80,7 +81,7 @@ export const MapWidget: React.FC = ({ }) => {
     const currentQueryBoundsRef = useRef<maplibregl.LngLatBounds | null>(null);
     const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
-    const { updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers } = useLayersManager(mapRef);
+    const { updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
 
 
     useEffect(() => {
@@ -235,8 +236,8 @@ export const MapWidget: React.FC = ({ }) => {
         mapRef: React.MutableRefObject<maplibregl.Map | null>,
         layerManager: LayerManager | null,
         viewMode: ViewMode,
-        stopsData: any,
-        nearbySearchData: any,
+        stopsData: StopsResponse | null,
+        nearbySearchData: NearBySearchResponse | null,
         itinerary: Itinerary | null
     ) => {
         if (!mapRef.current) return;
@@ -246,7 +247,7 @@ export const MapWidget: React.FC = ({ }) => {
         // }
 
         if (["DEFAULT", "ITINERARY", "PLAN", "STATION"].includes(viewMode)) {
-            updateNearbySearchLayers(mapRef, layerManager, stopsData);
+            updateNearbySearchLayers(mapRef, layerManager, nearbySearchData);
         }
     
         if (viewMode === "ITINERARY") {
@@ -261,10 +262,38 @@ export const MapWidget: React.FC = ({ }) => {
     // Stops Layers
     const updateStopsLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, stopsData: any) => {
         if (!stopsData) return;
+        if (!mapRef.current) return;
     
         const geojsonData = createStopsLayerData(stopsData);
         updateSource("stops-source", geojsonData);
-    
+        
+        if (!activeSources.current.has("stops-source")) {
+            // add click functionality
+            mapRef.current.on("click", "stops-layer", (e) => {
+                const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];
+                if (feature) {
+                    const stopId = feature.properties?.stop_id;
+                    const stopName = feature.properties?.stop_name;
+                    setSelectedStop({ stop_id: stopId, stop_name: stopName });
+                }
+            });
+            
+            // Register cursor events
+            mapRef.current.on("mouseenter", "stops-layer", () => {
+                if (mapRef.current) {
+                    mapRef.current.getCanvas().style.cursor = "pointer";
+                }
+            });
+
+            mapRef.current.on("mouseleave", "stops-layer", () => {
+                if (mapRef.current) {
+                    mapRef.current.getCanvas().style.cursor = "";
+                }
+            });
+
+            activateSource("stops-source");
+        }
+        
         addLayerIfNotExists(stopsLayerConfig);
         addLayerIfNotExists(stopsLabelsLayerConfig);
     };
@@ -283,6 +312,10 @@ export const MapWidget: React.FC = ({ }) => {
         const geojsonData = createItineraryLayerData(itinerary);
         if (!geojsonData) return;
         updateSource("itinerary-source", geojsonData);
+
+        if (!activeSources.current.has("itinerary-source")) {
+            activateSource("itinerary-source");
+        }
     
         const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig];
         layers.forEach(addLayerIfNotExists);
@@ -302,8 +335,7 @@ export const MapWidget: React.FC = ({ }) => {
         const geojsonData = createNearbySearchLayerData(nearbySearchData);
         updateSource("nearbySearch-source", geojsonData);
     
-        console.log("LAYER DATA:" + JSON.stringify(geojsonData));
-        const layers = [freeFloating_stopsLayerConfig, stop_stopsLayerConfig, ticketMachine_stopsLayerConfig, station_stopsLayerConfig, mobistation_stopsLayerConfig];
+        const layers = [nb_stopsLayerConfig];
         layers.forEach(addLayerIfNotExists);
     };
 
