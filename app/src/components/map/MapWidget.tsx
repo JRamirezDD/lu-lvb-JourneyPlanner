@@ -24,7 +24,8 @@ import useLayersManager from "./utils/layersManager";
 import { useNearbySearchDataContext } from "@/contexts/DataContext/nearbySearchDataContext";
 import { NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto/nearbysearchRequest";
 import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, mobistation_stopsLayerConfig, station_stopsLayerConfig, 
-    ticketMachine_stopsLayerConfig, stop_stopsLayerConfig } from "./layers/NearbySearchLayer";
+    ticketMachine_stopsLayerConfig, stop_stopsLayerConfig, 
+    searchItemsSource} from "./layers/NearbySearchLayer";
 import { NearBySearchResponse } from "@/api/nearbysearchService/dto/nearbysearchResponse";
 import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse";
 
@@ -335,7 +336,7 @@ export const MapWidget: React.FC = ({ }) => {
         const geojsonData = createNearbySearchLayerData(nearbySearchData);
         updateSource("nearbySearch-source", geojsonData);
     
-        const layers = [nb_stopsLayerConfig];
+        const layers = [freeFloating_stopsLayerConfig, stop_stopsLayerConfig, ticketMachine_stopsLayerConfig, station_stopsLayerConfig, mobistation_stopsLayerConfig ];
         layers.forEach(addLayerIfNotExists);
     };
 
