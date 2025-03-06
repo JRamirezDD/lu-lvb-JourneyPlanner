@@ -193,7 +193,8 @@ export const MapWidget: React.FC = ({ }) => {
         if (!currentQueryBoundsRef.current) return;
                 
         await fetchNearbySearch({ 
-            bb: boundsToString(currentQueryBoundsRef.current)
+            bb: boundsToString(currentQueryBoundsRef.current),
+            types: "stop,station,mobistation"
         } as NearBySearchParamsWithBoundingBox);
         
         if (errorStops) {

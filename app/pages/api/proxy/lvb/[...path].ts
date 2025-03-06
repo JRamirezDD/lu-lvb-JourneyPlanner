@@ -37,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             res.setHeader(key, value);
         });
 
-        // 🛠 Fix: Ensure JSON responses are properly parsed
+        // Fix: Ensure JSON responses are properly parsed
         if (contentType?.includes('application/json')) {
             try {
                 const jsonData = JSON.parse(rawText);
