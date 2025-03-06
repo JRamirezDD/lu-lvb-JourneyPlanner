@@ -1,229 +1,299 @@
+import { GeoJsonConvertible } from "@/types/GeoJsonConvertible";
+import { Feature, Point, FeatureCollection, Position } from "geojson";
+
 /**
- * Base DTO for the default search item.
+ * The overall response for a nearby search (an array of search items).
  */
-export interface SearchItemJson {
-    id: string;
-    name: string;
-    lat: number; // latitude (see below)
-    lon: number; // longitude (see below)
-    type: string; // e.g. "station", "stop", "free_floating", etc.
-    source: string; // e.g. "nextbike", "taxi", etc.
-    provider: string; // e.g. "nextbike Leipzig"
-    /**
-     * Data required to book or rent a vehicle. This can be one of the following types.
-     */
-    data:
-      | BikeFreeSearchJson
-      | BikeStationSearchJson
-      | FlinksterSearchJson
-      | Taxi
-      | Mobistation
-      | Stop
-      | EscooterFreeSearchJson
-      | EscooterStationSearchJson
-      | TicketSeller
-      | Flexa;
-    prov_id: string;
-    mobistation_id: string;
+
+export class NearBySearchResponse extends GeoJsonConvertible {
+  constructor(public searchItemsJson: SearchItemJson[]) {
+    super();
   }
-  
-  /** Latitude: number between -90 and 90 */
-  export type Latitude = number;
-  
-  /** Longitude: number between -180 and 180 */
-  export type Longitude = number;
-  
-  /* ***************************************************************
-     Variant DTOs for the "data" property
-     *************************************************************** */
-  
-  /**
-   * For a free-floating bike (or a bike that is not part of a station)
-   */
-  export interface BikeFreeSearchJson {
-    uid: number | null;
-    state: "ok";
-    active: boolean;
-    number: string;
-    bike_type: number;
-    lock_types: string[];
-    vehicletype: "bike";
-    bikeTypeName: string;
-    boardcomputer: number;
-    electric_lock: boolean;
+
+  toGeoJsonFeatures(): Feature<Point>[] {
+    return this.searchItemsJson.map((item) => item.toGeoJsonFeature());
   }
-  
-  /**
-   * For a bike station (when the source is Nextbike and type is "station")
-   */
-  export interface BikeStationSearchJson {
-    uid: number;
-    number: string;
-    num_spaces: number;
-    vehicletype: "bike";
-    num_vehicles: number;
-    terminal_type: string;
-    num_free_spaces: number;
-    num_available_vehicles: number;
-  }
-  
-  /**
-   * For a Flinkster search item
-   */
-  export interface FlinksterSearchJson {
-    address: FlinksterAddress;
-    attributes: FlinksterAttributes;
-    vehicletype: "car"; // as per enum in swagger
-    providerAreaId: string;
-  }
-  
-  export interface FlinksterAddress {
-    zip: string;
-    city: string;
-    number: string;
-    street: string;
-  }
-  
-  export interface FlinksterAttributes {
-    parking: {
-      description: string;
+
+  toGeoJson(): FeatureCollection<Point> {
+    const geojson: FeatureCollection<Point> = {
+      type: 'FeatureCollection',
+      features: this.toGeoJsonFeatures(),
     };
-    locationnote: {
-      description: string;
+    return geojson;
+  }
+}
+
+export class SearchItemJson extends GeoJsonConvertible {
+  constructor(
+    public id: string,
+    public name: string,
+    public lat: number,
+    public lon: number,
+    public type: string,
+    public source: string,
+    public provider: string,
+    public data: any,
+    public prov_id: string,
+    public mobistation_id: string,
+    public dist_to_center: number
+  ) {
+    super();
+  }
+
+  toGeoJsonFeature(): Feature<Point> {
+    const feature: Feature<Point> = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [this.lon, this.lat] as Position,
+      },
+      properties: {
+        name: this.name,
+        type: this.type,
+      },
     };
+    return feature;
   }
-  
+
+    toGeoJson(): Feature<Point> {
+        return this.toGeoJsonFeature();
+    }
+}
+
+//export type Latitude = number;    /* between -90 and 90 */
+//export type Longitude = number;   /* Longitude: number between -180 and 180 */
+
+/* ***************************************************************
+   Variant DTOs for the "data" property
+   *************************************************************** */
+ 
+export class BikeFreeSearchJson { //For a free-floating bike (or a bike that is not part of a station)
+  constructor(
+    public uid: number | null,
+    public state: "ok",
+    public active: boolean,
+    public number: string,
+    public bike_type: number,
+    public lock_types: string[],
+    public vehicletype: "bike",
+    public bikeTypeName: string,
+    public boardcomputer: number,
+    public electric_lock: boolean
+  ) {
+  }
+}
+
+export class BikeStationSearchJson {    //For a bike station (when the source is Nextbike and type is "station")
+  constructor(
+    public uid: number,
+    public number: string,
+    public num_spaces: number,
+    public num_vehicles: number,
+    public vehicletype: "bike",
+    public terminal_type: string,
+    public num_free_spaces: number,
+    public num_available_vehicles: number
+  ) {
+  }
+}
+
+export class FlinksterSearchJson {    //For a Flinkster search item
+  constructor(
+    public address: FlinksterAddress,
+    public attributes: FlinksterAttributes,
+    public vehicletype: "car",
+    public providerAreaId: string
+  ) {
+  }
+}
+
+export class FlinksterAddress { //HERE
+  zip: string;
+  city: string;
+  number: string;
+  street: string;
+
+  constructor(zip: string, city: string, number: string, street: string) {
+    this.zip = zip;
+    this.city = city;
+    this.number = number;
+    this.street = street;
+  }
+}
+
+export class FlinksterAttributes {  //HERE
+  parking: { description: string };
+  locationnote: { description: string };
+
+  constructor(parkingDescription: string, locationNoteDescription: string) {
+    this.parking = { description: parkingDescription };
+    this.locationnote = { description: locationNoteDescription };
+  }
+}
+
+/**
+ * For taxi-based items.
+ */
+export class Taxi { //HERE
+  phone: string;
+
+  constructor(phone: string) {
+    this.phone = phone;
+  }
+}
   /**
-   * For taxi-based items.
-   */
-  export interface Taxi {
-    phone: string;
+ * For mobistation items (often used when the source is "lvb").
+ */
+export class Mobistation {
+  constructor(
+    public address: MobistationAddress,
+    public stop_id: string | null,
+    public bike_racks: number | null,
+    public parking_spaces: number | null,
+    public charging_points: number,
+    public taxi_station_id: string | null,
+    public car_sharing_places: number,
+    public escooter_station_id: string | null,
+    public nextbike_station_id: string | null,
+    public teilauto_station_id: string | null,
+    public e_car_sharing_places: number | null,
+    public disabled_parking_spaces: number | null,
+    public escooter_station_information: any | null,
+    public nextbike_station_information: any | null,
+    public teilauto_station_information: any | null
+  ) {
   }
-  
-  /**
-   * For mobistation items (often used when the source is "lvb").
-   */
-  export interface Mobistation {
-    address: MobistationAddress;
-    stop_id: string | null;
-    bike_racks: number | null;
-    parking_spaces: number | null;
-    charging_points: number;
-    taxi_station_id: string | null;
-    car_sharing_places: number;
-    escooter_station_id: string | null;
-    nextbike_station_id: string | null;
-    teilauto_station_id: string | null;
-    e_car_sharing_places: number | null;
-    disabled_parking_spaces: number | null;
-    escooter_station_information: any | null;
-    nextbike_station_information: any | null;
-    teilauto_station_information: any | null;
+}
+
+export class MobistationAddress { //HERE
+  city: string;
+  street: string;
+  postalcode: string;
+
+  constructor(city: string, street: string, postalcode: string) {
+    this.city = city;
+    this.street = street;
+    this.postalcode = postalcode;
   }
-  
-  export interface MobistationAddress {
-    city: string;
-    street: string;
-    postalcode: string;
+}
+
+/**
+ * For a public transport stop (when the source is "gtfs-mdv").
+ */
+export class Stop {
+  constructor(
+    public address: StopAddress,
+    public zone_id: string,
+    public wheelchair_boarding: 0 | 1 | 2 | null
+  ) {
   }
-  
-  /**
-   * For a public transport stop (when the source is "gtfs-mdv").
-   */
-  export interface Stop {
-    address: StopAddress;
-    zone_id: string;
-    wheelchair_boarding: 0 | 1 | 2 | null;
+}
+
+export class StopAddress {
+  constructor(
+    public city: string,
+    public state: string,
+    public county: string,
+    public district: string,
+    public postalcode: string
+  ) {
   }
-  
-  export interface StopAddress {
-    city: string;
-    state: string;
-    county: string;
-    district: string;
-    postalcode: string;
+}
+
+/**
+ * For an e-scooter that is free-floating.
+ */
+export class EscooterFreeSearchJson {
+  constructor(
+    public uid: string,
+    public code: string,
+    public price: Price,
+    public zone_id: string,
+    public provider: string,
+    public iotVendor: string,
+    public vehicletype: "escooter",
+    public licencePlate: string,
+    public battery_level: number
+  ) {
   }
-  
-  /**
-   * For an e-scooter that is free-floating.
-   */
-  export interface EscooterFreeSearchJson {
-    uid: string;
-    code: string;
-    price: Price;
-    zone_id: string;
-    provider: string; // note: expected value “tier,voi”
-    iotVendor: string;
-    vehicletype: "escooter";
-    licencePlate: string;
-    battery_level: number;
+}
+
+export class Price {    //HERE
+  price_id?: string;
+  start_price: string;
+  price_per_min: string;
+
+  constructor(start_price: string, price_per_min: string, price_id?: string) {
+    this.price_id = price_id;
+    this.start_price = start_price;
+    this.price_per_min = price_per_min;
   }
-  
-  export interface Price {
-    price_id?: string;
-    start_price: string;
-    price_per_min: string;
+}
+
+/**
+ * For an e-scooter station.
+ */
+export class EscooterStationSearchJson {
+  constructor(
+    public provider: ("voi" | "tier")[],
+    public num_spaces: number,
+    public vehicletype: "escooter",
+    public num_vehicles: number,
+    public num_free_spaces: number,
+    public num_available_vehicles?: number
+  ) {
   }
-  
-  /**
-   * For an e-scooter station.
-   */
-  export interface EscooterStationSearchJson {
-    provider: ("voi" | "tier")[];
-    num_spaces: number;
-    vehicletype: "escooter";
-    num_vehicles: number;
-    num_free_spaces: number;
-    num_available_vehicles?: number;
+}
+
+/**
+ * For ticket seller items.
+ */
+export type TicketSellerType =
+  | "ticket-machine"
+  | "lvb-services"
+  | "shop"
+  | "konsum"
+  | "service-point";
+
+export class TicketSellerNotes {  //HERE
+  machineNumber: number;
+
+  constructor(machineNumber: number) {
+    this.machineNumber = machineNumber;
   }
-  
-  /**
-   * For ticket seller items.
-   */
-  export type TicketSellerType = "ticket-machine" | "lvb-services" | "shop" | "konsum" | "service-point";
-  
-  export interface TicketSellerNotes {
-    machineNumber: number;
+}
+
+export class TicketSeller {
+  constructor(
+    public city: string,
+    public type: TicketSellerType,
+    public notes: TicketSellerNotes | null,
+    public street: string,
+    public postcode: string,
+    public housenumber: string,
+    public addressExact: boolean
+  ) {
   }
-  
-  export interface TicketSeller {
-    city: string;
-    type: TicketSellerType;
-    notes: TicketSellerNotes | null;
-    street: string;
-    postcode: string;
-    housenumber: string;
-    addressExact: boolean;
+}
+
+export class Flexa {    //For Flexa items.
+  constructor(
+    public address: FlexaAddress,
+    public flexaId: number,
+    public flexaName: string,
+    public suspendedTo: string | null,
+    public suspendedFrom: string | null,
+    public transferToPublicTransport: number | null
+  ) {
   }
-  
-  /**
-   * For Flexa items.
-   */
-  export interface Flexa {
-    address: FlexaAddress;
-    flexaId: number;
-    flexaName: string;
-    suspendedTo: string | null; // date-time string
-    suspendedFrom: string | null; // date-time string
-    transferToPublicTransport: number | null;
+}
+export class FlexaAddress {
+  constructor(
+    public city: string,
+    public state: string,
+    public county: string,
+    public district: string,
+    public postalcode: string
+  ) {
   }
-  
-  export interface FlexaAddress {
-    city: string;
-    state: string;
-    county: string;
-    district: string;
-    postalcode: string;
-  }
-  
-  /* ***************************************************************
-     Overall response DTO
-     *************************************************************** */
-  
-  /**
-   * The overall response for a nearby search (an array of search items).
-   */
-  export interface NearBySearchResponse {
-    items: SearchItemJson[];
-  }
-  
+}

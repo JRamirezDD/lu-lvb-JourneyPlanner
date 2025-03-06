@@ -1,5 +1,9 @@
 import maplibregl, { LayerSpecification, Map, SourceSpecification } from "maplibre-gl";
 
+/**
+ * @deprecated
+ * Use the `useLayersManager` hook instead.
+ */
 export class LayerManager {
   private map: maplibregl.Map;
 
