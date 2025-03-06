@@ -22,9 +22,11 @@ import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDat
 import loadSVGImage from "@/utils/loadSVGImage";
 import useLayersManager from "./utils/layersManager";
 import { useNearbySearchDataContext } from "@/contexts/DataContext/nearbySearchDataContext";
-import { NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto/nearbySearchRequest";
-import { createNearbySearchLayerData, nb_stopsLayerConfig } from "./layers/NearbySearchLayer";
-import { NearBySearchResponse } from "@/api/nearbysearchService/dto/nearbySearchResponse";
+import { NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto/nearbysearchRequest";
+import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, mobistation_stopsLayerConfig, station_stopsLayerConfig, 
+    ticketMachine_stopsLayerConfig, stop_stopsLayerConfig, 
+    searchItemsSource} from "./layers/NearbySearchLayer";
+import { NearBySearchResponse } from "@/api/nearbysearchService/dto/nearbysearchResponse";
 import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse";
 
 // --- Bounding Box Helpers ---
@@ -241,9 +243,9 @@ export const MapWidget: React.FC = ({ }) => {
     ) => {
         if (!mapRef.current) return;
     
-        if (["DEFAULT", "ITINERARY", "PLAN", "STATION"].includes(viewMode)) {
-            updateStopsLayers(mapRef, layerManager, stopsData);
-        }
+        // if (["DEFAULT", "ITINERARY", "PLAN", "STATION"].includes(viewMode)) {
+        //     updateStopsLayers(mapRef, layerManager, stopsData);
+        // }
 
         if (["DEFAULT", "ITINERARY", "PLAN", "STATION"].includes(viewMode)) {
             updateNearbySearchLayers(mapRef, layerManager, nearbySearchData);
@@ -334,16 +336,12 @@ export const MapWidget: React.FC = ({ }) => {
         const geojsonData = createNearbySearchLayerData(nearbySearchData);
         updateSource("nearbySearch-source", geojsonData);
     
-        if (!activeSources.current.has("nearbySearch-source")) {
-            activateSource("nearbySearch-source");
-        }
-
-        const layers = [nb_stopsLayerConfig];
+        const layers = [freeFloating_stopsLayerConfig, stop_stopsLayerConfig, ticketMachine_stopsLayerConfig, station_stopsLayerConfig, mobistation_stopsLayerConfig ];
         layers.forEach(addLayerIfNotExists);
     };
 
     const removeNearbySearchLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
-        const layers = [nb_stopsLayerConfig];
+        const layers = [freeFloating_stopsLayerConfig, stop_stopsLayerConfig, ticketMachine_stopsLayerConfig, station_stopsLayerConfig, mobistation_stopsLayerConfig ];
         layers.forEach(layer => removeLayer(layer.id));
     
         activeSources.current.delete("nearbysearch-source");

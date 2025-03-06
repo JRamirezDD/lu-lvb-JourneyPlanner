@@ -1,9 +1,9 @@
 import httpClient from "../httpClient";
-import { NearBySearchResponse } from "./dto/nearbySearchResponse";
+import { NearBySearchResponse } from "./dto/nearbysearchResponse";
 
 import { toNearBySearchResponse } from "./mappers";
 import { nearbysearchmockresponse } from "./dto/__mock__/nearbysearchResponse.mock";
-import { NearBySearchParams, NearBySearchParamsWithBoundingBox } from "./dto/nearbySearchRequest";
+import { NearBySearchParams, NearBySearchParamsWithBoundingBox } from "./dto/nearbysearchRequest";
 import convertBoundingBoxToCenterAndRadius from "@/utils/convertBoundingBoxToCenterAndRadius";
 
 

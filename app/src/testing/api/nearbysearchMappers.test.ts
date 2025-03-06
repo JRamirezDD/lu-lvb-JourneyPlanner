@@ -12,7 +12,7 @@ import {
     toTicketSeller,
     toFlexa,
   } from "@/api/nearbysearchService/mappers";
-  import { NearBySearchResponse, SearchItemJson, Price } from "@/api/nearbysearchService/dto/nearbySearchResponse";
+  import { NearBySearchResponse, SearchItemJson, Price } from "@/api/nearbysearchService/dto/nearbysearchResponse";
   import { nearbysearchmockresponse } from "@/api/nearbysearchService/dto/__mock__/nearbysearchResponse.mock"
   describe("nearBySearchService Mappers", () => {
     // Sample mock objects for each variant
@@ -374,7 +374,7 @@ import {
       //console.log("RAW RESPONSE" + JSON.stringify(raw, null, 2))
 
       const geo = raw.toGeoJson();  //change object to geojson
-      //console.log("GEO" + JSON.stringify(geo, null, 2));    
+      console.log("GEO" + JSON.stringify(geo, null, 2));    
       expect(geo.features.length != 0);
     
 

@@ -12,7 +12,7 @@ import {
     TicketSeller,
     Flexa,
     Price,
-  } from "./dto/nearbySearchResponse";
+  } from "./dto/nearbysearchResponse";
   
   /**
    * Main mapper to convert a raw JSON object into a SearchItemJson DTO.
@@ -38,6 +38,9 @@ import {
   export const toSearchItemData = (
   json: any
 ): BikeFreeSearchJson | BikeStationSearchJson | FlinksterSearchJson | Taxi | Mobistation | Stop | EscooterFreeSearchJson | EscooterStationSearchJson | TicketSeller | Flexa => {
+  if (typeof json === "undefined" || json === null || typeof json !== "object" || json.vehicletype == null || json.vehicletype === null || typeof json.vehicletype === "undefined") {
+    return json;
+}
   if (json.vehicletype === "bike") {
     if (typeof json.bike_type !== "undefined") {
       // A free-floating bike has a bike_type property

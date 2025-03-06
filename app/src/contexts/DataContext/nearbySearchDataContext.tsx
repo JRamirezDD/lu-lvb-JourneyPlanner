@@ -3,9 +3,9 @@
 import React, { createContext, useContext } from "react";
 import { IDataContext } from "@/contexts/DataContext/IDataContext";
 import { useDataFetcher } from "@/hooks/useDataFetcher";
-import { NearBySearchResponse } from "@/api/nearbysearchService/dto/nearbySearchResponse";
-import { NearBySearchParams, NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto/nearbySearchRequest";
-import { searchAllNearby } from "@/api/nearbysearchService/nearbySearchService";
+import { NearBySearchResponse } from "@/api/nearbysearchService/dto/nearbysearchResponse";
+import { NearBySearchParams, NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto/nearbysearchRequest";
+import { searchAllNearby } from "@/api/nearbysearchService/nearbysearchService";
 
 
 export interface INearbySearchDataContext extends IDataContext<NearBySearchResponse> {
