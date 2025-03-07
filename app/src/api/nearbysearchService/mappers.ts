@@ -17,61 +17,64 @@ import {
   /**
    * Main mapper to convert a raw JSON object into a SearchItemJson DTO.
    */
-  export const toSearchItemJson = (json: any): SearchItemJson => {
-    return {
-      id: json.id,
-      name: json.name,
-      lat: parseFloat(json.lat),
-      lon: parseFloat(json.lon),
-      type: json.type,
-      source: json.source,
-      provider: json.provider,
-      data: toSearchItemData(json.data),
-      prov_id: json.prov_id,
-      mobistation_id: json.mobistation_id,
-    };
-  };
+  export const toSearchItemJson = (json: any): SearchItemJson => 
+    new SearchItemJson(
+      json.id,
+      json.name,
+      parseFloat(json.lat),
+      parseFloat(json.lon),
+      json.type,
+      json.source,
+      json.provider,
+      toSearchItemData(json.data),
+      json.prov_id,
+      json.mobistation_id,
+      json.dist_to_center,
+    );
   
   /**
    * Determines the correct DTO for the "data" property based on available fields.
    */
   export const toSearchItemData = (
-    json: any
-  ): BikeFreeSearchJson | BikeStationSearchJson | FlinksterSearchJson | Taxi | Mobistation | Stop | EscooterFreeSearchJson | EscooterStationSearchJson | TicketSeller | Flexa => {
-    if (json.vehicletype === "bike") {
-      if (typeof json.bike_type !== "undefined") {
-        // A free-floating bike has a bike_type property
-        return toBikeFreeSearchJson(json);
-      }
-      if (typeof json.num_spaces !== "undefined") {
-        // A bike station will have properties like num_spaces
-        return toBikeStationSearchJson(json);
-      }
-    } else if (json.vehicletype === "car") {
-      // Flinkster search items use vehicletype "car"
-      return toFlinksterSearchJson(json);
-    } else if (json.phone) {
-      return toTaxi(json);
-    } else if (typeof json.charging_points !== "undefined") {
-      return toMobistation(json);
-    } else if (typeof json.zone_id === "string" && typeof json.wheelchair_boarding !== "undefined") {
-      return toStop(json);
-    } else if (json.vehicletype === "escooter") {
-      if (json.code) {
-        return toEscooterFreeSearchJson(json);
-      }
-      if (typeof json.num_spaces !== "undefined") {
-        return toEscooterStationSearchJson(json);
-      }
-    } else if (typeof json.addressExact === "boolean") {
-      // TicketSeller items contain addressExact
-      return toTicketSeller(json);
-    } else if (typeof json.flexaId !== "undefined") {
-      return toFlexa(json);
-    }
-    // Fallback: return json directly (or throw an error)
+  json: any
+): BikeFreeSearchJson | BikeStationSearchJson | FlinksterSearchJson | Taxi | Mobistation | Stop | EscooterFreeSearchJson | EscooterStationSearchJson | TicketSeller | Flexa => {
+  if (typeof json === "undefined" || json === null || typeof json !== "object" || json.vehicletype == null || json.vehicletype === null || typeof json.vehicletype === "undefined") {
     return json;
-  };
+}
+  if (json.vehicletype === "bike") {
+    if (typeof json.bike_type !== "undefined") {
+      // A free-floating bike has a bike_type property
+      return toBikeFreeSearchJson(json);
+    }
+    if (typeof json.num_spaces !== "undefined") {
+      // A bike station will have properties like num_spaces
+      return toBikeStationSearchJson(json);
+    }
+  } else if (json.vehicletype === "car") {
+    // Flinkster search items use vehicletype "car"
+    return toFlinksterSearchJson(json);
+  } else if (json.phone) {
+    return toTaxi(json);
+  } else if (typeof json.charging_points !== "undefined") {
+    return toMobistation(json);
+  } else if (typeof json.zone_id === "string" && typeof json.wheelchair_boarding !== "undefined") {
+    return toStop(json);
+  } else if (json.vehicletype === "escooter") {
+    if (json.code) {
+      return toEscooterFreeSearchJson(json);
+    }
+    if (typeof json.num_spaces !== "undefined") {
+      return toEscooterStationSearchJson(json);
+    }
+  } else if (typeof json.addressExact === "boolean") {
+    // TicketSeller items contain addressExact
+    return toTicketSeller(json);
+  } else if (typeof json.flexaId !== "undefined") {
+    return toFlexa(json);
+  }
+  // Fallback: return json directly (or throw an error)
+  return json;
+};
   
   /* ======================
      Variant Mapping Functions
@@ -224,14 +227,17 @@ import {
   /* ======================
      Mapper for the overall response
      ====================== */
+  // export const toNearBySearchResponse = (json: any): NearBySearchResponse => 
+  //   new NearBySearchResponse((json.items || []).map((item: any) => toSearchItemJson(item)));
   
-  /**
-   * Converts a raw JSON response into a NearBySearchResponse DTO.
-   * Assumes the response JSON is an object with an "items" array.
-   */
-  export const toNearBySearchResponse = (json: any): NearBySearchResponse => {
-    return {
-      items: (json.items || []).map((item: any) => toSearchItemJson(item)),
-    };
-  };
-  
+
+  export const toNearBySearchResponse = (data: any): NearBySearchResponse => {
+    if(Array.isArray(data)){
+        return new NearBySearchResponse(data.map(toSearchItemJson));
+    } else if (data && data.items && Array.isArray(data.items)){
+        return new NearBySearchResponse(data.items.map(toSearchItemJson));
+    } else {
+        console.error("toNearBySearchResponse: Invalid data format", data);
+        return new NearBySearchResponse([]); // Return an empty response, or handle the error as needed.
+    }
+};

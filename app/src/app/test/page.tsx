@@ -8,6 +8,7 @@ import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
 import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataContext";
 import { SettingsProvider } from "@/contexts/settingsContext";
 import MainView from "@/components/MainView";
+import { NearbySearchDataProvider } from "@/contexts/DataContext/nearbySearchDataContext";
 
 
 
@@ -19,6 +20,7 @@ export default function Home() {
                 <AutocompleteDataProvider>
                 <OtpDataProvider>
                 <StopmonitorDataProvider>
+                  <NearbySearchDataProvider>
                 <>
       <div id="app" style={{ width: "100%", height: "100%" }}>
         <MainView />
@@ -36,7 +38,7 @@ export default function Home() {
       `}</style>
     </>
 
-
+                  </NearbySearchDataProvider>
                   </StopmonitorDataProvider>
                   </OtpDataProvider>
                   </AutocompleteDataProvider>
