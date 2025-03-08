@@ -148,7 +148,7 @@ const SelectedRouteDetails = () => {
       );
       setSelectedItinerary(mapItinerary);
     }
-  }, [otpData, selectedItineraryIndex, setSelectedItinerary]);
+  }, [otpData, selectedItineraryIndex]);
 
   // Fixed debug logging
   console.log('Selected Itinerary Data:', {
