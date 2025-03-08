@@ -3,7 +3,7 @@ import PersonStanding from "../../../public/Walk.svg";
 import Car from "../../../public/Car.svg";
 import Bike from "../../../public/Bike.svg";
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import RoutePlanner from "./RoutePlanner";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
@@ -29,6 +29,28 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
     });
   };
 
+  // Function to calculate and format time difference for delays/early arrivals
+  const formatTimeDifference = (scheduledTime: number, actualTime: number): { text: string, color: string } => {
+    if (!scheduledTime || !actualTime) return { text: "", color: "" };
+    
+    const diffInSeconds = (actualTime - scheduledTime) / 1000;
+    const diffInMinutes = Math.round(diffInSeconds / 60);
+    
+    if (diffInMinutes === 0) return { text: "", color: "" };
+    
+    if (diffInMinutes > 0) {
+      return { 
+        text: `+${diffInMinutes}m`, 
+        color: "text-red-600" 
+      };
+    } else {
+      return { 
+        text: `${diffInMinutes}m`, 
+        color: "text-green-600" 
+      };
+    }
+  };
+
   const getTransportType = (mode: string): "Tram" | "Bus" | "S-Bahn" | "Walk" | "Car" | "Bike" => {
     switch (mode) {
       case "TRAM": return "Tram";
@@ -41,14 +63,33 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
     }
   };
 
+  // Sort itineraries by arrival time
+  const sortedItineraries = useMemo(() => {
+    if (!otpData || !otpData.plan || !otpData.plan.itineraries) return [];
+    
+    return [...otpData.plan.itineraries]
+      .sort((a, b) => a.endTime - b.endTime)
+      .slice(0, 5);
+  }, [otpData]);
+
   const handleRouteClick = (index: number) => {
-    setSelectedItineraryIndex(index);
+    // Find the original index in the unsorted itineraries array
+    if (otpData && sortedItineraries) {
+      const selectedItinerary = sortedItineraries[index];
+      const originalIndex = otpData.plan.itineraries.findIndex(
+        itinerary => itinerary.startTime === selectedItinerary.startTime && 
+                    itinerary.endTime === selectedItinerary.endTime
+      );
+      setSelectedItineraryIndex(originalIndex !== -1 ? originalIndex : index);
+    } else {
+      setSelectedItineraryIndex(index);
+    }
     setActiveView("ITINERARY");
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (!otpData) return;
-    const maxRoutes = Math.min(otpData.plan.itineraries.length, 5);
+    if (!sortedItineraries.length) return;
+    const maxRoutes = Math.min(sortedItineraries.length, 5);
 
     switch (e.key) {
       case 'ArrowDown':
@@ -72,7 +113,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedRouteIndex, otpData]);
+  }, [selectedRouteIndex, sortedItineraries]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -99,69 +140,112 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
         
         {!loadingOtp && !errorOtp && otpData && (
           <ul className="space-y-3">
-            {otpData.plan.itineraries.slice(0, 5).map((itinerary, idx) => (
-              <li
-                key={idx}
-                className={`border border-primary-blue/10 rounded-lg cursor-pointer transition-colors overflow-hidden ${
-                  idx === selectedRouteIndex 
-                    ? 'bg-primary-yellow/10' 
-                    : 'hover:bg-primary-yellow/5'
-                }`}
-                onClick={() => handleRouteClick(idx)}
-              >
-                {/* Time Header */}
-                <div className="flex items-center justify-between p-2 bg-primary-yellow/5">
-                  <span className="font-medium">
-                    {formatTime(itinerary.startTime)} - {formatTime(itinerary.endTime)}
-                  </span>
-                  <div className="flex items-center gap-1">
-                    <Clock size={14} />
-                    <span>{formatDuration(itinerary.duration)}</span>
+            {sortedItineraries.map((itinerary, idx) => {
+              // Calculate delays for departure and arrival
+              const departureDelay = itinerary.legs[0]?.departureDelay || 0;
+              const arrivalDelay = itinerary.legs[itinerary.legs.length - 1]?.arrivalDelay || 0;
+              
+              const scheduledDepartureTime = itinerary.startTime - (departureDelay * 1000);
+              const scheduledArrivalTime = itinerary.endTime - (arrivalDelay * 1000);
+              
+              const departureDiff = formatTimeDifference(scheduledDepartureTime, itinerary.startTime);
+              const arrivalDiff = formatTimeDifference(scheduledArrivalTime, itinerary.endTime);
+              
+              return (
+                <li
+                  key={idx}
+                  className={`border border-primary-blue/10 rounded-lg cursor-pointer transition-colors overflow-hidden ${
+                    idx === selectedRouteIndex 
+                      ? 'bg-primary-yellow/10' 
+                      : 'hover:bg-primary-yellow/5'
+                  }`}
+                  onClick={() => handleRouteClick(idx)}
+                >
+                  {/* Time Header */}
+                  <div className="flex items-center justify-between p-2 bg-primary-yellow/5">
+                    <div className="flex flex-col">
+                      <div className="flex items-center">
+                        {/* Departure Time */}
+                        <div className="flex items-center">
+                          <span className="font-medium">
+                            {formatTime(itinerary.startTime)}
+                          </span>
+                          {departureDiff.text && (
+                            <span className={`text-sm font-medium ml-1 ${departureDiff.color}`}>
+                              {departureDiff.text}
+                            </span>
+                          )}
+                        </div>
+                        
+                        {/* Separator */}
+                        <span className="mx-3 font-medium">→</span>
+                        
+                        {/* Arrival Time */}
+                        <div className="flex items-center">
+                          <span className="font-medium">
+                            {formatTime(itinerary.endTime)}
+                          </span>
+                          {arrivalDiff.text && (
+                            <span className={`text-sm font-medium ml-1 ${arrivalDiff.color}`}>
+                              {arrivalDiff.text}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Clock size={14} />
+                      <span>{formatDuration(itinerary.duration)}</span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Route Visualization */}
-                <div className="p-3 flex items-center gap-1">
-                  {itinerary.legs.map((leg, index) => (
-                    <React.Fragment key={index}>
-                      {/* Transport Icon */}
-                      {leg.mode === "WALK" ? (
-                        <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
-                          <Image 
-                            src={PersonStanding}
-                            alt="Walking"
-                            width={14}
-                            height={14}
-                          />
-                          <span>{Math.round(leg.duration / 60)}</span>
-                        </div>
-                      ) : (
-                        <div className={`px-3 py-1 rounded font-medium ${
-                          leg.mode === 'TRAM' ? 'bg-red-600 text-white' :
-                          leg.mode === 'BUS' ? 'bg-purple-600 text-white' :
-                          leg.mode === 'SUBURB' ? 'bg-green-600 text-white' :
-                          'bg-green-600 text-white'
-                        }`}>
-                          {/* Replace leg.mode with getTransportType(leg.mode) */}
-                          {leg.route ? `${getTransportType(leg.mode)} ${leg.route}` : getTransportType(leg.mode)}
-                        </div>
-                      )}
+                  {/* Route Visualization */}
+                  <div className="p-3 flex items-center gap-1">
+                    {itinerary.legs.map((leg, index) => (
+                      <React.Fragment key={index}>
+                        {/* Transport Icon */}
+                        {leg.mode === "WALK" ? (
+                          <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
+                            <Image 
+                              src={PersonStanding}
+                              alt="Walking"
+                              width={14}
+                              height={14}
+                            />
+                            <span>{Math.round(leg.duration / 60)}</span>
+                          </div>
+                        ) : (
+                          <div className={`px-3 py-1 rounded font-medium ${
+                            leg.mode === 'TRAM' ? 'bg-red-600 text-white' :
+                            leg.mode === 'BUS' ? 'bg-purple-600 text-white' :
+                            leg.mode === 'SUBURB' ? 'bg-green-600 text-white' :
+                            'bg-green-600 text-white'
+                          }`}>
+                            {leg.route ? `${getTransportType(leg.mode)} ${leg.route}` : getTransportType(leg.mode)}
+                          </div>
+                        )}
 
-                      {/* Connector Line */}
-                      {index < itinerary.legs.length - 1 && (
-                        <div className="h-[2px] w-4 bg-gray-300" />
-                      )}
-                    </React.Fragment>
-                  ))}
-                </div>
+                        {/* Connector Line */}
+                        {index < itinerary.legs.length - 1 && (
+                          <div className="h-[2px] w-4 bg-gray-300" />
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </div>
 
-                {/* Departure Info */}
-                <div className="px-3 pb-2 text-sm text-gray-600">
-                  {translations?.ControlPanel?.routes?.leaves || "Leaves"} {formatTime(itinerary.startTime)}{" "}
-                  {translations?.ControlPanel?.routes?.from || "from"} {itinerary.legs[0].from.name}
-                </div>
-              </li>
-            ))}
+                  {/* Departure Info */}
+                  <div className="px-3 pb-2 text-sm text-gray-600">
+                    {translations?.ControlPanel?.routes?.leaves || "Leaves"} {formatTime(itinerary.startTime)}{" "}
+                    {departureDiff.text && (
+                      <span className={`text-sm font-medium ${departureDiff.color}`}>
+                        {departureDiff.text}
+                      </span>
+                    )}{" "}
+                    {translations?.ControlPanel?.routes?.from || "from"} {itinerary.legs[0].from.name}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>
