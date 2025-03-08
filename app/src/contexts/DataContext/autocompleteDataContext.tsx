@@ -23,6 +23,20 @@ const AutocompleteDataContext = createContext<IAutocompleteDataContext | undefin
 // Provider component for the AutocompleteDataContext
 export const AutocompleteDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const autocompleteFetcher = useDataFetcher<AutocompleteItem[]>(fetchAutocompleteData);
+    
+    // Create a function to clear the autocomplete data
+    const clearState = () => {
+        // Access the internal state setter from the fetcher
+        if (autocompleteFetcher.data) {
+            // We can't directly access the setter, so we'll fetch with an empty query
+            // which will effectively clear the data
+            autocompleteFetcher.fetchData({ 
+                search: "", 
+                format: "JSON",
+                pointType: "P,S,W,N" 
+            }).catch(err => console.error("Error clearing autocomplete data:", err));
+        }
+    };
 
     return (
         <AutocompleteDataContext.Provider
@@ -32,12 +46,7 @@ export const AutocompleteDataProvider: React.FC<{ children: React.ReactNode }> =
                 fetchAutocompleteData: autocompleteFetcher.fetchData,
                 loadingAutocomplete: autocompleteFetcher.loading,
                 errorAutocomplete: autocompleteFetcher.error,
-
-                clearState: () => {
-                    // Here you could implement a way to clear the state.
-                    // For example, if your useDataFetcher hook returned a setData function,
-                    // you could call setData(null). For now, we define it as a no-op.
-                },
+                clearState
             }}
         >
             {children}

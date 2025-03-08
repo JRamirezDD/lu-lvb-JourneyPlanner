@@ -40,7 +40,12 @@ interface SelectedLocation {
 
 const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => void }) => {
   const { translations, transportModes, toggleTransportMode } = useSettingsContext();
-  const { autocompleteData, fetchAutocompleteData, loadingAutocomplete } = useAutocompleteDataContext();
+  const { 
+    autocompleteData, 
+    fetchAutocompleteData, 
+    loadingAutocomplete,
+    clearState: clearAutocompleteData 
+  } = useAutocompleteDataContext();
   const { 
     fetchOtpData, 
     lastOrigin, 
@@ -78,6 +83,9 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   const [isOriginSelected, setIsOriginSelected] = useState(!!lastOrigin);
   const [isDestinationSelected, setIsDestinationSelected] = useState(!!lastDestination);
   
+  // Track which field is currently being searched
+  const [currentSearchField, setCurrentSearchField] = useState<"origin" | "destination" | null>(null);
+
   useEffect(() => {
     const now = new Date();
     setSelectedDate(now);
@@ -129,27 +137,67 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     setSelectedDestination(tempOrigin);
   };
 
+  // Create a function to fetch origin suggestions
+  const fetchOriginSuggestions = async (query: string) => {
+    if (query.length < 2) return;
+    
+    try {
+      setShowOriginSuggestions(true);
+      setShowDestinationSuggestions(false);
+      setOriginAutocompleteData([]); // Clear previous suggestions
+      setCurrentSearchField("origin"); // Set current search field
+      
+      // Clear any existing autocomplete data first
+      await clearAutocompleteData();
+      
+      await fetchAutocompleteData({ 
+        search: query,
+        format: "JSON",
+        pointType: "P,S,W,N"
+      });
+      
+      if (autocompleteData) {
+        setOriginAutocompleteData(autocompleteData);
+      }
+    } catch (error) {
+      console.error('Error fetching origin suggestions:', error);
+    }
+  };
+
+  // Create a function to fetch destination suggestions
+  const fetchDestinationSuggestions = async (query: string) => {
+    if (query.length < 2) return;
+    
+    try {
+      setShowDestinationSuggestions(true);
+      setShowOriginSuggestions(false);
+      setDestinationAutocompleteData([]); // Clear previous suggestions
+      setCurrentSearchField("destination"); // Set current search field
+      
+      // Clear any existing autocomplete data first
+      await clearAutocompleteData();
+      
+      await fetchAutocompleteData({ 
+        search: query,
+        format: "JSON",
+        pointType: "P,S,W,N"
+      });
+      
+      if (autocompleteData) {
+        setDestinationAutocompleteData(autocompleteData);
+      }
+    } catch (error) {
+      console.error('Error fetching destination suggestions:', error);
+    }
+  };
+
   // Update the origin effect
   useEffect(() => {
     if(isOriginSelected) return;
 
-    const timer = setTimeout(async () => {
+    const timer = setTimeout(() => {
       if (origin.length >= 2) {
-        try {
-          setShowOriginSuggestions(true);
-          setShowDestinationSuggestions(false);
-          setOriginAutocompleteData([]); // Clear previous suggestions
-          await fetchAutocompleteData({ 
-            search: origin,
-            format: "JSON",
-            pointType: "P,S,W,N"
-          });
-          if (autocompleteData) {
-            setOriginAutocompleteData(autocompleteData);
-          }
-        } catch (error) {
-          console.error('Error fetching origin suggestions:', error);
-        }
+        fetchOriginSuggestions(origin);
       } else {
         setShowOriginSuggestions(false);
         setOriginAutocompleteData([]);
@@ -157,29 +205,15 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     }, 300); // 300ms delay
 
     return () => clearTimeout(timer);
-  }, [origin, fetchAutocompleteData]);
+  }, [origin]);
 
   // Update the destination effect
   useEffect(() => {
     if(isDestinationSelected) return;
       
-    const timer = setTimeout(async () => {
+    const timer = setTimeout(() => {
       if (destination.length >= 2) {
-        try {
-          setShowDestinationSuggestions(true);
-          setShowOriginSuggestions(false);
-          setDestinationAutocompleteData([]); // Clear previous suggestions
-          await fetchAutocompleteData({ 
-            search: destination,
-            format: "JSON",
-            pointType: "P,S,W,N"
-          });
-          if (autocompleteData) {
-            setDestinationAutocompleteData(autocompleteData);
-          }
-        } catch (error) {
-          console.error('Error fetching destination suggestions:', error);
-        }
+        fetchDestinationSuggestions(destination);
       } else {
         setShowDestinationSuggestions(false);
         setDestinationAutocompleteData([]);
@@ -187,7 +221,26 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     }, 300); // 300ms delay
 
     return () => clearTimeout(timer);
-  }, [destination, fetchAutocompleteData, selectedOrigin, selectedDestination]);
+  }, [destination]);
+
+  // Clear autocomplete data when focusing on input fields
+  const handleOriginFocus = () => {
+    setCurrentSearchField("origin");
+    setDestinationAutocompleteData([]);
+    clearAutocompleteData();
+    if (origin.length >= 2 && !isOriginSelected) {
+      fetchOriginSuggestions(origin);
+    }
+  };
+
+  const handleDestinationFocus = () => {
+    setCurrentSearchField("destination");
+    setOriginAutocompleteData([]);
+    clearAutocompleteData();
+    if (destination.length >= 2 && !isDestinationSelected) {
+      fetchDestinationSuggestions(destination);
+    }
+  };
 
   const handleSuggestionClick = (suggestion: AutocompleteItem, isOrigin: boolean) => {
     const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
@@ -205,9 +258,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       setShowDestinationSuggestions(false);
     }
     
+    // Clear all autocomplete data
     setOriginAutocompleteData([]); 
     setDestinationAutocompleteData([]);
+    clearAutocompleteData();
     setSelectedIndex(-1);
+    setCurrentSearchField(null);
   
     // Ensure input field loses focus
     if (document.activeElement instanceof HTMLElement) {
@@ -334,16 +390,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               setSelectedIndex(-1);
             }}
             onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
-            onFocus={() => {
-              if (origin.length >= 2) {
-                setShowOriginSuggestions(true);
-              }
-            }}
+            onFocus={handleOriginFocus}
             className="location-input w-full p-2 border rounded"
           />
           {showOriginSuggestions && (
             <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
-              {loadingAutocomplete ? (
+              {loadingAutocomplete && currentSearchField === "origin" ? (
                 <div className="p-2 text-gray-600">Loading suggestions...</div>
               ) : originAutocompleteData.length > 0 ? (
                 originAutocompleteData.slice(0, 5).map((suggestion, index) => (
@@ -369,6 +421,14 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
           )}
         </div>
 
+        {/* Swap Button - Now positioned on the right side */}
+        <button
+          onClick={swapLocations}
+          className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-primary-yellow text-primary-blue p-3 rounded-full hover:bg-primary-yellow/80 transition-colors z-10 shadow-md"
+        >
+          <ArrowUpDown size={24} />
+        </button>
+
         {/* Destination Input with Suggestions */}
         <div className="relative">
           <input
@@ -382,16 +442,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               setSelectedIndex(-1);
             }}
             onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
-            onFocus={() => {
-              if (destination.length >= 2) {
-                setShowDestinationSuggestions(true);
-              }
-            }}
+            onFocus={handleDestinationFocus}
             className="location-input w-full p-2 border rounded"
           />
           {showDestinationSuggestions && (
             <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
-              {loadingAutocomplete ? (
+              {loadingAutocomplete && currentSearchField === "destination" ? (
                 <div className="p-2 text-gray-600">Loading suggestions...</div>
               ) : destinationAutocompleteData.length > 0 ? (
                 destinationAutocompleteData.slice(0, 5).map((suggestion, index) => (
@@ -416,14 +472,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
             </div>
           )}
         </div>
-        
-        {/* Swap Button - Now positioned on the right side */}
-        <button
-          onClick={swapLocations}
-          className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-primary-yellow text-primary-blue p-3 rounded-full hover:bg-primary-yellow/80 transition-colors z-10 shadow-md"
-        >
-          <ArrowUpDown size={24} />
-        </button>         
       </div>
 
       {/* Filter Buttons Container */}
