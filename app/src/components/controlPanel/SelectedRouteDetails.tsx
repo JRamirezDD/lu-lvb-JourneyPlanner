@@ -117,12 +117,12 @@ const formatTimeDifference = (scheduledTime: number, actualTime: number): { text
   
   if (diffInMinutes > 0) {
     return { 
-      text: `(+${diffInMinutes}m)`, 
+      text: `+${diffInMinutes}m`, 
       color: "text-red-600" 
     };
   } else {
     return { 
-      text: `(${diffInMinutes}m)`, 
+      text: `${diffInMinutes}m`, 
       color: "text-green-600" 
     };
   }
@@ -253,20 +253,38 @@ const SelectedRouteDetails = () => {
             <div key={index} className="flex gap-4">
               {/* Time Column */}
               <div className="w-16 flex flex-col items-center">
-                {/* Departure Time */}
-                <span className="font-medium text-gray-900">{formatTime(leg.startTime)}</span>
+                {/* Departure Time - Show actual and scheduled times */}
+                <div className="flex flex-col items-center">
+                  {/* Calculate scheduled departure time */}
+                  {(() => {
+                    const actualDepartureTime = leg.startTime;
+                    const scheduledDepartureTime = actualDepartureTime - (leg.departureDelay || 0) * 1000; // Convert seconds to ms
+                    const timeDiff = formatTimeDifference(scheduledDepartureTime, actualDepartureTime);
+                    
+                    return (
+                      <>
+                        <span className="font-medium text-gray-900">
+                          {formatTime(actualDepartureTime)}
+                        </span>
+                        {timeDiff.text && (
+                          <span className={`text-sm font-medium ${timeDiff.color}`}>
+                            {timeDiff.text}
+                          </span>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
                 
                 {index < selectedItinerary.legs.length && (
                   <div className={`h-full border-l-4 my-2 transition-all ${getLineColor(leg.mode)}`} />
                 )}
                 
-                {/* Arrival Time - now shown for all leg types */}
+                {/* Arrival Time - Show actual and scheduled times */}
                 <div className="flex flex-col items-center">
                   {(() => {
-                    // In a real app, you would use actual data from the API
-                    // Here we're simulating delays/early arrivals
-                    const scheduledArrivalTime = leg.endTime - (leg.arrivalDelay || 0);
                     const actualArrivalTime = leg.endTime;
+                    const scheduledArrivalTime = actualArrivalTime - (leg.arrivalDelay || 0) * 1000; // Convert seconds to ms
                     const timeDiff = formatTimeDifference(scheduledArrivalTime, actualArrivalTime);
                     
                     return (
@@ -275,7 +293,7 @@ const SelectedRouteDetails = () => {
                           {formatTime(actualArrivalTime)}
                         </span>
                         {timeDiff.text && (
-                          <span className={`text-xs ${timeDiff.color}`}>
+                          <span className={`text-sm font-medium ${timeDiff.color}`}>
                             {timeDiff.text}
                           </span>
                         )}
@@ -313,7 +331,7 @@ const SelectedRouteDetails = () => {
                           </span>
                         </div>
                         {/* Platform and stops info */}
-                        {(leg.mode === "TRAM" || leg.mode === "SUBURB" || leg.mode === "BUS") && (
+                        {(leg.mode === "TRAM" || leg.mode === "SUBURB" || leg.mode === "BUS" || leg.mode === "TRAIN") && (
                           <div className="text-sm text-gray-600 flex items-center gap-2">
                             <Info size={16} />
                             <span>{translations?.ControlPanel?.routeDetails?.platform?.replace("{number}", leg.mode || "")}</span>
@@ -338,31 +356,29 @@ const SelectedRouteDetails = () => {
                       {expandedLegs.includes(index) && leg.intermediateStops && (
                         <div className="ml-8 pl-4 border-l-2 border-gray-200">
                           {leg.intermediateStops.map((stop, stopIndex) => {
-                            // Calculate arrival time for this stop
-                            // We don't have actual arrival times for intermediate stops in the data
-                            // So we'll simulate it based on the leg's start and end times
+                         
                             const legDuration = leg.endTime - leg.startTime;
                             const stopRatio = (stopIndex + 1) / (leg.intermediateStops?.length || 1);
                             const estimatedTime = leg.startTime + (legDuration * stopRatio);
                             
-                            // Simulate some delays/early arrivals for demonstration
-                            // In a real app, this would come from the API
-                            const scheduledTime = estimatedTime;
-                            const actualTime = estimatedTime + (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 300000); // +/- 0-5 minutes in ms
+                            const startDelayMs = (leg.departureDelay || 0) * 1000;
+                            const endDelayMs = (leg.arrivalDelay || 0) * 1000;
+                            const estimatedDelayMs = startDelayMs + (endDelayMs - startDelayMs) * stopRatio;
                             
-                            const timeDiff = formatTimeDifference(scheduledTime, actualTime);
+                            const scheduledTime = estimatedTime - estimatedDelayMs;
+                            const timeDiff = formatTimeDifference(scheduledTime, estimatedTime);
                             
                             return (
                               <div key={stopIndex} className="py-2 flex justify-between items-center border-b border-gray-100">
-                                <div className="text-sm text-gray-800">
+                                <div className="text-base text-gray-800">
                                   {stop.name}
                                 </div>
                                 <div className="flex items-center">
-                                  <span className="text-sm font-medium">
-                                    {formatTime(actualTime)}
+                                  <span className="text-base font-normal">
+                                    {formatTime(estimatedTime)}
                                   </span>
                                   {timeDiff.text && (
-                                    <span className={`text-xs ml-1 ${timeDiff.color}`}>
+                                      <span className={`text-base font-normal ml-1 ${timeDiff.color}`}>
                                       {timeDiff.text}
                                     </span>
                                   )}
