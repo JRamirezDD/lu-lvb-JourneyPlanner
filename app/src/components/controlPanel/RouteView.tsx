@@ -8,11 +8,14 @@ import RoutePlanner from "./RoutePlanner";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
 import { ViewMode } from "@/types/ViewMode";
+import { useMapContext } from "@/contexts/mapContext";
+import { Itinerary } from "@/types/Itinerary";
 
 
 const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void }) => {
   const { translations } = useSettingsContext();
   const { otpData, loadingOtp, errorOtp, setSelectedItineraryIndex } = useOtpDataContext();
+  const { setSelectedItinerary } = useMapContext();
   const [selectedRouteIndex, setSelectedRouteIndex] = useState(-1);
 
   const formatDuration = (seconds: number): string => {
@@ -80,11 +83,25 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
         itinerary => itinerary.startTime === selectedItinerary.startTime && 
                     itinerary.endTime === selectedItinerary.endTime
       );
-      setSelectedItineraryIndex(originalIndex !== -1 ? originalIndex : index);
-    } else {
-      setSelectedItineraryIndex(index);
+      
+      // Set the selected itinerary index in the context
+      const actualIndex = originalIndex !== -1 ? originalIndex : index;
+      setSelectedItineraryIndex(actualIndex);
+      
+      // Create an Itinerary object from the OtpItinerary
+      const itinerary = otpData.plan.itineraries[actualIndex];
+      const mapItinerary = new Itinerary(
+        otpData.plan.from,
+        otpData.plan.to,
+        itinerary
+      );
+      
+      // Send the selected itinerary to the map context
+      setSelectedItinerary(mapItinerary);
+      
+      // Navigate to the itinerary view
+      setActiveView("ITINERARY");
     }
-    setActiveView("ITINERARY");
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {

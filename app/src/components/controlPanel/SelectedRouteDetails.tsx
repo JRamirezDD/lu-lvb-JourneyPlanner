@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight, Clock, Info, ChevronDown, ChevronUp, X } from "lucide-react";
 import PersonStanding from "../../../public/Walk.svg";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
 import { TransportMode } from "@/types/TransportMode";
@@ -9,6 +9,8 @@ import TramLogo from "../../../public/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
 import BusLogo from "../../../public/Bus-Logo.svg";
 import { useUIContext } from "@/contexts/uiContext";
+import { useMapContext } from "@/contexts/mapContext";
+import { Itinerary } from "@/types/Itinerary";
 
 interface RouteData {
   id: number;
@@ -132,7 +134,34 @@ const SelectedRouteDetails = () => {
   const { otpData, selectedItineraryIndex, setSelectedItineraryIndex, clearSearchParams } = useOtpDataContext();
   const { translations } = useSettingsContext();
   const { goToPreviousViewMode, setViewMode } = useUIContext();
+  const { setSelectedItinerary } = useMapContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
+
+  // Create a memoized function to update the map
+  const updateMap = useCallback((index: number) => {
+    if (otpData && index !== null && index >= 0 && index < otpData.plan.itineraries.length) {
+      const itinerary = otpData.plan.itineraries[index];
+      const mapItinerary = new Itinerary(
+        otpData.plan.from,
+        otpData.plan.to,
+        itinerary
+      );
+      setSelectedItinerary(mapItinerary);
+    }
+  }, [otpData, setSelectedItinerary]);
+
+  // Memoize the selected itinerary to prevent unnecessary re-renders
+  const selectedItinerary = useMemo(() => {
+    if (!otpData || selectedItineraryIndex === null) return null;
+    return otpData.plan.itineraries[selectedItineraryIndex];
+  }, [otpData, selectedItineraryIndex]);
+
+  // Update the map only on initial load and when explicitly navigating
+  useEffect(() => {
+    if (selectedItineraryIndex !== null) {
+      updateMap(selectedItineraryIndex);
+    }
+  }, [updateMap]); // Only run once on component mount
 
   // Fixed debug logging
   console.log('Selected Itinerary Data:', {
@@ -141,11 +170,10 @@ const SelectedRouteDetails = () => {
     legs: selectedItineraryIndex !== null ? otpData?.plan?.itineraries?.[selectedItineraryIndex]?.legs : null
   });
 
-  if (!otpData || selectedItineraryIndex === null) {
+  if (!otpData || selectedItineraryIndex === null || !selectedItinerary) {
     return <div>No route selected</div>;
   }
 
-  const selectedItinerary = otpData.plan.itineraries[selectedItineraryIndex];
   const totalRoutes = Math.min(otpData.plan.itineraries.length, 5);
 
   // Updated location name handler with more defensive checks
@@ -178,13 +206,19 @@ const SelectedRouteDetails = () => {
 
   const handlePrevRoute = () => {
     if (selectedItineraryIndex > 0) {
-      setSelectedItineraryIndex(selectedItineraryIndex - 1);
+      const newIndex = selectedItineraryIndex - 1;
+      setSelectedItineraryIndex(newIndex);
+      // Directly update the map without waiting for the effect
+      updateMap(newIndex);
     }
   };
 
   const handleNextRoute = () => {
     if (selectedItineraryIndex < totalRoutes - 1) {
-      setSelectedItineraryIndex(selectedItineraryIndex + 1);
+      const newIndex = selectedItineraryIndex + 1;
+      setSelectedItineraryIndex(newIndex);
+      // Directly update the map without waiting for the effect
+      updateMap(newIndex);
     }
   };
 
@@ -200,6 +234,8 @@ const SelectedRouteDetails = () => {
   const handleResetClick = () => {
     // Clear the search parameters
     clearSearchParams();
+    // Clear the selected itinerary from the map
+    setSelectedItinerary(null);
     // Navigate to the default view
     setViewMode("DEFAULT");
   };
