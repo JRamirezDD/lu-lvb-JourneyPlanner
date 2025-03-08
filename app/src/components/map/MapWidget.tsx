@@ -26,8 +26,9 @@ import { NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto
 import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, mobistation_stopsLayerConfig, station_stopsLayerConfig, 
     ticketMachine_stopsLayerConfig, stop_stopsLayerConfig, 
     searchItemsSource} from "./layers/NearbySearchLayer";
-import { NearBySearchResponse } from "@/api/nearbysearchService/dto/nearbysearchResponse";
+import { NearBySearchResponse, SearchItemJson } from "@/api/nearbysearchService/dto/nearbysearchResponse";
 import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse";
+import { plainToInstance } from "class-transformer";
 
 // --- Bounding Box Helpers ---
 
@@ -76,6 +77,7 @@ export const MapWidget: React.FC = ({ }) => {
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
     const { nearBySearchData, fetchNearbySearch, loadingNearbySearch, errorNearbySearch } = useNearbySearchDataContext();
     const { setSelectedItinerary, selectedItinerary } = useMapContext();
+    const {setSelectedNearbySearchItem, selectedNearbySearchItem} = useMapContext();
   
     
     // State to hold the current query bounds (the extended bounding box used for querying)
@@ -343,12 +345,40 @@ export const MapWidget: React.FC = ({ }) => {
     // NearbySearch Layers
     const updateNearbySearchLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, nearbySearchData: NearBySearchResponse | null) => {
         if (!nearbySearchData) return;
+        if (!mapRef.current) return;
     
         const geojsonData = createNearbySearchLayerData(nearbySearchData);
         updateSource("nearbySearch-source", geojsonData);
-    
+
         const layers = [freeFloating_stopsLayerConfig, stop_stopsLayerConfig, ticketMachine_stopsLayerConfig, station_stopsLayerConfig, mobistation_stopsLayerConfig ];
         layers.forEach(addLayerIfNotExists);
+
+        // Add layer click functionality
+        for (const layer of layers) {
+            mapRef.current.on("click", layer.id, (e) => {
+                const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];
+                if (feature) {
+                    const parsed = JSON.parse(feature.properties?.item);
+                    const rawObj = (Array.isArray(parsed) ? parsed[0] : parsed) as SearchItemJson;
+                    const searchItemJson =  plainToInstance(SearchItemJson, rawObj);
+                    console.log("Clicked nearby search item:", searchItemJson);
+                    setSelectedNearbySearchItem(searchItemJson);
+                }
+            });
+            
+            // Register cursor events
+            mapRef.current.on("mouseenter", layer.id, () => {
+                if (mapRef.current) {
+                    mapRef.current.getCanvas().style.cursor = "pointer";
+                }
+            });
+
+            mapRef.current.on("mouseleave", layer.id, () => {
+                if (mapRef.current) {
+                    mapRef.current.getCanvas().style.cursor = "";
+                }
+            });
+        }
     };
 
     const removeNearbySearchLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {

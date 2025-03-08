@@ -1,4 +1,4 @@
-import { MapWidget } from "@/components/map/MapWidget";
+import MapWidget from "@/components/map/MapWidget";
 import { generateStaticParams } from "../generateStaticParams";
 export { generateStaticParams };
 

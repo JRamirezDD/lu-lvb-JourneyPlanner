@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import MapWidget from '@/components/map/MapWidget';
 import { UIProvider, useUIContext } from '@/contexts/uiContext';
 import { MapProvider, useMapContext } from '@/contexts/mapContext';
 import maplibregl from 'maplibre-gl';
 import { StopmonitorDataProvider } from '@/contexts/DataContext/stopmonitorDataContext';
+import MapWidget from '@/components/map/MapWidget';
 
 
 jest.mock('maplibre-gl', () => ({

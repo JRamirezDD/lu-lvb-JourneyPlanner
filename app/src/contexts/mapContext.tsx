@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState } from "react";
 import { Coordinates } from "@/types/Coordinates";
 import { IContext } from "./IContext";
 import { Itinerary } from "@/types/Itinerary";
+import { SearchItemJson } from "@/api/nearbysearchService/dto/nearbysearchResponse";
 
 interface SelectedStop {
     stop_id: string;
@@ -28,6 +29,9 @@ export interface IMapContext extends IContext {
     selectedStop: SelectedStop | null; // Used to store the ID and name of the selected stop (selected from Stops layer)
     setSelectedStop: (stop: SelectedStop | null) => void;
 
+    // Pass objects from Map -> Control Panel
+    selectedNearbySearchItem: SearchItemJson | null; // Used to store the selected nearby search item (selected from Nearby Search layer)
+    setSelectedNearbySearchItem: (item: SearchItemJson | null) => void;
 
     clearState: () => void;
 }
@@ -40,6 +44,7 @@ export const MapProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     // Local state for the map.
     const [currentPosition, setCurrentPositionState] = useState<Coordinates | null>(null);
     const [selectedStop, setSelectedStopState] = useState<SelectedStop | null>(null);
+    const [selectedNearbySearchItem, setSelectedNearbySearchItem] = useState<SearchItemJson | null>(null);
     const [visibleLayers, setVisibleLayers] = useState<string[]>([]);
     const [selectedItinerary, setSelectedItineraryState] = useState<Itinerary | null>(null);
 
@@ -82,11 +87,13 @@ export const MapProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         selectedStop,
         visibleLayers,
         selectedItinerary,
+        selectedNearbySearchItem,
         setCurrentPosition,
         setSelectedStop,
         toggleLayer,
         clearState,
-        setSelectedItinerary
+        setSelectedItinerary,
+        setSelectedNearbySearchItem
     };
 
     return <MapContext.Provider value={value}> {children} </MapContext.Provider>;

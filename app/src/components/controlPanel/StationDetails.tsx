@@ -21,8 +21,8 @@ interface Disruption {
 }
 
 interface StationDetailsProps {
-  stopId?: string;  // Make stopId optional
-  stopName?: string; // Make stopName optional
+  stopId: string;
+  stopName: string | null;
 }
 
 const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {

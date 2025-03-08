@@ -1,0 +1,1 @@
+export type NearbySearchItemType = "stop" | "station" | "free_floating" | "parkingarea" | "operationarea" | "mobistation" | "ticket-seller" | "flexa" | "escooter" | "taxi";
