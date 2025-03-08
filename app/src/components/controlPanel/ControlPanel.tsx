@@ -53,7 +53,7 @@ const ControlPanel = () => {
         {viewMode === "DEFAULT" && <RoutePlanner setActiveView={setViewMode} />}
         {viewMode === "PLAN" && <RouteView setActiveView={setViewMode} />}
         {viewMode === "ITINERARY" && <SelectedRouteDetails />}
-        {viewMode === "STATION" && (
+        {viewMode === "STATION" && selectedStop && (
           <StationDetails 
             stopId={selectedStop?.stop_id} 
             stopName={selectedStop?.stop_name} 
