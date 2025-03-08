@@ -253,10 +253,36 @@ const SelectedRouteDetails = () => {
             <div key={index} className="flex gap-4">
               {/* Time Column */}
               <div className="w-16 flex flex-col items-center">
+                {/* Departure Time */}
                 <span className="font-medium text-gray-900">{formatTime(leg.startTime)}</span>
-                {index < selectedItinerary.legs.length  && (
+                
+                {index < selectedItinerary.legs.length && (
                   <div className={`h-full border-l-4 my-2 transition-all ${getLineColor(leg.mode)}`} />
                 )}
+                
+                {/* Arrival Time - now shown for all leg types */}
+                <div className="flex flex-col items-center">
+                  {(() => {
+                    // In a real app, you would use actual data from the API
+                    // Here we're simulating delays/early arrivals
+                    const scheduledArrivalTime = leg.endTime - (leg.arrivalDelay || 0);
+                    const actualArrivalTime = leg.endTime;
+                    const timeDiff = formatTimeDifference(scheduledArrivalTime, actualArrivalTime);
+                    
+                    return (
+                      <>
+                        <span className="font-medium text-gray-900">
+                          {formatTime(actualArrivalTime)}
+                        </span>
+                        {timeDiff.text && (
+                          <span className={`text-xs ${timeDiff.color}`}>
+                            {timeDiff.text}
+                          </span>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
               </div>
 
               {/* Content Column */}
