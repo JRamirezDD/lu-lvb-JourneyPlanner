@@ -27,7 +27,7 @@ export const toLeg = (data: any): Leg =>
         data.mode,
         toLocation(data.from),
         toLocation(data.to),
-        new LegGeometry(data.legGeometry.points.map((point: any) => ({ lat: point.lat, lon: point.lon }))),
+        new LegGeometry(data.legGeometry?.points?.map((point: any) => ({ lat: point.lat, lon: point.lon })) || {}),
         data.duration,
         data.transitLeg,
         data.route,
