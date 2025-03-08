@@ -129,7 +129,7 @@ const formatTimeDifference = (scheduledTime: number, actualTime: number): { text
 };
 
 const SelectedRouteDetails = () => {
-  const { otpData, selectedItineraryIndex, setSelectedItineraryIndex } = useOtpDataContext();
+  const { otpData, selectedItineraryIndex, setSelectedItineraryIndex, clearSearchParams } = useOtpDataContext();
   const { translations } = useSettingsContext();
   const { goToPreviousViewMode, setViewMode } = useUIContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
@@ -196,6 +196,14 @@ const SelectedRouteDetails = () => {
     );
   };
 
+  // Handle reset button click
+  const handleResetClick = () => {
+    // Clear the search parameters
+    clearSearchParams();
+    // Navigate to the default view
+    setViewMode("DEFAULT");
+  };
+
   return (
     <div className="flex flex-col w-full bg-white">
       {/* Header */}
@@ -239,7 +247,7 @@ const SelectedRouteDetails = () => {
           </button>
           <button 
             className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors ml-2"
-            onClick={() => setViewMode("DEFAULT")}
+            onClick={handleResetClick}
           >
             <X size={24} />
           </button>

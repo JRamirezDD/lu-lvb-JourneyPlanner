@@ -41,10 +41,18 @@ interface SelectedLocation {
 const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => void }) => {
   const { translations, transportModes, toggleTransportMode } = useSettingsContext();
   const { autocompleteData, fetchAutocompleteData, loadingAutocomplete } = useAutocompleteDataContext();
-  const { fetchOtpData } = useOtpDataContext();
+  const { 
+    fetchOtpData, 
+    lastOrigin, 
+    lastDestination, 
+    lastOriginCoordinates, 
+    lastDestinationCoordinates,
+    setLastSearchParams 
+  } = useOtpDataContext();
 
-  const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
+  // Initialize with values from context if available
+  const [origin, setOrigin] = useState(lastOrigin || "");
+  const [destination, setDestination] = useState(lastDestination || "");
   const [showOriginSuggestions, setShowOriginSuggestions] = useState(false);
   const [showDestinationSuggestions, setShowDestinationSuggestions] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
@@ -53,11 +61,22 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   const [defaultDate, setDefaultDate] = useState<Date | null>(null);
   const [originAutocompleteData, setOriginAutocompleteData] = useState<AutocompleteItem[]>([]);
   const [destinationAutocompleteData, setDestinationAutocompleteData] = useState<AutocompleteItem[]>([]);
-  const [selectedOrigin, setSelectedOrigin] = useState<SelectedLocation | null>(null);
-  const [selectedDestination, setSelectedDestination] = useState<SelectedLocation | null>(null);
+  
+  // Initialize with values from context if available
+  const [selectedOrigin, setSelectedOrigin] = useState<SelectedLocation | null>(
+    lastOrigin && lastOriginCoordinates 
+      ? { name: lastOrigin, coordinates: lastOriginCoordinates } 
+      : null
+  );
+  const [selectedDestination, setSelectedDestination] = useState<SelectedLocation | null>(
+    lastDestination && lastDestinationCoordinates 
+      ? { name: lastDestination, coordinates: lastDestinationCoordinates } 
+      : null
+  );
+  
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [isOriginSelected, setIsOriginSelected] = useState(false);
-  const [isDestinationSelected, setIsDestinationSelected] = useState(false);
+  const [isOriginSelected, setIsOriginSelected] = useState(!!lastOrigin);
+  const [isDestinationSelected, setIsDestinationSelected] = useState(!!lastDestination);
   
   useEffect(() => {
     const now = new Date();
@@ -217,6 +236,14 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     }
 
     try {
+      // Store the search parameters in the context
+      setLastSearchParams(
+        selectedOrigin.name,
+        selectedDestination.name,
+        selectedOrigin.coordinates,
+        selectedDestination.coordinates
+      );
+
       const params: Partial<RequestParameters> = {
         From: selectedOrigin.coordinates,
         To: selectedDestination.coordinates,
