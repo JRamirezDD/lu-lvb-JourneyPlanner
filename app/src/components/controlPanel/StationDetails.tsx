@@ -21,7 +21,7 @@ interface Disruption {
 
 interface StationDetailsProps {
   stopId: string;
-  stopName: string;
+  stopName: string | null;
 }
 
 const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {  // Default to Leipzig Hauptbahnhof for now
