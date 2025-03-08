@@ -13,6 +13,12 @@ const api_endpoint = process.env.NEXT_PUBLIC_API_ENDPOINT_NEARBYSEARCH;
 export const searchAllNearby = async (
     params: NearBySearchParams | NearBySearchParamsWithBoundingBox
 ): Promise<NearBySearchResponse> => {
+
+    if (useMock) {
+        return toNearBySearchResponse(nearbysearchmockresponse);
+    }
+
+    
     if ('bb' in params) {
         // Convert bounding box to center and radius
         const { center, radius } = convertBoundingBoxToCenterAndRadius(params.bb);
@@ -30,9 +36,7 @@ export const searchAllNearby = async (
         };
     }
 
-    if (useMock) {
-        return toNearBySearchResponse(nearbysearchmockresponse);
-    }
+
 
     try {
         const response = await httpClient.get(api_endpoint + "/search", { params });
