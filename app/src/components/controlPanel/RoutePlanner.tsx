@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Filter, ArrowUpDown, ChevronDown, ChevronUp, Calendar } from "lucide-react"; // Icons
 import TramLogo from "../../../public/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
+import TrainLogo from "../../../public/Train.svg";
 import BusLogo from "../../../public/Bus-Logo.svg"; 
 import TransportFilter from "./filters/TransportFilter";
 import DepartureFilter from "./filters/DepartureFilter";
@@ -28,7 +29,8 @@ const transportOptions: TransportOption[] = [
   { type: "Bus", logo: BusLogo, mode: "BUS" },
   { type: "Bike", logo: Bike, mode: "BIKE" },
   { type: "Walk", logo: PersonStanding, mode: "WALK" },
-  { type: "Car", logo: Car, mode: "CAR" }
+  { type: "Car", logo: Car, mode: "CAR" },
+  { type: "Train", logo: TrainLogo, mode: "TRAIN" }
 ];
 
 interface SelectedLocation {
@@ -87,6 +89,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       "Bike": "BIKE",
       "Walk": "WALK",
       "Car": "CAR",
+      "Train": "TRAIN"
     };
 
     const mode = modeMap[type];
@@ -150,7 +153,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
           await fetchAutocompleteData({ 
             search: destination,
             format: "JSON",
-            pointType: "P,S,W"
+            pointType: "P,S,W,N"
           });
           if (autocompleteData) {
             setDestinationAutocompleteData(autocompleteData);
@@ -289,108 +292,111 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     <div className="flex flex-col gap-4 p-4 w-full">
       <h2 className="text-lg font-bold">{translations?.ControlPanel?.planner?.title || "Plan Your Journey"}</h2>
 
-      {/* Origin Input with Suggestions */}
-      <div className="relative">
-        <input
-          type="text"
-          placeholder={translations?.ControlPanel?.planner?.origin || "Origin"}
-          value={origin}
-          onChange={(e) => {
-            setOrigin(e.target.value);
-            setIsOriginSelected(false);
-            setSelectedOrigin(null);
-            setSelectedIndex(-1);
-          }}
-          onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
-          onFocus={() => {
-            if (origin.length >= 2) {
-              setShowOriginSuggestions(true);
-            }
-          }}
-          className="location-input w-full p-2 border rounded"
-        />
-        {showOriginSuggestions && (
-          <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
-            {loadingAutocomplete ? (
-              <div className="p-2 text-gray-600">Loading suggestions...</div>
-            ) : originAutocompleteData.length > 0 ? (
-              originAutocompleteData.slice(0, 5).map((suggestion, index) => (
-                <div
-                  key={suggestion.id}
-                  onClick={() => handleSuggestionClick(suggestion, true)}
-                  className={`p-2 cursor-pointer ${
-                    index === selectedIndex 
-                      ? 'bg-primary-yellow/10' 
-                      : 'hover:bg-gray-100'
-                  }`}
-                >
-                  <div className="font-medium">{suggestion.name}</div>
-                  <div className="text-sm text-gray-600">
-                    {suggestion.streetname} {suggestion.housenumber}, {suggestion.stadt}
+      {/* Container for inputs and swap button */}
+      <div className="flex flex-col gap-4 relative">
+        {/* Origin Input with Suggestions */}
+        <div className="relative">
+          <input
+            type="text"
+            placeholder={translations?.ControlPanel?.planner?.origin || "Origin"}
+            value={origin}
+            onChange={(e) => {
+              setOrigin(e.target.value);
+              setIsOriginSelected(false);
+              setSelectedOrigin(null);
+              setSelectedIndex(-1);
+            }}
+            onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
+            onFocus={() => {
+              if (origin.length >= 2) {
+                setShowOriginSuggestions(true);
+              }
+            }}
+            className="location-input w-full p-2 border rounded"
+          />
+          {showOriginSuggestions && (
+            <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
+              {loadingAutocomplete ? (
+                <div className="p-2 text-gray-600">Loading suggestions...</div>
+              ) : originAutocompleteData.length > 0 ? (
+                originAutocompleteData.slice(0, 5).map((suggestion, index) => (
+                  <div
+                    key={suggestion.id}
+                    onClick={() => handleSuggestionClick(suggestion, true)}
+                    className={`p-2 cursor-pointer ${
+                      index === selectedIndex 
+                        ? 'bg-primary-yellow/10' 
+                        : 'hover:bg-gray-100'
+                    }`}
+                  >
+                    <div className="font-medium">{suggestion.name}</div>
+                    <div className="text-sm text-gray-600">
+                      {suggestion.streetname} {suggestion.housenumber}, {suggestion.stadt}
+                    </div>
                   </div>
-                </div>
-              ))
-            ) : (
-              <div className="p-2 text-gray-600">No suggestions found</div>
-            )}
-          </div>
-        )}
+                ))
+              ) : (
+                <div className="p-2 text-gray-600">No suggestions found</div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Destination Input with Suggestions */}
+        <div className="relative">
+          <input
+            type="text"
+            placeholder={translations?.ControlPanel?.planner?.destination || "Destination"}
+            value={destination}
+            onChange={(e) => {
+              setDestination(e.target.value);
+              setIsDestinationSelected(false);
+              setSelectedDestination(null);
+              setSelectedIndex(-1);
+            }}
+            onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
+            onFocus={() => {
+              if (destination.length >= 2) {
+                setShowDestinationSuggestions(true);
+              }
+            }}
+            className="location-input w-full p-2 border rounded"
+          />
+          {showDestinationSuggestions && (
+            <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
+              {loadingAutocomplete ? (
+                <div className="p-2 text-gray-600">Loading suggestions...</div>
+              ) : destinationAutocompleteData.length > 0 ? (
+                destinationAutocompleteData.slice(0, 5).map((suggestion, index) => (
+                  <div
+                    key={suggestion.id}
+                    onClick={() => handleSuggestionClick(suggestion, false)}
+                    className={`p-2 cursor-pointer ${
+                      index === selectedIndex 
+                        ? 'bg-primary-yellow/10' 
+                        : 'hover:bg-gray-100'
+                    }`}
+                  >
+                    <div className="font-medium">{suggestion.name}</div>
+                    <div className="text-sm text-gray-600">
+                      {suggestion.streetname} {suggestion.housenumber}, {suggestion.stadt}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="p-2 text-gray-600">No suggestions found</div>
+              )}
+            </div>
+          )}
+        </div>
         
-        {/* Swap Button */}
+        {/* Swap Button - Now positioned on the right side */}
         <button
           onClick={swapLocations}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#1a365d]/10 p-1 rounded-full hover:bg-[#fef9c3] transition-colors"
+          className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-primary-yellow text-primary-blue p-3 rounded-full hover:bg-primary-yellow/80 transition-colors z-10 shadow-md"
         >
-          <ArrowUpDown size={18} className="text-[#1a365d]" />
-        </button>
-      </div>
-
-      {/* Destination Input with Suggestions */}
-      <div className="relative">
-        <input
-          type="text"
-          placeholder={translations?.ControlPanel?.planner?.destination || "Destination"}
-          value={destination}
-          onChange={(e) => {
-            setDestination(e.target.value);
-            setIsDestinationSelected(false);
-            setSelectedDestination(null);
-            setSelectedIndex(-1);
-          }}
-          onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
-          onFocus={() => {
-            if (destination.length >= 2) {
-              setShowDestinationSuggestions(true);
-            }
-          }}
-          className="location-input w-full p-2 border rounded"
-        />
-        {showDestinationSuggestions && (
-          <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
-            {loadingAutocomplete ? (
-              <div className="p-2 text-gray-600">Loading suggestions...</div>
-            ) : destinationAutocompleteData.length > 0 ? (
-              destinationAutocompleteData.slice(0, 5).map((suggestion, index) => (
-                <div
-                  key={suggestion.id}
-                  onClick={() => handleSuggestionClick(suggestion, false)}
-                  className={`p-2 cursor-pointer ${
-                    index === selectedIndex 
-                      ? 'bg-primary-yellow/10' 
-                      : 'hover:bg-gray-100'
-                  }`}
-                >
-                  <div className="font-medium">{suggestion.name}</div>
-                  <div className="text-sm text-gray-600">
-                    {suggestion.streetname} {suggestion.housenumber}, {suggestion.stadt}
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="p-2 text-gray-600">No suggestions found</div>
-            )}
-          </div>
-        )}
+          <ArrowUpDown size={24} />
+        </button>         
       </div>
 
       {/* Filter Buttons Container */}

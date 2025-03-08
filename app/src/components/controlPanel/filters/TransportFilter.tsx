@@ -5,6 +5,7 @@ import BusLogo from "../../../../public/Bus-Logo.svg";
 import Bike from "../../../../public/Bike.svg";
 import PersonStanding from "../../../../public/Walk.svg";
 import Car from "../../../../public/Car.svg";
+import TrainLogo from "../../../../public/Train.svg";
 import { useSettingsContext } from "@/contexts/settingsContext";
 
 const transportOptions = [
@@ -13,7 +14,8 @@ const transportOptions = [
   { type: "Bus", logo: BusLogo, translationKey: null },
   { type: "Bike", logo: Bike, translationKey: "bike" },
   { type: "Walk", logo: PersonStanding, translationKey: "walk" },
-  { type: "Car", logo: Car, translationKey: "car" }
+  { type: "Car", logo: Car, translationKey: "car" },
+  { type: "Train", logo: TrainLogo, translationKey: "train" }
 ];
 
 interface TransportFilterProps {
