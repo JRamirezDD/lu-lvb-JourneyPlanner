@@ -205,12 +205,22 @@ export const MapWidget: React.FC = ({ }) => {
         }
     };
 
+    
+
     // React to viewmode changes
     useEffect(() => {
         if (mapRef.current) {
             loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
         }
     }, [viewMode]);
+
+    // listen to changes in itinerary
+    useEffect(() => {
+        if (mapRef.current) {
+            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
+        }
+    }, [setSelectedItinerary]);
+
 
     // React to stopsData being loaded
     useEffect(() => {

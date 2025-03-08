@@ -23,7 +23,7 @@ export interface IMapContext extends IContext {
     
     // Pass objects from Control Panel -> Map
     selectedItinerary: Itinerary | null // Used to store the selected itinerary (selected from Control Panel)
-    setSelectedItinerary: (itinerary: Itinerary) => void;
+    setSelectedItinerary: (itinerary: Itinerary | null) => void;
 
     // Pass objects from Map -> Control Panel
     selectedStop: SelectedStop | null; // Used to store the ID and name of the selected stop (selected from Stops layer)
@@ -60,7 +60,7 @@ export const MapProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     // Function to update the selected itinerary.
-    const setSelectedItinerary = (itinerary: Itinerary) => {
+    const setSelectedItinerary = (itinerary: Itinerary | null) => {
         setSelectedItineraryState(itinerary);
     };
 
