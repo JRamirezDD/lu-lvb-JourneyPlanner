@@ -1,5 +1,8 @@
 import { GeoJsonConvertible } from "@/types/GeoJsonConvertible";
+import { NearbySearchItemType } from "@/types/nearbysearch/NearbySearchItemType";
+import { plainToInstance, Transform } from 'class-transformer';
 import { Feature, Point, FeatureCollection, Position } from "geojson";
+
 
 /**
  * The overall response for a nearby search (an array of search items).
@@ -24,40 +27,73 @@ export class NearBySearchResponse extends GeoJsonConvertible {
 }
 
 export class SearchItemJson extends GeoJsonConvertible {
+  // The Transform decorator checks the parent object (obj) for the type field and returns
+  // an instance of the appropriate class for the "data" field.
+  @Transform(({ value, obj }) => {
+    switch (obj.type) {
+      case "free_floating":
+        return plainToInstance(BikeFreeSearchJson, value);
+      case "station":
+        return plainToInstance(BikeStationSearchJson, value);
+      case "stop":
+        return plainToInstance(Stop, value);
+      case "mobistation":
+        return plainToInstance(Mobistation, value);
+      case "flinkster":
+        return plainToInstance(FlinksterSearchJson, value);
+      case "taxi":
+        return plainToInstance(Taxi, value);
+      case "escooter":
+        return plainToInstance(EscooterFreeSearchJson, value);
+      case "escooter_station":
+        return plainToInstance(EscooterStationSearchJson, value);
+      case "ticket-seller":
+        return plainToInstance(TicketSeller, value);
+      case "flexa":
+        return plainToInstance(Flexa, value);
+      // Add other cases as needed for "parkingarea", "operationarea", "mobistation", etc.
+      default:
+        return value; // Fallback to the plain object if no match is found.
+    }
+  }, { toClassOnly: true })
+  public data: any;
+
   constructor(
     public id: string,
     public name: string,
     public lat: number,
     public lon: number,
-    public type: string,
+    public type: NearbySearchItemType,
     public source: string,
     public provider: string,
-    public data: any,
+    data: BikeFreeSearchJson | BikeStationSearchJson | Stop | Mobistation | FlinksterSearchJson | Taxi | EscooterFreeSearchJson | EscooterStationSearchJson | TicketSeller | Flexa,
     public prov_id: string,
     public mobistation_id: string,
     public dist_to_center: number
   ) {
     super();
+    this.data = data;
   }
 
   toGeoJsonFeature(): Feature<Point> {
     const feature: Feature<Point> = {
-      type: 'Feature',
+      type: "Feature",
       geometry: {
-        type: 'Point',
+        type: "Point",
         coordinates: [this.lon, this.lat] as Position,
       },
       properties: {
         name: this.name,
         type: this.type,
+        item: this,
       },
     };
     return feature;
   }
 
-    toGeoJson(): Feature<Point> {
-        return this.toGeoJsonFeature();
-    }
+  toGeoJson(): Feature<Point> {
+    return this.toGeoJsonFeature();
+  }
 }
 
 //export type Latitude = number;    /* between -90 and 90 */

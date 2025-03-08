@@ -1,6 +1,5 @@
 "use client";
 
-import { MapWidget } from "@/components/map/MapWidget";
 import { UIProvider } from "@/contexts/uiContext";
 import { MapProvider } from "@/contexts/mapContext";
 import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDataContext";
