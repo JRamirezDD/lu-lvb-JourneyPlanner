@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Clock, Info, ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Info, ChevronDown, ChevronUp, X } from "lucide-react";
 import PersonStanding from "../../../public/Walk.svg";
 import Image from "next/image";
 import { useState } from "react";
@@ -8,6 +8,7 @@ import { TransportMode } from "@/types/TransportMode";
 import TramLogo from "../../../public/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
 import BusLogo from "../../../public/Bus-Logo.svg";
+import { useUIContext } from "@/contexts/uiContext";
 
 interface RouteData {
   id: number;
@@ -108,6 +109,7 @@ const getTransportLogo = (mode: TransportMode) => {
 const SelectedRouteDetails = () => {
   const { otpData, selectedItineraryIndex, setSelectedItineraryIndex } = useOtpDataContext();
   const { translations } = useSettingsContext();
+  const { goToPreviousViewMode, setViewMode } = useUIContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
 
   // Fixed debug logging
@@ -177,6 +179,12 @@ const SelectedRouteDetails = () => {
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b bg-primary-yellow text-primary-blue">
         <div className="flex items-center gap-4">
+          <button 
+            className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors"
+            onClick={goToPreviousViewMode}
+          >
+            <ChevronLeft size={24} />
+          </button>
           <div>
             <div className="text-sm opacity-80">
               {formatTime(selectedItinerary.startTime)} - {formatTime(selectedItinerary.endTime)}
@@ -206,6 +214,12 @@ const SelectedRouteDetails = () => {
             }`}
           >
             <ChevronRight size={24} />
+          </button>
+          <button 
+            className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors ml-2"
+            onClick={() => setViewMode("DEFAULT")}
+          >
+            <X size={24} />
           </button>
         </div>
       </div>

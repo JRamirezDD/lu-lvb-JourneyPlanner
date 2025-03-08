@@ -7,6 +7,8 @@ import { ViewMode } from "@/types/ViewMode";
 export interface IUIContext extends IContext {
     viewMode: ViewMode;
     setViewMode: (mode: ViewMode) => void;
+    previousViewMode: ViewMode;
+    goToPreviousViewMode: () => void;
 
     clearState: () => void;
 }
@@ -17,21 +19,32 @@ const UIContext = createContext<IUIContext | undefined>(undefined);
 export const UIProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // Local state for UI
     const [viewMode, setViewModeState] = useState<ViewMode>("DEFAULT");
+    const [previousViewMode, setPreviousViewMode] = useState<ViewMode>("DEFAULT");
 
     // Function to update the view mode.
     const setViewMode = (mode: ViewMode) => {
         console.log("Setting view mode to", mode);
+        setPreviousViewMode(viewMode); // Store current view mode as previous
         setViewModeState(mode);
+    };
+
+    // Function to go back to the previous view mode
+    const goToPreviousViewMode = () => {
+        console.log("Going back to previous view mode:", previousViewMode);
+        setViewModeState(previousViewMode);
     };
 
     // clearState resets viewMode to its default value.
     const clearState = () => {
+        setPreviousViewMode("DEFAULT");
         setViewModeState("DEFAULT");
     };
 
     const value: IUIContext = {
         viewMode,
         setViewMode,
+        previousViewMode,
+        goToPreviousViewMode,
         clearState,
     };
 

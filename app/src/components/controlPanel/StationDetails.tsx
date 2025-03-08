@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, Star, AlertTriangle, Clock, Info } from "lucide-react";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
+import { useUIContext } from "@/contexts/uiContext";
 
 interface Departure {
   line: string;
@@ -20,11 +21,11 @@ interface Disruption {
 }
 
 interface StationDetailsProps {
-  stopId: string;
-  stopName: string;
+  stopId?: string;  // Make stopId optional
+  stopName?: string; // Make stopName optional
 }
 
-const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {  // Default to Leipzig Hauptbahnhof for now
+const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
   const { translations } = useSettingsContext();
   const { 
     stopMonitorData, 
@@ -32,6 +33,11 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {  // Defa
     errorStopMonitor,
     fetchStopMonitor 
   } = useStopmonitorDataContext();
+  const { goToPreviousViewMode } = useUIContext();
+  
+  // Default values for stopId and stopName
+  const effectiveStopId = stopId || "0013000"; // Default to "0013000" if no stopId provided
+  const effectiveStopName = stopName || "Leipzig Hauptbahnhof"; // Default name if none provided
   
   const [activeTab, setActiveTab] = useState<"now" | "timetable" | "disruptions">("now");
 
@@ -40,9 +46,9 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {  // Defa
     const fetchData = async () => {
 
       try {
-        console.log("Fetching stop monitor data for stopId:", stopId);
+        console.log("Fetching stop monitor data for stopId:", effectiveStopId);
         await fetchStopMonitor({
-          stopid: stopId,
+          stopid: effectiveStopId,
           date: new Date().toISOString().split('T')[0].replace(/-/g, ''), // Format: YYYYMMDD
           minutes: "60",  // Show next hour of departures
           max_items: "10" // Limit to 10 items
@@ -53,7 +59,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {  // Defa
     };
 
     fetchData();
-  }, [stopId]);
+  }, [effectiveStopId]);
 
   // Add logging
   console.log('StopMonitor Data:', {
@@ -104,11 +110,14 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {  // Defa
     <div className="flex flex-col w-full bg-white">
       {/* Header */}
       <div className="flex items-center gap-4 p-4 border-b bg-primary-yellow text-primary-blue">
-        <button className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors">
+        <button 
+          className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors"
+          onClick={goToPreviousViewMode}
+        >
           <ChevronLeft size={24} />
         </button>
         <div className="flex-1">
-          <h2 className="text-xl font-bold">Station {stopName}</h2>
+          <h2 className="text-xl font-bold">Station {effectiveStopName}</h2>
         </div>
       </div>
 
