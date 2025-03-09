@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useSettingsContext } from "@/contexts/settingsContext"; // Import context
-import { Clock, Calendar } from "lucide-react"; // Import icons
+import { useSettingsContext } from "@/contexts/settingsContext";
+import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from "lucide-react";
 
 interface DepartureFilterProps {
   selectedDate: Date | null;
@@ -8,100 +8,257 @@ interface DepartureFilterProps {
 }
 
 const DepartureFilter = ({ selectedDate, setSelectedDate }: DepartureFilterProps) => {
-  const { translations } = useSettingsContext(); // Get translations from context
+  const { translations } = useSettingsContext();
   const [isMounted, setIsMounted] = useState(false);
+  const [activeTab, setActiveTab] = useState<"departure" | "arrival">("departure");
+  const [selectedHour, setSelectedHour] = useState<number>(13);
+  const [selectedMinute, setSelectedMinute] = useState<number>(30);
 
   useEffect(() => {
     setIsMounted(true);
+    if (selectedDate) {
+      setSelectedHour(selectedDate.getHours());
+      setSelectedMinute(selectedDate.getMinutes());
+    } else {
+      const now = new Date();
+      setSelectedHour(now.getHours());
+      setSelectedMinute(now.getMinutes());
+      setSelectedDate(now);
+    }
   }, []);
 
   const setToNow = () => {
-    setSelectedDate(new Date());
+    const now = new Date();
+    setSelectedDate(now);
+    setSelectedHour(now.getHours());
+    setSelectedMinute(now.getMinutes());
   };
 
-  if (!isMounted) {
-    return null; // Prevents hydration issues
+  const handleTimeChange = (newHour: number, newMinute: number) => {
+    const newDate = new Date(selectedDate || new Date());
+    newDate.setHours(newHour, newMinute);
+    setSelectedDate(newDate);
+    setSelectedHour(newHour);
+    setSelectedMinute(newMinute);
+  };
+
+  const handleDateChange = (newDate: Date) => {
+    const date = new Date(newDate);
+    date.setHours(selectedHour, selectedMinute);
+    setSelectedDate(date);
+  };
+
+  const incrementHour = () => {
+    const newHour = (selectedHour + 1) % 24;
+    handleTimeChange(newHour, selectedMinute);
+  };
+
+  const decrementHour = () => {
+    const newHour = (selectedHour - 1 + 24) % 24;
+    handleTimeChange(newHour, selectedMinute);
+  };
+
+  const incrementMinute = () => {
+    const newMinute = (selectedMinute + 1) % 60;
+    handleTimeChange(selectedHour, newMinute);
+  };
+
+  const decrementMinute = () => {
+    const newMinute = (selectedMinute - 1 + 60) % 60;
+    handleTimeChange(selectedHour, newMinute);
+  };
+
+  const generateCalendar = () => {
+    if (!selectedDate) return null;
+
+    const currentDate = new Date(selectedDate);
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+    
+    // Get first day of month and total days
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    // Adjust for Sunday as first day (0) to Monday as first day (1)
+    const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
+    
+    const days = [];
+    const today = new Date();
+    
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < adjustedFirstDay; i++) {
+      days.push(<div key={`empty-${i}`} className="h-10 w-10"></div>);
+    }
+    
+    // Add days of the month
+    for (let i = 1; i <= daysInMonth; i++) {
+      const dayDate = new Date(year, month, i);
+      const isToday = 
+        today.getDate() === i && 
+        today.getMonth() === month && 
+        today.getFullYear() === year;
+      
+      const isSelected = 
+        selectedDate.getDate() === i && 
+        selectedDate.getMonth() === month && 
+        selectedDate.getFullYear() === year;
+      
+      days.push(
+        <button
+          key={`day-${i}`}
+          onClick={() => handleDateChange(dayDate)}
+          className={`h-10 w-10 rounded-full flex items-center justify-center text-sm
+            ${isToday ? 'font-bold' : ''}
+            ${isSelected ? 'bg-primary-blue text-white' : 'hover:bg-gray-100'}
+          `}
+        >
+          {i}
+        </button>
+      );
+    }
+    
+    return days;
+  };
+
+  const formatMonth = (date: Date) => {
+    // Use German locale for month formatting
+    return date.toLocaleDateString('de-DE', { month: 'long', year: 'numeric' });
+  };
+
+  const changeMonth = (increment: number) => {
+    if (!selectedDate) return;
+    
+    const newDate = new Date(selectedDate);
+    newDate.setMonth(newDate.getMonth() + increment);
+    handleDateChange(newDate);
+  };
+
+  if (!isMounted || !selectedDate) {
+    return null;
   }
 
+  // German weekday abbreviations
+  const weekdays = ['MO', 'DI', 'MI', 'DO', 'FR', 'SA', 'SO'];
+
   return (
-    <div className="p-4 border rounded bg-white shadow-sm">
-      <div className="flex flex-col gap-4">
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-sm font-medium text-primary-blue">
-            {translations?.ControlPanel?.planner?.filters?.datePicker?.title || "Departure Time"}
-          </h3>
+    <div className="border rounded-lg overflow-hidden bg-white shadow-sm">
+      {/* Tabs */}
+      <div className="flex w-full">
+        <button
+          className={`flex-1 py-3 text-center font-medium ${
+            activeTab === "departure"
+              ? "bg-primary-blue text-white"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+          }`}
+          onClick={() => setActiveTab("departure")}
+        >
+          {translations?.ControlPanel?.planner?.filters?.datePicker?.departure || "Abfahrt"}
+        </button>
+        <button
+          className={`flex-1 py-3 text-center font-medium ${
+            activeTab === "arrival"
+              ? "bg-primary-blue text-white"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+          }`}
+          onClick={() => setActiveTab("arrival")}
+        >
+          {translations?.ControlPanel?.planner?.filters?.datePicker?.arrival || "Ankunft"}
+        </button>
+      </div>
+
+      {/* Time Selector */}
+      <div className="p-4">
+        <div className="flex justify-between items-center mb-4">
           <button
             onClick={setToNow}
-            className="bg-primary-yellow text-primary-blue px-4 py-2 rounded-md hover:bg-primary-yellow/80 transition-colors text-sm font-medium flex items-center gap-2"
+            className="border border-primary-blue text-primary-blue px-4 py-2 rounded-md hover:bg-primary-blue/5 font-medium"
           >
-            <Clock size={16} />
-            {translations?.ControlPanel?.planner?.filters?.datePicker?.setToNow || "Set to Now"}
+            {translations?.ControlPanel?.planner?.filters?.datePicker?.now || "Jetzt"}
           </button>
         </div>
 
-        {/* Date and Time in a better layout */}
-        <div className="grid grid-cols-2 gap-4">
-          {/* Date Picker */}
-          <div className="relative">
-            <label className="block text-sm font-medium text-primary-blue mb-2 flex items-center gap-1">
-              <Calendar size={16} />
-              {translations?.ControlPanel?.planner?.filters?.datePicker?.date || "Date"}
-            </label>
-            <input
-              type="date"
-              value={selectedDate ? selectedDate.toISOString().split("T")[0] : ""}
-              onChange={(e) => {
-                const newDate = new Date(selectedDate || new Date());
-                const [year, month, day] = e.target.value.split("-").map(Number);
-                newDate.setFullYear(year, month - 1, day);
-                setSelectedDate(newDate);
-              }}
-              className="w-full p-2 border border-gray-300 rounded focus:border-primary-blue focus:ring-1 focus:ring-primary-blue outline-none"
-            />
+        {/* Enhanced Time Selector */}
+        <div className="flex justify-center items-center gap-8 py-4">
+          {/* Hour selector */}
+          <div className="flex flex-col items-center">
+            <button 
+              onClick={incrementHour}
+              className="p-2 rounded-full hover:bg-gray-100 text-gray-600"
+              aria-label="Increment hour"
+            >
+              <ChevronUp size={28} />
+            </button>
+            <div className="flex items-center justify-center w-20 h-20 text-4xl font-bold my-2 bg-gray-50 rounded-lg">
+              {selectedHour.toString().padStart(2, '0')}
+            </div>
+            <button 
+              onClick={decrementHour}
+              className="p-2 rounded-full hover:bg-gray-100 text-gray-600"
+              aria-label="Decrement hour"
+            >
+              <ChevronDown size={28} />
+            </button>
           </div>
 
-          {/* Time Picker */}
-          <div className="relative">
-            <label className="block text-sm font-medium text-primary-blue mb-2 flex items-center gap-1">
-              <Clock size={16} />
-              {translations?.ControlPanel?.planner?.filters?.datePicker?.time || "Time"}
-            </label>
-            <input
-              type="time"
-              value={selectedDate ? selectedDate.toTimeString().slice(0, 5) : ""}
-              onChange={(e) => {
-                const [hours, minutes] = e.target.value.split(":");
-                const newDate = new Date(selectedDate || new Date());
-                newDate.setHours(parseInt(hours), parseInt(minutes));
-                setSelectedDate(newDate);
-              }}
-              className="w-full p-2 border border-gray-300 rounded focus:border-primary-blue focus:ring-1 focus:ring-primary-blue outline-none"
-            />
+          <div className="text-4xl font-bold">:</div>
+
+          {/* Minute selector */}
+          <div className="flex flex-col items-center">
+            <button 
+              onClick={incrementMinute}
+              className="p-2 rounded-full hover:bg-gray-100 text-gray-600"
+              aria-label="Increment minute"
+            >
+              <ChevronUp size={28} />
+            </button>
+            <div className="flex items-center justify-center w-20 h-20 text-4xl font-bold my-2 bg-gray-50 rounded-lg">
+              {selectedMinute.toString().padStart(2, '0')}
+            </div>
+            <button 
+              onClick={decrementMinute}
+              className="p-2 rounded-full hover:bg-gray-100 text-gray-600"
+              aria-label="Decrement minute"
+            >
+              <ChevronDown size={28} />
+            </button>
           </div>
         </div>
-        
-        {/* Display selected date and time in a user-friendly format */}
-        {selectedDate && (
-          <div className="mt-2 text-sm text-gray-600 bg-gray-50 p-2 rounded">
-            <p>
-              {translations?.ControlPanel?.planner?.filters?.datePicker?.selected || "Selected"}: 
-              <span className="font-medium ml-1">
-                {selectedDate.toLocaleDateString(undefined, { 
-                  weekday: 'long', 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })}
-              </span>
-              <span className="font-medium ml-1">
-                {selectedDate.toLocaleTimeString(undefined, { 
-                  hour: '2-digit', 
-                  minute: '2-digit' 
-                })}
-              </span>
-            </p>
+      </div>
+
+      {/* Calendar */}
+      <div className="bg-gray-100">
+        {/* Month navigation */}
+        <div className="flex items-center justify-between bg-primary-yellow py-2 px-4">
+          <button 
+            onClick={() => changeMonth(-1)}
+            className="p-1 rounded-full hover:bg-primary-yellow/80"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <div className="font-medium">
+            {formatMonth(selectedDate)}
           </div>
-        )}
+          <button 
+            onClick={() => changeMonth(1)}
+            className="p-1 rounded-full hover:bg-primary-yellow/80"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+
+        {/* Weekday headers */}
+        <div className="grid grid-cols-7 gap-1 p-2">
+          {weekdays.map(day => (
+            <div key={day} className="h-8 flex items-center justify-center text-sm text-gray-500 font-medium">
+              {day}
+            </div>
+          ))}
+        </div>
+
+        {/* Calendar grid */}
+        <div className="grid grid-cols-7 gap-1 p-2">
+          {generateCalendar()}
+        </div>
       </div>
     </div>
   );
