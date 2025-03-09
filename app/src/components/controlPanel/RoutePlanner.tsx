@@ -186,7 +186,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     if (currentSearchField === "origin" && autocompleteData) {
       setOriginAutocompleteData(autocompleteData);
       setShowOriginSuggestions(true);
-    } else if (currentSearchField === "destination" && autocompleteData) {
+    } else if (currentSearchField === "destination"&& autocompleteData) {
       setDestinationAutocompleteData(autocompleteData);
       setShowDestinationSuggestions(true);
     }
