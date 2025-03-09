@@ -15,6 +15,13 @@ export interface IOtpDataContext extends IDataContext<OtpResponse> {
     errorOtp: string | null;
     selectedItineraryIndex: number | null;
     setSelectedItineraryIndex: (index: number) => void;
+    // Store search parameters
+    lastOrigin: string;
+    lastDestination: string;
+    lastOriginCoordinates: string;
+    lastDestinationCoordinates: string;
+    setLastSearchParams: (origin: string, destination: string, originCoords: string, destCoords: string) => void;
+    clearSearchParams: () => void;
     clearState: () => void;
 }
 
@@ -25,6 +32,29 @@ const OtpDataContext = createContext<IOtpDataContext | undefined>(undefined);
 export const OtpDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const otpFetcher = useDataFetcher<OtpResponse>(fetchOtpData);
     const [selectedItineraryIndex, setSelectedItineraryIndex] = useState<number | null>(null);
+    const [lastOrigin, setLastOrigin] = useState<string>("");
+    const [lastDestination, setLastDestination] = useState<string>("");
+    const [lastOriginCoordinates, setLastOriginCoordinates] = useState<string>("");
+    const [lastDestinationCoordinates, setLastDestinationCoordinates] = useState<string>("");
+
+    const setLastSearchParams = (
+        origin: string, 
+        destination: string, 
+        originCoords: string, 
+        destCoords: string
+    ) => {
+        setLastOrigin(origin);
+        setLastDestination(destination);
+        setLastOriginCoordinates(originCoords);
+        setLastDestinationCoordinates(destCoords);
+    };
+
+    const clearSearchParams = () => {
+        setLastOrigin("");
+        setLastDestination("");
+        setLastOriginCoordinates("");
+        setLastDestinationCoordinates("");
+    };
 
     return (
         <OtpDataContext.Provider
@@ -36,8 +66,16 @@ export const OtpDataProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 errorOtp: otpFetcher.error,
                 selectedItineraryIndex,
                 setSelectedItineraryIndex,
+                // Search parameters
+                lastOrigin,
+                lastDestination,
+                lastOriginCoordinates,
+                lastDestinationCoordinates,
+                setLastSearchParams,
+                clearSearchParams,
                 clearState: () => {
                     setSelectedItineraryIndex(null);
+                    // Don't clear the search parameters when clearing state
                 },
             }}
         >

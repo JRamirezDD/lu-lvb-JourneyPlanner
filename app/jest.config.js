@@ -1,4 +1,6 @@
 /** @type {import('jest').Config} */
+require('dotenv').config({ path: '.env.test' });
+
 const config = {
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
@@ -17,7 +19,11 @@ const config = {
   transformIgnorePatterns: [
     'node_modules/(?!(lucide-react|@lucide)/)'
   ],
-  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/']
+  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+  compilerOptions: {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  }
 }
 
 module.exports = config 

@@ -10,52 +10,57 @@ import { SettingsProvider, useSettingsContext } from '@/contexts/settingsContext
 import { AutocompleteDataProvider } from '@/contexts/DataContext/autocompleteDataContext';
 import { OtpDataProvider } from '@/contexts/DataContext/routingDataContext';
 import MainView from '@/components/MainView';
+import { NearbySearchDataProvider } from '@/contexts/DataContext/nearbySearchDataContext';
 
 
 jest.mock('maplibre-gl', () => ({
-    Map: jest.fn(() => ({
-      on: jest.fn((event, callback) => {
-        if (event === 'load' || event === 'moveend' || event === 'click') {
-          callback();
-        }
-      }),
-      off: jest.fn(),
-      remove: jest.fn(),
-      addSource: jest.fn(),
-      getSource: jest.fn(),
-      getLayer: jest.fn(() => ({})),
-      removeLayer: jest.fn(),
-      removeSource: jest.fn(),
-      loadImage: jest.fn((url, callback) => {
-        callback(null, { width: 1, height: 1 });
-      }),
-      addImage: jest.fn(),
-      queryRenderedFeatures: jest.fn((point) => {
-        return [{
-          geometry: {
-            type: 'Point',
-            coordinates: [10, 20],
-          },
-        }];
-      }),
-      getCanvas: jest.fn(() => ({ style: { cursor: '' } })),
-      resize: jest.fn(),
-      getBounds: jest.fn(() => ({
-        getSouthWest: jest.fn(() => ({ lng: 0, lat: 0 })),
-        getNorthEast: jest.fn(() => ({ lng: 1, lat: 1 })),
-        getCenter: jest.fn(() => ({ lng: 0.5, lat: 0.5 })),
-      })),
+  Map: jest.fn(() => ({
+    on: jest.fn((event, callback) => {
+      if (event === 'load' || event === 'moveend' || event === 'click') {
+        callback();
+      }
+    }),
+    off: jest.fn(),
+    remove: jest.fn(),
+    addSource: jest.fn(),
+    getSource: jest.fn(),
+    getLayer: jest.fn(() => ({})),
+    removeLayer: jest.fn(),
+    removeSource: jest.fn(),
+    loadImage: jest.fn((url, callback) => {
+      callback(null, { width: 1, height: 1 });
+    }),
+    addImage: jest.fn(),
+    // Add hasImage here
+    hasImage: jest.fn(() => false),
+    queryRenderedFeatures: jest.fn((point) => {
+      return [{
+        geometry: {
+          type: 'Point',
+          coordinates: [10, 20],
+        },
+      }];
+    }),
+    getCanvas: jest.fn(() => ({ style: { cursor: '' } })),
+    resize: jest.fn(),
+    getBounds: jest.fn(() => ({
+      getSouthWest: jest.fn(() => ({ lng: 0, lat: 0 })),
+      getNorthEast: jest.fn(() => ({ lng: 1, lat: 1 })),
+      getCenter: jest.fn(() => ({ lng: 0.5, lat: 0.5 })),
     })),
-    LngLatBounds: jest.fn((sw, ne) => ({
-      getSouthWest: jest.fn(() => sw),
-      getNorthEast: jest.fn(() => ne),
-      getCenter: jest.fn(() => ({
-        lng: (sw.lng + ne.lng) / 2,
-        lat: (sw.lat + ne.lat) / 2,
-      })),
-      contains: jest.fn(() => true),
+  })),
+  LngLatBounds: jest.fn((sw, ne) => ({
+    getSouthWest: jest.fn(() => sw),
+    getNorthEast: jest.fn(() => ne),
+    getCenter: jest.fn(() => ({
+      lng: (sw.lng + ne.lng) / 2,
+      lat: (sw.lat + ne.lat) / 2,
     })),
-  }));
+    contains: jest.fn(() => true),
+  })),
+}));
+
+
   jest.mock('@/contexts/uiContext', () => ({
     UIProvider: ({ children }: any) => <>{children}</>,
     useUIContext: jest.fn(() => ({
@@ -91,7 +96,9 @@ describe("MainView Integration Test with Maplibre", () => {
             <AutocompleteDataProvider>
               <OtpDataProvider>
                 <StopmonitorDataProvider>
+                  <NearbySearchDataProvider>
                   <MainView />
+                  </NearbySearchDataProvider>
                 </StopmonitorDataProvider>
               </OtpDataProvider>
             </AutocompleteDataProvider>

@@ -26,7 +26,9 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
   },
   "include": [
     "next-env.d.ts",
@@ -39,5 +41,5 @@
     "node_modules",
     "src-copy",
     ".next"
-  ]
+  ],
 }

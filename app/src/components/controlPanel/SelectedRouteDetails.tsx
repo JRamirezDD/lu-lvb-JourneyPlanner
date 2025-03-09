@@ -1,13 +1,16 @@
-import { ChevronLeft, ChevronRight, Clock, Info, ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Info, ChevronDown, ChevronUp, X } from "lucide-react";
 import PersonStanding from "../../../public/Walk.svg";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
 import { TransportMode } from "@/types/TransportMode";
 import TramLogo from "../../../public/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
 import BusLogo from "../../../public/Bus-Logo.svg";
+import { useUIContext } from "@/contexts/uiContext";
+import { useMapContext } from "@/contexts/mapContext";
+import { Itinerary } from "@/types/Itinerary";
 
 interface RouteData {
   id: number;
@@ -105,10 +108,47 @@ const getTransportLogo = (mode: TransportMode) => {
   }
 };
 
+// Function to calculate and format time difference for delays/early arrivals
+const formatTimeDifference = (scheduledTime: number, actualTime: number): { text: string, color: string } => {
+  if (!scheduledTime || !actualTime) return { text: "", color: "" };
+  
+  const diffInSeconds = (actualTime - scheduledTime) / 1000;
+  const diffInMinutes = Math.round(diffInSeconds / 60);
+  
+  if (diffInMinutes === 0) return { text: "", color: "" };
+  
+  if (diffInMinutes > 0) {
+    return { 
+      text: `+${diffInMinutes}m`, 
+      color: "text-red-600" 
+    };
+  } else {
+    return { 
+      text: `${diffInMinutes}m`, 
+      color: "text-green-600" 
+    };
+  }
+};
+
 const SelectedRouteDetails = () => {
-  const { otpData, selectedItineraryIndex, setSelectedItineraryIndex } = useOtpDataContext();
+  const { otpData, selectedItineraryIndex, setSelectedItineraryIndex, clearSearchParams } = useOtpDataContext();
   const { translations } = useSettingsContext();
+  const { goToPreviousViewMode, setViewMode } = useUIContext();
+  const { setSelectedItinerary } = useMapContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
+
+  // Update the map when the selected itinerary changes
+  useEffect(() => {
+    if (otpData && selectedItineraryIndex !== null) {
+      const itinerary = otpData.plan.itineraries[selectedItineraryIndex];
+      const mapItinerary = new Itinerary(
+        otpData.plan.from,
+        otpData.plan.to,
+        itinerary
+      );
+      setSelectedItinerary(mapItinerary);
+    }
+  }, [otpData, selectedItineraryIndex]);
 
   // Fixed debug logging
   console.log('Selected Itinerary Data:', {
@@ -172,11 +212,27 @@ const SelectedRouteDetails = () => {
     );
   };
 
+  // Handle reset button click
+  const handleResetClick = () => {
+    // Clear the search parameters
+    clearSearchParams();
+    // Clear the selected itinerary from the map
+    setSelectedItinerary(null);
+    // Navigate to the default view
+    setViewMode("DEFAULT");
+  };
+
   return (
     <div className="flex flex-col w-full bg-white">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b bg-primary-yellow text-primary-blue">
         <div className="flex items-center gap-4">
+          <button 
+            className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors"
+            onClick={goToPreviousViewMode}
+          >
+            <ChevronLeft size={24} />
+          </button>
           <div>
             <div className="text-sm opacity-80">
               {formatTime(selectedItinerary.startTime)} - {formatTime(selectedItinerary.endTime)}
@@ -207,6 +263,12 @@ const SelectedRouteDetails = () => {
           >
             <ChevronRight size={24} />
           </button>
+          <button 
+            className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors ml-2"
+            onClick={handleResetClick}
+          >
+            <X size={24} />
+          </button>
         </div>
       </div>
 
@@ -217,10 +279,54 @@ const SelectedRouteDetails = () => {
             <div key={index} className="flex gap-4">
               {/* Time Column */}
               <div className="w-16 flex flex-col items-center">
-                <span className="font-medium text-gray-900">{formatTime(leg.startTime)}</span>
-                {index < selectedItinerary.legs.length  && (
+                {/* Departure Time - Show actual and scheduled times */}
+                <div className="flex flex-col items-center">
+                  {/* Calculate scheduled departure time */}
+                  {(() => {
+                    const actualDepartureTime = leg.startTime;
+                    const scheduledDepartureTime = actualDepartureTime - (leg.departureDelay || 0) * 1000; // Convert seconds to ms
+                    const timeDiff = formatTimeDifference(scheduledDepartureTime, actualDepartureTime);
+                    
+                    return (
+                      <>
+                        <span className="font-medium text-gray-900">
+                          {formatTime(actualDepartureTime)}
+                        </span>
+                        {timeDiff.text && (
+                          <span className={`text-sm font-medium ${timeDiff.color}`}>
+                            {timeDiff.text}
+                          </span>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+                
+                {index < selectedItinerary.legs.length && (
                   <div className={`h-full border-l-4 my-2 transition-all ${getLineColor(leg.mode)}`} />
                 )}
+                
+                {/* Arrival Time - Show actual and scheduled times */}
+                <div className="flex flex-col items-center">
+                  {(() => {
+                    const actualArrivalTime = leg.endTime;
+                    const scheduledArrivalTime = actualArrivalTime - (leg.arrivalDelay || 0) * 1000; // Convert seconds to ms
+                    const timeDiff = formatTimeDifference(scheduledArrivalTime, actualArrivalTime);
+                    
+                    return (
+                      <>
+                        <span className="font-medium text-gray-900">
+                          {formatTime(actualArrivalTime)}
+                        </span>
+                        {timeDiff.text && (
+                          <span className={`text-sm font-medium ${timeDiff.color}`}>
+                            {timeDiff.text}
+                          </span>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
               </div>
 
               {/* Content Column */}
@@ -251,7 +357,7 @@ const SelectedRouteDetails = () => {
                           </span>
                         </div>
                         {/* Platform and stops info */}
-                        {(leg.mode === "TRAM" || leg.mode === "SUBURB" || leg.mode === "BUS") && (
+                        {(leg.mode === "TRAM" || leg.mode === "SUBURB" || leg.mode === "BUS" || leg.mode === "TRAIN") && (
                           <div className="text-sm text-gray-600 flex items-center gap-2">
                             <Info size={16} />
                             <span>{translations?.ControlPanel?.routeDetails?.platform?.replace("{number}", leg.mode || "")}</span>
@@ -275,11 +381,37 @@ const SelectedRouteDetails = () => {
                       {/* Show stops only when expanded */}
                       {expandedLegs.includes(index) && leg.intermediateStops && (
                         <div className="ml-8 pl-4 border-l-2 border-gray-200">
-                          {leg.intermediateStops.map((stop, stopIndex) => (
-                            <div key={stopIndex} className="text-sm text-gray-600">
-                              {stop.name}
-                            </div>
-                          ))}
+                          {leg.intermediateStops.map((stop, stopIndex) => {
+                         
+                            const legDuration = leg.endTime - leg.startTime;
+                            const stopRatio = (stopIndex + 1) / (leg.intermediateStops?.length || 1);
+                            const estimatedTime = leg.startTime + (legDuration * stopRatio);
+                            
+                            const startDelayMs = (leg.departureDelay || 0) * 1000;
+                            const endDelayMs = (leg.arrivalDelay || 0) * 1000;
+                            const estimatedDelayMs = startDelayMs + (endDelayMs - startDelayMs) * stopRatio;
+                            
+                            const scheduledTime = estimatedTime - estimatedDelayMs;
+                            const timeDiff = formatTimeDifference(scheduledTime, estimatedTime);
+                            
+                            return (
+                              <div key={stopIndex} className="py-2 flex justify-between items-center border-b border-gray-100">
+                                <div className="text-base text-gray-800">
+                                  {stop.name}
+                                </div>
+                                <div className="flex items-center">
+                                  <span className="text-base font-normal">
+                                    {formatTime(estimatedTime)}
+                                  </span>
+                                  {timeDiff.text && (
+                                      <span className={`text-base font-normal ml-1 ${timeDiff.color}`}>
+                                      {timeDiff.text}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
                       )}
                     </div>
