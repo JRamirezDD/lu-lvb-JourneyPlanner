@@ -44,6 +44,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     autocompleteData, 
     fetchAutocompleteData, 
     loadingAutocomplete,
+    errorAutocomplete,
     clearState: clearAutocompleteData 
   } = useAutocompleteDataContext();
   const { 
@@ -103,7 +104,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       })
     : '';
 
-  // Add logging for transport modes changes
+  // Log transport modes changes
   useEffect(() => {
     console.log('Current Transport Modes:', transportModes);
   }, [transportModes]);
@@ -121,10 +122,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
 
     const mode = modeMap[type];
     if (mode) {
-      console.log('Toggling transport mode:', {
-        type,
-        mappedMode: mode
-      });
+      console.log('Toggling transport mode:', { type, mappedMode: mode });
       toggleTransportMode(mode);
     }
   };
@@ -137,90 +135,82 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     setSelectedDestination(tempOrigin);
   };
 
-  // Create a function to fetch origin suggestions
+  // Functions to trigger fetch of suggestions. The returned autocomplete data will be processed by the effect below.
   const fetchOriginSuggestions = async (query: string) => {
     if (query.length < 2) return;
     
     try {
-      setShowOriginSuggestions(true);
       setShowDestinationSuggestions(false);
-      setOriginAutocompleteData([]); // Clear previous suggestions
-      setCurrentSearchField("origin"); // Set current search field
-      
-      // Clear any existing autocomplete data first
+      setCurrentSearchField("origin");
+      // Clear previous autocomplete data
+      setOriginAutocompleteData([]);
       await clearAutocompleteData();
-      
       await fetchAutocompleteData({ 
         search: query,
         format: "JSON",
         pointType: "P,S,W,N"
       });
-      
-      if (autocompleteData) {
-        setOriginAutocompleteData(autocompleteData);
-      }
     } catch (error) {
       console.error('Error fetching origin suggestions:', error);
     }
   };
 
-  // Create a function to fetch destination suggestions
   const fetchDestinationSuggestions = async (query: string) => {
     if (query.length < 2) return;
     
     try {
-      setShowDestinationSuggestions(true);
       setShowOriginSuggestions(false);
-      setDestinationAutocompleteData([]); // Clear previous suggestions
-      setCurrentSearchField("destination"); // Set current search field
-      
-      // Clear any existing autocomplete data first
+      setCurrentSearchField("destination");
+      setDestinationAutocompleteData([]);
       await clearAutocompleteData();
-      
       await fetchAutocompleteData({ 
         search: query,
         format: "JSON",
         pointType: "P,S,W,N"
       });
-      
-      if (autocompleteData) {
-        setDestinationAutocompleteData(autocompleteData);
-      }
     } catch (error) {
       console.error('Error fetching destination suggestions:', error);
     }
   };
 
-  // Update the origin effect
+  // Effect to trigger suggestion update based on the latest autocomplete data.
   useEffect(() => {
-    if(isOriginSelected) return;
+    if (loadingAutocomplete) {
+      console.warn("Autocomplete data is still loading...");
+      return;
+    }
+    if (errorAutocomplete) {
+      console.error("Error fetching autocomplete data:", errorAutocomplete);
+      return;
+    }
+    if (currentSearchField === "origin" && autocompleteData) {
+      setOriginAutocompleteData(autocompleteData);
+      setShowOriginSuggestions(true);
+    } else if (currentSearchField === "destination" && autocompleteData) {
+      setDestinationAutocompleteData(autocompleteData);
+      setShowDestinationSuggestions(true);
+    }
+  }, [autocompleteData, currentSearchField, loadingAutocomplete, errorAutocomplete]);
 
-    const timer = setTimeout(() => {
-      if (origin.length >= 2) {
-        fetchOriginSuggestions(origin);
-      } else {
-        setShowOriginSuggestions(false);
-        setOriginAutocompleteData([]);
-      }
-    }, 300); // 300ms delay
-
-    return () => clearTimeout(timer);
+  // Effects to fetch suggestions on input change
+  useEffect(() => {
+    if (isOriginSelected) return;
+    if (origin.length >= 2) {
+      fetchOriginSuggestions(origin);
+    } else {
+      setShowOriginSuggestions(false);
+      setOriginAutocompleteData([]);
+    }
   }, [origin]);
 
-  // Update the destination effect
   useEffect(() => {
-    if(isDestinationSelected) return;
-      
-    const timer = setTimeout(() => {
-      if (destination.length >= 2) {
-        fetchDestinationSuggestions(destination);
-      } else {
-        setShowDestinationSuggestions(false);
-        setDestinationAutocompleteData([]);
-      }
-    }, 300); // 300ms delay
-
-    return () => clearTimeout(timer);
+    if (isDestinationSelected) return;
+    if (destination.length >= 2) {
+      fetchDestinationSuggestions(destination);
+    } else {
+      setShowDestinationSuggestions(false);
+      setDestinationAutocompleteData([]);
+    }
   }, [destination]);
 
   // Clear autocomplete data when focusing on input fields
@@ -258,20 +248,19 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       setShowDestinationSuggestions(false);
     }
     
-    // Clear all autocomplete data
+    // Clear autocomplete data and reset state
     setOriginAutocompleteData([]); 
     setDestinationAutocompleteData([]);
     clearAutocompleteData();
     setSelectedIndex(-1);
     setCurrentSearchField(null);
   
-    // Ensure input field loses focus
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
   };
   
-  // Add click outside handler
+  // Click-outside handler for suggestions
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -292,7 +281,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     }
 
     try {
-      // Store the search parameters in the context
       setLastSearchParams(
         selectedOrigin.name,
         selectedDestination.name,
@@ -367,7 +355,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         }
         setSelectedIndex(-1);
         break;
-        
     }
   };
 
@@ -375,9 +362,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     <div className="flex flex-col gap-4 p-4 w-full">
       <h2 className="text-lg font-bold">{translations?.ControlPanel?.planner?.title || "Plan Your Journey"}</h2>
 
-      {/* Container for inputs and swap button */}
+      {/* Inputs and swap button */}
       <div className="flex flex-col gap-4 relative">
-        {/* Origin Input with Suggestions */}
         <div className="relative">
           <input
             type="text"
@@ -402,11 +388,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
                   <div
                     key={suggestion.id}
                     onClick={() => handleSuggestionClick(suggestion, true)}
-                    className={`p-2 cursor-pointer ${
-                      index === selectedIndex 
-                        ? 'bg-primary-yellow/10' 
-                        : 'hover:bg-gray-100'
-                    }`}
+                    className={`p-2 cursor-pointer ${index === selectedIndex ? 'bg-primary-yellow/10' : 'hover:bg-gray-100'}`}
                   >
                     <div className="font-medium">{suggestion.name}</div>
                     <div className="text-sm text-gray-600">
@@ -421,7 +403,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
           )}
         </div>
 
-        {/* Swap Button - Now positioned on the right side */}
         <button
           onClick={swapLocations}
           className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-primary-yellow text-primary-blue p-3 rounded-full hover:bg-primary-yellow/80 transition-colors z-10 shadow-md"
@@ -429,7 +410,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
           <ArrowUpDown size={24} />
         </button>
 
-        {/* Destination Input with Suggestions */}
         <div className="relative">
           <input
             type="text"
@@ -454,11 +434,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
                   <div
                     key={suggestion.id}
                     onClick={() => handleSuggestionClick(suggestion, false)}
-                    className={`p-2 cursor-pointer ${
-                      index === selectedIndex 
-                        ? 'bg-primary-yellow/10' 
-                        : 'hover:bg-gray-100'
-                    }`}
+                    className={`p-2 cursor-pointer ${index === selectedIndex ? 'bg-primary-yellow/10' : 'hover:bg-gray-100'}`}
                   >
                     <div className="font-medium">{suggestion.name}</div>
                     <div className="text-sm text-gray-600">
@@ -474,9 +450,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         </div>
       </div>
 
-      {/* Filter Buttons Container */}
+      {/* Filter Buttons */}
       <div className="grid grid-cols-2 gap-2">
-        {/* Departure Filter Button */}
         <button
           onClick={() => setShowDepartureFilter(!showDepartureFilter)}
           className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
@@ -494,7 +469,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
           {showDepartureFilter ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </button>
 
-        {/* Transport Filter Button */}
         <button
           onClick={() => setShowFilters(!showFilters)}
           className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
@@ -507,7 +481,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         </button>
       </div>
 
-      {/* Filter Components */}
       {showDepartureFilter && (
         <DepartureFilter 
           selectedDate={selectedDate}
@@ -526,7 +499,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         />
       )}
 
-      {/* See Routes Button */}
       <button 
         onClick={handleSeeRoutes}
         disabled={!selectedOrigin || !selectedDestination}
