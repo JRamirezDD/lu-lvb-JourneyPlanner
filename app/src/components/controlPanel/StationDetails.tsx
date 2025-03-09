@@ -3,6 +3,7 @@ import { ChevronLeft, Star, AlertTriangle, Clock, Info } from "lucide-react";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
 import { useUIContext } from "@/contexts/uiContext";
+import { useMapContext } from "@/contexts/mapContext";
 
 interface Departure {
   line: string;
@@ -34,6 +35,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
     fetchStopMonitor 
   } = useStopmonitorDataContext();
   const { goToPreviousViewMode, viewMode, previousViewMode } = useUIContext();
+  const { setSelectedNearbySearchItem } = useMapContext();
   
   // Add debug logging for UI context
   console.log("StationDetails UI Context:", { viewMode, previousViewMode });
@@ -118,6 +120,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
           onClick={() => {
             console.log("Back button clicked, navigating to previous view mode:", previousViewMode);
             goToPreviousViewMode();
+            setSelectedNearbySearchItem(null);
           }}
         >
           <ChevronLeft size={24} />
