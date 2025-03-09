@@ -57,22 +57,47 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 
 
-const allowCors = (fn: (arg0: any, arg1: any) => any) => async (req: { method: string; }, res: { setHeader: (arg0: string, arg1: string | boolean) => void; status: (arg0: number) => { (): any; new(): any; end: { (): void; new(): any; }; }; }) => {
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    // another common pattern
-    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+const allowCors = (fn: (req: any, res: any) => any) => async (req: any, res: any) => {
+    const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['*'];
+    let requestOrigin = req.headers.origin;
+  
+    // If Origin is undefined, try falling back to Referer header
+    if (!requestOrigin && req.headers.referer) {
+      try {
+        const url = new URL(req.headers.referer);
+        requestOrigin = url.origin;
+      } catch (e) {
+        console.error('Error parsing referer header:', e);
+      }
+    }
+  
+    // If still no origin is detected, decide whether to allow or block the request.
+    if (!requestOrigin) {
+      console.warn('No Origin or Referer header present; proceeding without strict CORS check.');
+      return await fn(req, res);
+    }
+  
+    if (!allowedOrigins.includes(requestOrigin) && !allowedOrigins.includes('*')) {
+      res.status(403).json({ error: 'Origin not allowed: ' + requestOrigin });
+      return;
+    }
+  
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Origin', requestOrigin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
     res.setHeader(
       'Access-Control-Allow-Headers',
       'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
+    );
+  
     if (req.method === 'OPTIONS') {
-      res.status(200).end()
-      return
+      res.status(200).end();
+      return;
     }
-    return await fn(req, res)
-  }
+    return await fn(req, res);
+  };
+  
+  
   
 
 export default allowCors(handler);
