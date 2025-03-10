@@ -35,23 +35,6 @@ interface RouteData {
   }[];
 }
 
-const routes: RouteData[] = [
-  {
-    id: 1,
-    duration: "28 min",
-    startTime: "13:05",
-    endTime: "13:33",
-    walkDistance: "400 m",
-    walkDuration: "6 min",
-    steps: [
-      { time: "13:05", type: "start", from: "Leipzig Hauptbahnhof", to: "Willy-Brandt-Platz" },
-      { time: "13:07", type: "tram", line: "4", direction: "toStotteritz", platform: "2", stops: 5, stopDuration: "12" },
-      { time: "13:19", type: "transfer", from: "Markt", transferDuration: "4" },
-      { time: "13:23", type: "tram", line: "15", direction: "toMeusdorf", platform: "1", stops: 2, stopDuration: "8" },
-      { time: "13:33", type: "end", from: "Universität Leipzig", to: "Augustusplatz" }
-    ]
-  }
-];
 
 type LegType = 'START' | 'END' | 'WALK' | 'TRANSFER' | TransportMode;
 
@@ -133,7 +116,7 @@ const formatTimeDifference = (scheduledTime: number, actualTime: number): { text
 const SelectedRouteDetails = () => {
   const { otpData, selectedItineraryIndex, setSelectedItineraryIndex, clearSearchParams } = useOtpDataContext();
   const { translations } = useSettingsContext();
-  const { goToPreviousViewMode, setViewMode } = useUIContext();
+  const { goToPreviousViewMode, setViewMode, previousViewMode } = useUIContext();
   const { setSelectedItinerary } = useMapContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
 
@@ -229,7 +212,10 @@ const SelectedRouteDetails = () => {
         <div className="flex items-center gap-4">
           <button 
             className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors"
-            onClick={goToPreviousViewMode}
+            onClick={() => {
+              console.log("Back button clicked, navigating to previous view mode:", previousViewMode);
+              goToPreviousViewMode();
+            }}
           >
             <ChevronLeft size={24} />
           </button>

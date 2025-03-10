@@ -3,6 +3,7 @@ import { ChevronLeft, Star, AlertTriangle, Clock, Info } from "lucide-react";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
 import { useUIContext } from "@/contexts/uiContext";
+import { useMapContext } from "@/contexts/mapContext";
 
 interface Departure {
   line: string;
@@ -33,7 +34,11 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
     errorStopMonitor,
     fetchStopMonitor 
   } = useStopmonitorDataContext();
-  const { goToPreviousViewMode } = useUIContext();
+  const { goToPreviousViewMode, viewMode, previousViewMode } = useUIContext();
+  const { setSelectedNearbySearchItem } = useMapContext();
+  
+  // Add debug logging for UI context
+  console.log("StationDetails UI Context:", { viewMode, previousViewMode });
   
   // Default values for stopId and stopName
   const effectiveStopId = stopId || "0013000"; // Default to "0013000" if no stopId provided
@@ -112,7 +117,11 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
       <div className="flex items-center gap-4 p-4 border-b bg-primary-yellow text-primary-blue">
         <button 
           className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors"
-          onClick={goToPreviousViewMode}
+          onClick={() => {
+            console.log("Back button clicked, navigating to previous view mode:", previousViewMode);
+            goToPreviousViewMode();
+            setSelectedNearbySearchItem(null);
+          }}
         >
           <ChevronLeft size={24} />
         </button>

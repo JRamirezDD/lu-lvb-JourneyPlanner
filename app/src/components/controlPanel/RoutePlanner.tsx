@@ -355,6 +355,14 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         }
         setSelectedIndex(-1);
         break;
+      case 'Tab':
+        if (isOrigin) {
+          setShowOriginSuggestions(false);
+        } else {
+          setShowDestinationSuggestions(false);
+        }
+        setSelectedIndex(-1);
+        break;
     }
   };
 
