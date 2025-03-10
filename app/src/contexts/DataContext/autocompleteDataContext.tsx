@@ -26,16 +26,7 @@ export const AutocompleteDataProvider: React.FC<{ children: React.ReactNode }> =
     
     // Create a function to clear the autocomplete data
     const clearState = () => {
-        // Access the internal state setter from the fetcher
-        if (autocompleteFetcher.data) {
-            // We can't directly access the setter, so we'll fetch with an empty query
-            // which will effectively clear the data
-            autocompleteFetcher.fetchData({ 
-                search: "", 
-                format: "JSON",
-                pointType: "P,S,W,N" 
-            }).catch(err => console.error("Error clearing autocomplete data:", err));
-        }
+        // TODO
     };
 
     return (
