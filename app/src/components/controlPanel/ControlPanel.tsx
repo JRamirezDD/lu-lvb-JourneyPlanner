@@ -12,8 +12,7 @@ import extractTrailingDigits from "@/utils/extractTrailingDigits";
 
 const ControlPanel = () => {
   const { viewMode, setViewMode } = useUIContext();
-  const { selectedStop } = useMapContext();
-  const { selectedNearbySearchItem } = useMapContext();
+  const { selectedStop, selectedNearbySearchItem, setSelectedNearbySearchItem } = useMapContext();
 
   // We'll store the stable Stop ID here.
   const [stableStopId, setStableStopId] = useState<string | null>(null);
@@ -26,6 +25,10 @@ const ControlPanel = () => {
       const newStopId = extractTrailingDigits(selectedNearbySearchItem.id);
       setStableStopId(newStopId);
       setStableStopName(selectedNearbySearchItem.name);
+      
+      // Set the view mode to STATION
+      // The UIContext will handle preserving the previous view mode
+      console.log("Setting view mode to STATION from map selection");
       setViewMode("STATION");
       console.log("Updated stableStopId to:", newStopId);
     } else {
@@ -34,21 +37,17 @@ const ControlPanel = () => {
     }
   }, [selectedNearbySearchItem, setViewMode]);
 
+  // Clear selectedNearbySearchItem when navigating away from STATION view
+  useEffect(() => {
+    if (viewMode !== "STATION" && selectedNearbySearchItem) {
+      console.log("Clearing selectedNearbySearchItem as we're no longer in STATION view");
+      setSelectedNearbySearchItem(null);
+    }
+  }, [viewMode, selectedNearbySearchItem, setSelectedNearbySearchItem]);
+
   return (
     <div className="w-full h-full bg-white shadow-lg overflow-y-auto text-primary-blue">
-      <div className="p-4 pb-32">
-        <nav className="flex space-x-2 mb-4">
-          <button
-            onClick={() => setViewMode("STATION")}
-            className={`px-4 py-2 rounded transition-colors ${
-              viewMode === "STATION"
-                ? "bg-primary-yellow text-primary-blue"
-                : "hover:bg-primary-yellow/10"
-            }`}
-          >
-            Station
-          </button>
-        </nav>
+      <div className="p-4 pb-32">  
 
         {viewMode === "DEFAULT" && <RoutePlanner setActiveView={setViewMode} />}
         {viewMode === "PLAN" && <RouteView setActiveView={setViewMode} />}

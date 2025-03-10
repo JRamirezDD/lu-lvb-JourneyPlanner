@@ -19,7 +19,14 @@
                 "datePicker": {
                     "date": "Date",
                     "time": "Time",
-                    "setToNow": "Set to Now"
+                    "setToNow": "Set to Now",
+                    "now": "Now",
+                    "arrival": "Arrival",
+                    "departure": "Departure",
+                    "cancel": "Cancel",
+                    "apply": "Apply",
+                    "title": "Departure Time",
+                    "selected": "Selected"
                 },
                 "departureNow": "Depart Now",
                 "departureAt": "Depart at {time}",

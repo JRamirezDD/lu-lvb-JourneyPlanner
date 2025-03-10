@@ -24,7 +24,14 @@
                 "datePicker": {
                     "date": "Datum",
                     "time": "Uhrzeit",
-                    "setToNow": "Auf Jetzt setzen"
+                    "setToNow": "Auf Jetzt setzen",
+                    "now": "Jetzt",
+                    "arrival": "Ankunft",
+                    "departure": "Abfahrt",
+                    "cancel": "Abbrechen",
+                    "apply": "Übernehmen",
+                    "title": "Abfahrtszeit",
+                    "selected": "Ausgewählt"
                 },
                 "departureNow": "Jetzt abfahren",
                 "departureAt": "Abfahrt um {time}"
