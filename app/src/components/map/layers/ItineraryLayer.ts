@@ -35,6 +35,8 @@ export const createItineraryLayerData = (selectedItinerary: Itinerary): FeatureC
 
 import { SourceSpecification, LayerSpecification } from "maplibre-gl";
 
+//current leg modes are: walking, s bahn, bus, tram, train
+
 // Shared itinerary source (dynamically updated)
 export const itinerarySource: SourceSpecification = {
   type: "geojson",
@@ -42,6 +44,21 @@ export const itinerarySource: SourceSpecification = {
     type: "FeatureCollection",
     features: [],
   },
+};
+
+
+// Intermediate stops (smaller black circles)
+export const intermediateStopsLayerConfig: LayerSpecification = {
+  id: "intermediatestops-layer",
+  type: "circle",
+  source: "itinerary-source",
+  paint: {
+    "circle-radius": 3,
+    "circle-color": "white",
+    "circle-stroke-width": 2,
+    "circle-stroke-color": "black",
+  },
+  filter: ["==", ["get", "type"], "Intermediate Stop"],
 };
 
 // Walking route (grey dashed line)
@@ -57,6 +74,17 @@ export const walkLayerConfig: LayerSpecification = {
   },
   filter: ["==", ["get", "mode"], "WALK"],
 };
+
+// bike route (green)
+export const bikeLayerConfig: LayerSpecification = {
+  id: "bike-layer",
+  type: "line",
+  source: "itinerary-source",
+  layout: { "line-join": "round", "line-cap": "round" },
+  paint: { "line-color": "#032c58", "line-width": 4 },
+  filter: ["any", ["==", ["get", "mode"], "BICYCLE"], ["==", ["get", "mode"], "BIKERENTAL"]],
+};
+
 
 // Suburban route (green)
 export const suburbLayerConfig: LayerSpecification = {
@@ -104,7 +132,7 @@ export const legStartEndLayerConfig: LayerSpecification = {
   type: "circle",
   source: "itinerary-source",
   paint: {
-    "circle-radius": 5,
+    "circle-radius": 3,
     "circle-color": "white",
     "circle-stroke-width": 2,
     "circle-stroke-color": "black",
@@ -112,16 +140,3 @@ export const legStartEndLayerConfig: LayerSpecification = {
   filter: ["any", ["==", ["get", "type"], "Leg Start"], ["==", ["get", "type"], "Leg End"]],
 };
 
-// Intermediate stops (smaller black circles)
-export const intermediateStopsLayerConfig: LayerSpecification = {
-  id: "intermediatestops-layer",
-  type: "circle",
-  source: "itinerary-source",
-  paint: {
-    "circle-radius": 3,
-    "circle-color": "white",
-    "circle-stroke-width": 2,
-    "circle-stroke-color": "black",
-  },
-  filter: ["==", ["get", "type"], "Intermediate Stop"],
-};

@@ -24,9 +24,11 @@ import loadPNGImage from "@/utils/loadPNGImage";
 import useLayersManager from "./utils/layersManager";
 import { useNearbySearchDataContext } from "@/contexts/DataContext/nearbySearchDataContext";
 import { NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto/nearbysearchRequest";
-import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, mobistation_stopsLayerConfig, station_stopsLayerConfig, 
+import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, mobistation_stopsLayerConfig, taxi_station_stopsLayerConfig, 
     ticketMachine_stopsLayerConfig, stop_stopsLayerConfig, 
-    searchItemsSource} from "./layers/NearbySearchLayer";
+    searchItemsSource,
+    nextbike_station_stopsLayerConfig,
+    escooter_station_stopsLayerConfig} from "./layers/NearbySearchLayer";
 import { NearBySearchResponse, SearchItemJson } from "@/api/nearbysearchService/dto/nearbysearchResponse";
 import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse";
 import { plainToInstance } from "class-transformer";
@@ -137,6 +139,48 @@ export const MapWidget: React.FC = ({ }) => {
                     console.error("Error loading current location icon:", error);
                 });
 
+                loadSVGImage("/lu-lvb-JourneyPlanner/Bus-Logo.svg").then((image) => {
+                    if (!map.hasImage("Bus-Logo")) {
+                        map.addImage("Bus-Logo", image as HTMLImageElement | ImageBitmap);
+                    }
+                }).catch((error) => {
+                    throw error;
+                });
+                loadSVGImage("/lu-lvb-JourneyPlanner/ticket.svg").then((image) => {
+                    if (!map.hasImage("ticket")) {
+                        map.addImage("ticket", image as HTMLImageElement | ImageBitmap);
+                    }
+                }).catch((error) => {
+                    throw error;
+                });
+                loadSVGImage("/lu-lvb-JourneyPlanner/taxi.svg").then((image) => {
+                    if (!map.hasImage("taxi")) {
+                        map.addImage("taxi", image as HTMLImageElement | ImageBitmap);
+                    }
+                }).catch((error) => {
+                    throw error;
+                });
+                loadSVGImage("/lu-lvb-JourneyPlanner/nextbike.svg").then((image) => {
+                    if (!map.hasImage("nextbike")) {
+                        map.addImage("nextbike", image as HTMLImageElement | ImageBitmap);
+                    }
+                }).catch((error) => {
+                    throw error;
+                });
+                loadSVGImage("/lu-lvb-JourneyPlanner/scooter.svg").then((image) => {
+                    if (!map.hasImage("scooter")) {
+                        map.addImage("scooter", image as HTMLImageElement | ImageBitmap);
+                    }
+                }).catch((error) => {
+                    throw error;
+                });
+                loadSVGImage("/lu-lvb-JourneyPlanner/charger.svg").then((image) => {
+                    if (!map.hasImage("charger")) {
+                        map.addImage("charger", image as HTMLImageElement | ImageBitmap);
+                    }
+                }).catch((error) => {
+                    throw error;
+                });
             };
             loadImages();
 
@@ -381,7 +425,15 @@ export const MapWidget: React.FC = ({ }) => {
             activateSource("itinerary-source");
         }
     
-        const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig];
+        const layers = [
+            walkLayerConfig, 
+            suburbLayerConfig, 
+            tramLayerConfig, 
+            trainLayerConfig, 
+            busLayerConfig,
+            legStartEndLayerConfig, 
+            intermediateStopsLayerConfig
+        ];
         layers.forEach(addLayerIfNotExists);
     };
 
@@ -400,8 +452,24 @@ export const MapWidget: React.FC = ({ }) => {
         const geojsonData = createNearbySearchLayerData(nearbySearchData);
         updateSource("nearbySearch-source", geojsonData);
 
-        const layers = [freeFloating_stopsLayerConfig, stop_stopsLayerConfig, ticketMachine_stopsLayerConfig, station_stopsLayerConfig, mobistation_stopsLayerConfig ];
+        //create layers 
+        const layers = [
+            freeFloating_stopsLayerConfig, 
+            stop_stopsLayerConfig, 
+            ticketMachine_stopsLayerConfig, 
+            taxi_station_stopsLayerConfig, 
+            nextbike_station_stopsLayerConfig,
+            escooter_station_stopsLayerConfig,
+            mobistation_stopsLayerConfig 
+            ];
         layers.forEach(addLayerIfNotExists);
+
+        // const filteredFeatures = geojsonData.features.filter(
+        //     (feature) => feature.properties.item.source === "nextbike"
+        //   );
+        // geojsonData.features = filteredFeatures;
+        // console.log("FILTERED:" + filteredFeatures);
+          //map.getSource("nearbySearch-source").setData(yourGeoJsonData);
 
         // Add layer click functionality
         for (const layer of layers) {
@@ -432,7 +500,7 @@ export const MapWidget: React.FC = ({ }) => {
     };
 
     const removeNearbySearchLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
-        const layers = [freeFloating_stopsLayerConfig, stop_stopsLayerConfig, ticketMachine_stopsLayerConfig, station_stopsLayerConfig, mobistation_stopsLayerConfig ];
+        const layers = [freeFloating_stopsLayerConfig, stop_stopsLayerConfig, ticketMachine_stopsLayerConfig, taxi_station_stopsLayerConfig, mobistation_stopsLayerConfig ];
         layers.forEach(layer => removeLayer(layer.id));
     
         activeSources.current.delete("nearbysearch-source");
