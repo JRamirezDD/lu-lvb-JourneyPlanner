@@ -83,7 +83,7 @@ export const MapWidget: React.FC = ({ }) => {
     const [mapLoaded, setMapLoaded] = useState(false);
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
     const { nearBySearchData, fetchNearbySearch, loadingNearbySearch, errorNearbySearch } = useNearbySearchDataContext();
-    const { setSelectedItinerary, selectedItinerary } = useMapContext();
+    const { setSelectedItinerary, selectedItinerary, resetCenterTrigger, resetCenterCounter, zoominLevel, zoomoutLevel } = useMapContext();
     const { setSelectedNearbySearchItem, selectedNearbySearchItem } = useMapContext();
     const { currentLocation, locationIsEnabled: isEnabled } = useLocationContext();
   
@@ -94,6 +94,7 @@ export const MapWidget: React.FC = ({ }) => {
     
     const { setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
 
+    const  storedCenter = useRef<Coordinates | null>(null); 
 
     useEffect(() => {
         if (!mapContainerRef.current || mapRef.current) return;
@@ -231,29 +232,56 @@ export const MapWidget: React.FC = ({ }) => {
         return () => map.remove();
     }, []);
 
+    // zoom level event handler
+    useEffect(() => {
+        if (mapRef.current) {
+            const currentZoom = mapRef.current.getZoom();
+            moveMap(undefined, currentZoom + 1, 200);
+        }
+    }, [zoominLevel]);
+
+    useEffect(() => {
+        if (mapRef.current) {
+            const currentZoom = mapRef.current.getZoom();
+            moveMap(undefined, currentZoom - 1, 200);
+        }
+    }, [zoomoutLevel]);
+
 
     // Location event handlers
     const setCenter = (coords: Coordinates): void => {
         if (mapRef.current && coords) {
-            console.log("Setting center to:", currentLocation);
+            storedCenter.current = coords
+        }
+    }
+
+    const moveMap = (coords?: Coordinates, zoomLevel?: number, duration?: number): void => {
+        if (mapRef.current) {
             mapRef.current.easeTo({
-                center: [coords.lon, coords.lat],
-                zoom: 14,
-                duration: 1000,
+                center: coords? [coords.lon, coords.lat] : mapRef.current.getCenter(),
+                zoom: zoomLevel ? zoomLevel : mapRef.current.getZoom(),
+                duration: duration ? duration : undefined,
                 essential: true,
-            })
+            });
         }
     }
 
     useEffect(() => {
+        if (mapRef.current && storedCenter.current && isEnabled) {
+            moveMap(storedCenter.current, 14, 500);
+        }
+    }, [resetCenterCounter]);
+
+    
+    useEffect(() => {
         if (mapRef.current && isEnabled && currentLocation) {
             setCenter(currentLocation.coords);
-
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
+            resetCenterTrigger();
         }
     }, [isEnabled, mapRef.current]);
 
-    // --- Update current location icon on map when location changes ---
+    // Update current location icon on map when location changes
     useEffect(() => {
         if (isEnabled && currentLocation) {
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
@@ -474,7 +502,6 @@ export const MapWidget: React.FC = ({ }) => {
         // Add layer click functionality
         
         const loadStopsLayerClickFunctionality = (layer_id = stop_stopsLayerConfig.id) => {
-            console.log("ADD CLICK FUNCTIONALITY");
             if (!mapRef.current) return;
             mapRef.current.on("click", layer_id, (e) => {
                 const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];

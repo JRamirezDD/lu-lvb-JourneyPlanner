@@ -33,6 +33,14 @@ export interface IMapContext extends IContext {
     selectedNearbySearchItem: SearchItemJson | null; // Used to store the selected nearby search item (selected from Nearby Search layer)
     setSelectedNearbySearchItem: (item: SearchItemJson | null) => void;
 
+    zoominLevel: number;
+    increaseZoomLevel: () => void;
+    zoomoutLevel: number;
+    decreaseZoomLevel: () => void;
+
+    resetCenterCounter: number;
+    resetCenterTrigger: () => void;
+
     clearState: () => void;
 }
 
@@ -47,6 +55,11 @@ export const MapProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const [selectedNearbySearchItem, setSelectedNearbySearchItem] = useState<SearchItemJson | null>(null);
     const [visibleLayers, setVisibleLayers] = useState<string[]>([]);
     const [selectedItinerary, setSelectedItineraryState] = useState<Itinerary | null>(null);
+    const [resetCenterCounter, setResetCenterCounter] = useState<number>(0);
+    const [zoominLevel, setZoomInLevel] = useState<number>(0);
+    const [zoomoutLevel, setZoomOutLevel] = useState<number>(0);
+    const increaseZoomLevel = () => setZoomInLevel(zoominLevel + 1);
+    const decreaseZoomLevel = () => setZoomOutLevel(zoomoutLevel - 1);
 
 
     // Function to update the current position.
@@ -73,6 +86,11 @@ export const MapProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         );
     };    
 
+    const resetCenterTrigger = () => {
+        setResetCenterCounter(resetCenterCounter + 1);
+    }
+
+
     // Function to reset all map-related state to default values.
     const clearState = () => {
         setCurrentPositionState({ lat: 0, lon: 0 });
@@ -93,7 +111,13 @@ export const MapProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         toggleLayer,
         clearState,
         setSelectedItinerary,
-        setSelectedNearbySearchItem
+        setSelectedNearbySearchItem,
+        resetCenterCounter,
+        resetCenterTrigger,
+        zoominLevel,
+        zoomoutLevel,
+        increaseZoomLevel,
+        decreaseZoomLevel,
     };
 
     return <MapContext.Provider value={value}> {children} </MapContext.Provider>;
