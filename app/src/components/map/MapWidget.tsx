@@ -456,8 +456,8 @@ export const MapWidget: React.FC = ({ }) => {
             setSource("current-location-source", currentLocationSource, geojsonData);
         }
     
-        addLayerIfNotExists(currentLocationLayerConfig);
         addLayerIfNotExists(currentLocationAccuracyLayerConfig);
+        addLayerIfNotExists(currentLocationLayerConfig);
     };
 
       
