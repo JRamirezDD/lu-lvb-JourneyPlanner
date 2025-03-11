@@ -72,6 +72,10 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         activeLayers.current.forEach(layerId => console.log(layerId));
     };
 
+    const getSource = (sourceId: string) => {
+        return sources.current.get(sourceId);
+    }
+
     return { updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
 };
 
