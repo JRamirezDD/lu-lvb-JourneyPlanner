@@ -472,8 +472,11 @@ export const MapWidget: React.FC = ({ }) => {
           //map.getSource("nearbySearch-source").setData(yourGeoJsonData);
 
         // Add layer click functionality
-        for (const layer of layers) {
-            mapRef.current.on("click", layer.id, (e) => {
+        
+        const loadStopsLayerClickFunctionality = (layer_id = stop_stopsLayerConfig.id) => {
+            console.log("ADD CLICK FUNCTIONALITY");
+            if (!mapRef.current) return;
+            mapRef.current.on("click", layer_id, (e) => {
                 const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];
                 if (feature) {
                     const parsed = JSON.parse(feature.properties?.item);
@@ -485,18 +488,46 @@ export const MapWidget: React.FC = ({ }) => {
             });
             
             // Register cursor events
-            mapRef.current.on("mouseenter", layer.id, () => {
+            mapRef.current.on("mouseenter", layer_id, () => {
                 if (mapRef.current) {
                     mapRef.current.getCanvas().style.cursor = "pointer";
                 }
             });
 
-            mapRef.current.on("mouseleave", layer.id, () => {
+            mapRef.current.on("mouseleave", layer_id, () => {
                 if (mapRef.current) {
                     mapRef.current.getCanvas().style.cursor = "";
                 }
             });
         }
+
+        loadStopsLayerClickFunctionality(stop_stopsLayerConfig.id);
+
+        // for (const layer of layers) {
+        //     mapRef.current.on("click", layer.id, (e) => {
+        //         const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];
+        //         if (feature) {
+        //             const parsed = JSON.parse(feature.properties?.item);
+        //             const rawObj = (Array.isArray(parsed) ? parsed[0] : parsed) as SearchItemJson;
+        //             const searchItemJson =  plainToInstance(SearchItemJson, rawObj);
+        //             console.log("Clicked nearby search item:", searchItemJson);
+        //             setSelectedNearbySearchItem(searchItemJson);
+        //         }
+        //     });
+            
+        //     // Register cursor events
+        //     mapRef.current.on("mouseenter", layer.id, () => {
+        //         if (mapRef.current) {
+        //             mapRef.current.getCanvas().style.cursor = "pointer";
+        //         }
+        //     });
+
+        //     mapRef.current.on("mouseleave", layer.id, () => {
+        //         if (mapRef.current) {
+        //             mapRef.current.getCanvas().style.cursor = "";
+        //         }
+        //     });
+        // }
     };
 
     const removeNearbySearchLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {

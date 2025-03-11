@@ -41,13 +41,13 @@ export const stop_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
       "icon-image": "haltestelle",
-      "icon-size": 0.02,
+      "icon-size": 0.025,
   },
   filter: ["==", ["get", "type"], "stop"],
 };
 
 export const ticketMachine_stopsLayerConfig: LayerSpecification = {
-  id: "stop_stops-layer",
+  id: "ticket_machine-layer",
   type: "symbol",
   source: "nearbySearch-source",
   minzoom: 14,
@@ -68,7 +68,7 @@ export const taxi_station_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "taxi", 
-    "icon-size": .16,
+    "icon-size": .12,
 },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "taxi"]
 };
@@ -81,7 +81,7 @@ export const escooter_station_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "scooter", 
-    "icon-size": .029,
+    "icon-size": .022,
 },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "escooter"]
 };
@@ -94,7 +94,7 @@ export const nextbike_station_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "nextbike", 
-    "icon-size": .16,
+    "icon-size": .12,
 },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "nextbike"]
 };
@@ -107,7 +107,7 @@ export const mobistation_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "charger", 
-    "icon-size": .16,
+    "icon-size": .12,
 },
   filter: ["==", ["get", "type"], "mobistation"],
 };
