@@ -31,6 +31,10 @@ import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, mobistation
 import { NearBySearchResponse, SearchItemJson } from "@/api/nearbysearchService/dto/nearbysearchResponse";
 import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse";
 import { plainToInstance } from "class-transformer";
+import { useLocationContext } from "@/contexts/locationContext";
+import { Coordinates } from "@/types/Coordinates";
+import { createCurrentLocationData, currentLocationLayerConfig } from "./layers/currentLocationLayer";
+import { Location } from "@/types/Location";
 
 // --- Bounding Box Helpers ---
 
@@ -79,7 +83,8 @@ export const MapWidget: React.FC = ({ }) => {
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
     const { nearBySearchData, fetchNearbySearch, loadingNearbySearch, errorNearbySearch } = useNearbySearchDataContext();
     const { setSelectedItinerary, selectedItinerary } = useMapContext();
-    const {setSelectedNearbySearchItem, selectedNearbySearchItem} = useMapContext();
+    const { setSelectedNearbySearchItem, selectedNearbySearchItem } = useMapContext();
+    const { currentLocation, locationIsEnabled: isEnabled } = useLocationContext();
   
     
     // State to hold the current query bounds (the extended bounding box used for querying)
@@ -119,6 +124,16 @@ export const MapWidget: React.FC = ({ }) => {
                 }).catch((error) => {
                     throw error;
                 });
+
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/current-location-icon.svg").then((image) => {
+                    if (!map.hasImage("current-location-icon")) {
+                    map.addImage("current-location-icon", image as HTMLImageElement | ImageBitmap);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error loading current location icon:", error);
+                });
+
                 loadSVGImage("/lu-lvb-JourneyPlanner/Bus-Logo.svg").then((image) => {
                     if (!map.hasImage("Bus-Logo")) {
                         map.addImage("Bus-Logo", image as HTMLImageElement | ImageBitmap);
@@ -210,8 +225,33 @@ export const MapWidget: React.FC = ({ }) => {
     
         return () => map.remove();
     }, []);
+
+
+    // Location event handlers
+    const setCenter = (coords: Coordinates): void => {
+        if (mapRef.current && coords) {
+            console.log("Setting center to:", currentLocation);
+            mapRef.current.setCenter([coords.lon, coords.lat]);
+        }
+    }
+
+    useEffect(() => {
+        if (mapRef.current && isEnabled && currentLocation) {
+            setCenter(currentLocation.coords);
+
+            updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
+        }
+    }, [isEnabled, mapRef.current]);
+
+    // --- Update current location icon on map when location changes ---
+    useEffect(() => {
+        if (isEnabled && currentLocation) {
+            updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
+        }
+    }, [currentLocation, isEnabled]);
+
     
-    // React to changes in queryBoundsState
+    // Bounds change event handler
     useEffect(() => {
         console.log("queryBounds:", queryBoundsState);
         
@@ -456,6 +496,29 @@ export const MapWidget: React.FC = ({ }) => {
         activeSources.current.delete("nearbysearch-source");
     };
     
+
+    const updateCurrentLocationLayer = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, currentLocation: Location | null) => {
+        if (!currentLocation) return;
+        if (!mapRef.current) return;
+
+        if (!currentLocation) return;
+    
+        const geojsonData = createCurrentLocationData(currentLocation.coords);
+        if (!geojsonData) return;
+
+        if (!activeSources.current.has("current-location-source")) {
+            activateSource("current-location-source");
+            updateSource("current-location-source", geojsonData);
+        }
+        else {
+            const source = mapRef.current.getSource("current-location-source") as maplibregl.GeoJSONSource;
+            if (source) {
+                source.setData(geojsonData);
+            }
+        }
+    
+        addLayerIfNotExists(currentLocationLayerConfig);
+    };
 
       
 

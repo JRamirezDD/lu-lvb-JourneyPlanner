@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import { Filter, ArrowUpDown, ChevronDown, ChevronUp, Calendar } from "lucide-react"; // Icons
 import TramLogo from "../../../public/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
@@ -148,7 +148,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       await fetchAutocompleteData({ 
         search: query,
         format: "JSON",
-        pointType: "P,S,W,N"
+        pointType: "N,P,S,W"
       });
     } catch (error) {
       console.error('Error fetching origin suggestions:', error);
@@ -166,7 +166,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       await fetchAutocompleteData({ 
         search: query,
         format: "JSON",
-        pointType: "P,S,W,N"
+        pointType: "N,P,S,W"
       });
     } catch (error) {
       console.error('Error fetching destination suggestions:', error);
@@ -233,17 +233,26 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   };
 
   const handleSuggestionClick = (suggestion: AutocompleteItem, isOrigin: boolean) => {
-    const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
-    const coordinates = `${suggestion.lat},${suggestion.lon}`;
+
+    let SelectedLocation: SetStateAction<SelectedLocation | null>;
+
+    if (suggestion instanceof AutocompleteItem) {
+      const fullAddress = `${suggestion.data}`;
+      const coordinates = `${suggestion.lat},${suggestion.lon}`;
+      SelectedLocation = { name: fullAddress, coordinates };
+    } 
+    else {
+      return;  
+    }
   
     if (isOrigin) {
-      setOrigin(fullAddress);
-      setSelectedOrigin({ name: fullAddress, coordinates });
+      setOrigin(SelectedLocation.name);
+      setSelectedOrigin(SelectedLocation);
       setIsOriginSelected(true);
       setShowOriginSuggestions(false);
     } else {
-      setDestination(fullAddress);
-      setSelectedDestination({ name: fullAddress, coordinates });
+      setDestination(SelectedLocation.name);
+      setSelectedDestination(SelectedLocation);
       setIsDestinationSelected(true);
       setShowDestinationSuggestions(false);
     }
