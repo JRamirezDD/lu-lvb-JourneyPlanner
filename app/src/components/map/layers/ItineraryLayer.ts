@@ -44,6 +44,21 @@ export const itinerarySource: SourceSpecification = {
   },
 };
 
+
+// Intermediate stops (smaller black circles)
+export const intermediateStopsLayerConfig: LayerSpecification = {
+  id: "intermediatestops-layer",
+  type: "circle",
+  source: "itinerary-source",
+  paint: {
+    "circle-radius": 3,
+    "circle-color": "white",
+    "circle-stroke-width": 2,
+    "circle-stroke-color": "black",
+  },
+  filter: ["==", ["get", "type"], "Intermediate Stop"],
+};
+
 // Walking route (grey dashed line)
 export const walkLayerConfig: LayerSpecification = {
   id: "walk-layer",
@@ -104,7 +119,7 @@ export const legStartEndLayerConfig: LayerSpecification = {
   type: "circle",
   source: "itinerary-source",
   paint: {
-    "circle-radius": 5,
+    "circle-radius": 3,
     "circle-color": "white",
     "circle-stroke-width": 2,
     "circle-stroke-color": "black",
@@ -112,16 +127,3 @@ export const legStartEndLayerConfig: LayerSpecification = {
   filter: ["any", ["==", ["get", "type"], "Leg Start"], ["==", ["get", "type"], "Leg End"]],
 };
 
-// Intermediate stops (smaller black circles)
-export const intermediateStopsLayerConfig: LayerSpecification = {
-  id: "intermediatestops-layer",
-  type: "circle",
-  source: "itinerary-source",
-  paint: {
-    "circle-radius": 3,
-    "circle-color": "white",
-    "circle-stroke-width": 2,
-    "circle-stroke-color": "black",
-  },
-  filter: ["==", ["get", "type"], "Intermediate Stop"],
-};

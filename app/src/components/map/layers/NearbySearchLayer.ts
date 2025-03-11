@@ -7,15 +7,6 @@ export const createNearbySearchLayerData = (searchItems: NearBySearchResponse): 
   const searchItemsGeoJson = searchItems.toGeoJson();
   console.log("SearchItems GeoJSON:", searchItemsGeoJson);
   return searchItemsGeoJson;
-
-
-      //  const raw = toNearBySearchResponse(nearbysearchmockresponse); //map to nearbysearchresponse object
-      //   //console.log("RAW RESPONSE" + JSON.stringify(raw, null, 2))
-  
-      //   const geo = raw.toGeoJson();  //change object to geojson
-      //   console.log("GEO" + JSON.stringify(geo, null, 2));    
-      //   expect(geo.features.length != 0);
-
 };
 
 // Stops source definition
@@ -37,10 +28,8 @@ export const freeFloating_stopsLayerConfig: LayerSpecification = {
     paint: {
       "circle-radius": 5,
       "circle-color": "red",
-      "circle-stroke-width": 2,
-      "circle-stroke-color": "black",
     },
-    filter: ["==", ["get", "type"], "Point"],
+    filter: ["==", ["get", "type"], "free_floating"],
 };
 
 
@@ -52,7 +41,7 @@ export const stop_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
       "icon-image": "haltestelle",
-      "icon-size": 0.022,
+      "icon-size": 0.02,
   },
   filter: ["==", ["get", "type"], "stop"],
 };
@@ -64,34 +53,61 @@ export const ticketMachine_stopsLayerConfig: LayerSpecification = {
   minzoom: 14,
   maxzoom: 22,
   layout: {
-      "icon-image": "haltestelle", 
-      "icon-size": 0.022,
+      "icon-image": "ticket", 
+      "icon-size": 4.022,
   },
   filter: ["==", ["get", "type"], "ticket-machine"],
 };
 
-export const station_stopsLayerConfig: LayerSpecification = {
-  id: "station_stops-layer",
+// nextbike, Taxi, eScooter 
+export const taxi_station_stopsLayerConfig: LayerSpecification = {
+  id: "taxi_station_stops-layer",
   type: "symbol",
   source: "nearbySearch-source",
   minzoom: 14,
   maxzoom: 22,
   layout: {
-      "icon-image": "haltestelle", 
-      "icon-size": 0.022,
-  },
-  filter: ["==", ["get", "type"], "station"],
+    "icon-image": "taxi", 
+    "icon-size": .16,
+},
+  filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "taxi"]
+};
+
+export const escooter_station_stopsLayerConfig: LayerSpecification = {
+  id: "escooter_station_stops-layer",
+  type: "symbol",
+  source: "nearbySearch-source",
+  minzoom: 14,
+  maxzoom: 22,
+  layout: {
+    "icon-image": "scooter", 
+    "icon-size": .029,
+},
+  filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "escooter"]
+};
+
+export const nextbike_station_stopsLayerConfig: LayerSpecification = {
+  id: "nextbike_station_stops-layer",
+  type: "symbol",
+  source: "nearbySearch-source",
+  minzoom: 14,
+  maxzoom: 22,
+  layout: {
+    "icon-image": "nextbike", 
+    "icon-size": .16,
+},
+  filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "nextbike"]
 };
 
 export const mobistation_stopsLayerConfig: LayerSpecification = {
   id: "mobistation_stops-layer",
-  type: "symbol",
+  type: "circle",
   source: "nearbySearch-source",
   minzoom: 14,
   maxzoom: 22,
-  layout: {
-      "icon-image": "haltestelle",
-      "icon-size": 0.022,
+  paint: {
+    "circle-radius": 5,
+    "circle-color": "black",
   },
   filter: ["==", ["get", "type"], "mobistation"],
 };
