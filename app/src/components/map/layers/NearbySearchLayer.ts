@@ -101,14 +101,14 @@ export const nextbike_station_stopsLayerConfig: LayerSpecification = {
 
 export const mobistation_stopsLayerConfig: LayerSpecification = {
   id: "mobistation_stops-layer",
-  type: "circle",
+  type: "symbol",
   source: "nearbySearch-source",
   minzoom: 14,
   maxzoom: 22,
-  paint: {
-    "circle-radius": 5,
-    "circle-color": "black",
-  },
+  layout: {
+    "icon-image": "charger", 
+    "icon-size": .16,
+},
   filter: ["==", ["get", "type"], "mobistation"],
 };
 

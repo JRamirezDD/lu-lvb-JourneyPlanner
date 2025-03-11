@@ -154,6 +154,13 @@ export const MapWidget: React.FC = ({ }) => {
                 }).catch((error) => {
                     throw error;
                 });
+                loadSVGImage("/lu-lvb-JourneyPlanner/charger.svg").then((image) => {
+                    if (!map.hasImage("charger")) {
+                        map.addImage("charger", image as HTMLImageElement | ImageBitmap);
+                    }
+                }).catch((error) => {
+                    throw error;
+                });
             };
             loadImages();
 
@@ -402,8 +409,8 @@ export const MapWidget: React.FC = ({ }) => {
             ticketMachine_stopsLayerConfig, 
             taxi_station_stopsLayerConfig, 
             nextbike_station_stopsLayerConfig,
-            escooter_station_stopsLayerConfig
-            //mobistation_stopsLayerConfig 
+            escooter_station_stopsLayerConfig,
+            mobistation_stopsLayerConfig 
             ];
         layers.forEach(addLayerIfNotExists);
 
