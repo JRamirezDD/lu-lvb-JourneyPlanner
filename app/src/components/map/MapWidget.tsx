@@ -20,6 +20,7 @@ import {
 import { Itinerary } from "@/types/Itinerary";
 import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
 import loadSVGImage from "@/utils/loadSVGImage";
+import loadPNGImage from "@/utils/loadPNGImage";
 import useLayersManager from "./utils/layersManager";
 import { useNearbySearchDataContext } from "@/contexts/DataContext/nearbySearchDataContext";
 import { NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto/nearbysearchRequest";
@@ -31,7 +32,7 @@ import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse"
 import { plainToInstance } from "class-transformer";
 import { useLocationContext } from "@/contexts/locationContext";
 import { Coordinates } from "@/types/Coordinates";
-import { createCurrentLocationData, currentLocationLayerConfig } from "./layers/currentLocationLayer";
+import { createCurrentLocationData, currentLocationAccuracyLayerConfig, currentLocationLayerConfig, currentLocationSource } from "./layers/currentLocationLayer";
 import { Location } from "@/types/Location";
 
 // --- Bounding Box Helpers ---
@@ -89,7 +90,7 @@ export const MapWidget: React.FC = ({ }) => {
     const currentQueryBoundsRef = useRef<maplibregl.LngLatBounds | null>(null);
     const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
-    const { updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
+    const { setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
 
 
     useEffect(() => {
@@ -100,9 +101,11 @@ export const MapWidget: React.FC = ({ }) => {
             style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
             center: [12.377014, 51.340613],
             zoom: 14,
+            fadeDuration: 0
           });
     
         map.on("load", () => {
+
             // Initialize LayerManager and mapRef
             layerManagerRef.current = new LayerManager(map);
             mapRef.current = map;
@@ -123,7 +126,9 @@ export const MapWidget: React.FC = ({ }) => {
                     throw error;
                 });
 
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/current-location-icon.svg").then((image) => {
+                
+
+                loadPNGImage("/lu-lvb-JourneyPlanner/icons/current-location-icon.png").then((image) => {
                     if (!map.hasImage("current-location-icon")) {
                     map.addImage("current-location-icon", image as HTMLImageElement | ImageBitmap);
                     }
@@ -187,7 +192,12 @@ export const MapWidget: React.FC = ({ }) => {
     const setCenter = (coords: Coordinates): void => {
         if (mapRef.current && coords) {
             console.log("Setting center to:", currentLocation);
-            mapRef.current.setCenter([coords.lon, coords.lat]);
+            mapRef.current.easeTo({
+                center: [coords.lon, coords.lat],
+                zoom: 14,
+                duration: 1000,
+                essential: true,
+            })
         }
     }
 
@@ -435,21 +445,19 @@ export const MapWidget: React.FC = ({ }) => {
 
         if (!currentLocation) return;
     
-        const geojsonData = createCurrentLocationData(currentLocation.coords);
+        const geojsonData = createCurrentLocationData(currentLocation);
         if (!geojsonData) return;
 
         if (!activeSources.current.has("current-location-source")) {
+            setSource("current-location-source", currentLocationSource, geojsonData);
             activateSource("current-location-source");
-            updateSource("current-location-source", geojsonData);
         }
         else {
-            const source = mapRef.current.getSource("current-location-source") as maplibregl.GeoJSONSource;
-            if (source) {
-                source.setData(geojsonData);
-            }
+            setSource("current-location-source", currentLocationSource, geojsonData);
         }
     
         addLayerIfNotExists(currentLocationLayerConfig);
+        addLayerIfNotExists(currentLocationAccuracyLayerConfig);
     };
 
       
