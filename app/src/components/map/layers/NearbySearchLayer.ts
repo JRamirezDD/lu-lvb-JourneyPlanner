@@ -41,10 +41,32 @@ export const stop_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
       "icon-image": "haltestelle",
-      "icon-size": 0.025,
+      "icon-size": 0.08,
   },
   filter: ["==", ["get", "type"], "stop"],
 };
+
+  // Stops Labels Layer
+  export const stop_stopsLabelsLayerConfig: LayerSpecification = {
+    id: "stops-labels",
+    type: "symbol",
+    source: "nearbySearch-source",
+    minzoom: 15,
+    maxzoom: 22,
+    layout: {
+      "text-field": ["get", "name"],
+      "text-size": 12,
+      "text-offset": [0, 1.2],
+      "text-anchor": "top",
+    },
+    paint: {
+      "text-color": "#000",
+      "text-halo-color": "#fff",
+      "text-halo-width": 1,
+    },
+    filter: ["==", ["get", "type"], "stop"],
+  };
+
 
 export const ticketMachine_stopsLayerConfig: LayerSpecification = {
   id: "ticket_machine-layer",
@@ -54,7 +76,7 @@ export const ticketMachine_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
       "icon-image": "ticket", 
-      "icon-size": 4.022,
+      "icon-size": 0.07,
   },
   filter: ["==", ["get", "type"], "ticket-machine"],
 };
@@ -68,7 +90,7 @@ export const taxi_station_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "taxi", 
-    "icon-size": .12,
+    "icon-size": 0.07,
 },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "taxi"]
 };
@@ -81,7 +103,7 @@ export const escooter_station_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "scooter", 
-    "icon-size": .022,
+    "icon-size": 0.07,
 },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "escooter"]
 };
@@ -94,7 +116,7 @@ export const nextbike_station_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "nextbike", 
-    "icon-size": .12,
+    "icon-size": 0.07,
 },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "nextbike"]
 };
@@ -107,7 +129,7 @@ export const mobistation_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "charger", 
-    "icon-size": .12,
+    "icon-size": 0.07,
 },
   filter: ["==", ["get", "type"], "mobistation"],
 };

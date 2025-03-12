@@ -1,18 +1,18 @@
 import { useState, useEffect, SetStateAction } from "react";
 import { Filter, ArrowUpDown, ChevronDown, ChevronUp, Calendar } from "lucide-react"; // Icons
-import TramLogo from "../../../public/Tram-Logo.svg";
-import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
-import TrainLogo from "../../../public/Train.svg";
-import BusLogo from "../../../public/Bus-Logo.svg"; 
+import TramLogo from "../../../public/icons/otp-icons/Tram-Logo.svg";
+import S_BahnLogo from "../../../public/icons/otp-icons/S-Bahn-Logo.svg";
+import TrainLogo from "../../../public/icons/otp-icons/Train.svg";
+import BusLogo from "../../../public/icons/otp-icons/Bus-Logo.svg"; 
 import TransportFilter from "./filters/TransportFilter";
 import DepartureFilter from "./filters/DepartureFilter";
 import { useSettingsContext } from "@/contexts/settingsContext"; // Import context
 import { useAutocompleteDataContext } from "@/contexts/DataContext/autocompleteDataContext";
 import { AutocompleteItem } from "@/api/autocompleteService/dto/autocompleteitemResponse";
 import { TransportMode } from "@/types/TransportMode";
-import Bike from "../../../public/Bike.svg";
-import PersonStanding from "../../../public/Walk.svg";
-import Car from "../../../public/Car.svg";
+import Bike from "../../../public/icons/otp-icons/Bike.svg";
+import PersonStanding from "../../../public/icons/otp-icons/Walk.svg";
+import Car from "../../../public/icons/otp-icons/Car.svg";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
 import { RequestParameters } from "@/api/routingService/dto/otpRequest";
 import { ViewMode } from "@/types/ViewMode";

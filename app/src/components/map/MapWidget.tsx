@@ -28,7 +28,8 @@ import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, mobistation
     ticketMachine_stopsLayerConfig, stop_stopsLayerConfig, 
     searchItemsSource,
     nextbike_station_stopsLayerConfig,
-    escooter_station_stopsLayerConfig} from "./layers/NearbySearchLayer";
+    escooter_station_stopsLayerConfig,
+    stop_stopsLabelsLayerConfig} from "./layers/NearbySearchLayer";
 import { NearBySearchResponse, SearchItemJson } from "@/api/nearbysearchService/dto/nearbysearchResponse";
 import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse";
 import { plainToInstance } from "class-transformer";
@@ -121,7 +122,7 @@ export const MapWidget: React.FC = ({ }) => {
     
             // Load Images
             const loadImages = () => {
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/haltestelle.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/haltestelle.svg").then((image) => {
                     if (!map.hasImage("haltestelle")) {
                         map.addImage("haltestelle", image as HTMLImageElement | ImageBitmap);
                     }
@@ -140,42 +141,42 @@ export const MapWidget: React.FC = ({ }) => {
                     console.error("Error loading current location icon:", error);
                 });
 
-                loadSVGImage("/lu-lvb-JourneyPlanner/Bus-Logo.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/Bus-Logo.svg").then((image) => {
                     if (!map.hasImage("Bus-Logo")) {
                         map.addImage("Bus-Logo", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
                 });
-                loadSVGImage("/lu-lvb-JourneyPlanner/ticket.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/ticket.svg").then((image) => {
                     if (!map.hasImage("ticket")) {
                         map.addImage("ticket", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
                 });
-                loadSVGImage("/lu-lvb-JourneyPlanner/taxi.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/taxi.svg").then((image) => {
                     if (!map.hasImage("taxi")) {
                         map.addImage("taxi", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
                 });
-                loadSVGImage("/lu-lvb-JourneyPlanner/nextbike.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/nextbike.svg").then((image) => {
                     if (!map.hasImage("nextbike")) {
                         map.addImage("nextbike", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
                 });
-                loadSVGImage("/lu-lvb-JourneyPlanner/scooter.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/scooter.svg").then((image) => {
                     if (!map.hasImage("scooter")) {
                         map.addImage("scooter", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
                 });
-                loadSVGImage("/lu-lvb-JourneyPlanner/charger.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/charger.svg").then((image) => {
                     if (!map.hasImage("charger")) {
                         map.addImage("charger", image as HTMLImageElement | ImageBitmap);
                     }
@@ -482,13 +483,14 @@ export const MapWidget: React.FC = ({ }) => {
 
         //create layers 
         const layers = [
-            freeFloating_stopsLayerConfig, 
-            stop_stopsLayerConfig, 
             ticketMachine_stopsLayerConfig, 
-            taxi_station_stopsLayerConfig, 
-            nextbike_station_stopsLayerConfig,
             escooter_station_stopsLayerConfig,
-            mobistation_stopsLayerConfig 
+            freeFloating_stopsLayerConfig,
+            nextbike_station_stopsLayerConfig,
+            taxi_station_stopsLayerConfig,
+            mobistation_stopsLayerConfig,
+            stop_stopsLabelsLayerConfig,
+            stop_stopsLayerConfig
             ];
         layers.forEach(addLayerIfNotExists);
 

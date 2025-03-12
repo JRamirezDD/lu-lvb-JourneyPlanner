@@ -1,13 +1,13 @@
 import { ChevronLeft, ChevronRight, Clock, Info, ChevronDown, ChevronUp, X } from "lucide-react";
-import PersonStanding from "../../../public/Walk.svg";
+import PersonStanding from "../../../public/icons/otp-icons/Walk.svg";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
 import { TransportMode } from "@/types/TransportMode";
-import TramLogo from "../../../public/Tram-Logo.svg";
-import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
-import BusLogo from "../../../public/Bus-Logo.svg";
+import TramLogo from "../../../public/icons/otp-icons/Tram-Logo.svg";
+import S_BahnLogo from "../../../public/icons/otp-icons/S-Bahn-Logo.svg";
+import BusLogo from "../../../public/icons/otp-icons/Bus-Logo.svg";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { Itinerary } from "@/types/Itinerary";

@@ -1,7 +1,7 @@
 import { Clock } from "lucide-react";
-import PersonStanding from "../../../public/Walk.svg";
-import Car from "../../../public/Car.svg";
-import Bike from "../../../public/Bike.svg";
+import PersonStanding from "../../../public/icons/otp-icons/Walk.svg";
+import Car from "../../../public/icons/otp-icons/Car.svg";
+import Bike from "../../../public/icons/otp-icons/Bike.svg";
 import Image from "next/image";
 import React, { useState, useEffect, useMemo } from "react";
 import RoutePlanner from "./RoutePlanner";
