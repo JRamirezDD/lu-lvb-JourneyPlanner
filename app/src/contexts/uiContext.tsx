@@ -24,8 +24,12 @@ export const UIProvider: React.FC<{ children: React.ReactNode }> = ({ children }
     // Function to update the view mode.
     const setViewMode = (mode: ViewMode) => {
         console.log("Setting view mode to", mode);
-        setPreviousViewMode(viewMode); // Store current view mode as previous
-        setViewModeState(mode);
+        if (mode === "STATION" && viewMode === "STATION") {
+            setViewModeState(mode);
+        } else {
+            setPreviousViewMode(viewMode); // Store current view mode as previous
+            setViewModeState(mode);
+        }
     };
 
     // Function to go back to the previous view mode
