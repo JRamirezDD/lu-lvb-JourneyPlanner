@@ -8,7 +8,7 @@ const LocationUpdater: React.FC = () => {
   const { updateLocation, locationIsEnabled: isEnabled, setIsEnabled } = useContext(LocationContext);
   const lastUpdateRef = useRef(0);
   // Set the desired update interval in milliseconds (e.g., 10000ms = 10 seconds)
-  const updateInterval = 200;
+  const updateInterval = 50;
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -26,7 +26,8 @@ const LocationUpdater: React.FC = () => {
           const heading = position.coords.heading;
           const speed = position.coords.speed;
           const timestamp = position.timestamp;
-          updateLocation({ timestamp, coords, heading, speed });
+          const accuracy = position.coords.accuracy
+          updateLocation({ timestamp, coords, heading, speed, accuracy });
 
           if (!isEnabled) {
             setIsEnabled(true);
@@ -35,7 +36,7 @@ const LocationUpdater: React.FC = () => {
         (error) => { 
             console.error("Error watching position", error) 
         },
-        { enableHighAccuracy: true, timeout: 5000 }
+        { enableHighAccuracy: false, timeout: 5000 }
       );
 
 
