@@ -46,6 +46,12 @@ export const itinerarySource: SourceSpecification = {
   },
 };
 
+export const itineraryLayerConfig: LayerSpecification = {
+  id: "itinerary-layer",
+  type: "line",
+  source: "itinerary-source",
+  layout: { "line-join": "round", "line-cap": "round" },
+}
 
 // Intermediate stops (smaller black circles)
 export const intermediateStopsLayerConfig: LayerSpecification = {

@@ -5,7 +5,7 @@ import maplibregl, { Map } from "maplibre-gl";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./utils/ILayer";
-import { busLayerConfig, createItineraryLayerData } from "./layers/ItineraryLayer";
+import { busLayerConfig, createItineraryLayerData, itineraryLayerConfig } from "./layers/ItineraryLayer";
 import { ViewMode } from "@/types/ViewMode";
 import { stopsLayerConfig, stopsLabelsLayerConfig, stopsSource as stopsSourceConfig, createStopsLayerData, stopsSource } from "./layers/StopsLayer";
 import {
@@ -339,8 +339,15 @@ export const MapWidget: React.FC = ({ }) => {
 
     // listen to changes in itinerary
     useEffect(() => {
+        // After triggering layer load
         if (mapRef.current) {
-            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
+            waitForLayer(mapRef.current, itineraryLayerConfig.id)
+            .then(() => {
+                centerToLayer(mapRef, itineraryLayerConfig.id);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
         }
     }, [setSelectedItinerary]);
 
@@ -395,6 +402,30 @@ export const MapWidget: React.FC = ({ }) => {
     
         mapRef.current.resize();
     };
+
+    // Helper function to wait for a layer to exist on the map
+    const waitForLayer = (
+        map: maplibregl.Map, 
+        layerId: string, 
+        timeout = 5000
+    ): Promise<void> => {
+        return new Promise((resolve, reject) => {
+        const start = Date.now();
+    
+        const checkLayer = () => {
+            if (map.getLayer(layerId)) {
+                resolve();
+            } else if (Date.now() - start > timeout) {
+                reject(new Error(`Timeout: Layer ${layerId} was not added within ${timeout}ms`));
+            } else {
+                requestAnimationFrame(checkLayer);
+            }
+        };
+    
+        checkLayer();
+        });
+    };
+  
 
     // Stops Layers
     const updateStopsLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, stopsData: any) => {
@@ -461,13 +492,23 @@ export const MapWidget: React.FC = ({ }) => {
             trainLayerConfig, 
             busLayerConfig,
             legStartEndLayerConfig, 
-            intermediateStopsLayerConfig
+            intermediateStopsLayerConfig,
+            itineraryLayerConfig
         ];
         layers.forEach(addLayerIfNotExists);
     };
 
     const removeItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
-        const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig];
+        const layers = [
+            walkLayerConfig, 
+            suburbLayerConfig, 
+            tramLayerConfig, 
+            trainLayerConfig, 
+            busLayerConfig,
+            legStartEndLayerConfig, 
+            intermediateStopsLayerConfig,
+            itineraryLayerConfig
+        ];
         layers.forEach(layer => removeLayer(layer.id));
         
         clearSource("itinerary-source");
@@ -588,7 +629,61 @@ export const MapWidget: React.FC = ({ }) => {
         addLayerIfNotExists(currentLocationLayerConfig);
     };
 
+    
+    const centerToLayer = (
+            mapRef: React.MutableRefObject<maplibregl.Map | null>,
+            layerId: string
+        ) => {
+        if (!mapRef.current) return;
+
+        console.log("Centering to layer:", layerId);
+        
+        if (!mapRef.current.getLayer(layerId)) return;
+
+        const features = mapRef.current.queryRenderedFeatures({ layers: [layerId] });
+        console.log(features);
+
+        if (features.length) {
+          // Initialize bounds with extreme values.
+          const bounds = features.reduce(
+            (acc, feature) => {
+              if (feature.geometry && feature.geometry.bbox) {
+                const [minX, minY, maxX, maxY] = feature.geometry.bbox;
+                return [
+                  Math.min(acc[0], minX),
+                  Math.min(acc[1], minY),
+                  Math.max(acc[2], maxX),
+                  Math.max(acc[3], maxY)
+                ];
+              }
+              return acc;
+            },
+            [Infinity, Infinity, -Infinity, -Infinity]
+          );
       
+          // Ensure valid bounds were computed.
+          if (
+            bounds[0] !== Infinity &&
+            bounds[1] !== Infinity &&
+            bounds[2] !== -Infinity &&
+            bounds[3] !== -Infinity
+          ) {
+            mapRef.current.fitBounds(
+              [
+                [bounds[0], bounds[1]],
+                [bounds[2], bounds[3]]
+              ],
+              { padding: 20 }
+            );
+          } else {
+            console.log("No valid bounding box found for layer:", layerId);
+          }
+        } else {
+          console.log("No features found for layer:", layerId);
+        }
+      };
+      
+
 
     //console.log("Rendering MapWidget. Map container ref:", mapContainerRef.current);
     return (
@@ -602,5 +697,6 @@ export const MapWidget: React.FC = ({ }) => {
          }}
         />
       );};
+      
 
 export default MapWidget;
