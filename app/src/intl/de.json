@@ -13,6 +13,8 @@
             "origin": "Start",
             "destination": "Ziel",
             "seeRoutes": "Routen anzeigen",
+            "currentLocation": "Aktueller Standort",
+            "useCurrentLocation": "Verwenden Sie Ihren aktuellen Standort",
             "filters": {
                 "departure": "Abfahrt",
                 "transport": {
@@ -40,7 +42,9 @@
         "routes": {
             "availableRoutes": "Verfügbare Routen",
             "leaves": "Abfahrt um",
-            "from": "von"
+            "from": "von",
+            "earlier": "Früher",
+            "later": "Später"
         },
         "routeDetails": {
             "itinerary": "Reiseplan",

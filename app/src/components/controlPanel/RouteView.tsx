@@ -1,4 +1,4 @@
-import { Clock } from "lucide-react";
+import { Clock, ChevronLeft, ChevronRight } from "lucide-react";
 import PersonStanding from "../../../public/icons/otp-icons/Walk.svg";
 import Car from "../../../public/icons/otp-icons/Car.svg";
 import Bike from "../../../public/icons/otp-icons/Bike.svg";
@@ -10,11 +10,13 @@ import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
 import { ViewMode } from "@/types/ViewMode";
 import { useMapContext } from "@/contexts/mapContext";
 import { Itinerary } from "@/types/Itinerary";
+import { RequestParameters } from "@/api/routingService/dto/otpRequest";
+import { TransportMode } from "@/types/TransportMode";
 
 
 const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void }) => {
   const { translations } = useSettingsContext();
-  const { otpData, loadingOtp, errorOtp, setSelectedItineraryIndex } = useOtpDataContext();
+  const { otpData, loadingOtp, errorOtp, setSelectedItineraryIndex, fetchOtpData, lastOrigin, lastDestination, lastOriginCoordinates, lastDestinationCoordinates, lastTransportModes, lastDate, lastTime, setLastSearchParams } = useOtpDataContext();
   const { setSelectedItinerary } = useMapContext();
   const [selectedRouteIndex, setSelectedRouteIndex] = useState(-1);
 
@@ -64,6 +66,79 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
       case "BIKE": return "Bike";
       default: return "Walk";
     }
+  };
+
+
+  const handleEarlierSearch = () => {
+    console.log("handleEarlierSearch");
+    // Calculate the adjusted time
+    const adjustedTime = lastTime ? adjustTimeString(lastTime, -5) : undefined;
+    
+    // Update the last search params in context
+    if (adjustedTime) {
+      setLastSearchParams(
+        lastOrigin,
+        lastDestination,
+        lastOriginCoordinates,
+        lastDestinationCoordinates,
+        lastTransportModes as TransportMode[],
+        lastDate,
+        adjustedTime
+      );
+    }
+    
+    // Fetch otp data with earlier search time
+    const params: Partial<RequestParameters> = {
+      From: lastOriginCoordinates,
+      To: lastDestinationCoordinates,
+      Travelmode: lastTransportModes as TransportMode[],
+      date: lastDate,
+      time: adjustedTime,
+      numItineraries: 5,  
+    };
+    fetchOtpData(params);
+  };
+
+  const handleLaterSearch = () => {
+    console.log("handleLaterSearch");
+    // Calculate the adjusted time
+    const adjustedTime = lastTime ? adjustTimeString(lastTime, 5) : undefined;
+    
+    // Update the last search params in context
+    if (adjustedTime) {
+      setLastSearchParams(
+        lastOrigin,
+        lastDestination,
+        lastOriginCoordinates,
+        lastDestinationCoordinates,
+        lastTransportModes as TransportMode[],
+        lastDate,
+        adjustedTime
+      );
+    }
+    
+    // Fetch otp data with later search time
+    const params: Partial<RequestParameters> = {
+      From: lastOriginCoordinates,
+      To: lastDestinationCoordinates,
+      Travelmode: lastTransportModes as TransportMode[],
+      date: lastDate,
+      time: adjustedTime,
+      numItineraries: 5,  
+    };
+    fetchOtpData(params);
+  };
+
+  // Helper function to adjust time string by minutes
+  const adjustTimeString = (timeStr: string, minutesToAdd: number): string => {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes + minutesToAdd, 0, 0);
+    return date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
   };
 
   // Sort itineraries by arrival time
@@ -139,9 +214,33 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
 
       {/* Routes List Section */}
       <div className="border-t pt-4">
-        <h2 className="text-lg font-bold mb-4">
-          {translations?.ControlPanel?.routes?.availableRoutes || "Available Routes"}
-        </h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-bold">
+            {translations?.ControlPanel?.routes?.availableRoutes || "Available Routes"}
+          </h2>
+          
+          {/* Earlier/Later buttons */}
+          {otpData && otpData.plan && otpData.plan.itineraries && otpData.plan.itineraries.length > 0 && (
+            <div className="flex gap-2">
+              <button 
+                onClick={handleEarlierSearch}
+                disabled={loadingOtp}
+                className="flex items-center gap-1 px-3 py-1 bg-primary-yellow text-primary-blue rounded-md hover:bg-primary-yellow/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ChevronLeft size={16} />
+                <span>{translations?.ControlPanel?.routes?.earlier || "Earlier"}</span>
+              </button>
+              <button 
+                onClick={handleLaterSearch}
+                disabled={loadingOtp}
+                className="flex items-center gap-1 px-3 py-1 bg-primary-yellow text-primary-blue rounded-md hover:bg-primary-yellow/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <span>{translations?.ControlPanel?.routes?.later || "Later"}</span>
+                <ChevronRight size={16} />
+              </button>
+            </div>
+          )}
+        </div>
 
         {loadingOtp && (
           <div className="p-4 text-center text-gray-600">

@@ -20,7 +20,10 @@ export interface IOtpDataContext extends IDataContext<OtpResponse> {
     lastDestination: string;
     lastOriginCoordinates: string;
     lastDestinationCoordinates: string;
-    setLastSearchParams: (origin: string, destination: string, originCoords: string, destCoords: string) => void;
+    lastTransportModes: string[];
+    lastDate: string;
+    lastTime: string;
+    setLastSearchParams: (origin: string, destination: string, originCoords: string, destCoords: string, transportModes: string[], date: string, time: string) => void;
     clearSearchParams: () => void;
     clearState: () => void;
 }
@@ -36,17 +39,27 @@ export const OtpDataProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [lastDestination, setLastDestination] = useState<string>("");
     const [lastOriginCoordinates, setLastOriginCoordinates] = useState<string>("");
     const [lastDestinationCoordinates, setLastDestinationCoordinates] = useState<string>("");
+    const [lastTransportModes, setLastTransportModes] = useState<string[]>([]);
+    const [lastDate, setLastDate] = useState<string>("");
+    const [lastTime, setLastTime] = useState<string>("");
+
 
     const setLastSearchParams = (
         origin: string, 
         destination: string, 
         originCoords: string, 
-        destCoords: string
+        destCoords: string,
+        transportModes: string[],
+        date: string,
+        time: string
     ) => {
         setLastOrigin(origin);
         setLastDestination(destination);
         setLastOriginCoordinates(originCoords);
         setLastDestinationCoordinates(destCoords);
+        setLastTransportModes(transportModes);
+        setLastDate(date);
+        setLastTime(time);
     };
 
     const clearSearchParams = () => {
@@ -54,6 +67,9 @@ export const OtpDataProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setLastDestination("");
         setLastOriginCoordinates("");
         setLastDestinationCoordinates("");
+        setLastTransportModes([]);
+        setLastDate("");
+        setLastTime("");
     };
 
     return (
@@ -71,6 +87,9 @@ export const OtpDataProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 lastDestination,
                 lastOriginCoordinates,
                 lastDestinationCoordinates,
+                lastTransportModes,
+                lastDate,
+                lastTime,
                 setLastSearchParams,
                 clearSearchParams,
                 clearState: () => {
