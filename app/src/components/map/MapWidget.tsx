@@ -5,7 +5,6 @@ import maplibregl, { Map } from "maplibre-gl";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./utils/ILayer";
-import { busLayerConfig, createItineraryLayerData } from "./layers/ItineraryLayer";
 import { ViewMode } from "@/types/ViewMode";
 import { stopsLayerConfig, stopsLabelsLayerConfig, stopsSource as stopsSourceConfig, createStopsLayerData, stopsSource } from "./layers/StopsLayer";
 import {
@@ -15,7 +14,11 @@ import {
     tramLayerConfig,
     trainLayerConfig,
     legStartEndLayerConfig,
-    intermediateStopsLayerConfig
+    intermediateStopsLayerConfig,
+    busLayerConfig,
+    createItineraryLayerData,
+    destinationLayerConfig,
+    originLayerConfig
 } from "./layers/ItineraryLayer";
 import { Itinerary } from "@/types/Itinerary";
 import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
@@ -102,7 +105,7 @@ export const MapWidget: React.FC = ({ }) => {
     
         const map = new maplibregl.Map({
             container: mapContainerRef.current,
-            style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+            style: "https://api.maptiler.com/maps/c07241ff-0cee-4b65-8404-fb9439c2fc2e/style.json?key=0RiVj3uh1o63zeuIVaKk",
             center: [12.377014, 51.340613],
             zoom: 14,
             fadeDuration: 0
@@ -179,6 +182,20 @@ export const MapWidget: React.FC = ({ }) => {
                 loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/charger.svg").then((image) => {
                     if (!map.hasImage("charger")) {
                         map.addImage("charger", image as HTMLImageElement | ImageBitmap);
+                    }
+                }).catch((error) => {
+                    throw error;
+                });
+                loadSVGImage("/lu-lvb-JourneyPlanner/filled_pin.svg").then((image) => {
+                    if (!map.hasImage("filled_pin")) {
+                        map.addImage("filled_pin", image as HTMLImageElement | ImageBitmap);
+                    }
+                }).catch((error) => {
+                    throw error;
+                });
+                loadSVGImage("/lu-lvb-JourneyPlanner/hollow_pin.svg").then((image) => {
+                    if (!map.hasImage("hollow_pin")) {
+                        map.addImage("hollow_pin", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
@@ -461,13 +478,15 @@ export const MapWidget: React.FC = ({ }) => {
             trainLayerConfig, 
             busLayerConfig,
             legStartEndLayerConfig, 
-            intermediateStopsLayerConfig
+            intermediateStopsLayerConfig,
+            destinationLayerConfig,
+            originLayerConfig
         ];
         layers.forEach(addLayerIfNotExists);
     };
 
     const removeItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
-        const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig];
+        const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig, destinationLayerConfig, originLayerConfig];
         layers.forEach(layer => removeLayer(layer.id));
         
         clearSource("itinerary-source");

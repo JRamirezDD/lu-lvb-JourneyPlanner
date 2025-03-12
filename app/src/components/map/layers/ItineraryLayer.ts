@@ -12,7 +12,6 @@ import { GeoJSON, FeatureCollection, Point, LineString } from "geojson";
 
 export const createItineraryLayerData = (selectedItinerary: Itinerary): FeatureCollection<Point | LineString> | undefined => {
   console.log("CREATE ITINERARY LAYER DATA TRIGGERED");
-  //setSelectedItinerary(toOtpResponse(mockOtpResponse).plan.itineraries[0]);
   const _selectedItinerary = toOtpResponse(mockOtpResponse).plan.itineraries[0];
 
   if (selectedItinerary) {
@@ -126,13 +125,30 @@ export const trainLayerConfig: LayerSpecification = {
   filter: ["==", ["get", "mode"], "TRAIN"],
 };
 
+// display any lines with different modes 
+export const backupLayerConfig: LayerSpecification = {
+  id: "backup-layer",
+  type: "line",
+  source: "itinerary-source",
+  layout: { "line-join": "round", "line-cap": "round" },
+  paint: { "line-color": "black", "line-width": 4 },
+  filter: ["all", ["!=", ["get", "mode"], "BICYCLE"], 
+                  ["!=", ["get", "mode"], "BIKERENTAL"],
+                  ["!=", ["get", "mode"], "WALK"],
+                  ["!=", ["get", "mode"], "SUBURB"],
+                  ["!=", ["get", "mode"], "BUS"],
+                  ["!=", ["get", "mode"], "TRAM"],
+                  ["!=", ["get", "mode"], "TRAIN"],
+                ],
+};
+
 // Start & end points (black circles)
 export const legStartEndLayerConfig: LayerSpecification = {
   id: "legstartend-layer",
   type: "circle",
   source: "itinerary-source",
   paint: {
-    "circle-radius": 3,
+    "circle-radius": 5,
     "circle-color": "white",
     "circle-stroke-width": 2,
     "circle-stroke-color": "black",
@@ -140,3 +156,27 @@ export const legStartEndLayerConfig: LayerSpecification = {
   filter: ["any", ["==", ["get", "type"], "Leg Start"], ["==", ["get", "type"], "Leg End"]],
 };
 
+export const destinationLayerConfig: LayerSpecification = {
+  id: "destination-layer",
+  type: "circle",
+  source: "itinerary-source",
+  paint: {
+    "circle-radius": 7,
+    "circle-color": "black",
+  },
+  filter: ["==", ["get", "type"], "Destination"]
+};
+
+export const originLayerConfig: LayerSpecification = {
+  id: "origin-layer",
+  type: "circle",
+  source: "itinerary-source",
+  paint: {
+    "circle-radius": 7,
+    "circle-color": "black",
+  },
+  filter: ["==", ["get", "type"], "Origin"]
+};
+
+
+//"name": "Destination",
