@@ -106,7 +106,8 @@ export const MapWidget: React.FC = ({ }) => {
     
         const map = new maplibregl.Map({
             container: mapContainerRef.current,
-            style: "https://api.maptiler.com/maps/c07241ff-0cee-4b65-8404-fb9439c2fc2e/style.json?key=0RiVj3uh1o63zeuIVaKk",
+            style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", 
+            // "https://api.maptiler.com/maps/c07241ff-0cee-4b65-8404-fb9439c2fc2e/style.json?key=0RiVj3uh1o63zeuIVaKk",
             center: [12.377014, 51.340613],
             zoom: 14,
             fadeDuration: 0
