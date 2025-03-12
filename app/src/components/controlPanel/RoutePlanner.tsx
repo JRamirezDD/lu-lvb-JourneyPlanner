@@ -1,21 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import { Filter, ArrowUpDown, ChevronDown, ChevronUp, Calendar } from "lucide-react"; // Icons
-import TramLogo from "../../../public/Tram-Logo.svg";
-import S_BahnLogo from "../../../public/S-Bahn-Logo.svg";
-import TrainLogo from "../../../public/Train.svg";
-import BusLogo from "../../../public/Bus-Logo.svg"; 
+import TramLogo from "../../../public/icons/otp-icons/Tram-Logo.svg";
+import S_BahnLogo from "../../../public/icons/otp-icons/S-Bahn-Logo.svg";
+import TrainLogo from "../../../public/icons/otp-icons/Train.svg";
+import BusLogo from "../../../public/icons/otp-icons/Bus-Logo.svg"; 
 import TransportFilter from "./filters/TransportFilter";
 import DepartureFilter from "./filters/DepartureFilter";
 import { useSettingsContext } from "@/contexts/settingsContext"; // Import context
 import { useAutocompleteDataContext } from "@/contexts/DataContext/autocompleteDataContext";
 import { AutocompleteItem } from "@/api/autocompleteService/dto/autocompleteitemResponse";
 import { TransportMode } from "@/types/TransportMode";
-import Bike from "../../../public/Bike.svg";
-import PersonStanding from "../../../public/Walk.svg";
-import Car from "../../../public/Car.svg";
+import Bike from "../../../public/icons/otp-icons/Bike.svg";
+import PersonStanding from "../../../public/icons/otp-icons/Walk.svg";
+import Car from "../../../public/icons/otp-icons/Car.svg";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
 import { RequestParameters } from "@/api/routingService/dto/otpRequest";
 import { ViewMode } from "@/types/ViewMode";
+import SuggestionContainer from "./widgets/SuggestionContainer";
 
 type TransportOption = {
   type: string;
@@ -148,7 +149,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       await fetchAutocompleteData({ 
         search: query,
         format: "JSON",
-        pointType: "P,S,W,N"
+        pointType: "N,P,S,W"
       });
     } catch (error) {
       console.error('Error fetching origin suggestions:', error);
@@ -166,7 +167,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       await fetchAutocompleteData({ 
         search: query,
         format: "JSON",
-        pointType: "P,S,W,N"
+        pointType: "N,P,S,W"
       });
     } catch (error) {
       console.error('Error fetching destination suggestions:', error);
@@ -233,17 +234,26 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   };
 
   const handleSuggestionClick = (suggestion: AutocompleteItem, isOrigin: boolean) => {
-    const fullAddress = `${suggestion.name}${suggestion.streetname ? `, ${suggestion.streetname}` : ''}${suggestion.housenumber ? ` ${suggestion.housenumber}` : ''}${suggestion.stadt ? `, ${suggestion.stadt}` : ''}`;
-    const coordinates = `${suggestion.lat},${suggestion.lon}`;
+
+    let SelectedLocation: SetStateAction<SelectedLocation | null>;
+
+    if (suggestion instanceof AutocompleteItem) {
+      const fullAddress = `${suggestion.data}`;
+      const coordinates = `${suggestion.lat},${suggestion.lon}`;
+      SelectedLocation = { name: fullAddress, coordinates };
+    } 
+    else {
+      return;  
+    }
   
     if (isOrigin) {
-      setOrigin(fullAddress);
-      setSelectedOrigin({ name: fullAddress, coordinates });
+      setOrigin(SelectedLocation.name);
+      setSelectedOrigin(SelectedLocation);
       setIsOriginSelected(true);
       setShowOriginSuggestions(false);
     } else {
-      setDestination(fullAddress);
-      setSelectedDestination({ name: fullAddress, coordinates });
+      setDestination(SelectedLocation.name);
+      setSelectedDestination(SelectedLocation);
       setIsDestinationSelected(true);
       setShowDestinationSuggestions(false);
     }
@@ -366,160 +376,140 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     }
   };
 
-  return (
-    <div className="flex flex-col gap-4 p-4 w-full">
-      <h2 className="text-lg font-bold">{translations?.ControlPanel?.planner?.title || "Plan Your Journey"}</h2>
-
-      {/* Inputs and swap button */}
-      <div className="flex flex-col gap-4 relative">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder={translations?.ControlPanel?.planner?.origin || "Origin"}
-            value={origin}
-            onChange={(e) => {
-              setOrigin(e.target.value);
-              setIsOriginSelected(false);
-              setSelectedOrigin(null);
-              setSelectedIndex(-1);
-            }}
-            onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
-            onFocus={handleOriginFocus}
-            className="location-input w-full p-2 border rounded"
-          />
-          {showOriginSuggestions && (
-            <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
-              {loadingAutocomplete && currentSearchField === "origin" ? (
-                <div className="p-2 text-gray-600">Loading suggestions...</div>
-              ) : originAutocompleteData.length > 0 ? (
-                originAutocompleteData.slice(0, 5).map((suggestion, index) => (
-                  <div
-                    key={suggestion.id}
-                    onClick={() => handleSuggestionClick(suggestion, true)}
-                    className={`p-2 cursor-pointer ${index === selectedIndex ? 'bg-primary-yellow/10' : 'hover:bg-gray-100'}`}
-                  >
-                    <div className="font-medium">{suggestion.name}</div>
-                    <div className="text-sm text-gray-600">
-                      {suggestion.streetname} {suggestion.housenumber}, {suggestion.stadt}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="p-2 text-gray-600">No suggestions found</div>
-              )}
-            </div>
-          )}
-        </div>
-
-        <button
-          onClick={swapLocations}
-          className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-primary-yellow text-primary-blue p-3 rounded-full hover:bg-primary-yellow/80 transition-colors z-10 shadow-md"
-        >
-          <ArrowUpDown size={24} />
-        </button>
-
-        <div className="relative">
-          <input
-            type="text"
-            placeholder={translations?.ControlPanel?.planner?.destination || "Destination"}
-            value={destination}
-            onChange={(e) => {
-              setDestination(e.target.value);
-              setIsDestinationSelected(false);
-              setSelectedDestination(null);
-              setSelectedIndex(-1);
-            }}
-            onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
-            onFocus={handleDestinationFocus}
-            className="location-input w-full p-2 border rounded"
-          />
-          {showDestinationSuggestions && (
-            <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
-              {loadingAutocomplete && currentSearchField === "destination" ? (
-                <div className="p-2 text-gray-600">Loading suggestions...</div>
-              ) : destinationAutocompleteData.length > 0 ? (
-                destinationAutocompleteData.slice(0, 5).map((suggestion, index) => (
-                  <div
-                    key={suggestion.id}
-                    onClick={() => handleSuggestionClick(suggestion, false)}
-                    className={`p-2 cursor-pointer ${index === selectedIndex ? 'bg-primary-yellow/10' : 'hover:bg-gray-100'}`}
-                  >
-                    <div className="font-medium">{suggestion.name}</div>
-                    <div className="text-sm text-gray-600">
-                      {suggestion.streetname} {suggestion.housenumber}, {suggestion.stadt}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="p-2 text-gray-600">No suggestions found</div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Filter Buttons */}
-      <div className="grid grid-cols-2 gap-2">
-        <button
-          onClick={() => setShowDepartureFilter(!showDepartureFilter)}
-          className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
-          suppressHydrationWarning
-        >
-          <div className="flex items-center gap-2">
-            <Calendar size={18} />
-            <span>
-              {isDepartureModified 
-                ? translations?.ControlPanel?.planner?.filters?.departureAt?.replace("{time}", formattedTime) || `Departure at ${formattedTime}`
-                : translations?.ControlPanel?.planner?.filters?.departureNow || "Depart Now"
-              }
-            </span>
+  
+      return (
+      <div className="flex flex-col gap-4 p-4 w-full">
+        <h2 className="text-lg font-bold">
+          {translations?.ControlPanel?.planner?.title || "Plan Your Journey"}
+        </h2>
+  
+        {/* Inputs and swap button */}
+        <div className="flex flex-col gap-4 relative">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder={translations?.ControlPanel?.planner?.origin || "Origin"}
+              value={origin}
+              onChange={(e) => {
+                setOrigin(e.target.value);
+                setIsOriginSelected(false);
+                setSelectedOrigin(null);
+                setSelectedIndex(-1);
+              }}
+              onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
+              onFocus={handleOriginFocus}
+              className="location-input w-full p-2 border rounded"
+            />
+            {showOriginSuggestions && (
+              <SuggestionContainer
+                suggestions={originAutocompleteData}
+                loading={loadingAutocomplete && currentSearchField === "origin"}
+                selectedIndex={selectedIndex}
+                onSuggestionClick={(suggestion: AutocompleteItem) =>
+                  handleSuggestionClick(suggestion, true)
+                }
+              />
+            )}
           </div>
-          {showDepartureFilter ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-        </button>
-
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
-        >
-          <div className="flex items-center gap-2">
-            <Filter size={18} />
-            <span>{translations?.ControlPanel?.planner?.filters?.transportButton || "Transport"}</span>
+  
+          <button
+            onClick={swapLocations}
+            className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-primary-yellow text-primary-blue p-3 rounded-full hover:bg-primary-yellow/80 transition-colors z-10 shadow-md"
+          >
+            <ArrowUpDown size={24} />
+          </button>
+  
+          <div className="relative">
+            <input
+              type="text"
+              placeholder={translations?.ControlPanel?.planner?.destination || "Destination"}
+              value={destination}
+              onChange={(e) => {
+                setDestination(e.target.value);
+                setIsDestinationSelected(false);
+                setSelectedDestination(null);
+                setSelectedIndex(-1);
+              }}
+              onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
+              onFocus={handleDestinationFocus}
+              className="location-input w-full p-2 border rounded"
+            />
+            {showDestinationSuggestions && (
+              <SuggestionContainer
+                suggestions={destinationAutocompleteData}
+                loading={loadingAutocomplete && currentSearchField === "destination"}
+                selectedIndex={selectedIndex}
+                onSuggestionClick={(suggestion: AutocompleteItem) =>
+                  handleSuggestionClick(suggestion, false)
+                }
+              />
+            )}
           </div>
-          {showFilters ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+        </div>
+  
+        {/* Filter Buttons */}
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => setShowDepartureFilter(!showDepartureFilter)}
+            className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
+            suppressHydrationWarning
+          >
+            <div className="flex items-center gap-2">
+              <Calendar size={18} />
+              <span>
+                {isDepartureModified
+                  ? translations?.ControlPanel?.planner?.filters?.departureAt?.replace("{time}", formattedTime) ||
+                    `Departure at ${formattedTime}`
+                  : translations?.ControlPanel?.planner?.filters?.departureNow || "Depart Now"}
+              </span>
+            </div>
+            {showDepartureFilter ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          </button>
+  
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
+          >
+            <div className="flex items-center gap-2">
+              <Filter size={18} />
+              <span>{translations?.ControlPanel?.planner?.filters?.transportButton || "Transport"}</span>
+            </div>
+            {showFilters ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          </button>
+        </div>
+  
+        {showDepartureFilter && (
+          <DepartureFilter 
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          />
+        )}
+        {showFilters && (
+          <TransportFilter 
+            activeFilters={Object.fromEntries(
+              transportOptions.map(option => [
+                option.type,
+                transportModes.includes(option.mode)
+              ])
+            )}
+            toggleFilter={toggleFilter}
+          />
+        )}
+  
+        <button 
+          onClick={handleSeeRoutes}
+          disabled={!selectedOrigin || !selectedDestination}
+          className={`p-2 rounded w-full transition-colors ${
+            !selectedOrigin || !selectedDestination 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-primary-yellow text-primary-blue hover:bg-primary-yellow/80'
+          }`}
+        >
+          {translations?.ControlPanel?.planner?.seeRoutes || "See Routes"}
         </button>
       </div>
-
-      {showDepartureFilter && (
-        <DepartureFilter 
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-        />
-      )}
-      {showFilters && (
-        <TransportFilter 
-          activeFilters={Object.fromEntries(
-            transportOptions.map(option => [
-              option.type,
-              transportModes.includes(option.mode)
-            ])
-          )}
-          toggleFilter={toggleFilter}
-        />
-      )}
-
-      <button 
-        onClick={handleSeeRoutes}
-        disabled={!selectedOrigin || !selectedDestination}
-        className={`p-2 rounded w-full transition-colors ${
-          !selectedOrigin || !selectedDestination 
-            ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-primary-yellow text-primary-blue hover:bg-primary-yellow/80'
-        }`}
-      >
-        {translations?.ControlPanel?.planner?.seeRoutes || "See Routes"}
-      </button>
-    </div>
-  );
+    );
 };
-
+  
 export default RoutePlanner;
+  

@@ -7,15 +7,6 @@ export const createNearbySearchLayerData = (searchItems: NearBySearchResponse): 
   const searchItemsGeoJson = searchItems.toGeoJson();
   console.log("SearchItems GeoJSON:", searchItemsGeoJson);
   return searchItemsGeoJson;
-
-
-      //  const raw = toNearBySearchResponse(nearbysearchmockresponse); //map to nearbysearchresponse object
-      //   //console.log("RAW RESPONSE" + JSON.stringify(raw, null, 2))
-  
-      //   const geo = raw.toGeoJson();  //change object to geojson
-      //   console.log("GEO" + JSON.stringify(geo, null, 2));    
-      //   expect(geo.features.length != 0);
-
 };
 
 // Stops source definition
@@ -37,10 +28,8 @@ export const freeFloating_stopsLayerConfig: LayerSpecification = {
     paint: {
       "circle-radius": 5,
       "circle-color": "red",
-      "circle-stroke-width": 2,
-      "circle-stroke-color": "black",
     },
-    filter: ["==", ["get", "type"], "Point"],
+    filter: ["==", ["get", "type"], "free_floating"],
 };
 
 
@@ -52,35 +41,84 @@ export const stop_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
       "icon-image": "haltestelle",
-      "icon-size": 0.022,
+      "icon-size": 0.08,
   },
   filter: ["==", ["get", "type"], "stop"],
 };
 
+  // Stops Labels Layer
+  export const stop_stopsLabelsLayerConfig: LayerSpecification = {
+    id: "stops-labels",
+    type: "symbol",
+    source: "nearbySearch-source",
+    minzoom: 15,
+    maxzoom: 22,
+    layout: {
+      "text-field": ["get", "name"],
+      "text-size": 12,
+      "text-offset": [0, 1.2],
+      "text-anchor": "top",
+    },
+    paint: {
+      "text-color": "#000",
+      "text-halo-color": "#fff",
+      "text-halo-width": 1,
+    },
+    filter: ["==", ["get", "type"], "stop"],
+  };
+
+
 export const ticketMachine_stopsLayerConfig: LayerSpecification = {
-  id: "stop_stops-layer",
+  id: "ticket_machine-layer",
   type: "symbol",
   source: "nearbySearch-source",
   minzoom: 14,
   maxzoom: 22,
   layout: {
-      "icon-image": "haltestelle", 
-      "icon-size": 0.022,
+      "icon-image": "ticket", 
+      "icon-size": 0.07,
   },
   filter: ["==", ["get", "type"], "ticket-machine"],
 };
 
-export const station_stopsLayerConfig: LayerSpecification = {
-  id: "station_stops-layer",
+// nextbike, Taxi, eScooter 
+export const taxi_station_stopsLayerConfig: LayerSpecification = {
+  id: "taxi_station_stops-layer",
   type: "symbol",
   source: "nearbySearch-source",
   minzoom: 14,
   maxzoom: 22,
   layout: {
-      "icon-image": "haltestelle", 
-      "icon-size": 0.022,
-  },
-  filter: ["==", ["get", "type"], "station"],
+    "icon-image": "taxi", 
+    "icon-size": 0.07,
+},
+  filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "taxi"]
+};
+
+export const escooter_station_stopsLayerConfig: LayerSpecification = {
+  id: "escooter_station_stops-layer",
+  type: "symbol",
+  source: "nearbySearch-source",
+  minzoom: 14,
+  maxzoom: 22,
+  layout: {
+    "icon-image": "scooter", 
+    "icon-size": 0.07,
+},
+  filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "escooter"]
+};
+
+export const nextbike_station_stopsLayerConfig: LayerSpecification = {
+  id: "nextbike_station_stops-layer",
+  type: "symbol",
+  source: "nearbySearch-source",
+  minzoom: 14,
+  maxzoom: 22,
+  layout: {
+    "icon-image": "nextbike", 
+    "icon-size": 0.07,
+},
+  filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "nextbike"]
 };
 
 export const mobistation_stopsLayerConfig: LayerSpecification = {
@@ -90,9 +128,9 @@ export const mobistation_stopsLayerConfig: LayerSpecification = {
   minzoom: 14,
   maxzoom: 22,
   layout: {
-      "icon-image": "haltestelle",
-      "icon-size": 0.022,
-  },
+    "icon-image": "charger", 
+    "icon-size": 0.07,
+},
   filter: ["==", ["get", "type"], "mobistation"],
 };
 

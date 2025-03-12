@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { GeoJSON } from "geojson";
-import { LayerSpecification } from "maplibre-gl";
+import { LayerSpecification, SourceSpecification } from "maplibre-gl";
 
 const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>) => {
     const sources = useRef(new Map<string, any>());
@@ -33,6 +33,9 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         if (activeSources.current.has(sourceId)) {
             console.log(`Source ${sourceId} already active.`);
             return;
+        } else {
+            console.log(`Activating source ${sourceId}.`);
+            activeSources.current.add(sourceId);
         }
     }
 
@@ -72,7 +75,17 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         activeLayers.current.forEach(layerId => console.log(layerId));
     };
 
-    return { updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
+    const setSource = (sourceId: string, sourceSpecification: SourceSpecification, newData: GeoJSON) => {
+        if (!mapRef.current) return;
+        let source = mapRef.current.getSource(sourceId) as maplibregl.GeoJSONSource;
+        if (!source) {
+            mapRef.current.addSource(sourceId, sourceSpecification);
+        }
+        source = mapRef.current.getSource(sourceId) as maplibregl.GeoJSONSource;
+        source.setData(newData);
+    }
+
+    return { setSource, updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
 };
 
 export default useLayersManager;

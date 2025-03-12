@@ -5,7 +5,7 @@ import { UIProvider, useUIContext } from '@/contexts/uiContext';
 import { MapProvider, useMapContext } from '@/contexts/mapContext';
 import maplibregl from 'maplibre-gl';
 import { StopmonitorDataProvider } from '@/contexts/DataContext/stopmonitorDataContext';
-import MapWidget from '@/components/map/MapWidget';
+import Map from '@/components/map/MapWidget';
 import { NearbySearchDataProvider } from '@/contexts/DataContext/nearbySearchDataContext';
 
 
@@ -78,7 +78,7 @@ describe('Map Component', () => {
       <UIProvider>
         <MapProvider>
           <StopmonitorDataProvider>
-            <MapWidget />
+            <Map />
           </StopmonitorDataProvider>
         </MapProvider>
       </UIProvider>
@@ -91,7 +91,7 @@ describe('Map Component', () => {
       <UIProvider>
         <MapProvider>
           <StopmonitorDataProvider>
-            <MapWidget />
+            <Map />
           </StopmonitorDataProvider>
         </MapProvider>
       </UIProvider>
@@ -108,7 +108,7 @@ describe('Map Component', () => {
         <MapProvider>
           <StopmonitorDataProvider>
             <NearbySearchDataProvider>
-            <MapWidget />
+            <Map />
             </NearbySearchDataProvider>
           </StopmonitorDataProvider>
         </MapProvider>
