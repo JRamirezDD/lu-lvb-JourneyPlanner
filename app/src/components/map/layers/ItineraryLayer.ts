@@ -148,7 +148,7 @@ export const legStartEndLayerConfig: LayerSpecification = {
   type: "circle",
   source: "itinerary-source",
   paint: {
-    "circle-radius": 3,
+    "circle-radius": 5,
     "circle-color": "white",
     "circle-stroke-width": 2,
     "circle-stroke-color": "black",
@@ -158,23 +158,23 @@ export const legStartEndLayerConfig: LayerSpecification = {
 
 export const destinationLayerConfig: LayerSpecification = {
   id: "destination-layer",
-  type: "symbol",
+  type: "circle",
   source: "itinerary-source",
-  layout: {
-    "icon-image": "filled_pin", 
-    "icon-size": .03,
-},
+  paint: {
+    "circle-radius": 7,
+    "circle-color": "black",
+  },
   filter: ["==", ["get", "type"], "Destination"]
 };
 
 export const originLayerConfig: LayerSpecification = {
   id: "origin-layer",
-  type: "symbol",
+  type: "circle",
   source: "itinerary-source",
-  layout: {
-    "icon-image": "hollow_pin", 
-    "icon-size": .03,
-},
+  paint: {
+    "circle-radius": 7,
+    "circle-color": "black",
+  },
   filter: ["==", ["get", "type"], "Origin"]
 };
 

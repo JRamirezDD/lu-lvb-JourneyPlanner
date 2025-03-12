@@ -480,7 +480,7 @@ export const MapWidget: React.FC = ({ }) => {
             legStartEndLayerConfig, 
             intermediateStopsLayerConfig,
             destinationLayerConfig,
-            //originLayerConfig
+            originLayerConfig
         ];
         layers.forEach(addLayerIfNotExists);
     };
