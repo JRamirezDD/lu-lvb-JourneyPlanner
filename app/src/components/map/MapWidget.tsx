@@ -20,6 +20,7 @@ import {
 import { Itinerary } from "@/types/Itinerary";
 import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
 import loadSVGImage from "@/utils/loadSVGImage";
+import loadPNGImage from "@/utils/loadPNGImage";
 import useLayersManager from "./utils/layersManager";
 import { useNearbySearchDataContext } from "@/contexts/DataContext/nearbySearchDataContext";
 import { NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto/nearbysearchRequest";
@@ -27,13 +28,14 @@ import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, mobistation
     ticketMachine_stopsLayerConfig, stop_stopsLayerConfig, 
     searchItemsSource,
     nextbike_station_stopsLayerConfig,
-    escooter_station_stopsLayerConfig} from "./layers/NearbySearchLayer";
+    escooter_station_stopsLayerConfig,
+    stop_stopsLabelsLayerConfig} from "./layers/NearbySearchLayer";
 import { NearBySearchResponse, SearchItemJson } from "@/api/nearbysearchService/dto/nearbysearchResponse";
 import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse";
 import { plainToInstance } from "class-transformer";
 import { useLocationContext } from "@/contexts/locationContext";
 import { Coordinates } from "@/types/Coordinates";
-import { createCurrentLocationData, currentLocationLayerConfig } from "./layers/currentLocationLayer";
+import { createCurrentLocationData, currentLocationAccuracyLayerConfig, currentLocationLayerConfig, currentLocationSource } from "./layers/currentLocationLayer";
 import { Location } from "@/types/Location";
 
 // --- Bounding Box Helpers ---
@@ -82,7 +84,7 @@ export const MapWidget: React.FC = ({ }) => {
     const [mapLoaded, setMapLoaded] = useState(false);
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
     const { nearBySearchData, fetchNearbySearch, loadingNearbySearch, errorNearbySearch } = useNearbySearchDataContext();
-    const { setSelectedItinerary, selectedItinerary } = useMapContext();
+    const { setSelectedItinerary, selectedItinerary, resetCenterTrigger, resetCenterCounter, zoominLevel, zoomoutLevel } = useMapContext();
     const { setSelectedNearbySearchItem, selectedNearbySearchItem } = useMapContext();
     const { currentLocation, locationIsEnabled: isEnabled } = useLocationContext();
   
@@ -91,8 +93,9 @@ export const MapWidget: React.FC = ({ }) => {
     const currentQueryBoundsRef = useRef<maplibregl.LngLatBounds | null>(null);
     const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
-    const { updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
+    const { setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
 
+    const  storedCenter = useRef<Coordinates | null>(null); 
 
     useEffect(() => {
         if (!mapContainerRef.current || mapRef.current) return;
@@ -102,9 +105,11 @@ export const MapWidget: React.FC = ({ }) => {
             style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
             center: [12.377014, 51.340613],
             zoom: 14,
+            fadeDuration: 0
           });
     
         map.on("load", () => {
+
             // Initialize LayerManager and mapRef
             layerManagerRef.current = new LayerManager(map);
             mapRef.current = map;
@@ -117,7 +122,7 @@ export const MapWidget: React.FC = ({ }) => {
     
             // Load Images
             const loadImages = () => {
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/haltestelle.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/haltestelle.svg").then((image) => {
                     if (!map.hasImage("haltestelle")) {
                         map.addImage("haltestelle", image as HTMLImageElement | ImageBitmap);
                     }
@@ -125,7 +130,9 @@ export const MapWidget: React.FC = ({ }) => {
                     throw error;
                 });
 
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/current-location-icon.svg").then((image) => {
+                
+
+                loadPNGImage("/lu-lvb-JourneyPlanner/icons/current-location-icon.png").then((image) => {
                     if (!map.hasImage("current-location-icon")) {
                     map.addImage("current-location-icon", image as HTMLImageElement | ImageBitmap);
                     }
@@ -134,42 +141,42 @@ export const MapWidget: React.FC = ({ }) => {
                     console.error("Error loading current location icon:", error);
                 });
 
-                loadSVGImage("/lu-lvb-JourneyPlanner/Bus-Logo.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/Bus-Logo.svg").then((image) => {
                     if (!map.hasImage("Bus-Logo")) {
                         map.addImage("Bus-Logo", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
                 });
-                loadSVGImage("/lu-lvb-JourneyPlanner/ticket.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/ticket.svg").then((image) => {
                     if (!map.hasImage("ticket")) {
                         map.addImage("ticket", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
                 });
-                loadSVGImage("/lu-lvb-JourneyPlanner/taxi.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/taxi.svg").then((image) => {
                     if (!map.hasImage("taxi")) {
                         map.addImage("taxi", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
                 });
-                loadSVGImage("/lu-lvb-JourneyPlanner/nextbike.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/nextbike.svg").then((image) => {
                     if (!map.hasImage("nextbike")) {
                         map.addImage("nextbike", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
                 });
-                loadSVGImage("/lu-lvb-JourneyPlanner/scooter.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/scooter.svg").then((image) => {
                     if (!map.hasImage("scooter")) {
                         map.addImage("scooter", image as HTMLImageElement | ImageBitmap);
                     }
                 }).catch((error) => {
                     throw error;
                 });
-                loadSVGImage("/lu-lvb-JourneyPlanner/charger.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/charger.svg").then((image) => {
                     if (!map.hasImage("charger")) {
                         map.addImage("charger", image as HTMLImageElement | ImageBitmap);
                     }
@@ -226,24 +233,56 @@ export const MapWidget: React.FC = ({ }) => {
         return () => map.remove();
     }, []);
 
+    // zoom level event handler
+    useEffect(() => {
+        if (mapRef.current) {
+            const currentZoom = mapRef.current.getZoom();
+            moveMap(undefined, currentZoom + 1, 200);
+        }
+    }, [zoominLevel]);
+
+    useEffect(() => {
+        if (mapRef.current) {
+            const currentZoom = mapRef.current.getZoom();
+            moveMap(undefined, currentZoom - 1, 200);
+        }
+    }, [zoomoutLevel]);
+
 
     // Location event handlers
     const setCenter = (coords: Coordinates): void => {
         if (mapRef.current && coords) {
-            console.log("Setting center to:", currentLocation);
-            mapRef.current.setCenter([coords.lon, coords.lat]);
+            storedCenter.current = coords
+        }
+    }
+
+    const moveMap = (coords?: Coordinates, zoomLevel?: number, duration?: number): void => {
+        if (mapRef.current) {
+            mapRef.current.easeTo({
+                center: coords? [coords.lon, coords.lat] : mapRef.current.getCenter(),
+                zoom: zoomLevel ? zoomLevel : mapRef.current.getZoom(),
+                duration: duration ? duration : undefined,
+                essential: true,
+            });
         }
     }
 
     useEffect(() => {
+        if (mapRef.current && storedCenter.current && isEnabled) {
+            moveMap(storedCenter.current, 14, 500);
+        }
+    }, [resetCenterCounter]);
+
+    
+    useEffect(() => {
         if (mapRef.current && isEnabled && currentLocation) {
             setCenter(currentLocation.coords);
-
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
+            resetCenterTrigger();
         }
     }, [isEnabled, mapRef.current]);
 
-    // --- Update current location icon on map when location changes ---
+    // Update current location icon on map when location changes
     useEffect(() => {
         if (isEnabled && currentLocation) {
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
@@ -444,13 +483,14 @@ export const MapWidget: React.FC = ({ }) => {
 
         //create layers 
         const layers = [
-            freeFloating_stopsLayerConfig, 
-            stop_stopsLayerConfig, 
             ticketMachine_stopsLayerConfig, 
-            taxi_station_stopsLayerConfig, 
-            nextbike_station_stopsLayerConfig,
             escooter_station_stopsLayerConfig,
-            mobistation_stopsLayerConfig 
+            freeFloating_stopsLayerConfig,
+            nextbike_station_stopsLayerConfig,
+            taxi_station_stopsLayerConfig,
+            mobistation_stopsLayerConfig,
+            stop_stopsLabelsLayerConfig,
+            stop_stopsLayerConfig
             ];
         layers.forEach(addLayerIfNotExists);
 
@@ -462,8 +502,10 @@ export const MapWidget: React.FC = ({ }) => {
           //map.getSource("nearbySearch-source").setData(yourGeoJsonData);
 
         // Add layer click functionality
-        for (const layer of layers) {
-            mapRef.current.on("click", layer.id, (e) => {
+        
+        const loadStopsLayerClickFunctionality = (layer_id = stop_stopsLayerConfig.id) => {
+            if (!mapRef.current) return;
+            mapRef.current.on("click", layer_id, (e) => {
                 const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];
                 if (feature) {
                     const parsed = JSON.parse(feature.properties?.item);
@@ -475,18 +517,46 @@ export const MapWidget: React.FC = ({ }) => {
             });
             
             // Register cursor events
-            mapRef.current.on("mouseenter", layer.id, () => {
+            mapRef.current.on("mouseenter", layer_id, () => {
                 if (mapRef.current) {
                     mapRef.current.getCanvas().style.cursor = "pointer";
                 }
             });
 
-            mapRef.current.on("mouseleave", layer.id, () => {
+            mapRef.current.on("mouseleave", layer_id, () => {
                 if (mapRef.current) {
                     mapRef.current.getCanvas().style.cursor = "";
                 }
             });
         }
+
+        loadStopsLayerClickFunctionality(stop_stopsLayerConfig.id);
+
+        // for (const layer of layers) {
+        //     mapRef.current.on("click", layer.id, (e) => {
+        //         const feature = (e as maplibregl.MapLayerMouseEvent).features?.[0];
+        //         if (feature) {
+        //             const parsed = JSON.parse(feature.properties?.item);
+        //             const rawObj = (Array.isArray(parsed) ? parsed[0] : parsed) as SearchItemJson;
+        //             const searchItemJson =  plainToInstance(SearchItemJson, rawObj);
+        //             console.log("Clicked nearby search item:", searchItemJson);
+        //             setSelectedNearbySearchItem(searchItemJson);
+        //         }
+        //     });
+            
+        //     // Register cursor events
+        //     mapRef.current.on("mouseenter", layer.id, () => {
+        //         if (mapRef.current) {
+        //             mapRef.current.getCanvas().style.cursor = "pointer";
+        //         }
+        //     });
+
+        //     mapRef.current.on("mouseleave", layer.id, () => {
+        //         if (mapRef.current) {
+        //             mapRef.current.getCanvas().style.cursor = "";
+        //         }
+        //     });
+        // }
     };
 
     const removeNearbySearchLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
@@ -503,20 +573,18 @@ export const MapWidget: React.FC = ({ }) => {
 
         if (!currentLocation) return;
     
-        const geojsonData = createCurrentLocationData(currentLocation.coords);
+        const geojsonData = createCurrentLocationData(currentLocation);
         if (!geojsonData) return;
 
         if (!activeSources.current.has("current-location-source")) {
+            setSource("current-location-source", currentLocationSource, geojsonData);
             activateSource("current-location-source");
-            updateSource("current-location-source", geojsonData);
         }
         else {
-            const source = mapRef.current.getSource("current-location-source") as maplibregl.GeoJSONSource;
-            if (source) {
-                source.setData(geojsonData);
-            }
+            setSource("current-location-source", currentLocationSource, geojsonData);
         }
     
+        addLayerIfNotExists(currentLocationAccuracyLayerConfig);
         addLayerIfNotExists(currentLocationLayerConfig);
     };
 
