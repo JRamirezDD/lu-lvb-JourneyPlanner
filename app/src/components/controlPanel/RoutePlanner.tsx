@@ -17,6 +17,7 @@ import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
 import { RequestParameters } from "@/api/routingService/dto/otpRequest";
 import { ViewMode } from "@/types/ViewMode";
 import SuggestionContainer from "./widgets/SuggestionContainer";
+import { useLocationContext } from "@/contexts/locationContext";
 
 type TransportOption = {
   type: string;
@@ -56,6 +57,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     lastDestinationCoordinates,
     setLastSearchParams 
   } = useOtpDataContext();
+  const { currentLocation, locationIsEnabled } = useLocationContext();
 
   // Initialize with values from context if available
   const [origin, setOrigin] = useState(lastOrigin || "");
@@ -295,7 +297,18 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         selectedOrigin.name,
         selectedDestination.name,
         selectedOrigin.coordinates,
-        selectedDestination.coordinates
+        selectedDestination.coordinates,
+        transportModes, 
+        selectedDate ? selectedDate.toLocaleDateString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric'
+        }).replace(/\//g, '-') : "",
+        selectedDate ? selectedDate.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        }) : ""
       );
 
       const params: Partial<RequestParameters> = {
@@ -342,17 +355,32 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
-        setSelectedIndex(prev => 
-          prev < suggestions.length - 1 ? prev + 1 : prev
-        );
+        // If we're at the current location option (-2) or before it (-1), move to the first suggestion (0)
+        // Otherwise, move down through the suggestions
+        setSelectedIndex(prev => {
+          if (prev < 0) return 0;
+          return prev < suggestions.length - 1 ? prev + 1 : prev;
+        });
         break;
       case 'ArrowUp':
         e.preventDefault();
-        setSelectedIndex(prev => prev > -1 ? prev - 1 : -1);
+        // If we're at the first suggestion (0), move to the current location option (-2)
+        // Otherwise, move up through the suggestions
+        setSelectedIndex(prev => {
+          if (prev === 0 && locationIsEnabled) return -2;
+          return prev > -2 ? prev - 1 : -2;
+        });
         break;
       case 'Enter':
         e.preventDefault();
-        if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+        if (selectedIndex === -2 && locationIsEnabled) {
+          // Handle current location selection
+          if (isOrigin) {
+            handleUseCurrentLocationForOrigin();
+          } else {
+            handleUseCurrentLocationForDestination();
+          }
+        } else if (selectedIndex >= 0 && suggestions[selectedIndex]) {
           handleSuggestionClick(suggestions[selectedIndex], isOrigin);
         }
         setSelectedIndex(-1);
@@ -376,140 +404,193 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     }
   };
 
-  
-      return (
-      <div className="flex flex-col gap-4 p-4 w-full">
-        <h2 className="text-lg font-bold">
-          {translations?.ControlPanel?.planner?.title || "Plan Your Journey"}
-        </h2>
-  
-        {/* Inputs and swap button */}
-        <div className="flex flex-col gap-4 relative">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder={translations?.ControlPanel?.planner?.origin || "Origin"}
-              value={origin}
-              onChange={(e) => {
-                setOrigin(e.target.value);
-                setIsOriginSelected(false);
-                setSelectedOrigin(null);
-                setSelectedIndex(-1);
-              }}
-              onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
-              onFocus={handleOriginFocus}
-              className="location-input w-full p-2 border rounded"
-            />
-            {showOriginSuggestions && (
-              <SuggestionContainer
-                suggestions={originAutocompleteData}
-                loading={loadingAutocomplete && currentSearchField === "origin"}
-                selectedIndex={selectedIndex}
-                onSuggestionClick={(suggestion: AutocompleteItem) =>
-                  handleSuggestionClick(suggestion, true)
-                }
-              />
-            )}
-          </div>
-  
-          <button
-            onClick={swapLocations}
-            className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-primary-yellow text-primary-blue p-3 rounded-full hover:bg-primary-yellow/80 transition-colors z-10 shadow-md"
-          >
-            <ArrowUpDown size={24} />
-          </button>
-  
-          <div className="relative">
-            <input
-              type="text"
-              placeholder={translations?.ControlPanel?.planner?.destination || "Destination"}
-              value={destination}
-              onChange={(e) => {
-                setDestination(e.target.value);
-                setIsDestinationSelected(false);
-                setSelectedDestination(null);
-                setSelectedIndex(-1);
-              }}
-              onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
-              onFocus={handleDestinationFocus}
-              className="location-input w-full p-2 border rounded"
-            />
-            {showDestinationSuggestions && (
-              <SuggestionContainer
-                suggestions={destinationAutocompleteData}
-                loading={loadingAutocomplete && currentSearchField === "destination"}
-                selectedIndex={selectedIndex}
-                onSuggestionClick={(suggestion: AutocompleteItem) =>
-                  handleSuggestionClick(suggestion, false)
-                }
-              />
-            )}
-          </div>
-        </div>
-  
-        {/* Filter Buttons */}
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            onClick={() => setShowDepartureFilter(!showDepartureFilter)}
-            className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
-            suppressHydrationWarning
-          >
-            <div className="flex items-center gap-2">
-              <Calendar size={18} />
-              <span>
-                {isDepartureModified
-                  ? translations?.ControlPanel?.planner?.filters?.departureAt?.replace("{time}", formattedTime) ||
-                    `Departure at ${formattedTime}`
-                  : translations?.ControlPanel?.planner?.filters?.departureNow || "Depart Now"}
-              </span>
-            </div>
-            {showDepartureFilter ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-          </button>
-  
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
-          >
-            <div className="flex items-center gap-2">
-              <Filter size={18} />
-              <span>{translations?.ControlPanel?.planner?.filters?.transportButton || "Transport"}</span>
-            </div>
-            {showFilters ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-          </button>
-        </div>
-  
-        {showDepartureFilter && (
-          <DepartureFilter 
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
+  // Handle using current location for origin
+  const handleUseCurrentLocationForOrigin = () => {
+    if (!currentLocation || !locationIsEnabled) {
+      console.error('Current location is not available');
+      return;
+    }
+
+    const coordinates = `${currentLocation.coords.lat},${currentLocation.coords.lon}`;
+    // Use the translated text for current location
+    const locationName = translations?.ControlPanel?.planner?.currentLocation || "Current Location";
+    
+    setOrigin(locationName);
+    setSelectedOrigin({ name: locationName, coordinates });
+    setIsOriginSelected(true);
+    setShowOriginSuggestions(false);
+    
+    // Clear autocomplete data and reset state
+    setOriginAutocompleteData([]);
+    clearAutocompleteData();
+    setSelectedIndex(-1);
+    setCurrentSearchField(null);
+  };
+
+  // Handle using current location for destination
+  const handleUseCurrentLocationForDestination = () => {
+    if (!currentLocation || !locationIsEnabled) {
+      console.error('Current location is not available');
+      return;
+    }
+
+    const coordinates = `${currentLocation.coords.lat},${currentLocation.coords.lon}`;
+    // Use the translated text for current location
+    const locationName = translations?.ControlPanel?.planner?.currentLocation || "Current Location";
+    
+    setDestination(locationName);
+    setSelectedDestination({ name: locationName, coordinates });
+    setIsDestinationSelected(true);
+    setShowDestinationSuggestions(false);
+    
+    // Clear autocomplete data and reset state
+    setDestinationAutocompleteData([]);
+    clearAutocompleteData();
+    setSelectedIndex(-1);
+    setCurrentSearchField(null);
+  };
+
+  return (
+    <div className="flex flex-col gap-4 p-4 w-full">
+      <h2 className="text-lg font-bold">
+        {translations?.ControlPanel?.planner?.title || "Plan Your Journey"}
+      </h2>
+
+      {/* Inputs and swap button */}
+      <div className="flex flex-col gap-4 relative">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder={translations?.ControlPanel?.planner?.origin || "Origin"}
+            value={origin}
+            onChange={(e) => {
+              setOrigin(e.target.value);
+              setIsOriginSelected(false);
+              setSelectedOrigin(null);
+              setSelectedIndex(-1);
+            }}
+            onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
+            onFocus={handleOriginFocus}
+            className="location-input w-full p-2 border rounded"
           />
-        )}
-        {showFilters && (
-          <TransportFilter 
-            activeFilters={Object.fromEntries(
-              transportOptions.map(option => [
-                option.type,
-                transportModes.includes(option.mode)
-              ])
-            )}
-            toggleFilter={toggleFilter}
-          />
-        )}
-  
-        <button 
-          onClick={handleSeeRoutes}
-          disabled={!selectedOrigin || !selectedDestination}
-          className={`p-2 rounded w-full transition-colors ${
-            !selectedOrigin || !selectedDestination 
-              ? 'bg-gray-400 cursor-not-allowed' 
-              : 'bg-primary-yellow text-primary-blue hover:bg-primary-yellow/80'
-          }`}
+          {showOriginSuggestions && (
+            <SuggestionContainer
+              suggestions={originAutocompleteData}
+              loading={loadingAutocomplete && currentSearchField === "origin"}
+              selectedIndex={selectedIndex}
+              onSuggestionClick={(suggestion: AutocompleteItem) =>
+                handleSuggestionClick(suggestion, true)
+              }
+              onCurrentLocationClick={handleUseCurrentLocationForOrigin}
+              showCurrentLocation={locationIsEnabled}
+              currentLocationLabel={translations?.ControlPanel?.planner?.currentLocation || "Current Location"}
+              currentLocationDescription={translations?.ControlPanel?.planner?.useCurrentLocation || "Use your current location"}
+            />
+          )}
+        </div>
+
+        <button
+          onClick={swapLocations}
+          className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-primary-yellow text-primary-blue p-3 rounded-full hover:bg-primary-yellow/80 transition-colors z-10 shadow-md"
         >
-          {translations?.ControlPanel?.planner?.seeRoutes || "See Routes"}
+          <ArrowUpDown size={24} />
+        </button>
+
+        <div className="relative">
+          <input
+            type="text"
+            placeholder={translations?.ControlPanel?.planner?.destination || "Destination"}
+            value={destination}
+            onChange={(e) => {
+              setDestination(e.target.value);
+              setIsDestinationSelected(false);
+              setSelectedDestination(null);
+              setSelectedIndex(-1);
+            }}
+            onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
+            onFocus={handleDestinationFocus}
+            className="location-input w-full p-2 border rounded"
+          />
+          {showDestinationSuggestions && (
+            <SuggestionContainer
+              suggestions={destinationAutocompleteData}
+              loading={loadingAutocomplete && currentSearchField === "destination"}
+              selectedIndex={selectedIndex}
+              onSuggestionClick={(suggestion: AutocompleteItem) =>
+                handleSuggestionClick(suggestion, false)
+              }
+              onCurrentLocationClick={handleUseCurrentLocationForDestination}
+              showCurrentLocation={locationIsEnabled}
+              currentLocationLabel={translations?.ControlPanel?.planner?.currentLocation || "Current Location"}
+              currentLocationDescription={translations?.ControlPanel?.planner?.useCurrentLocation || "Use your current location"}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Filter Buttons */}
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          onClick={() => setShowDepartureFilter(!showDepartureFilter)}
+          className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
+          suppressHydrationWarning
+        >
+          <div className="flex items-center gap-2">
+            <Calendar size={18} />
+            <span>
+              {isDepartureModified
+                ? translations?.ControlPanel?.planner?.filters?.departureAt?.replace("{time}", formattedTime) ||
+                  `Departure at ${formattedTime}`
+                : translations?.ControlPanel?.planner?.filters?.departureNow || "Depart Now"}
+            </span>
+          </div>
+          {showDepartureFilter ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+        </button>
+
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          className="flex items-center justify-between bg-primary-yellow text-primary-blue px-4 py-2 rounded-md transition-all hover:bg-primary-yellow/80"
+        >
+          <div className="flex items-center gap-2">
+            <Filter size={18} />
+            <span>{translations?.ControlPanel?.planner?.filters?.transportButton || "Transport"}</span>
+          </div>
+          {showFilters ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </button>
       </div>
-    );
+
+      {showDepartureFilter && (
+        <DepartureFilter 
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+      )}
+      {showFilters && (
+        <TransportFilter 
+          activeFilters={Object.fromEntries(
+            transportOptions.map(option => [
+              option.type,
+              transportModes.includes(option.mode)
+            ])
+          )}
+          toggleFilter={toggleFilter}
+        />
+      )}
+
+      <button 
+        onClick={handleSeeRoutes}
+        disabled={!selectedOrigin || !selectedDestination}
+        className={`p-2 rounded w-full transition-colors ${
+          !selectedOrigin || !selectedDestination 
+            ? 'bg-gray-400 cursor-not-allowed' 
+            : 'bg-primary-yellow text-primary-blue hover:bg-primary-yellow/80'
+        }`}
+      >
+        {translations?.ControlPanel?.planner?.seeRoutes || "See Routes"}
+      </button>
+    </div>
+  );
 };
-  
+
 export default RoutePlanner;
   

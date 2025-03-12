@@ -13,6 +13,8 @@
             "origin": "Origin",
             "destination": "Destination",
             "seeRoutes": "See Routes",
+            "currentLocation": "Current Location",
+            "useCurrentLocation": "Use your current location",
             "filters": {
                 "departure": "Departure",
                 "transportButton": "Transport",
@@ -40,7 +42,9 @@
         "routes": {
             "availableRoutes": "Available Routes",
             "leaves": "Leaves at",
-            "from": "from"
+            "from": "from",
+            "earlier": "Earlier",
+            "later": "Later"
         },
         "routeDetails": {
             "itinerary": "Itinerary",
