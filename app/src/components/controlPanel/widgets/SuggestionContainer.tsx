@@ -36,6 +36,10 @@ const SuggestionContainer: React.FC<SuggestionContainerProps> = ({
                                    onCurrentLocationClick && 
                                    !hasCurrentLocationInSuggestions;
 
+  // Determine if we should show the "No suggestions found" message
+  // Only show it if there are no suggestions AND current location is not available
+  const showNoSuggestionsMessage = suggestions.length === 0 && !shouldShowCurrentLocation;
+
   return (
     <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
       {loading ? (
@@ -48,7 +52,7 @@ const SuggestionContainer: React.FC<SuggestionContainerProps> = ({
               onClick={onCurrentLocationClick}
               className={`p-2 cursor-pointer ${
                 selectedIndex === -2 ? 'bg-primary-yellow/10' : 'hover:bg-gray-100'
-              } border-b`}
+              } ${suggestions.length > 0 ? 'border-b' : ''}`}
             >
               <div className="font-medium flex items-center gap-2">
                 <MapPin size={16} className="text-primary-blue" />
@@ -79,7 +83,9 @@ const SuggestionContainer: React.FC<SuggestionContainerProps> = ({
               </div>
             ))
           ) : (
-            <div className="p-2 text-gray-600">No suggestions found</div>
+            showNoSuggestionsMessage && (
+              <div className="p-2 text-gray-600">No suggestions found</div>
+            )
           )}
         </>
       )}

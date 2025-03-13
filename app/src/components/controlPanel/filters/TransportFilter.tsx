@@ -2,9 +2,6 @@ import Image from "next/image";
 import TramLogo from "../../../../public/icons/otp-icons/Tram-Logo.svg";
 import S_BahnLogo from "../../../../public/icons/otp-icons/S-Bahn-Logo.svg";
 import BusLogo from "../../../../public/icons/otp-icons/Bus-Logo.svg";
-import Bike from "../../../../public/icons/otp-icons/Bike.svg";
-import PersonStanding from "../../../../public/icons/otp-icons/Walk.svg";
-import Car from "../../../../public/icons/otp-icons/Car.svg";
 import TrainLogo from "../../../../public/icons/otp-icons/Train.svg";
 import { useSettingsContext } from "@/contexts/settingsContext";
 
@@ -12,9 +9,6 @@ const transportOptions = [
   { type: "Tram", logo: TramLogo, translationKey: null },
   { type: "S-Bahn", logo: S_BahnLogo, translationKey: null },
   { type: "Bus", logo: BusLogo, translationKey: null },
-  { type: "Bike", logo: Bike, translationKey: "bike" },
-  { type: "Walk", logo: PersonStanding, translationKey: "walk" },
-  { type: "Car", logo: Car, translationKey: "car" },
   { type: "Train", logo: TrainLogo, translationKey: "train" }
 ];
 

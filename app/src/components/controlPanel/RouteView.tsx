@@ -227,7 +227,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
               <button 
                 onClick={handleEarlierSearch}
                 disabled={loadingOtp}
-                className="flex items-center gap-1 px-3 py-1 bg-primary-yellow text-primary-blue rounded-md hover:bg-primary-yellow/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-1 px-3 py-1 bg-white text-primary-blue rounded-md border border-gray-200 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ChevronLeft size={16} />
                 <span>{translations?.ControlPanel?.routes?.earlier || "Earlier"}</span>
@@ -235,7 +235,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
               <button 
                 onClick={handleLaterSearch}
                 disabled={loadingOtp}
-                className="flex items-center gap-1 px-3 py-1 bg-primary-yellow text-primary-blue rounded-md hover:bg-primary-yellow/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-1 px-3 py-1 bg-white text-primary-blue rounded-md border border-gray-200 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span>{translations?.ControlPanel?.routes?.later || "Later"}</span>
                 <ChevronRight size={16} />
