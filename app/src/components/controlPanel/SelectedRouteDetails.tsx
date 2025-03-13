@@ -116,9 +116,15 @@ const formatTimeDifference = (scheduledTime: number, actualTime: number): { text
 const SelectedRouteDetails = () => {
   const { otpData, selectedItineraryIndex, setSelectedItineraryIndex, clearSearchParams } = useOtpDataContext();
   const { translations } = useSettingsContext();
-  const { goToPreviousViewMode, setViewMode, previousViewMode } = useUIContext();
+  const { goToPreviousViewMode, setViewMode, previousViewMode, navigationHistory } = useUIContext();
   const { setSelectedItinerary } = useMapContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
+
+  // Log navigation state
+  console.log('SelectedRouteDetails navigation state:', { 
+    previousViewMode, 
+    navigationHistory 
+  });
 
   // Update the map when the selected itinerary changes
   useEffect(() => {
@@ -213,7 +219,7 @@ const SelectedRouteDetails = () => {
           <button 
             className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors"
             onClick={() => {
-              console.log("Back button clicked, navigating to previous view mode:", previousViewMode);
+              console.log("Back button clicked, navigating using goToPreviousViewMode");
               goToPreviousViewMode();
             }}
           >
