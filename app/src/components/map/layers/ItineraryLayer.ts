@@ -86,7 +86,7 @@ export const bikeLayerConfig: LayerSpecification = {
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "#032c58", "line-width": 4 },
+  paint: { "line-color": ["get", "routeColor"], "line-width": 4 },
   filter: ["any", ["==", ["get", "mode"], "BICYCLE"], ["==", ["get", "mode"], "BIKERENTAL"]],
 };
 
@@ -97,7 +97,7 @@ export const suburbLayerConfig: LayerSpecification = {
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "#008D4F", "line-width": 4 },
+  paint: { "line-color": ["get", "routeColor"], "line-width": 4 },
   filter: ["==", ["get", "mode"], "SUBURB"],
 };
 
@@ -107,7 +107,7 @@ export const busLayerConfig: LayerSpecification = {
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "#800080", "line-width": 4 },
+  paint: { "line-color": ["get", "routeColor"], "line-width": 4 },
   filter: ["==", ["get", "mode"], "BUS"],
 };
 
@@ -117,7 +117,7 @@ export const tramLayerConfig: LayerSpecification = {
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "#D91A1A", "line-width": 4 },
+  paint: { "line-color": ["get", "routeColor"], "line-width": 4 },
   filter: ["==", ["get", "mode"], "TRAM"],
 };
 
@@ -127,7 +127,7 @@ export const trainLayerConfig: LayerSpecification = {
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "red", "line-width": 4 },
+  paint: { "line-color": ["get", "routeColor"], "line-width": 4 },
   filter: ["==", ["get", "mode"], "TRAIN"],
 };
 
