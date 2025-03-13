@@ -94,7 +94,8 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
       Travelmode: lastTransportModes as TransportMode[],
       date: lastDate,
       time: adjustedTime,
-      numItineraries: 5,  
+      numItineraries: 5,
+      arriveBy: false  // Always use departure time for earlier/later buttons
     };
     fetchOtpData(params);
   };
@@ -124,7 +125,8 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
       Travelmode: lastTransportModes as TransportMode[],
       date: lastDate,
       time: adjustedTime,
-      numItineraries: 5,  
+      numItineraries: 5,
+      arriveBy: false  // Always use departure time for earlier/later buttons
     };
     fetchOtpData(params);
   };
