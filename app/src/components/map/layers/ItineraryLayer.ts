@@ -73,9 +73,9 @@ export const walkLayerConfig: LayerSpecification = {
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
   paint: {
-    "line-color": "#000000",
-    "line-width": 2,
-    "line-dasharray": [4, 2],
+    "line-color": "#032c58",
+    "line-width": 3,
+    "line-dasharray": [3.5,3],
   },
   filter: ["==", ["get", "mode"], "WALK"],
 };
@@ -168,7 +168,7 @@ export const destinationLayerConfig: LayerSpecification = {
   source: "itinerary-source",
   paint: {
     "circle-radius": 7,
-    "circle-color": "black",
+    "circle-color": "#032c58",
   },
   filter: ["==", ["get", "type"], "Destination"]
 };
@@ -179,7 +179,7 @@ export const originLayerConfig: LayerSpecification = {
   source: "itinerary-source",
   paint: {
     "circle-radius": 7,
-    "circle-color": "black",
+    "circle-color": "#032c58",
   },
   filter: ["==", ["get", "type"], "Origin"]
 };
