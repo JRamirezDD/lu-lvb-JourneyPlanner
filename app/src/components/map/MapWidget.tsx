@@ -39,6 +39,7 @@ import { useLocationContext } from "@/contexts/locationContext";
 import { Coordinates } from "@/types/Coordinates";
 import { createCurrentLocationData, currentLocationAccuracyLayerConfig, currentLocationLayerConfig, currentLocationSource } from "./layers/currentLocationLayer";
 import { Location } from "@/types/Location";
+import centerToLayer from "./utils/centerToLayer";
 
 // --- Bounding Box Helpers ---
 
@@ -360,7 +361,11 @@ export const MapWidget: React.FC = ({ }) => {
         if (mapRef.current) {
             waitForLayer(mapRef.current, itineraryLayerConfig.id)
             .then(() => {
-                centerToLayer(mapRef, itineraryLayerConfig.id);
+                if (mapRef.current)
+                    centerToLayer(mapRef.current, itineraryLayerConfig.id);
+                else {
+                    console.error("Map reference not available.");
+                }
             })
             .catch((error) => {
                 console.error(error);
@@ -634,58 +639,7 @@ export const MapWidget: React.FC = ({ }) => {
     };
 
     
-    const centerToLayer = (
-            mapRef: React.MutableRefObject<maplibregl.Map | null>,
-            layerId: string
-        ) => {
-        if (!mapRef.current) return;
 
-        console.log("Centering to layer:", layerId);
-        
-        if (!mapRef.current.getLayer(layerId)) return;
-
-        const features = mapRef.current.queryRenderedFeatures({ layers: [layerId] });
-        console.log(features);
-
-        if (features.length) {
-          // Initialize bounds with extreme values.
-          const bounds = features.reduce(
-            (acc, feature) => {
-              if (feature.geometry && feature.geometry.bbox) {
-                const [minX, minY, maxX, maxY] = feature.geometry.bbox;
-                return [
-                  Math.min(acc[0], minX),
-                  Math.min(acc[1], minY),
-                  Math.max(acc[2], maxX),
-                  Math.max(acc[3], maxY)
-                ];
-              }
-              return acc;
-            },
-            [Infinity, Infinity, -Infinity, -Infinity]
-          );
-      
-          // Ensure valid bounds were computed.
-          if (
-            bounds[0] !== Infinity &&
-            bounds[1] !== Infinity &&
-            bounds[2] !== -Infinity &&
-            bounds[3] !== -Infinity
-          ) {
-            mapRef.current.fitBounds(
-              [
-                [bounds[0], bounds[1]],
-                [bounds[2], bounds[3]]
-              ],
-              { padding: 20 }
-            );
-          } else {
-            console.log("No valid bounding box found for layer:", layerId);
-          }
-        } else {
-          console.log("No features found for layer:", layerId);
-        }
-      };
       
 
 

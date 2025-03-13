@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { GeoJSON } from "geojson";
 import { LayerSpecification, SourceSpecification } from "maplibre-gl";
+import fadeInLayer from "./fadeInLayer"; // Import fade-in function
 
 const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>) => {
     const sources = useRef(new Map<string, any>());
@@ -37,7 +38,7 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
             console.log(`Activating source ${sourceId}.`);
             activeSources.current.add(sourceId);
         }
-    }
+    };
 
     const clearSource = (sourceId: string) => {
         if (!mapRef.current) return;
@@ -54,12 +55,30 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
     const addLayerIfNotExists = (layerConfig: LayerSpecification) => {
         if (!mapRef.current) return;
         if (!activeLayers.current.has(layerConfig.id)) {
-            console.info(`Layer ${layerConfig.id} not found in ${printActiveLayers()}, adding...`);
-            mapRef.current.addLayer(layerConfig);
+            console.info(`Layer ${layerConfig.id} not found, adding...`);
+    
+            // Step 1: Modify layerConfig to start with opacity 0
+            const modifiedLayerConfig: maplibregl.LayerSpecification = {
+                ...layerConfig,
+                paint: {
+                    ...layerConfig.paint,
+                    "icon-opacity": 0,
+                    "text-opacity": 0,
+                }
+            };
+    
+            // Step 2: Add layer with opacity set to 0
+            mapRef.current.addLayer(modifiedLayerConfig);
             activeLayers.current.add(layerConfig.id);
-            console.log(`Added layer: ${layerConfig.id}`);
+            console.log(`Added layer with initial opacity 0: ${layerConfig.id}`);
+    
+            // Step 3: Ensure a slight delay before starting fade-in
+            setTimeout(() => {
+                fadeInLayer(mapRef.current!, layerConfig.id);
+            }, 50);
         }
     };
+    
 
     const removeLayer = (layerId: string) => {
         if (!mapRef.current) return;
@@ -83,7 +102,7 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         }
         source = mapRef.current.getSource(sourceId) as maplibregl.GeoJSONSource;
         source.setData(newData);
-    }
+    };
 
     return { setSource, updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
 };
