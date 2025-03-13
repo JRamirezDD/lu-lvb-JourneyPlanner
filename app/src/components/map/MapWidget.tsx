@@ -28,11 +28,9 @@ import loadPNGImage from "@/utils/loadPNGImage";
 import useLayersManager from "./utils/layersManager";
 import { useNearbySearchDataContext } from "@/contexts/DataContext/nearbySearchDataContext";
 import { NearBySearchParamsWithBoundingBox } from "@/api/nearbysearchService/dto/nearbysearchRequest";
-import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, mobistation_stopsLayerConfig, taxi_station_stopsLayerConfig, 
-    ticketMachine_stopsLayerConfig, stop_stopsLayerConfig, 
+import { createNearbySearchLayerData, freeFloating_stopsLayerConfig, 
+    stop_stopsLayerConfig, 
     searchItemsSource,
-    nextbike_station_stopsLayerConfig,
-    escooter_station_stopsLayerConfig,
     stop_stopsLabelsLayerConfig} from "./layers/NearbySearchLayer";
 import { NearBySearchResponse, SearchItemJson } from "@/api/nearbysearchService/dto/nearbysearchResponse";
 import { StopsResponse } from "@/api/stopmonitorService/dto/stopmonitorResponse";
@@ -535,12 +533,7 @@ export const MapWidget: React.FC = ({ }) => {
 
         //create layers 
         const layers = [
-            ticketMachine_stopsLayerConfig, 
-            escooter_station_stopsLayerConfig,
             freeFloating_stopsLayerConfig,
-            nextbike_station_stopsLayerConfig,
-            taxi_station_stopsLayerConfig,
-            mobistation_stopsLayerConfig,
             stop_stopsLabelsLayerConfig,
             stop_stopsLayerConfig
             ];
@@ -612,7 +605,7 @@ export const MapWidget: React.FC = ({ }) => {
     };
 
     const removeNearbySearchLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
-        const layers = [freeFloating_stopsLayerConfig, stop_stopsLayerConfig, ticketMachine_stopsLayerConfig, taxi_station_stopsLayerConfig, mobistation_stopsLayerConfig ];
+        const layers = [freeFloating_stopsLayerConfig, stop_stopsLayerConfig ];
         layers.forEach(layer => removeLayer(layer.id));
     
         activeSources.current.delete("nearbysearch-source");
