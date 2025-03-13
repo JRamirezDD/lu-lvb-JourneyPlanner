@@ -37,7 +37,7 @@ export const stop_stopsLayerConfig: LayerSpecification = {
   id: "stop_stops-layer",
   type: "symbol",
   source: "nearbySearch-source",
-  minzoom: 13.5, // Lowered to ensure it exists before fading in
+  minzoom: 13.92, // Lowered to ensure it exists before fading in
   maxzoom: 22,
   layout: {
     "icon-image": "haltestelle",
@@ -48,7 +48,7 @@ export const stop_stopsLayerConfig: LayerSpecification = {
       "interpolate",
       ["linear"],
       ["zoom"],
-      13.9, 0, // Fully transparent at zoom 13.5
+      13.92, 0.1, // Fully transparent at zoom 13.5
       14, 1    // Fully visible at zoom 14
     ]
   },
@@ -61,7 +61,7 @@ export const stop_stopsLayerConfig: LayerSpecification = {
     id: "stops-labels",
     type: "symbol",
     source: "nearbySearch-source",
-    minzoom: 14, // Lowered to ensure it exists before fading in
+    minzoom: 14.42, // Lowered to ensure it exists before fading in
     maxzoom: 22,
     layout: {
       "text-field": ["get", "name"],
@@ -77,7 +77,7 @@ export const stop_stopsLayerConfig: LayerSpecification = {
         "interpolate",
         ["linear"],
         ["zoom"],
-        14.4, 0,   // Fully transparent at zoom 14
+        14.42, 0.1,   // Fully transparent at zoom 14
         14.5, 1  // Fully visible at zoom 14.5
       ]
     },
