@@ -29,7 +29,7 @@ const LocationUpdater: React.FC = () => {
           const accuracy = position.coords.accuracy
           console.log("ACCURACY LOADED ", accuracy)
 
-          if (accuracy > 500) { // 500 meters from estimated centerl
+          if (accuracy > 5000) { // 500 meters from estimated centerl
             console.warn(`Accuracy is too low ${accuracy}, skipping update`);
             throw new Error("Accuracy is too low, skipping update");
           }
