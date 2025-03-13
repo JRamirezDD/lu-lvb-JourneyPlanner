@@ -26,7 +26,7 @@ const LocationUpdater: React.FC = () => {
           const heading = position.coords.heading;
           const speed = position.coords.speed;
           const timestamp = position.timestamp;
-          const accuracy = position.coords.accuracy
+          const accuracy = 100
           console.log("ACCURACY LOADED ", accuracy)
 
           if (accuracy > 5000) { // 500 meters from estimated centerl
