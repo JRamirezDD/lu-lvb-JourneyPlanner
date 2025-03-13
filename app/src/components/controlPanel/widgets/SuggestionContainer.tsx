@@ -1,6 +1,6 @@
 import { AutocompleteItem } from '@/api/autocompleteService/dto/autocompleteitemResponse';
 import { MapPin } from 'lucide-react';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 interface SuggestionContainerProps {
   suggestions: AutocompleteItem[];
@@ -23,6 +23,19 @@ const SuggestionContainer: React.FC<SuggestionContainerProps> = ({
   currentLocationLabel = "Current Location",
   currentLocationDescription = "Use your current location",
 }) => {
+  // Check if current location is already in the suggestions list
+  const hasCurrentLocationInSuggestions = useMemo(() => {
+    return suggestions.some(suggestion => 
+      suggestion.name === currentLocationLabel || 
+      suggestion.data === currentLocationLabel
+    );
+  }, [suggestions, currentLocationLabel]);
+
+  // Only show the current location option if it's not already in the suggestions
+  const shouldShowCurrentLocation = showCurrentLocation && 
+                                   onCurrentLocationClick && 
+                                   !hasCurrentLocationInSuggestions;
+
   return (
     <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
       {loading ? (
@@ -30,7 +43,7 @@ const SuggestionContainer: React.FC<SuggestionContainerProps> = ({
       ) : (
         <>
           {/* Current Location Option */}
-          {showCurrentLocation && onCurrentLocationClick && (
+          {shouldShowCurrentLocation && (
             <div
               onClick={onCurrentLocationClick}
               className={`p-2 cursor-pointer ${
