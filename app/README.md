@@ -1,5 +1,13 @@
 # lu-lvb-JourneyPlanner
 
+## Development Guide
+### Styleguide
+[Airbnb Javascript Style Guide](https://github.com/airbnb/javascript)
+
+### Dependencies
+`Dependency` v`recommended version` (where appropriate) - `purpose` (where appropriate)
+- npm v10.9.0
+- Node.js v22.12.0
 
 ## Hosting
 Not currently hosted. Hosting to be delivered in Sprint 2.
@@ -51,6 +59,7 @@ npm install
 ```bash
 npm run dev
 ```
+
 
 ### Running in Production Mode (Separate Hosting of Front-end and Back-end Components):
 1. ***First install the dependencies***
