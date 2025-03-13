@@ -27,14 +27,23 @@ const LocationUpdater: React.FC = () => {
           const speed = position.coords.speed;
           const timestamp = position.timestamp;
           const accuracy = position.coords.accuracy
+          console.log("ACCURACY LOADED ", accuracy)
+
+          if (accuracy > 500) { // 500 meters from estimated centerl
+            console.warn(`Accuracy is too low ${accuracy}, skipping update`);
+            throw new Error("Accuracy is too low, skipping update");
+          }
+
           updateLocation({ timestamp, coords, heading, speed, accuracy });
+
+
 
           if (!isEnabled) {
             setIsEnabled(true);
           }
         },
         (error) => { 
-            console.error("Error watching position", error) 
+            console.error("Error loading position", error) 
         },
         { enableHighAccuracy: false, timeout: 5000 }
       );

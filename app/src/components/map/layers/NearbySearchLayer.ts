@@ -37,7 +37,7 @@ export const stop_stopsLayerConfig: LayerSpecification = {
   id: "stop_stops-layer",
   type: "symbol",
   source: "nearbySearch-source",
-  minzoom: 14,
+  minzoom: 13.5,
   maxzoom: 22,
   layout: {
       "icon-image": "haltestelle",
@@ -51,7 +51,7 @@ export const stop_stopsLayerConfig: LayerSpecification = {
     id: "stops-labels",
     type: "symbol",
     source: "nearbySearch-source",
-    minzoom: 15,
+    minzoom: 14.5,
     maxzoom: 22,
     layout: {
       "text-field": ["get", "name"],

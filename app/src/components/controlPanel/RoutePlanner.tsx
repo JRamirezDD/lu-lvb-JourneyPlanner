@@ -68,6 +68,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   const [showDepartureFilter, setShowDepartureFilter] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [defaultDate, setDefaultDate] = useState<Date | null>(null);
+  const [isArrival, setIsArrival] = useState(false);
   const [originAutocompleteData, setOriginAutocompleteData] = useState<AutocompleteItem[]>([]);
   const [destinationAutocompleteData, setDestinationAutocompleteData] = useState<AutocompleteItem[]>([]);
   
@@ -97,7 +98,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   }, []);
   
   const isDepartureModified = selectedDate && defaultDate 
-    ? selectedDate.getTime() !== defaultDate.getTime()
+    ? selectedDate.getTime() !== defaultDate.getTime() || isArrival
     : false;
     
   const formattedTime = selectedDate
@@ -315,7 +316,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         From: selectedOrigin.coordinates,
         To: selectedDestination.coordinates,
         Travelmode: transportModes,
-        numItineraries: 5,  
+        numItineraries: 5,
+        arriveBy: isArrival
       };
 
       if (selectedDate) {
@@ -337,7 +339,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         To: params.To,
         Travelmode: params.Travelmode,
         date: params.date,
-        time: params.time
+        time: params.time,
+        arriveBy: params.arriveBy
       });
 
       await fetchOtpData(params);
@@ -563,6 +566,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         <DepartureFilter 
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
+          isArrival={isArrival}
+          setIsArrival={setIsArrival}
         />
       )}
       {showFilters && (

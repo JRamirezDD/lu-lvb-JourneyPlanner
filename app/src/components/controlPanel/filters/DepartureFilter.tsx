@@ -5,12 +5,19 @@ import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from "lucide-react"
 interface DepartureFilterProps {
   selectedDate: Date | null;
   setSelectedDate: (date: Date) => void;
+  isArrival?: boolean;
+  setIsArrival?: (isArrival: boolean) => void;
 }
 
-const DepartureFilter = ({ selectedDate, setSelectedDate }: DepartureFilterProps) => {
+const DepartureFilter = ({ 
+  selectedDate, 
+  setSelectedDate, 
+  isArrival = false, 
+  setIsArrival 
+}: DepartureFilterProps) => {
   const { translations } = useSettingsContext();
   const [isMounted, setIsMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState<"departure" | "arrival">("departure");
+  const [activeTab, setActiveTab] = useState<"departure" | "arrival">(isArrival ? "arrival" : "departure");
   const [selectedHour, setSelectedHour] = useState<number>(13);
   const [selectedMinute, setSelectedMinute] = useState<number>(30);
 
@@ -66,6 +73,13 @@ const DepartureFilter = ({ selectedDate, setSelectedDate }: DepartureFilterProps
   const decrementMinute = () => {
     const newMinute = (selectedMinute - 1 + 60) % 60;
     handleTimeChange(selectedHour, newMinute);
+  };
+
+  const handleTabChange = (tab: "departure" | "arrival") => {
+    setActiveTab(tab);
+    if (setIsArrival) {
+      setIsArrival(tab === "arrival");
+    }
   };
 
   const generateCalendar = () => {
@@ -150,7 +164,7 @@ const DepartureFilter = ({ selectedDate, setSelectedDate }: DepartureFilterProps
               ? "bg-primary-blue text-white"
               : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
-          onClick={() => setActiveTab("departure")}
+          onClick={() => handleTabChange("departure")}
         >
           {translations?.ControlPanel?.planner?.filters?.datePicker?.departure || "Abfahrt"}
         </button>
@@ -160,7 +174,7 @@ const DepartureFilter = ({ selectedDate, setSelectedDate }: DepartureFilterProps
               ? "bg-primary-blue text-white"
               : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
-          onClick={() => setActiveTab("arrival")}
+          onClick={() => handleTabChange("arrival")}
         >
           {translations?.ControlPanel?.planner?.filters?.datePicker?.arrival || "Ankunft"}
         </button>

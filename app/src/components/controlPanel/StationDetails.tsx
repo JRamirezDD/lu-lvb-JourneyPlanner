@@ -34,11 +34,11 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
     errorStopMonitor,
     fetchStopMonitor 
   } = useStopmonitorDataContext();
-  const { goToPreviousViewMode, viewMode, previousViewMode } = useUIContext();
+  const { goToPreviousViewMode, viewMode, previousViewMode, navigationHistory } = useUIContext();
   const { setSelectedNearbySearchItem } = useMapContext();
   
   // Add debug logging for UI context
-  console.log("StationDetails UI Context:", { viewMode, previousViewMode });
+  console.log("StationDetails UI Context:", { viewMode, previousViewMode, navigationHistory });
   
   // Default values for stopId and stopName
   const effectiveStopId = stopId || "0013000"; // Default to "0013000" if no stopId provided
@@ -118,7 +118,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
         <button 
           className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors"
           onClick={() => {
-            console.log("Back button clicked, navigating to previous view mode:", previousViewMode);
+            console.log("Back button clicked, navigating using goToPreviousViewMode");
             goToPreviousViewMode();
             setSelectedNearbySearchItem(null);
           }}
