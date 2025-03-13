@@ -209,6 +209,47 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedRouteIndex, sortedItineraries]);
 
+  // Function to calculate wait time between legs
+  const calculateWaitTime = (currentLeg: any, nextLeg: any): number | null => {
+    if (!currentLeg || !nextLeg) return null;
+    
+    const currentLegEndTime = currentLeg.endTime;
+    const nextLegStartTime = nextLeg.startTime;
+    
+    // If there's a time gap between legs, it's a wait time
+    const waitTime = nextLegStartTime - currentLegEndTime;
+    
+    // Only return wait time if it's significant (more than 60 seconds)
+    return waitTime > 60000 ? waitTime : null;
+  };
+
+  // Function to determine if a WALK leg is actually a transfer wait
+  const isTransferWait = (leg: any, index: number, legs: any[]): boolean => {
+    // If it's not a WALK leg, it's definitely not a transfer wait
+    if (leg.mode !== "WALK") return false;
+    
+    // If it's the first or last leg, it's a real walk, not a transfer wait
+    if (index === 0 || index === legs.length - 1) return false;
+    
+    // If the leg is between two transport legs and is short (less than 300m)
+    // and at a similar location, it's likely a transfer wait
+    const prevLeg = legs[index - 1];
+    const nextLeg = legs[index + 1];
+    
+    // Check if both adjacent legs are transit legs
+    const isBetweenTransit = prevLeg.transitLeg && nextLeg.transitLeg;
+    
+    // Check if the walk distance is short (typical for transfers)
+    const isShortWalk = leg.distance < 300;
+    
+    // Check if the from/to locations have similar names (indicating a transfer point)
+    const isSameLocation = 
+      (leg.from.name.includes(prevLeg.to.name) || prevLeg.to.name.includes(leg.from.name)) &&
+      (leg.to.name.includes(nextLeg.from.name) || nextLeg.from.name.includes(leg.to.name));
+    
+    return isBetweenTransit && (isShortWalk || isSameLocation);
+  };
+
   return (
     <div className="flex flex-col gap-6">
       {/* Route Planner Section */}
@@ -318,37 +359,67 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
                   </div>
 
                   {/* Route Visualization */}
-                  <div className="p-3 flex items-center gap-1">
-                    {itinerary.legs.map((leg, index) => (
-                      <React.Fragment key={index}>
-                        {/* Transport Icon */}
-                        {leg.mode === "WALK" ? (
-                          <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
-                            <Image 
-                              src={PersonStanding}
-                              alt="Walking"
-                              width={14}
-                              height={14}
-                            />
-                            <span>{Math.round(leg.duration / 60)}</span>
-                          </div>
-                        ) : (
-                          <div className={`px-3 py-1 rounded font-medium ${
-                            leg.mode === 'TRAM' ? 'bg-red-600 text-white' :
-                            leg.mode === 'BUS' ? 'bg-purple-600 text-white' :
-                            leg.mode === 'SUBURB' ? 'bg-green-600 text-white' :
-                            'bg-green-600 text-white'
-                          }`}>
-                            {leg.route ? `${getTransportType(leg.mode)} ${leg.route}` : getTransportType(leg.mode)}
-                          </div>
-                        )}
+                  <div className="p-3 flex items-center gap-1 flex-wrap">
+                    {itinerary.legs.map((leg, index) => {
+                      // Check if this is a transfer wait disguised as a walk
+                      const isWaitingTransfer = isTransferWait(leg, index, itinerary.legs);
+                      
+                      return (
+                        <React.Fragment key={index}>
+                          {/* Transport Icon */}
+                          {leg.mode === "WALK" && !isWaitingTransfer ? (
+                            <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
+                              <Image 
+                                src={PersonStanding}
+                                alt="Walking"
+                                width={14}
+                                height={14}
+                              />
+                              <span>{Math.round(leg.duration / 60)}</span>
+                            </div>
+                          ) : isWaitingTransfer ? (
+                            // Display as wait time instead of walk
+                            <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
+                              <Clock size={14} />
+                              <span>Wait {Math.round(leg.duration / 60)} min</span>
+                            </div>
+                          ) : (
+                            <div className={`px-3 py-1 rounded font-medium ${
+                              leg.mode === 'TRAM' ? 'bg-red-600 text-white' :
+                              leg.mode === 'BUS' ? 'bg-purple-600 text-white' :
+                              leg.mode === 'SUBURB' ? 'bg-green-600 text-white' :
+                              'bg-green-600 text-white'
+                            }`}>
+                              {leg.route ? `${getTransportType(leg.mode)} ${leg.route}` : getTransportType(leg.mode)}
+                            </div>
+                          )}
 
-                        {/* Connector Line */}
-                        {index < itinerary.legs.length - 1 && (
-                          <div className="h-[2px] w-4 bg-gray-300" />
-                        )}
-                      </React.Fragment>
-                    ))}
+                          {/* Connector Line and Wait Time */}
+                          {index < itinerary.legs.length - 1 && !isWaitingTransfer && (
+                            <>
+                              <div className="h-[2px] w-4 bg-gray-300" />
+                              
+                              {/* Display wait time if there is a gap between legs */}
+                              {(() => {
+                                const waitTime = calculateWaitTime(leg, itinerary.legs[index + 1]);
+                                if (waitTime) {
+                                  return (
+                                    <>
+                                      <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
+                                        <Clock size={14} />
+                                        <span>Wait {Math.round(waitTime / 60000)} min</span>
+                                      </div>
+                                      <div className="h-[2px] w-4 bg-gray-300" />
+                                    </>
+                                  );
+                                }
+                                return null;
+                              })()}
+                            </>
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
                   </div>
 
                   {/* Departure Info */}

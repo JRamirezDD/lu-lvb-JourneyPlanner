@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Clock, Info, ChevronDown, ChevronUp, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, ChevronDown, ChevronUp, X } from "lucide-react";
 import PersonStanding from "../../../public/icons/otp-icons/Walk.svg";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -348,14 +348,7 @@ const SelectedRouteDetails = () => {
                             {leg.route ? `${leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode} ${leg.route}` : leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode}
                           </span>
                         </div>
-                        {/* Platform and stops info */}
-                        {(leg.mode === "TRAM" || leg.mode === "SUBURB" || leg.mode === "BUS" || leg.mode === "TRAIN") && (
-                          <div className="text-sm text-gray-600 flex items-center gap-2">
-                            <Info size={16} />
-                            <span>{translations?.ControlPanel?.routeDetails?.platform?.replace("{number}", leg.mode || "")}</span>
-                          </div>
-                        )}
-
+                        
                         {/* Add toggle button when there are stops */}
                         {leg.intermediateStops && leg.intermediateStops.length > 0 && (
                           <button

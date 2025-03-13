@@ -60,6 +60,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   const [showDestinationSuggestions, setShowDestinationSuggestions] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [showDepartureFilter, setShowDepartureFilter] = useState(false);
+  const [lastClickedFilter, setLastClickedFilter] = useState<'departure' | 'transport' | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [defaultDate, setDefaultDate] = useState<Date | null>(null);
   const [isArrival, setIsArrival] = useState(false);
@@ -651,7 +652,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       {/* Filter Buttons */}
       <div className="grid grid-cols-2 gap-2">
         <button
-          onClick={() => setShowDepartureFilter(!showDepartureFilter)}
+          onClick={() => {
+            setShowDepartureFilter(!showDepartureFilter);
+            if (!showDepartureFilter) {
+              setLastClickedFilter('departure');
+            }
+          }}
           className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50"
           suppressHydrationWarning
         >
@@ -672,7 +678,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         </button>
 
         <button
-          onClick={() => setShowFilters(!showFilters)}
+          onClick={() => {
+            setShowFilters(!showFilters);
+            if (!showFilters) {
+              setLastClickedFilter('transport');
+            }
+          }}
           className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50"
         >
           <div className="flex items-center gap-2">
@@ -683,24 +694,51 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         </button>
       </div>
 
-      {showDepartureFilter && (
-        <DepartureFilter 
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          isArrival={isArrival}
-          setIsArrival={setIsArrival}
-        />
-      )}
-      {showFilters && (
-        <TransportFilter 
-          activeFilters={Object.fromEntries(
-            transportOptions.map(option => [
-              option.type,
-              transportModes.includes(option.mode)
-            ])
+      {/* Render filters based on which was clicked last */}
+      {lastClickedFilter === 'transport' ? (
+        <>
+          {showFilters && (
+            <TransportFilter 
+              activeFilters={Object.fromEntries(
+                transportOptions.map(option => [
+                  option.type,
+                  transportModes.includes(option.mode)
+                ])
+              )}
+              toggleFilter={toggleFilter}
+            />
           )}
-          toggleFilter={toggleFilter}
-        />
+          {showDepartureFilter && (
+            <DepartureFilter 
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              isArrival={isArrival}
+              setIsArrival={setIsArrival}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          {showDepartureFilter && (
+            <DepartureFilter 
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              isArrival={isArrival}
+              setIsArrival={setIsArrival}
+            />
+          )}
+          {showFilters && (
+            <TransportFilter 
+              activeFilters={Object.fromEntries(
+                transportOptions.map(option => [
+                  option.type,
+                  transportModes.includes(option.mode)
+                ])
+              )}
+              toggleFilter={toggleFilter}
+            />
+          )}
+        </>
       )}
 
       <button 
