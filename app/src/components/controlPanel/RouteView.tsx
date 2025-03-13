@@ -226,7 +226,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
   // Function to determine if a WALK leg is actually a transfer wait
   const isTransferWait = (leg: any, index: number, legs: any[]): boolean => {
     // If it's not a WALK leg, it's definitely not a transfer wait
-    if (leg.mode !== "WALK") return false;
+    if (leg.mode !== "WAIT") return false;
     
     // If it's the first or last leg, it's a real walk, not a transfer wait
     if (index === 0 || index === legs.length - 1) return false;
@@ -381,7 +381,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
                             // Display as wait time instead of walk
                             <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
                               <Clock size={14} />
-                              <span>Wait {Math.round(leg.duration / 60)} min</span>
+                              <span>{Math.round(leg.duration / 60)} min</span>
                             </div>
                           ) : (
                             <div className={`px-3 py-1 rounded font-medium ${
@@ -397,7 +397,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
                           {/* Connector Line and Wait Time */}
                           {index < itinerary.legs.length - 1 && !isWaitingTransfer && (
                             <>
-                              <div className="h-[2px] w-4 bg-gray-300" />
+                              <div className="h-[2px] w-6 bg-gray-300 mx-1" />
                               
                               {/* Display wait time if there is a gap between legs */}
                               {(() => {
@@ -407,9 +407,9 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
                                     <>
                                       <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
                                         <Clock size={14} />
-                                        <span>Wait {Math.round(waitTime / 60000)} min</span>
+                                        <span>{Math.round(waitTime / 60000)} min</span>
                                       </div>
-                                      <div className="h-[2px] w-4 bg-gray-300" />
+                                      <div className="h-[2px] w-6 bg-gray-300 mx-1" />
                                     </>
                                   );
                                 }
