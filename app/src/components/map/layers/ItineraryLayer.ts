@@ -87,7 +87,7 @@ export const bikeLayerConfig: LayerSpecification = {
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": ["get", "routeColor"], "line-width": 4 },
+  paint: { "line-color": ["get", "routeColor"], "line-width": 4, "line-opacity": 1, },
   filter: ["any", ["==", ["get", "mode"], "BICYCLE"], ["==", ["get", "mode"], "BIKERENTAL"]],
 };
 
@@ -98,7 +98,7 @@ export const suburbLayerConfig: LayerSpecification = {
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": ["get", "routeColor"], "line-width": 4 },
+  paint: { "line-color": ["get", "routeColor"], "line-width": 4, "line-opacity": 1, },
   filter: ["==", ["get", "mode"], "SUBURB"],
 };
 
@@ -108,7 +108,7 @@ export const busLayerConfig: LayerSpecification = {
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": ["get", "routeColor"], "line-width": 4 },
+  paint: { "line-color": ["get", "routeColor"], "line-width": 4, "line-opacity": 1, },
   filter: ["==", ["get", "mode"], "BUS"],
 };
 
@@ -118,7 +118,7 @@ export const tramLayerConfig: LayerSpecification = {
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": ["get", "routeColor"], "line-width": 4 },
+  paint: { "line-color": ["get", "routeColor"], "line-width": 4, "line-opacity": 1, },
   filter: ["==", ["get", "mode"], "TRAM"],
 };
 
@@ -128,7 +128,7 @@ export const trainLayerConfig: LayerSpecification = {
   type: "line",
   source: "itinerary-source",
   layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": ["get", "routeColor"], "line-width": 4 },
+  paint: { "line-color": ["get", "routeColor"], "line-width": 4, "line-opacity": 1, },
   filter: ["==", ["get", "mode"], "TRAIN"],
 };
 
@@ -137,7 +137,7 @@ export const backupLayerConfig: LayerSpecification = {
   id: "backup-layer",
   type: "line",
   source: "itinerary-source",
-  paint: { "line-opacity": 1, "line-color": "black", "line-width": 4,  },
+  paint: { "line-opacity": 1, "line-color": "black", "line-width": 4  },
   filter: ["all", ["!=", ["get", "mode"], "BICYCLE"], 
                   ["!=", ["get", "mode"], "BIKERENTAL"],
                   ["!=", ["get", "mode"], "WALK"],
