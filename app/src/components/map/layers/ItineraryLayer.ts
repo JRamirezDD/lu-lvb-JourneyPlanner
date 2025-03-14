@@ -62,6 +62,8 @@ export const intermediateStopsLayerConfig: LayerSpecification = {
     "circle-color": "white",
     "circle-stroke-width": 2,
     "circle-stroke-color": "black",
+    "circle-opacity": 1,
+    "circle-stroke-opacity": 1,
   },
   filter: ["==", ["get", "type"], "Intermediate Stop"],
 };
@@ -71,8 +73,8 @@ export const walkLayerConfig: LayerSpecification = {
   id: "walk-layer",
   type: "line",
   source: "itinerary-source",
-  layout: { "line-join": "round", "line-cap": "round" },
   paint: {
+    "line-opacity": 1,
     "line-color": "#000000",
     "line-width": 2,
     "line-dasharray": [4, 2],
@@ -85,8 +87,7 @@ export const bikeLayerConfig: LayerSpecification = {
   id: "bike-layer",
   type: "line",
   source: "itinerary-source",
-  layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "#032c58", "line-width": 4 },
+  paint: { "line-opacity": 1, "line-color": "#032c58", "line-width": 4 },
   filter: ["any", ["==", ["get", "mode"], "BICYCLE"], ["==", ["get", "mode"], "BIKERENTAL"]],
 };
 
@@ -96,8 +97,7 @@ export const suburbLayerConfig: LayerSpecification = {
   id: "suburb-layer",
   type: "line",
   source: "itinerary-source",
-  layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "#008D4F", "line-width": 4 },
+  paint: { "line-opacity": 1, "line-color": "#008D4F", "line-width": 4 },
   filter: ["==", ["get", "mode"], "SUBURB"],
 };
 
@@ -106,8 +106,7 @@ export const busLayerConfig: LayerSpecification = {
   id: "bus-layer",
   type: "line",
   source: "itinerary-source",
-  layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "#800080", "line-width": 4 },
+  paint: { "line-opacity": 1, "line-color": "#800080", "line-width": 4 },
   filter: ["==", ["get", "mode"], "BUS"],
 };
 
@@ -116,8 +115,7 @@ export const tramLayerConfig: LayerSpecification = {
   id: "tram-layer",
   type: "line",
   source: "itinerary-source",
-  layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "#D91A1A", "line-width": 4 },
+  paint: { "line-opacity": 1, "line-color": "#D91A1A", "line-width": 4 },
   filter: ["==", ["get", "mode"], "TRAM"],
 };
 
@@ -126,8 +124,7 @@ export const trainLayerConfig: LayerSpecification = {
   id: "train-layer",
   type: "line",
   source: "itinerary-source",
-  layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "red", "line-width": 4 },
+  paint: { "line-opacity": 1, "line-color": "red", "line-width": 4 },
   filter: ["==", ["get", "mode"], "TRAIN"],
 };
 
@@ -136,8 +133,7 @@ export const backupLayerConfig: LayerSpecification = {
   id: "backup-layer",
   type: "line",
   source: "itinerary-source",
-  layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "black", "line-width": 4 },
+  paint: { "line-opacity": 1, "line-color": "black", "line-width": 4,  },
   filter: ["all", ["!=", ["get", "mode"], "BICYCLE"], 
                   ["!=", ["get", "mode"], "BIKERENTAL"],
                   ["!=", ["get", "mode"], "WALK"],
@@ -154,6 +150,8 @@ export const legStartEndLayerConfig: LayerSpecification = {
   type: "circle",
   source: "itinerary-source",
   paint: {
+    "circle-opacity" : 1,
+    "circle-stroke-opacity": 1,
     "circle-radius": 5,
     "circle-color": "white",
     "circle-stroke-width": 2,
@@ -167,6 +165,8 @@ export const destinationLayerConfig: LayerSpecification = {
   type: "circle",
   source: "itinerary-source",
   paint: {
+    "circle-opacity" : 1,
+    "circle-stroke-opacity": 1,
     "circle-radius": 7,
     "circle-color": "black",
   },
@@ -178,6 +178,8 @@ export const originLayerConfig: LayerSpecification = {
   type: "circle",
   source: "itinerary-source",
   paint: {
+    "circle-opacity" : 1,
+    "circle-stroke-opacity": 1,
     "circle-radius": 7,
     "circle-color": "black",
   },

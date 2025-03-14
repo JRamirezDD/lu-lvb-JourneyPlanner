@@ -37,21 +37,31 @@ export const stop_stopsLayerConfig: LayerSpecification = {
   id: "stop_stops-layer",
   type: "symbol",
   source: "nearbySearch-source",
-  minzoom: 13.5,
+  minzoom: 13.92, // Lowered to ensure it exists before fading in
   maxzoom: 22,
   layout: {
-      "icon-image": "haltestelle",
-      "icon-size": 0.08,
+    "icon-image": "haltestelle",
+    "icon-size": 1,
+  },
+  paint: {
+    "icon-opacity": [
+      "interpolate",
+      ["linear"],
+      ["zoom"],
+      13.92, 0.1, // Fully transparent at zoom 13.5
+      14, 1    // Fully visible at zoom 14
+    ]
   },
   filter: ["==", ["get", "type"], "stop"],
 };
+
 
   // Stops Labels Layer
   export const stop_stopsLabelsLayerConfig: LayerSpecification = {
     id: "stops-labels",
     type: "symbol",
     source: "nearbySearch-source",
-    minzoom: 14.5,
+    minzoom: 14.42, // Lowered to ensure it exists before fading in
     maxzoom: 22,
     layout: {
       "text-field": ["get", "name"],
@@ -63,20 +73,33 @@ export const stop_stopsLayerConfig: LayerSpecification = {
       "text-color": "#000",
       "text-halo-color": "#fff",
       "text-halo-width": 1,
+      "text-opacity": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        14.42, 0.1,   // Fully transparent at zoom 14
+        14.5, 1  // Fully visible at zoom 14.5
+      ]
     },
     filter: ["==", ["get", "type"], "stop"],
   };
+  
+  
 
 
 export const ticketMachine_stopsLayerConfig: LayerSpecification = {
   id: "ticket_machine-layer",
   type: "symbol",
   source: "nearbySearch-source",
-  minzoom: 14,
+  minzoom: 14.5,
   maxzoom: 22,
   layout: {
       "icon-image": "ticket", 
-      "icon-size": 0.07,
+      "icon-size": 0.015,
+  },
+  paint: {
+    "icon-opacity": 1,
+    "text-opacity": 1,
   },
   filter: ["==", ["get", "type"], "ticket-machine"],
 };
@@ -86,12 +109,16 @@ export const taxi_station_stopsLayerConfig: LayerSpecification = {
   id: "taxi_station_stops-layer",
   type: "symbol",
   source: "nearbySearch-source",
-  minzoom: 14,
+  minzoom: 14.5,
   maxzoom: 22,
   layout: {
     "icon-image": "taxi", 
-    "icon-size": 0.07,
-},
+    "icon-size": 0.015,
+  },
+  paint: {
+    "icon-opacity": 1,
+    "text-opacity": 1,
+  },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "taxi"]
 };
 
@@ -99,12 +126,16 @@ export const escooter_station_stopsLayerConfig: LayerSpecification = {
   id: "escooter_station_stops-layer",
   type: "symbol",
   source: "nearbySearch-source",
-  minzoom: 14,
+  minzoom: 14.5,
   maxzoom: 22,
   layout: {
     "icon-image": "scooter", 
-    "icon-size": 0.07,
-},
+    "icon-size": 0.015,
+  },
+  paint: {
+    "icon-opacity": 1,
+    "text-opacity": 1,
+  },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "escooter"]
 };
 
@@ -112,12 +143,16 @@ export const nextbike_station_stopsLayerConfig: LayerSpecification = {
   id: "nextbike_station_stops-layer",
   type: "symbol",
   source: "nearbySearch-source",
-  minzoom: 14,
+  minzoom: 14.5,
   maxzoom: 22,
   layout: {
     "icon-image": "nextbike", 
-    "icon-size": 0.07,
-},
+    "icon-size": 0.015,
+  },
+  paint: {
+    "icon-opacity": 1,
+    "text-opacity": 1,
+  },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "nextbike"]
 };
 
@@ -125,12 +160,16 @@ export const mobistation_stopsLayerConfig: LayerSpecification = {
   id: "mobistation_stops-layer",
   type: "symbol",
   source: "nearbySearch-source",
-  minzoom: 14,
+  minzoom: 14.5,
   maxzoom: 22,
   layout: {
     "icon-image": "charger", 
-    "icon-size": 0.07,
-},
+    "icon-size": 0.015,
+  },
+  paint: {
+    "icon-opacity": 1,
+    "text-opacity": 1,
+  },
   filter: ["==", ["get", "type"], "mobistation"],
 };
 
