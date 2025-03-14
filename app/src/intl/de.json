@@ -31,7 +31,7 @@
                     "sBahn": "S-Bahn",
                     "train": "Regionalverkehr"
                 },
-                "transportButton": "Optionen",
+                "transportButton": "Verkehrsmittel",
                 "datePicker": {
                     "date": "Datum",
                     "time": "Uhrzeit",

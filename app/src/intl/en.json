@@ -22,7 +22,7 @@
             "useCurrentLocation": "Use your current location",
             "filters": {
                 "departure": "Departure",
-                "transportButton": "Options",
+                "transportButton": "Transport Options",
                 "datePicker": {
                     "date": "Date",
                     "time": "Time",
