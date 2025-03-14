@@ -127,9 +127,9 @@ export const MapWidget: React.FC = ({ }) => {
     
             // Load Images
             const loadImages = () => {
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/haltestelle.svg").then((image) => {
+                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/haltestelle.svg", 19).then((image) => {
                     if (!map.hasImage("haltestelle")) {
-                        map.addImage("haltestelle", image as HTMLImageElement | ImageBitmap);
+                        map.addImage("haltestelle", image as HTMLImageElement );
                     }
                 }).catch((error) => {
                     throw error;
@@ -361,6 +361,9 @@ export const MapWidget: React.FC = ({ }) => {
         // After triggering layer load
         if (mapRef.current) {
             loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
+            
+            reloadItineraryLayers(mapRef, layerManagerRef.current, selectedItinerary);
+            
             waitForLayer(mapRef.current, itineraryLayerConfig.id)
             .then(() => {
                 if (mapRef.current)
@@ -478,7 +481,28 @@ export const MapWidget: React.FC = ({ }) => {
         if (!itinerary) return;
     
         const geojsonData = createItineraryLayerData(itinerary);
-        console.log("updating itinerary layer")
+        console.log("updating itinerary")
+        if (!geojsonData) return;
+    
+        const layers = [
+            walkLayerConfig, 
+            suburbLayerConfig, 
+            tramLayerConfig, 
+            trainLayerConfig, 
+            busLayerConfig,
+            legStartEndLayerConfig, 
+            intermediateStopsLayerConfig,
+            destinationLayerConfig,
+            originLayerConfig
+        ];
+        layers.forEach(addLayerIfNotExists);
+    };
+
+    const reloadItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
+        if (!itinerary) return;
+    
+        const geojsonData = createItineraryLayerData(itinerary);
+        console.log("updating itinerary")
         if (!geojsonData) return;
     
         const layers = [
@@ -493,7 +517,7 @@ export const MapWidget: React.FC = ({ }) => {
             originLayerConfig
         ];
         layers.forEach(() => reloadLayersWithNewData("itinerary-source", geojsonData, layers));
-    };
+    }
 
     const removeItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
         const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig, destinationLayerConfig, originLayerConfig];
