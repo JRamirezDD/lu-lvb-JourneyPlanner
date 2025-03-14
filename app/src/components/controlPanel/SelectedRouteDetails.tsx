@@ -12,6 +12,7 @@ import TrainLogo from "../../../public/icons/otp-icons/Train.svg";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { Itinerary } from "@/types/Itinerary";
+//import { RouteColor } from "@/types/RouteColor";
 
 interface RouteData {
   id: number;
@@ -23,6 +24,7 @@ interface RouteData {
   steps: {
     time: string;
     type: "start" | "walk" | "tram" | "bus" | "s-bahn" | "transfer" | "end";
+    routeColor: string;
     line?: string;
     from?: string;
     to?: string;
@@ -42,38 +44,6 @@ type LegType = 'START' | 'END' | 'WALK' | 'TRANSFER' | TransportMode;
 // Helper function to check if a mode is "WALK"
 const isWalkMode = (mode: string): boolean => mode === "WALK";
 
-const getTransportColor = (mode: TransportMode) => {
-  switch (mode) {
-    case "TRAM": return "bg-red-600";
-    case "SUBURB": return "bg-green-600";
-    case "BUS": return "bg-purple-600";
-    case "TRAIN": return "bg-blue-600";
-    default: return "bg-gray-400";
-  }
-};
-
-// Special function to get color for any mode including "WALK"
-const getAnyModeColor = (mode: string): string => {
-  if (isWalkMode(mode)) return "bg-gray-200";
-  return getTransportColor(mode as TransportMode);
-};
-
-const getLineColor = (mode: TransportMode) => {
-  switch (mode) {
-    case "TRAM": return "border-red-600";
-    case "SUBURB": return "border-green-600";
-    case "BUS": return "border-purple-600";
-    case "TRAIN": return "border-blue-600";
-    default: return "border-gray-200";
-  }
-};
-
-// Special function to get line color for any mode including "WALK"
-const getAnyModeLineColor = (mode: string): string => {
-  if (isWalkMode(mode)) return "border-gray-600 border-dashed";
-  return getLineColor(mode as TransportMode);
-};
-
 const getLegType = (mode: string): LegType => {
   if (mode === 'WALK') return 'WALK';
   if (mode === 'TRANSFER') return 'TRANSFER';
@@ -83,11 +53,11 @@ const getLegType = (mode: string): LegType => {
 const formatTime = (timestamp: number): string => {
   // Convert the timestamp to a Date object
   const date = new Date(timestamp);
-  
+
   // Extract hours and minutes from the timestamp
   const hours = date.getUTCHours();
   const minutes = date.getUTCMinutes();
-  
+
   // Format as HH:MM
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 };
@@ -111,21 +81,21 @@ const getTransportLogo = (mode: TransportMode) => {
 // Function to calculate and format time difference for delays/early arrivals
 const formatTimeDifference = (scheduledTime: number, actualTime: number): { text: string, color: string } => {
   if (!scheduledTime || !actualTime) return { text: "", color: "" };
-  
+
   const diffInSeconds = (actualTime - scheduledTime) / 1000;
   const diffInMinutes = Math.round(diffInSeconds / 60);
-  
+
   if (diffInMinutes === 0) return { text: "", color: "" };
-  
+
   if (diffInMinutes > 0) {
-    return { 
-      text: `+${diffInMinutes}m`, 
-      color: "text-red-600" 
+    return {
+      text: `+${diffInMinutes}m`,
+      color: "text-red-600"
     };
   } else {
-    return { 
-      text: `${diffInMinutes}m`, 
-      color: "text-green-600" 
+    return {
+      text: `${diffInMinutes}m`,
+      color: "text-green-600"
     };
   }
 };
@@ -138,9 +108,9 @@ const SelectedRouteDetails = () => {
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
 
   // Log navigation state
-  console.log('SelectedRouteDetails navigation state:', { 
-    previousViewMode, 
-    navigationHistory 
+  console.log('SelectedRouteDetails navigation state:', {
+    previousViewMode,
+    navigationHistory
   });
 
   // Update the map when the selected itinerary changes
@@ -175,11 +145,11 @@ const SelectedRouteDetails = () => {
     try {
       // Debug log
       console.log('Leg data:', leg);
-      
+
       if (!leg) return "Unknown location";
 
       const location = isDestination ? leg.to.name : leg.from.name;
-      
+
       // Debug log
       console.log('Location data:', location);
 
@@ -211,8 +181,8 @@ const SelectedRouteDetails = () => {
   };
 
   const toggleLegExpansion = (index: number) => {
-    setExpandedLegs(prev => 
-      prev.includes(index) 
+    setExpandedLegs(prev =>
+      prev.includes(index)
         ? prev.filter(i => i !== index)
         : [...prev, index]
     );
@@ -233,7 +203,7 @@ const SelectedRouteDetails = () => {
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b bg-primary-yellow text-primary-blue">
         <div className="flex items-center gap-4">
-          <button 
+          <button
             className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors"
             onClick={() => {
               console.log("Back button clicked, navigating using goToPreviousViewMode");
@@ -254,9 +224,8 @@ const SelectedRouteDetails = () => {
           <button
             onClick={handlePrevRoute}
             disabled={selectedItineraryIndex === 0}
-            className={`p-1 rounded ${
-              selectedItineraryIndex === 0 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'
-            }`}
+            className={`p-1 rounded ${selectedItineraryIndex === 0 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'
+              }`}
           >
             <ChevronLeft size={24} />
           </button>
@@ -266,13 +235,12 @@ const SelectedRouteDetails = () => {
           <button
             onClick={handleNextRoute}
             disabled={selectedItineraryIndex === totalRoutes - 1}
-            className={`p-1 rounded ${
-              selectedItineraryIndex === totalRoutes - 1 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'
-            }`}
+            className={`p-1 rounded ${selectedItineraryIndex === totalRoutes - 1 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'
+              }`}
           >
             <ChevronRight size={24} />
           </button>
-          <button 
+          <button
             className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors ml-2"
             onClick={handleResetClick}
           >
@@ -295,7 +263,7 @@ const SelectedRouteDetails = () => {
                     const actualDepartureTime = leg.startTime;
                     const scheduledDepartureTime = actualDepartureTime - (leg.departureDelay || 0) * 1000; // Convert seconds to ms
                     const timeDiff = formatTimeDifference(scheduledDepartureTime, actualDepartureTime);
-                    
+
                     return (
                       <>
                         <span className="font-medium text-gray-900">
@@ -310,18 +278,21 @@ const SelectedRouteDetails = () => {
                     );
                   })()}
                 </div>
-                
+
                 {index < selectedItinerary.legs.length && (
-                  <div className={`h-full border-l-4 my-2 transition-all ${getAnyModeLineColor(leg.mode)}`} />
+                  <div
+                    className={`h-full border-l-4 my-2 transition-all`} // Remove inline style from className
+                    style={{ borderLeftColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }} // Apply style attribute
+                  />
                 )}
-                
+
                 {/* Arrival Time - Show actual and scheduled times */}
                 <div className="flex flex-col items-center">
                   {(() => {
                     const actualArrivalTime = leg.endTime;
                     const scheduledArrivalTime = actualArrivalTime - (leg.arrivalDelay || 0) * 1000; // Convert seconds to ms
                     const timeDiff = formatTimeDifference(scheduledArrivalTime, actualArrivalTime);
-                    
+
                     return (
                       <>
                         <span className="font-medium text-gray-900">
@@ -342,11 +313,11 @@ const SelectedRouteDetails = () => {
               <div className="flex-1 pb-8">
                 {/* From Location */}
                 <div className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded-full ${
-                    getLegType(leg.mode) === 'START' ? 'bg-green-500' :
-                    getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' :
-                    getAnyModeColor(leg.mode)
-                  }`} />
+                  <div className={`w-3 h-3 rounded-full ${getLegType(leg.mode) === 'START' ? 'bg-green-500' :
+                      getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' :
+                        ''}`}
+                    style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }} // Apply style attribute
+                  />
                   <div className="font-medium text-gray-900">
                     {leg.from.name}
                   </div>
@@ -360,7 +331,10 @@ const SelectedRouteDetails = () => {
                         {getTransportLogo(leg.mode as TransportMode) && (
                           <Image src={getTransportLogo(leg.mode as TransportMode)!} alt={leg.mode} width={24} height={24} />
                         )}
-                        <div className={`px-3 py-1.5 rounded-full shadow-sm ${getAnyModeColor(leg.mode)}`}>
+                        <div
+                          className={`px-3 py-1.5 rounded-full shadow-sm`} // Remove inline style from className
+                          style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }} // Apply style attribute
+                        >
                           <span className="text-white font-medium">
                             {leg.route ? `${leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode} ${leg.route}` : leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode}
                           </span>
@@ -384,18 +358,18 @@ const SelectedRouteDetails = () => {
                       {expandedLegs.includes(index) && leg.intermediateStops && (
                         <div className="ml-8 pl-4 border-l-2 border-gray-200">
                           {leg.intermediateStops.map((stop, stopIndex) => {
-                         
+
                             const legDuration = leg.endTime - leg.startTime;
                             const stopRatio = (stopIndex + 1) / (leg.intermediateStops?.length || 1);
                             const estimatedTime = leg.startTime + (legDuration * stopRatio);
-                            
+
                             const startDelayMs = (leg.departureDelay || 0) * 1000;
                             const endDelayMs = (leg.arrivalDelay || 0) * 1000;
                             const estimatedDelayMs = startDelayMs + (endDelayMs - startDelayMs) * stopRatio;
-                            
+
                             const scheduledTime = estimatedTime - estimatedDelayMs;
                             const timeDiff = formatTimeDifference(scheduledTime, estimatedTime);
-                            
+
                             return (
                               <div key={stopIndex} className="py-2 flex justify-between items-center border-b border-gray-100">
                                 <div className="text-base text-gray-800">
@@ -406,7 +380,7 @@ const SelectedRouteDetails = () => {
                                     {formatTime(estimatedTime)}
                                   </span>
                                   {timeDiff.text && (
-                                      <span className={`text-base font-normal ml-1 ${timeDiff.color}`}>
+                                    <span className={`text-base font-normal ml-1 ${timeDiff.color}`}>
                                       {timeDiff.text}
                                     </span>
                                   )}
@@ -427,11 +401,11 @@ const SelectedRouteDetails = () => {
 
                 {/* To Location */}
                 <div className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded-full ${
-                    getLegType(leg.mode) === 'END' ? 'bg-red-500' :
-                    getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' :
-                    getAnyModeColor(leg.mode)
-                  }`} />
+                  <div className={`w-3 h-3 rounded-full ${getLegType(leg.mode) === 'END' ? 'bg-red-500' :
+                      getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' : ''
+                    }`}
+                    style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }} // Apply style attribute
+                  />
                   <div className="font-medium text-gray-900">
                     {leg.to.name}
                   </div>
