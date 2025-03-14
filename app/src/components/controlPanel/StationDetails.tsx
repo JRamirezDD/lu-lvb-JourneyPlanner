@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ChevronLeft, Star, AlertTriangle, Clock, Info } from "lucide-react";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
@@ -15,10 +15,11 @@ interface Departure {
 }
 
 interface Disruption {
-  type: "delay" | "cancellation" | "construction";
+  type: string;
   lines: string[];
   message: string;
   until: string;
+  header?: string;
 }
 
 interface StationDetailsProps {
@@ -96,20 +97,51 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
     minutes: Math.round(item.dep_waiting_time / 60)
   })) || [];
 
-  const disruptions: Disruption[] = [
-    {
-      type: "construction",
-      lines: ["11", "15"],
-      message: "Bauarbeiten zwischen Wilhelm-Leuschner-Platz und Augustusplatz. Bitte planen Sie mehr Zeit ein.",
-      until: "15.04.2024",
-    },
-    {
-      type: "delay",
-      lines: ["S3"],
-      message: "Verzögerungen wegen technischer Störung am Hauptbahnhof.",
-      until: "Heute",
-    },
-  ];
+  // Extract alerts from stopMonitorData
+  const disruptions: Disruption[] = useMemo(() => {
+    if (!stopMonitorData?.items) return [];
+    
+    // Create a map to deduplicate alerts
+    const alertMap = new Map<string, Disruption>();
+    
+    // Process all items and their alerts
+    stopMonitorData.items.forEach(item => {
+      if (item.alerts && item.alerts.length > 0) {
+        item.alerts.forEach(alert => {
+          // Use the description text as a unique key
+          const key = alert.alertDescriptionText;
+          
+          if (!alertMap.has(key)) {
+            // Format the date for display
+            const endDate = new Date(alert.effectiveEndDate);
+            const formattedDate = endDate.toLocaleDateString();
+            
+            // Map alert category to a type
+            let type = "info";
+            if (alert.alertCategory === 1) type = "delay";
+            if (alert.alertCategory === 2) type = "cancellation";
+            if (alert.alertCategory === 3) type = "construction";
+            
+            alertMap.set(key, {
+              type: type,
+              lines: [item.line], // Start with this line
+              message: alert.alertDescriptionText,
+              until: formattedDate,
+              header: alert.alertHeaderText
+            });
+          } else {
+            // Add this line to existing alert if not already included
+            const existingAlert = alertMap.get(key)!;
+            if (!existingAlert.lines.includes(item.line)) {
+              existingAlert.lines.push(item.line);
+            }
+          }
+        });
+      }
+    });
+    
+    return Array.from(alertMap.values());
+  }, [stopMonitorData]);
 
   return (
     <div className="flex flex-col w-full bg-white">
@@ -209,7 +241,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
                 <div className="bg-[#1a365d] text-white px-4 py-2 flex items-center gap-2">
                   <AlertTriangle size={18} />
                   <span className="font-medium">
-                    {translations?.ControlPanel?.station?.disruption?.type?.[disruption.type] || disruption.type}
+                    {disruption.header || translations?.ControlPanel?.station?.disruption?.type?.[disruption.type] || disruption.type}
                   </span>
                 </div>
                 <div className="p-4">
