@@ -1,7 +1,9 @@
 import { Clock, ChevronLeft, ChevronRight } from "lucide-react";
 import PersonStanding from "../../../public/icons/otp-icons/Walk.svg";
-import Car from "../../../public/icons/otp-icons/Car.svg";
-import Bike from "../../../public/icons/otp-icons/Bike.svg";
+import Tram from "../../../public/icons/otp-icons/Tram-Logo.svg";
+import Bus from "../../../public/icons/otp-icons/Bus-Logo.svg";
+import Sbahn from "../../../public/icons/otp-icons/S-Bahn-Logo.svg";
+import Train from "../../../public/icons/otp-icons/Train.svg";
 import Image from "next/image";
 import React, { useState, useEffect, useMemo } from "react";
 import RoutePlanner from "./RoutePlanner";
@@ -68,6 +70,27 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
     }
   };
 
+  // Get the appropriate transport icon based on mode
+  const getTransportIcon = (mode: string) => {
+    switch (mode) {
+      case "TRAM": return Tram;
+      case "BUS": return Bus;
+      case "SUBURB": return Sbahn;
+      case "TRAIN": return Train;
+      default: return null;
+    }
+  };
+
+  // Get the appropriate transport color based on mode
+  const getTransportColor = (mode: string): string => {
+    switch (mode) {
+      case "TRAM": return "bg-red-600";
+      case "BUS": return "bg-purple-600";
+      case "SUBURB": return "bg-green-600";
+      case "TRAIN": return "bg-blue-600";
+      default: return "bg-gray-600";
+    }
+  };
 
   const handleEarlierSearch = () => {
     console.log("handleEarlierSearch");
@@ -182,6 +205,13 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
+    // Skip handling if an input element is focused
+    if (document.activeElement instanceof HTMLInputElement || 
+        document.activeElement instanceof HTMLTextAreaElement ||
+        document.activeElement?.classList.contains('location-input')) {
+      return;
+    }
+    
     if (!sortedItineraries.length) return;
     const maxRoutes = Math.min(sortedItineraries.length, 5);
 
@@ -248,6 +278,11 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
       (leg.to.name.includes(nextLeg.from.name) || nextLeg.from.name.includes(leg.to.name));
     
     return isBetweenTransit && (isShortWalk || isSameLocation);
+  };
+
+  // Function to determine if a leg is a walking leg
+  const isWalkingLeg = (leg: any): boolean => {
+    return leg.mode === "TRANSFER" || (leg.transitLeg === false && leg.mode !== "BIKE" && leg.mode !== "CAR");
   };
 
   return (
@@ -363,11 +398,12 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
                     {itinerary.legs.map((leg, index) => {
                       // Check if this is a transfer wait disguised as a walk
                       const isWaitingTransfer = isTransferWait(leg, index, itinerary.legs);
+                      const isWalking = isWalkingLeg(leg);
                       
                       return (
                         <React.Fragment key={index}>
                           {/* Transport Icon */}
-                          {leg.mode === "WALK" && !isWaitingTransfer ? (
+                          {isWalking && !isWaitingTransfer ? (
                             <div className="flex items-center gap-1 text-gray-600 bg-gray-100 px-2 py-1 rounded text-sm">
                               <Image 
                                 src={PersonStanding}
@@ -384,13 +420,24 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
                               <span>{Math.round(leg.duration / 60)} min</span>
                             </div>
                           ) : (
-                            <div className={`px-3 py-1 rounded font-medium ${
-                              leg.mode === 'TRAM' ? 'bg-red-600 text-white' :
-                              leg.mode === 'BUS' ? 'bg-purple-600 text-white' :
-                              leg.mode === 'SUBURB' ? 'bg-green-600 text-white' :
-                              'bg-green-600 text-white'
-                            }`}>
-                              {leg.route ? `${getTransportType(leg.mode)} ${leg.route}` : getTransportType(leg.mode)}
+                            // New transport display style similar to the image
+                            <div className="flex items-center">
+                              {/* Transport logo and route number */}
+                              <div className={`px-3 py-1 rounded-md font-medium ${getTransportColor(leg.mode)} text-white flex items-center gap-1`}>
+                                {/* Display the actual logo instead of just a letter */}
+                                {getTransportIcon(leg.mode) && (
+                                  <Image 
+                                    src={getTransportIcon(leg.mode)!}
+                                    alt={leg.mode}
+                                    width={20}
+                                    height={20}
+                                    className="mr-1"
+                                  />
+                                )}
+                                {leg.route && (
+                                  <span>{leg.route}</span>
+                                )}
+                              </div>
                             </div>
                           )}
 

@@ -64,6 +64,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [defaultDate, setDefaultDate] = useState<Date | null>(null);
   const [isArrival, setIsArrival] = useState(false);
+  const [lessTransfers, setLessTransfers] = useState(false);
+  const [shortWalk, setShortWalk] = useState(false);
   const [originAutocompleteData, setOriginAutocompleteData] = useState<AutocompleteItem[]>([]);
   const [destinationAutocompleteData, setDestinationAutocompleteData] = useState<AutocompleteItem[]>([]);
   
@@ -392,7 +394,9 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         To: selectedDestination.coordinates,
         Travelmode: transportModes,
         numItineraries: 5,
-        arriveBy: isArrival
+        arriveBy: isArrival,
+        lessTransfers: lessTransfers,
+        shortWalk: shortWalk
       };
 
       if (selectedDate) {
@@ -415,7 +419,9 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         Travelmode: params.Travelmode,
         date: params.date,
         time: params.time,
-        arriveBy: params.arriveBy
+        arriveBy: params.arriveBy,
+        lessTransfers: params.lessTransfers,
+        shortWalk: params.shortWalk
       });
 
       await fetchOtpData(params);
@@ -436,6 +442,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
+        e.stopPropagation(); // Stop event propagation
         // Ensure only one suggestion container is visible
         if (isOrigin) {
           setShowDestinationSuggestions(false);
@@ -456,6 +463,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         break;
       case 'ArrowUp':
         e.preventDefault();
+        e.stopPropagation(); // Stop event propagation
         // Ensure only one suggestion container is visible
         if (isOrigin) {
           setShowDestinationSuggestions(false);
@@ -476,19 +484,26 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         break;
       case 'Enter':
         e.preventDefault();
-        if (selectedIndex === -2 && locationIsEnabled) {
-          // Handle current location selection
-          if (isOrigin) {
-            handleUseCurrentLocationForOrigin();
-          } else {
-            handleUseCurrentLocationForDestination();
+        e.stopPropagation(); // Stop event propagation
+        
+        // Only handle Enter if suggestions are visible
+        if ((isOrigin && showOriginSuggestions) || (!isOrigin && showDestinationSuggestions)) {
+          if (selectedIndex === -2 && locationIsEnabled) {
+            // Handle current location selection
+            if (isOrigin) {
+              handleUseCurrentLocationForOrigin();
+            } else {
+              handleUseCurrentLocationForDestination();
+            }
+          } else if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+            handleSuggestionClick(suggestions[selectedIndex], isOrigin);
           }
-        } else if (selectedIndex >= 0 && suggestions[selectedIndex]) {
-          handleSuggestionClick(suggestions[selectedIndex], isOrigin);
+          setSelectedIndex(-1);
         }
-        setSelectedIndex(-1);
         break;
       case 'Escape':
+        e.preventDefault();
+        e.stopPropagation(); // Stop event propagation
         if (isOrigin) {
           setShowOriginSuggestions(false);
         } else {
@@ -553,6 +568,15 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     setSelectedIndex(-1);
     // Clear the search request stack
     setSearchRequestStack([]);
+  };
+
+  // Toggle handlers for new filter options
+  const toggleLessTransfers = () => {
+    setLessTransfers(prev => !prev);
+  };
+
+  const toggleShortWalk = () => {
+    setShortWalk(prev => !prev);
   };
 
   return (
@@ -706,6 +730,10 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
                 ])
               )}
               toggleFilter={toggleFilter}
+              lessTransfers={lessTransfers}
+              shortWalk={shortWalk}
+              onToggleLessTransfers={toggleLessTransfers}
+              onToggleShortWalk={toggleShortWalk}
             />
           )}
           {showDepartureFilter && (
@@ -736,6 +764,10 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
                 ])
               )}
               toggleFilter={toggleFilter}
+              lessTransfers={lessTransfers}
+              shortWalk={shortWalk}
+              onToggleLessTransfers={toggleLessTransfers}
+              onToggleShortWalk={toggleShortWalk}
             />
           )}
         </>

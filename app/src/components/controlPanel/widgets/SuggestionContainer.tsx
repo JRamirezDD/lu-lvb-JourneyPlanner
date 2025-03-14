@@ -40,6 +40,22 @@ const SuggestionContainer: React.FC<SuggestionContainerProps> = ({
   // Only show it if there are no suggestions AND current location is not available
   const showNoSuggestionsMessage = suggestions.length === 0 && !shouldShowCurrentLocation;
 
+  // Handle current location click with event stopping
+  const handleCurrentLocationClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onCurrentLocationClick) {
+      onCurrentLocationClick();
+    }
+  };
+
+  // Handle suggestion click with event stopping
+  const handleSuggestionClick = (e: React.MouseEvent, suggestion: AutocompleteItem) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onSuggestionClick(suggestion);
+  };
+
   return (
     <div className="suggestions-container absolute z-10 w-full bg-white border rounded-md shadow-lg mt-1">
       {loading ? (
@@ -49,7 +65,7 @@ const SuggestionContainer: React.FC<SuggestionContainerProps> = ({
           {/* Current Location Option */}
           {shouldShowCurrentLocation && (
             <div
-              onClick={onCurrentLocationClick}
+              onClick={handleCurrentLocationClick}
               className={`p-2 cursor-pointer ${
                 selectedIndex === -2 ? 'bg-primary-yellow/10' : 'hover:bg-gray-100'
               } ${suggestions.length > 0 ? 'border-b' : ''}`}
@@ -69,7 +85,7 @@ const SuggestionContainer: React.FC<SuggestionContainerProps> = ({
             suggestions.slice(0, 5).map((suggestion, index) => (
               <div
                 key={suggestion.id}
-                onClick={() => onSuggestionClick(suggestion)}
+                onClick={(e) => handleSuggestionClick(e, suggestion)}
                 className={`p-2 cursor-pointer ${
                   index === selectedIndex ? 'bg-primary-yellow/10' : 'hover:bg-gray-100'
                 }`}
