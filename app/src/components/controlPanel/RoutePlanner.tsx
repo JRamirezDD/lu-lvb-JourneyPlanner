@@ -624,7 +624,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
             }}
             onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
             onFocus={handleOriginFocus}
-            className="location-input w-full p-2 border rounded"
+            className="location-input w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
           />
           {showOriginSuggestions && (
             <SuggestionContainer
@@ -644,7 +644,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
 
         <button
           onClick={swapLocations}
-          className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-gray-200 text-primary-blue p-3 rounded-full hover:bg-gray-300 transition-colors z-10 shadow-md"
+          className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-gray-200 text-primary-blue p-3 rounded-full hover:bg-gray-300 transition-colors z-10 shadow-md focus:outline-none focus:ring-2 focus:ring-primary-blue"
         >
           <ArrowUpDown size={24} />
         </button>
@@ -674,7 +674,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
             }}
             onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
             onFocus={handleDestinationFocus}
-            className="location-input w-full p-2 border rounded"
+            className="location-input w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
           />
           {showDestinationSuggestions && (
             <SuggestionContainer
@@ -702,7 +702,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               setLastClickedFilter('departure');
             }
           }}
-          className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50"
+          className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-blue"
           suppressHydrationWarning
         >
           <div className="flex items-center gap-2">
@@ -728,7 +728,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               setLastClickedFilter('transport');
             }
           }}
-          className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50"
+          className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-blue"
         >
           <div className="flex items-center gap-2">
             <Filter size={18} />
@@ -796,7 +796,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       <button 
         onClick={handleSeeRoutes}
         disabled={!selectedOrigin || !selectedDestination}
-        className={`p-2 rounded w-full transition-colors ${
+        className={`p-2 rounded w-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-blue ${
           !selectedOrigin || !selectedDestination 
             ? 'bg-primary-yellow/50 text-primary-blue/70 cursor-not-allowed' 
             : 'bg-primary-yellow text-primary-blue hover:bg-primary-yellow/80'
