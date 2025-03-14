@@ -599,10 +599,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         </h2>
         <button 
           onClick={() => setActiveView("SEARCH_STATION")}
-          className="text-primary-blue hover:text-primary-blue/80 text-sm flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-primary-blue rounded px-2 py-1"
+          className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-blue"
         >
-          <Search size={16} />
-          {translations?.ControlPanel?.planner?.searchStation || "Search Station"}
+          <div className="flex items-center gap-2">
+            <Search size={18} />
+            <span>{translations?.ControlPanel?.searchButton || "Search Station"}</span>
+          </div>
         </button>
       </div>
 

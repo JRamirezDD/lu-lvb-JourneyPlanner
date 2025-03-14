@@ -271,7 +271,7 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
             <ChevronLeft size={20} />
           </button>
           <h2 className="text-lg font-bold">
-            {translations?.ControlPanel?.searchStation?.title || "Search Station"}
+            {translations?.ControlPanel?.search?.title }
           </h2>
         </div>
       </div>
@@ -280,7 +280,7 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
       <div className="relative">
         <input
           type="text"
-          placeholder={translations?.ControlPanel?.searchStation?.placeholder || "Enter station name"}
+          placeholder={translations?.ControlPanel?.search?.placeholder }
           value={stationQuery}
           onChange={(e) => {
             setStationQuery(e.target.value);
@@ -313,7 +313,7 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
         }`}
       >
         <Search size={18} />
-        <span>{translations?.ControlPanel?.searchStation?.search || "Search Station"}</span>
+        <span>{translations?.ControlPanel?.search?.title}</span>
       </button>
     </div>
   );
