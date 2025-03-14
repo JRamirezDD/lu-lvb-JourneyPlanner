@@ -8,6 +8,11 @@
         "list2": "Reiseplaner"
     },
     "ControlPanel": {
+        "searchButton": "Stationssuche",
+        "search": {
+            "title": "Stationssuche",
+            "placeholder": "Station eingeben"
+        },
         "planner": {
             "title": "Planen Sie Ihre Reise",
             "origin": "Start",
@@ -26,7 +31,7 @@
                     "sBahn": "S-Bahn",
                     "train": "Regionalverkehr"
                 },
-                "transportButton": "Transport",
+                "transportButton": "Optionen",
                 "datePicker": {
                     "date": "Datum",
                     "time": "Uhrzeit",
