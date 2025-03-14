@@ -97,6 +97,7 @@ export class Leg extends GeoJsonConvertible {
         public realTime: boolean,
         public distance: number,
         public mode: TransportMode,
+        public routeColor: string,
         public from: Location,
         public to: Location,
         public legGeometry: LegGeometry,
@@ -129,6 +130,7 @@ export class Leg extends GeoJsonConvertible {
                     route: this.route,
                     distance: this.distance,
                     duration: this.duration,
+                    routeColor: this.routeColor
                 },
             };
             features.push(lineString);
