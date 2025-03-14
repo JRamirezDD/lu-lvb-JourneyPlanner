@@ -65,5 +65,8 @@ export const currentLocationLayerConfig : LayerSpecification = {
     "icon-image": "current-location-icon",
     "icon-size": 0.20,
   },
+  paint: {
+    "icon-opacity": 1,
+  },
 };
   

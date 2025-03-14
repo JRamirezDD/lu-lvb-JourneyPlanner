@@ -39,7 +39,8 @@ import { useLocationContext } from "@/contexts/locationContext";
 import { Coordinates } from "@/types/Coordinates";
 import { createCurrentLocationData, currentLocationAccuracyLayerConfig, currentLocationLayerConfig, currentLocationSource } from "./layers/currentLocationLayer";
 import { Location } from "@/types/Location";
-import centerToLayer from "./utils/centerToLayer";
+import centerToLayer from "./utils/helpers/centerToLayer";
+import waitForLayer from "./utils/helpers/waitForLayer";
 
 // --- Bounding Box Helpers ---
 
@@ -425,30 +426,6 @@ export const MapWidget: React.FC = ({ }) => {
         mapRef.current.resize();
     };
 
-    // Helper function to wait for a layer to exist on the map
-    const waitForLayer = (
-        map: maplibregl.Map, 
-        layerId: string, 
-        timeout = 5000
-    ): Promise<void> => {
-        return new Promise((resolve, reject) => {
-        const start = Date.now();
-    
-        const checkLayer = () => {
-            if (map.getLayer(layerId)) {
-                resolve();
-            } else if (Date.now() - start > timeout) {
-                reject(new Error(`Timeout: Layer ${layerId} was not added within ${timeout}ms`));
-            } else {
-                requestAnimationFrame(checkLayer);
-            }
-        };
-    
-        checkLayer();
-        });
-    };
-  
-
     // Stops Layers
     const updateStopsLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, stopsData: any) => {
         if (!stopsData) return;
@@ -502,10 +479,6 @@ export const MapWidget: React.FC = ({ }) => {
         const geojsonData = createItineraryLayerData(itinerary);
         if (!geojsonData) return;
         updateSource("itinerary-source", geojsonData);
-
-        if (!activeSources.current.has("itinerary-source")) {
-            activateSource("itinerary-source");
-        }
     
         const layers = [
             walkLayerConfig, 

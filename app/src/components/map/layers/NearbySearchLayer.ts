@@ -97,6 +97,10 @@ export const ticketMachine_stopsLayerConfig: LayerSpecification = {
       "icon-image": "ticket", 
       "icon-size": 0.06,
   },
+  paint: {
+    "icon-opacity": 1,
+    "text-opacity": 1,
+  },
   filter: ["==", ["get", "type"], "ticket-machine"],
 };
 
@@ -110,7 +114,11 @@ export const taxi_station_stopsLayerConfig: LayerSpecification = {
   layout: {
     "icon-image": "taxi", 
     "icon-size": 0.06,
-},
+  },
+  paint: {
+    "icon-opacity": 1,
+    "text-opacity": 1,
+  },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "taxi"]
 };
 
@@ -123,7 +131,11 @@ export const escooter_station_stopsLayerConfig: LayerSpecification = {
   layout: {
     "icon-image": "scooter", 
     "icon-size": 0.06,
-},
+  },
+  paint: {
+    "icon-opacity": 1,
+    "text-opacity": 1,
+  },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "escooter"]
 };
 
@@ -136,7 +148,11 @@ export const nextbike_station_stopsLayerConfig: LayerSpecification = {
   layout: {
     "icon-image": "nextbike", 
     "icon-size": 0.06,
-},
+  },
+  paint: {
+    "icon-opacity": 1,
+    "text-opacity": 1,
+  },
   filter: ["==", ["get", "source", ["get", "item", ["properties"]]], "nextbike"]
 };
 
@@ -149,7 +165,11 @@ export const mobistation_stopsLayerConfig: LayerSpecification = {
   layout: {
     "icon-image": "charger", 
     "icon-size": 0.06,
-},
+  },
+  paint: {
+    "icon-opacity": 1,
+    "text-opacity": 1,
+  },
   filter: ["==", ["get", "type"], "mobistation"],
 };
 

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { GeoJSON } from "geojson";
 import { LayerSpecification, SourceSpecification } from "maplibre-gl";
-import fadeInLayer from "./fadeInLayer"; // Import fade-in function
+import fadeInLayer from "./helpers/fadeInLayer"; // Import fade-in function
 
 const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>) => {
     const sources = useRef(new Map<string, any>());
@@ -25,7 +25,19 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         } else {
             console.log(`Adding new source: ${sourceId}`);
             mapRef.current.addSource(sourceId, { type: "geojson", data: newData });
+            activateSource(sourceId);
         }
+    };
+
+    const reloadLayersWithNewData = (sourceId: string, newData: GeoJSON, layers: LayerSpecification[]) => {
+        if (!mapRef.current) return;
+        
+        const existingSource = sources.current.get(sourceId);
+        for (const layer of layers) {
+            removeLayer(layer.id);
+        }
+
+        updateSource(sourceId, newData);
     };
 
     const activateSource = (sourceId: string) => {
@@ -52,7 +64,7 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         }
     };
 
-    const addLayerIfNotExists = (layerConfig: LayerSpecification) => {
+    const addLayerIfNotExists = (layerConfig: LayerSpecification, fade_in_duration = 500) => {
         if (!mapRef.current) return;
         if (!activeLayers.current.has(layerConfig.id)) {
             console.info(`Layer ${layerConfig.id} not found, adding...`);
@@ -61,77 +73,17 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
     
             // Fade-in effect for layers
             
-            // Save original paint properties
-            const originalPaint = layerConfig.paint ? { ...layerConfig.paint } : {};
 
-
-            // Modify layerConfig to start with opacity 0
-            const modifiedLayerConfig: maplibregl.LayerSpecification = {
-                ...layerConfig,
-            };
-
-            if (layerConfig.type === "line") {
-                modifiedLayerConfig.paint = {
-                    ...modifiedLayerConfig.paint,
-                    "line-opacity": 0,
-                };
-            }
-
-            if (layerConfig.type === "fill") {
-                modifiedLayerConfig.paint = {
-                    ...modifiedLayerConfig.paint,
-                    "fill-opacity": 0,
-                };
-            }
-
-            if (layerConfig.type === "circle") {
-                modifiedLayerConfig.paint = {
-                    ...modifiedLayerConfig.paint,
-                    "circle-opacity": 0,
-                };
-            }
-
-            if (layerConfig.type === "symbol") {
-                modifiedLayerConfig.paint = {
-                    ...modifiedLayerConfig.paint,
-                    "icon-opacity": 0,
-                    "text-opacity": 0,
-                };
-            }
-
-            if (layerConfig.type === "raster") {
-                modifiedLayerConfig.paint = {
-                    ...modifiedLayerConfig.paint,
-                    "raster-opacity": 0,
-                };
-            }
-
-            if (layerConfig.type === "fill-extrusion") {
-                modifiedLayerConfig.paint = {
-                    ...modifiedLayerConfig.paint,
-                    "fill-extrusion-opacity": 0,
-                };
-            }
-
-            if (layerConfig.type === "heatmap") {
-                modifiedLayerConfig.paint = {
-                    ...modifiedLayerConfig.paint,
-                    "heatmap-opacity": 0,
-                };
-            }
 
             
 
     
+
+            fadeInLayer(mapRef.current!, layerConfig, fade_in_duration);
+
             // Add layer with opacity set to 0
-            mapRef.current.addLayer(modifiedLayerConfig);
             activeLayers.current.add(layerConfig.id);
             console.log(`Added layer with initial opacity 0: ${layerConfig.id}`);
-    
-            // Step 3: Ensure a slight delay before starting fade-in
-            setTimeout(() => {
-                fadeInLayer(mapRef.current!, layerConfig.id, originalPaint);
-            }, 1000);
         }
     };
     
