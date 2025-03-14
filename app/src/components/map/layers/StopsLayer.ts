@@ -55,6 +55,8 @@ export const stopsSource: GeoJSONSourceSpecification = {
       "circle-color": "#ff0000",
       "circle-stroke-width": 1,
       "circle-stroke-color": "#000",
+      "circle-opacity": 1,
+      "circle-stroke-opacity": 1,
     },
   };
   
@@ -75,6 +77,7 @@ export const stopsSource: GeoJSONSourceSpecification = {
       "text-color": "#000",
       "text-halo-color": "#fff",
       "text-halo-width": 1,
+      "text-opacity": 1,
     },
   };
   

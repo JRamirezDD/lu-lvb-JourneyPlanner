@@ -39,6 +39,8 @@ import { useLocationContext } from "@/contexts/locationContext";
 import { Coordinates } from "@/types/Coordinates";
 import { createCurrentLocationData, currentLocationAccuracyLayerConfig, currentLocationLayerConfig, currentLocationSource } from "./layers/currentLocationLayer";
 import { Location } from "@/types/Location";
+import centerToLayer from "./utils/helpers/centerToLayer";
+import waitForLayer from "./utils/helpers/waitForLayer";
 
 // --- Bounding Box Helpers ---
 
@@ -95,7 +97,7 @@ export const MapWidget: React.FC = ({ }) => {
     const currentQueryBoundsRef = useRef<maplibregl.LngLatBounds | null>(null);
     const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
-    const { setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
+    const { reloadLayersWithNewData, setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
 
     const  storedCenter = useRef<Coordinates | null>(null); 
 
@@ -358,9 +360,14 @@ export const MapWidget: React.FC = ({ }) => {
     useEffect(() => {
         // After triggering layer load
         if (mapRef.current) {
+            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
             waitForLayer(mapRef.current, itineraryLayerConfig.id)
             .then(() => {
-                centerToLayer(mapRef, itineraryLayerConfig.id);
+                if (mapRef.current)
+                    centerToLayer(mapRef.current, itineraryLayerConfig.id);
+                else {
+                    console.error("Map reference not available.");
+                }
             })
             .catch((error) => {
                 console.error(error);
@@ -420,30 +427,6 @@ export const MapWidget: React.FC = ({ }) => {
         mapRef.current.resize();
     };
 
-    // Helper function to wait for a layer to exist on the map
-    const waitForLayer = (
-        map: maplibregl.Map, 
-        layerId: string, 
-        timeout = 5000
-    ): Promise<void> => {
-        return new Promise((resolve, reject) => {
-        const start = Date.now();
-    
-        const checkLayer = () => {
-            if (map.getLayer(layerId)) {
-                resolve();
-            } else if (Date.now() - start > timeout) {
-                reject(new Error(`Timeout: Layer ${layerId} was not added within ${timeout}ms`));
-            } else {
-                requestAnimationFrame(checkLayer);
-            }
-        };
-    
-        checkLayer();
-        });
-    };
-  
-
     // Stops Layers
     const updateStopsLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, stopsData: any) => {
         if (!stopsData) return;
@@ -495,12 +478,8 @@ export const MapWidget: React.FC = ({ }) => {
         if (!itinerary) return;
     
         const geojsonData = createItineraryLayerData(itinerary);
+        console.log("updating itinerary layer")
         if (!geojsonData) return;
-        updateSource("itinerary-source", geojsonData);
-
-        if (!activeSources.current.has("itinerary-source")) {
-            activateSource("itinerary-source");
-        }
     
         const layers = [
             walkLayerConfig, 
@@ -513,7 +492,7 @@ export const MapWidget: React.FC = ({ }) => {
             destinationLayerConfig,
             originLayerConfig
         ];
-        layers.forEach(addLayerIfNotExists);
+        layers.forEach(() => reloadLayersWithNewData("itinerary-source", geojsonData, layers));
     };
 
     const removeItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
@@ -634,58 +613,7 @@ export const MapWidget: React.FC = ({ }) => {
     };
 
     
-    const centerToLayer = (
-            mapRef: React.MutableRefObject<maplibregl.Map | null>,
-            layerId: string
-        ) => {
-        if (!mapRef.current) return;
 
-        console.log("Centering to layer:", layerId);
-        
-        if (!mapRef.current.getLayer(layerId)) return;
-
-        const features = mapRef.current.queryRenderedFeatures({ layers: [layerId] });
-        console.log(features);
-
-        if (features.length) {
-          // Initialize bounds with extreme values.
-          const bounds = features.reduce(
-            (acc, feature) => {
-              if (feature.geometry && feature.geometry.bbox) {
-                const [minX, minY, maxX, maxY] = feature.geometry.bbox;
-                return [
-                  Math.min(acc[0], minX),
-                  Math.min(acc[1], minY),
-                  Math.max(acc[2], maxX),
-                  Math.max(acc[3], maxY)
-                ];
-              }
-              return acc;
-            },
-            [Infinity, Infinity, -Infinity, -Infinity]
-          );
-      
-          // Ensure valid bounds were computed.
-          if (
-            bounds[0] !== Infinity &&
-            bounds[1] !== Infinity &&
-            bounds[2] !== -Infinity &&
-            bounds[3] !== -Infinity
-          ) {
-            mapRef.current.fitBounds(
-              [
-                [bounds[0], bounds[1]],
-                [bounds[2], bounds[3]]
-              ],
-              { padding: 20 }
-            );
-          } else {
-            console.log("No valid bounding box found for layer:", layerId);
-          }
-        } else {
-          console.log("No features found for layer:", layerId);
-        }
-      };
       
 
 

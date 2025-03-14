@@ -62,6 +62,8 @@ export const intermediateStopsLayerConfig: LayerSpecification = {
     "circle-color": "white",
     "circle-stroke-width": 2,
     "circle-stroke-color": "black",
+    "circle-opacity": 1,
+    "circle-stroke-opacity": 1,
   },
   filter: ["==", ["get", "type"], "Intermediate Stop"],
 };
@@ -71,7 +73,6 @@ export const walkLayerConfig: LayerSpecification = {
   id: "walk-layer",
   type: "line",
   source: "itinerary-source",
-  layout: { "line-join": "round", "line-cap": "round" },
   paint: {
     "line-color": "#032c58",
     "line-width": 3,
@@ -136,8 +137,7 @@ export const backupLayerConfig: LayerSpecification = {
   id: "backup-layer",
   type: "line",
   source: "itinerary-source",
-  layout: { "line-join": "round", "line-cap": "round" },
-  paint: { "line-color": "black", "line-width": 4 },
+  paint: { "line-opacity": 1, "line-color": "black", "line-width": 4,  },
   filter: ["all", ["!=", ["get", "mode"], "BICYCLE"], 
                   ["!=", ["get", "mode"], "BIKERENTAL"],
                   ["!=", ["get", "mode"], "WALK"],
@@ -154,6 +154,8 @@ export const legStartEndLayerConfig: LayerSpecification = {
   type: "circle",
   source: "itinerary-source",
   paint: {
+    "circle-opacity" : 1,
+    "circle-stroke-opacity": 1,
     "circle-radius": 5,
     "circle-color": "white",
     "circle-stroke-width": 2,
@@ -167,6 +169,8 @@ export const destinationLayerConfig: LayerSpecification = {
   type: "circle",
   source: "itinerary-source",
   paint: {
+    "circle-opacity" : 1,
+    "circle-stroke-opacity": 1,
     "circle-radius": 7,
     "circle-color": "#032c58",
   },
@@ -178,6 +182,8 @@ export const originLayerConfig: LayerSpecification = {
   type: "circle",
   source: "itinerary-source",
   paint: {
+    "circle-opacity" : 1,
+    "circle-stroke-opacity": 1,
     "circle-radius": 7,
     "circle-color": "#032c58",
   },

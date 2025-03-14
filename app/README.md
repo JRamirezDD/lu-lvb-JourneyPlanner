@@ -1,5 +1,13 @@
 # lu-lvb-JourneyPlanner
 
+## Development Guide
+### Styleguide
+[Airbnb Javascript Style Guide](https://github.com/airbnb/javascript)
+
+### Dependencies
+`Dependency` v`recommended version` (where appropriate) - `purpose` (where appropriate)
+- npm v10.9.0
+- Node.js v22.12.0
 
 ## Hosting
 Not currently hosted. Hosting to be delivered in Sprint 2.
@@ -21,7 +29,6 @@ To set this up, do the following:
 Create `.env.local` file under `/app/src`
 Place the following variables
 - `LVB_API_KEY`="YOUR_KEY" => Corresponds to the API Key to the LVB APIs.
-- `MAPBOX_ACCESS_TOKEN`="YOUR_TOKEN" => Corresponds to the API Key for the MapBox account.
 
 
 ### Per-Environment Application Environment Variables
@@ -31,7 +38,6 @@ These environment variables relate to target-API-endpoints, API Proxy Configurat
     - `export` => only generates static pages, excluding anything under `/pages/api`.
     - `standalone` => generates the entire ready-to-host application in a single package.
 - `NEXT_PUBLIC_LVB_PROXY_ADDRESS`="http://LVB_PROXY_ADDRESS" => When the application is hosted locally and in a single deployment, then simply referring to the the localhost address is sufficient. Otherwise, the address of the externally-hosted proxies needs to be provided.
-- `NEXT_PUBLIC_MAPBOX_PROXY_ADDRESS`"=http://MAPBOX_PROXY_ADDRESS" => Same as `NEXT_PUBLIC_LVB_PROXY_ADDRESS`.
 - `LVB_API_BASE_URL`="http://LVB_API_BASE_URL" => Used by the Proxy Component.
 - `NEXT_PUBLIC_API_ENDPOINT_AUTOCOMPLETE`="/lvb-endpoint"
 - `NEXT_PUBLIC_API_ENDPOINT_STOPMONITOR`="/lvb-endpoint"
@@ -53,6 +59,7 @@ npm install
 ```bash
 npm run dev
 ```
+
 
 ### Running in Production Mode (Separate Hosting of Front-end and Back-end Components):
 1. ***First install the dependencies***
