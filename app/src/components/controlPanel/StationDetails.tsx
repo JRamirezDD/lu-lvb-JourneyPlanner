@@ -44,7 +44,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
   const effectiveStopId = stopId || "0013000"; // Default to "0013000" if no stopId provided
   const effectiveStopName = stopName || "Leipzig Hauptbahnhof"; // Default name if none provided
   
-  const [activeTab, setActiveTab] = useState<"now" | "timetable" | "disruptions">("now");
+  const [activeTab, setActiveTab] = useState<"now" | "disruptions">("now");
 
   useEffect(() => {
     // Fetch stop monitor data when component mounts
@@ -132,7 +132,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
 
       {/* Tab Navigation */}
       <div className="flex border-b">
-        {(["now", "timetable", "disruptions"] as const).map((tab) => (
+        {(["now", "disruptions"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -148,7 +148,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
       </div>
 
       {/* Station tabs */}
-      {(activeTab === 'now' || activeTab === 'timetable') && (
+      {activeTab === 'now' && (
         <div className="flex flex-col">
           {loadingStopMonitor && (
             <div className="p-4 text-center text-gray-600">
@@ -186,11 +186,9 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
                   <div className="col-span-6 font-medium text-gray-900">{departure.destination}</div>
                   <div className="col-span-2 text-right">
                     <div className="font-medium text-gray-900">{departure.time}</div>
-                    {activeTab === "now" && (
-                      <div className="text-sm text-green-600">
-                        {translations?.ControlPanel?.station?.minutes?.replace("{count}", departure.minutes.toString()) || `${departure.minutes} min`}
-                      </div>
-                    )}
+                    <div className="text-sm text-green-600">
+                      {translations?.ControlPanel?.station?.minutes?.replace("{count}", departure.minutes.toString()) || `${departure.minutes} min`}
+                    </div>
                   </div>
                   <div className="col-span-2 text-right font-medium">{departure.platform}</div>
                 </div>
