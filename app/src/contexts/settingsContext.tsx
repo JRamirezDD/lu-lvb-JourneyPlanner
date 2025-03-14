@@ -25,7 +25,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode; initialLang
     const [language, setLanguageState] = useState<"en" | "de">(initialLanguage);
     const [translations, setTranslations] = useState<Record<string, any>>({});
 
-    const [transportModes, setTransportModesState] = useState<TransportMode[]>(["WALK", "BUS", "TRAM", "SUBURB", "BIKE", "CAR"]);
+    const [transportModes, setTransportModesState] = useState<TransportMode[]>(["BUS", "TRAM", "SUBURB", "TRAIN"]);
     const [avoidWalking, setAvoidWalking] = useState<boolean>(false);
     const [wheelchairAccessible, setWheelchairAccessible] = useState<boolean>(false);
 
@@ -65,7 +65,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode; initialLang
 
     const clearState = () => {
         setLanguageState("en");
-        setTransportModesState(["WALK", "BUS", "TRAM", "SUBURB", "BIKE", "CAR"]);
+        setTransportModesState(["BUS", "TRAM", "SUBURB", "TRAIN"]);
         setAvoidWalking(false);
         setWheelchairAccessible(false);
     };
