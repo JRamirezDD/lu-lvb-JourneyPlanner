@@ -1,5 +1,5 @@
 import { useState, useEffect, SetStateAction } from "react";
-import { Filter, ArrowUpDown, ChevronDown, ChevronUp, Calendar } from "lucide-react"; // Icons
+import { Filter, ArrowUpDown, ChevronDown, ChevronUp, Calendar, Search } from "lucide-react"; // Icons
 import TramLogo from "../../../public/icons/otp-icons/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/icons/otp-icons/S-Bahn-Logo.svg";
 import TrainLogo from "../../../public/icons/otp-icons/Train.svg";
@@ -593,9 +593,18 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
 
   return (
     <div className="flex flex-col gap-4 p-4 w-full">
-      <h2 className="text-lg font-bold">
-        {translations?.ControlPanel?.planner?.title || "Plan Your Journey"}
-      </h2>
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="text-lg font-bold">
+          {translations?.ControlPanel?.planner?.title || "Plan Your Journey"}
+        </h2>
+        <button 
+          onClick={() => setActiveView("SEARCH_STATION")}
+          className="text-primary-blue hover:text-primary-blue/80 text-sm flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-primary-blue rounded px-2 py-1"
+        >
+          <Search size={16} />
+          {translations?.ControlPanel?.planner?.searchStation || "Search Station"}
+        </button>
+      </div>
 
       {/* Inputs and swap button */}
       <div className="flex flex-col gap-4 relative">
