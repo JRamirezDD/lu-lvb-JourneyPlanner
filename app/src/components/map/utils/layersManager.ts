@@ -31,13 +31,14 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
 
     const reloadLayersWithNewData = (sourceId: string, newData: GeoJSON, layers: LayerSpecification[]) => {
         if (!mapRef.current) return;
+        console.log(`Reloading layers with new data for source ${sourceId}.`);
         
-        const existingSource = sources.current.get(sourceId);
         for (const layer of layers) {
             removeLayer(layer.id);
+            updateSource(sourceId, newData);
+            addLayerIfNotExists(layer);
         }
 
-        updateSource(sourceId, newData);
     };
 
     const activateSource = (sourceId: string) => {
@@ -66,24 +67,18 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
 
     const addLayerIfNotExists = (layerConfig: LayerSpecification, fade_in_duration = 500) => {
         if (!mapRef.current) return;
-        if (!activeLayers.current.has(layerConfig.id)) {
+        if (activeLayers.current.has(layerConfig.id)) {
+            console.log(`Layer ${layerConfig.id} already exists.`);
+            return;
+        }
+        else {
             console.info(`Layer ${layerConfig.id} not found, adding...`);
     
-            
-    
-            // Fade-in effect for layers
-            
-
-
-            
-
-    
-
+            // with fade-in effect
             fadeInLayer(mapRef.current!, layerConfig, fade_in_duration);
 
-            // Add layer with opacity set to 0
             activeLayers.current.add(layerConfig.id);
-            console.log(`Added layer with initial opacity 0: ${layerConfig.id}`);
+            console.log(`Added layer: ${layerConfig.id}`);
         }
     };
     
@@ -112,7 +107,7 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         source.setData(newData);
     };
 
-    return { setSource, updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
+    return { reloadLayersWithNewData, setSource, updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
 };
 
 export default useLayersManager;

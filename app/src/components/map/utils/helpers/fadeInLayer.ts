@@ -5,9 +5,7 @@ const fadeInLayer = (
     layerConfig: LayerSpecification,
     duration = 500
 ) => {
-    if (map.getLayer(layerConfig.id)) {
-        map.removeLayer(layerConfig.id);
-    }
+
 
             // Save original paint properties
             const originalPaint: { [key: string]: any } = layerConfig.paint ? { ...layerConfig.paint } : {};

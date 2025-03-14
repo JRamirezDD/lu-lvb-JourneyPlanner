@@ -97,7 +97,7 @@ export const MapWidget: React.FC = ({ }) => {
     const currentQueryBoundsRef = useRef<maplibregl.LngLatBounds | null>(null);
     const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
-    const { setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
+    const { reloadLayersWithNewData, setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
 
     const  storedCenter = useRef<Coordinates | null>(null); 
 
@@ -360,6 +360,7 @@ export const MapWidget: React.FC = ({ }) => {
     useEffect(() => {
         // After triggering layer load
         if (mapRef.current) {
+            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
             waitForLayer(mapRef.current, itineraryLayerConfig.id)
             .then(() => {
                 if (mapRef.current)
@@ -477,8 +478,8 @@ export const MapWidget: React.FC = ({ }) => {
         if (!itinerary) return;
     
         const geojsonData = createItineraryLayerData(itinerary);
+        console.log("updating itinerary layer")
         if (!geojsonData) return;
-        updateSource("itinerary-source", geojsonData);
     
         const layers = [
             walkLayerConfig, 
@@ -491,7 +492,7 @@ export const MapWidget: React.FC = ({ }) => {
             destinationLayerConfig,
             originLayerConfig
         ];
-        layers.forEach(addLayerIfNotExists);
+        layers.forEach(() => reloadLayersWithNewData("itinerary-source", geojsonData, layers));
     };
 
     const removeItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
