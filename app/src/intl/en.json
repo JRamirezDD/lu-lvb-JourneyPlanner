@@ -8,6 +8,11 @@
       "list2": "Journey Planner"
     },
     "ControlPanel": {
+        "searchButton": "Search Station",
+        "search": {
+            "title": "Search for a station",
+            "placeholder": "Enter a station name"
+        },
         "planner": {
             "title": "Plan Your Trip",
             "origin": "Origin",
@@ -17,7 +22,7 @@
             "useCurrentLocation": "Use your current location",
             "filters": {
                 "departure": "Departure",
-                "transportButton": "Transport",
+                "transportButton": "Options",
                 "datePicker": {
                     "date": "Date",
                     "time": "Time",
