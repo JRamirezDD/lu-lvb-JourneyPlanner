@@ -77,6 +77,7 @@ export const walkLayerConfig: LayerSpecification = {
     "line-color": "#032c58",
     "line-width": 3,
     "line-dasharray": [3.5,3],
+    "line-opacity": 1
   },
   filter: ["==", ["get", "mode"], "WALK"],
 };

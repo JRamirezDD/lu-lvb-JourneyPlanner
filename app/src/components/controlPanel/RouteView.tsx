@@ -333,12 +333,19 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
                             <span>{Math.round(leg.duration / 60)}</span>
                           </div>
                         ) : (
-                          <div className={`px-3 py-1 rounded font-medium ${
-                            leg.mode === 'TRAM' ? 'bg-red-600 text-white' :
-                            leg.mode === 'BUS' ? 'bg-purple-600 text-white' :
-                            leg.mode === 'SUBURB' ? 'bg-green-600 text-white' :
-                            'bg-green-600 text-white'
-                          }`}>
+                          <div className={`px-3 py-1 rounded font-medium text-white`}
+                          style={{
+                            backgroundColor: leg.routeColor && leg.routeColor.startsWith("#")
+                              ? leg.routeColor
+                              : leg.mode === "TRAM"
+                              ? "red"
+                              : leg.mode === "BUS"
+                              ? "purple"
+                              : leg.mode === "SUBURB"
+                              ? "green"
+                              : "green",
+                          }}
+                        >
                             {leg.route ? `${getTransportType(leg.mode)} ${leg.route}` : getTransportType(leg.mode)}
                           </div>
                         )}
