@@ -99,6 +99,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     setDefaultDate(now);
   }, []);
   
+  // Ensure suggestions are hidden on initial load
+  useEffect(() => {
+    setShowOriginSuggestions(false);
+    setShowDestinationSuggestions(false);
+  }, []);
+  
   const isDepartureModified = selectedDate && defaultDate 
     ? selectedDate.getTime() !== defaultDate.getTime() || isArrival
     : false;
@@ -250,14 +256,17 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   useEffect(() => {
     if (isOriginSelected) return;
     
-    if (origin.length >= 2) {
-      fetchOriginSuggestions(origin);
-    } else {
-      // Show only current location when input is less than 2 characters
-      setOriginAutocompleteData([]);
-      if (locationIsEnabled) {
+    // Only show suggestions if the user has interacted with the input
+    if (document.activeElement?.classList.contains('location-input')) {
+      if (origin.length >= 2) {
+        fetchOriginSuggestions(origin);
+      } else if (locationIsEnabled) {
+        // Always show current location when location is enabled
+        setOriginAutocompleteData([]);
         setShowOriginSuggestions(true);
       } else {
+        // Hide suggestions if location is not enabled and input is too short
+        setOriginAutocompleteData([]);
         setShowOriginSuggestions(false);
       }
     }
@@ -266,14 +275,17 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   useEffect(() => {
     if (isDestinationSelected) return;
     
-    if (destination.length >= 2) {
-      fetchDestinationSuggestions(destination);
-    } else {
-      // Show only current location when input is less than 2 characters
-      setDestinationAutocompleteData([]);
-      if (locationIsEnabled) {
+    // Only show suggestions if the user has interacted with the input
+    if (document.activeElement?.classList.contains('location-input')) {
+      if (destination.length >= 2) {
+        fetchDestinationSuggestions(destination);
+      } else if (locationIsEnabled) {
+        // Always show current location when location is enabled
+        setDestinationAutocompleteData([]);
         setShowDestinationSuggestions(true);
       } else {
+        // Hide suggestions if location is not enabled and input is too short
+        setDestinationAutocompleteData([]);
         setShowDestinationSuggestions(false);
       }
     }
@@ -289,7 +301,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     if (origin.length >= 2 && !isOriginSelected) {
       fetchOriginSuggestions(origin);
     } else if (locationIsEnabled) {
-      // Show only current location when input is less than 2 characters
+      // Always show current location option when input is focused and location is enabled
       setOriginAutocompleteData([]);
       setShowOriginSuggestions(true);
     }
@@ -304,7 +316,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     if (destination.length >= 2 && !isDestinationSelected) {
       fetchDestinationSuggestions(destination);
     } else if (locationIsEnabled) {
-      // Show only current location when input is less than 2 characters
+      // Always show current location option when input is focused and location is enabled
       setDestinationAutocompleteData([]);
       setShowDestinationSuggestions(true);
     }
@@ -601,8 +613,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               // Close destination suggestions
               setShowDestinationSuggestions(false);
               
-              // Show current location option immediately when typing
-              if (e.target.value.length < 2 && locationIsEnabled) {
+              // Show suggestions based on input length
+              if (e.target.value.length >= 2) {
+                fetchOriginSuggestions(e.target.value);
+              } else if (locationIsEnabled) {
+                // Always show current location option when location is enabled
+                setOriginAutocompleteData([]);
                 setShowOriginSuggestions(true);
               }
             }}
@@ -647,8 +663,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               // Close origin suggestions
               setShowOriginSuggestions(false);
               
-              // Show current location option immediately when typing
-              if (e.target.value.length < 2 && locationIsEnabled) {
+              // Show suggestions based on input length
+              if (e.target.value.length >= 2) {
+                fetchDestinationSuggestions(e.target.value);
+              } else if (locationIsEnabled) {
+                // Always show current location option when location is enabled
+                setDestinationAutocompleteData([]);
                 setShowDestinationSuggestions(true);
               }
             }}
