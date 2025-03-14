@@ -423,21 +423,26 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
                             // New transport display style similar to the image
                             <div className="flex items-center">
                               {/* Transport logo and route number */}
-                              <div className={`px-3 py-1 rounded-md font-medium ${getTransportColor(leg.mode)} text-white flex items-center gap-1`}>
-                                {/* Display the actual logo instead of just a letter */}
-                                {getTransportIcon(leg.mode) && (
-                                  <Image 
-                                    src={getTransportIcon(leg.mode)!}
-                                    alt={leg.mode}
-                                    width={20}
-                                    height={20}
-                                    className="mr-1"
-                                  />
-                                )}
-                                {leg.route && (
-                                  <span>{leg.route}</span>
-                                )}
-                              </div>
+                              <div
+  className={`px-3 py-1 rounded-md font-medium text-white flex items-center gap-1`}
+  style={{
+    backgroundColor: leg.routeColor && leg.routeColor.startsWith("#")
+      ? leg.routeColor
+      : undefined,
+  }}
+>
+  {/* Display the actual logo instead of just a letter */}
+  {getTransportIcon(leg.mode) && (
+    <Image
+      src={getTransportIcon(leg.mode)!}
+      alt={leg.mode}
+      width={20}
+      height={20}
+      className="mr-1"
+    />
+  )}
+  {leg.route && <span>{leg.route}</span>}
+</div>
                             </div>
                           )}
 

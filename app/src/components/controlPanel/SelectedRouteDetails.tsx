@@ -12,7 +12,7 @@ import TrainLogo from "../../../public/icons/otp-icons/Train.svg";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { Itinerary } from "@/types/Itinerary";
-import { RouteColor } from "@/types/RouteColor";
+//import { RouteColor } from "@/types/RouteColor";
 
 interface RouteData {
   id: number;
@@ -43,38 +43,6 @@ type LegType = 'START' | 'END' | 'WALK' | 'TRANSFER' | TransportMode;
 
 // Helper function to check if a mode is "WALK"
 const isWalkMode = (mode: string): boolean => mode === "WALK";
-
-const getTransportColor = (mode: TransportMode) => {
-  switch (mode) {
-    case "TRAM": return "bg-red-600";
-    case "SUBURB": return "bg-green-600";
-    case "BUS": return "bg-purple-600";
-    case "TRAIN": return "bg-blue-600";
-    default: return "bg-gray-400";
-  }
-};
-
-// Special function to get color for any mode including "WALK"
-const getAnyModeColor = (mode: string): string => {
-  if (isWalkMode(mode)) return "bg-gray-200";
-  return getTransportColor(mode as TransportMode);
-};
-
-const getLineColor = (mode: TransportMode) => {
-  switch (mode) {
-    case "TRAM": return "border-red-600";
-    case "SUBURB": return "border-green-600";
-    case "BUS": return "border-purple-600";
-    case "TRAIN": return "border-blue-600";
-    default: return "border-gray-200";
-  }
-};
-
-// Special function to get line color for any mode including "WALK"
-const getAnyModeLineColor = (mode: string): string => {
-  if (isWalkMode(mode)) return "border-gray-600 border-dashed";
-  return getLineColor(mode as TransportMode);
-};
 
 const getLegType = (mode: string): LegType => {
   if (mode === 'WALK') return 'WALK';
