@@ -1,5 +1,5 @@
 import { useState, useEffect, SetStateAction } from "react";
-import { Filter, ArrowUpDown, ChevronDown, ChevronUp, Calendar } from "lucide-react"; // Icons
+import { Filter, ArrowUpDown, ChevronDown, ChevronUp, Calendar, Search } from "lucide-react"; // Icons
 import TramLogo from "../../../public/icons/otp-icons/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/icons/otp-icons/S-Bahn-Logo.svg";
 import TrainLogo from "../../../public/icons/otp-icons/Train.svg";
@@ -97,6 +97,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     const now = new Date();
     setSelectedDate(now);
     setDefaultDate(now);
+  }, []);
+  
+  // Ensure suggestions are hidden on initial load
+  useEffect(() => {
+    setShowOriginSuggestions(false);
+    setShowDestinationSuggestions(false);
   }, []);
   
   const isDepartureModified = selectedDate && defaultDate 
@@ -250,14 +256,17 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   useEffect(() => {
     if (isOriginSelected) return;
     
-    if (origin.length >= 2) {
-      fetchOriginSuggestions(origin);
-    } else {
-      // Show only current location when input is less than 2 characters
-      setOriginAutocompleteData([]);
-      if (locationIsEnabled) {
+    // Only show suggestions if the user has interacted with the input
+    if (document.activeElement?.classList.contains('location-input')) {
+      if (origin.length >= 2) {
+        fetchOriginSuggestions(origin);
+      } else if (locationIsEnabled) {
+        // Always show current location when location is enabled
+        setOriginAutocompleteData([]);
         setShowOriginSuggestions(true);
       } else {
+        // Hide suggestions if location is not enabled and input is too short
+        setOriginAutocompleteData([]);
         setShowOriginSuggestions(false);
       }
     }
@@ -266,14 +275,17 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   useEffect(() => {
     if (isDestinationSelected) return;
     
-    if (destination.length >= 2) {
-      fetchDestinationSuggestions(destination);
-    } else {
-      // Show only current location when input is less than 2 characters
-      setDestinationAutocompleteData([]);
-      if (locationIsEnabled) {
+    // Only show suggestions if the user has interacted with the input
+    if (document.activeElement?.classList.contains('location-input')) {
+      if (destination.length >= 2) {
+        fetchDestinationSuggestions(destination);
+      } else if (locationIsEnabled) {
+        // Always show current location when location is enabled
+        setDestinationAutocompleteData([]);
         setShowDestinationSuggestions(true);
       } else {
+        // Hide suggestions if location is not enabled and input is too short
+        setDestinationAutocompleteData([]);
         setShowDestinationSuggestions(false);
       }
     }
@@ -289,7 +301,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     if (origin.length >= 2 && !isOriginSelected) {
       fetchOriginSuggestions(origin);
     } else if (locationIsEnabled) {
-      // Show only current location when input is less than 2 characters
+      // Always show current location option when input is focused and location is enabled
       setOriginAutocompleteData([]);
       setShowOriginSuggestions(true);
     }
@@ -304,7 +316,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     if (destination.length >= 2 && !isDestinationSelected) {
       fetchDestinationSuggestions(destination);
     } else if (locationIsEnabled) {
-      // Show only current location when input is less than 2 characters
+      // Always show current location option when input is focused and location is enabled
       setDestinationAutocompleteData([]);
       setShowDestinationSuggestions(true);
     }
@@ -581,9 +593,18 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
 
   return (
     <div className="flex flex-col gap-4 p-4 w-full">
-      <h2 className="text-lg font-bold">
-        {translations?.ControlPanel?.planner?.title || "Plan Your Journey"}
-      </h2>
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="text-lg font-bold">
+          {translations?.ControlPanel?.planner?.title || "Plan Your Journey"}
+        </h2>
+        <button 
+          onClick={() => setActiveView("SEARCH_STATION")}
+          className="text-primary-blue hover:text-primary-blue/80 text-sm flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-primary-blue rounded px-2 py-1"
+        >
+          <Search size={16} />
+          {translations?.ControlPanel?.planner?.searchStation || "Search Station"}
+        </button>
+      </div>
 
       {/* Inputs and swap button */}
       <div className="flex flex-col gap-4 relative">
@@ -601,14 +622,18 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               // Close destination suggestions
               setShowDestinationSuggestions(false);
               
-              // Show current location option immediately when typing
-              if (e.target.value.length < 2 && locationIsEnabled) {
+              // Show suggestions based on input length
+              if (e.target.value.length >= 2) {
+                fetchOriginSuggestions(e.target.value);
+              } else if (locationIsEnabled) {
+                // Always show current location option when location is enabled
+                setOriginAutocompleteData([]);
                 setShowOriginSuggestions(true);
               }
             }}
             onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
             onFocus={handleOriginFocus}
-            className="location-input w-full p-2 border rounded"
+            className="location-input w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
           />
           {showOriginSuggestions && (
             <SuggestionContainer
@@ -628,7 +653,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
 
         <button
           onClick={swapLocations}
-          className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-gray-200 text-primary-blue p-3 rounded-full hover:bg-gray-300 transition-colors z-10 shadow-md"
+          className="absolute right-[-16px] top-1/2 transform -translate-y-1/2 bg-gray-200 text-primary-blue p-3 rounded-full hover:bg-gray-300 transition-colors z-10 shadow-md focus:outline-none focus:ring-2 focus:ring-primary-blue"
         >
           <ArrowUpDown size={24} />
         </button>
@@ -647,14 +672,18 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               // Close origin suggestions
               setShowOriginSuggestions(false);
               
-              // Show current location option immediately when typing
-              if (e.target.value.length < 2 && locationIsEnabled) {
+              // Show suggestions based on input length
+              if (e.target.value.length >= 2) {
+                fetchDestinationSuggestions(e.target.value);
+              } else if (locationIsEnabled) {
+                // Always show current location option when location is enabled
+                setDestinationAutocompleteData([]);
                 setShowDestinationSuggestions(true);
               }
             }}
             onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
             onFocus={handleDestinationFocus}
-            className="location-input w-full p-2 border rounded"
+            className="location-input w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
           />
           {showDestinationSuggestions && (
             <SuggestionContainer
@@ -682,7 +711,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               setLastClickedFilter('departure');
             }
           }}
-          className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50"
+          className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-blue"
           suppressHydrationWarning
         >
           <div className="flex items-center gap-2">
@@ -708,7 +737,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               setLastClickedFilter('transport');
             }
           }}
-          className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50"
+          className="flex items-center justify-between bg-white text-primary-blue px-4 py-2 rounded-md border border-gray-200 transition-all hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-blue"
         >
           <div className="flex items-center gap-2">
             <Filter size={18} />
@@ -776,7 +805,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       <button 
         onClick={handleSeeRoutes}
         disabled={!selectedOrigin || !selectedDestination}
-        className={`p-2 rounded w-full transition-colors ${
+        className={`p-2 rounded w-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-blue ${
           !selectedOrigin || !selectedDestination 
             ? 'bg-primary-yellow/50 text-primary-blue/70 cursor-not-allowed' 
             : 'bg-primary-yellow text-primary-blue hover:bg-primary-yellow/80'
