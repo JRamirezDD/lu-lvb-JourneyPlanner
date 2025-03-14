@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { GeoJSON } from "geojson";
 import { LayerSpecification, SourceSpecification } from "maplibre-gl";
+import fadeInLayer from "./helpers/fadeInLayer"; // Import fade-in function
 
 const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>) => {
     const sources = useRef(new Map<string, any>());
@@ -24,7 +25,20 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         } else {
             console.log(`Adding new source: ${sourceId}`);
             mapRef.current.addSource(sourceId, { type: "geojson", data: newData });
+            activateSource(sourceId);
         }
+    };
+
+    const reloadLayersWithNewData = (sourceId: string, newData: GeoJSON, layers: LayerSpecification[]) => {
+        if (!mapRef.current) return;
+        console.log(`Reloading layers with new data for source ${sourceId}.`);
+        
+        for (const layer of layers) {
+            removeLayer(layer.id);
+            updateSource(sourceId, newData);
+            addLayerIfNotExists(layer);
+        }
+
     };
 
     const activateSource = (sourceId: string) => {
@@ -37,7 +51,7 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
             console.log(`Activating source ${sourceId}.`);
             activeSources.current.add(sourceId);
         }
-    }
+    };
 
     const clearSource = (sourceId: string) => {
         if (!mapRef.current) return;
@@ -51,15 +65,23 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         }
     };
 
-    const addLayerIfNotExists = (layerConfig: LayerSpecification) => {
+    const addLayerIfNotExists = (layerConfig: LayerSpecification, fade_in_duration = 500) => {
         if (!mapRef.current) return;
-        if (!activeLayers.current.has(layerConfig.id)) {
-            console.info(`Layer ${layerConfig.id} not found in ${printActiveLayers()}, adding...`);
-            mapRef.current.addLayer(layerConfig);
+        if (activeLayers.current.has(layerConfig.id)) {
+            console.log(`Layer ${layerConfig.id} already exists.`);
+            return;
+        }
+        else {
+            console.info(`Layer ${layerConfig.id} not found, adding...`);
+    
+            // with fade-in effect
+            fadeInLayer(mapRef.current!, layerConfig, fade_in_duration);
+
             activeLayers.current.add(layerConfig.id);
             console.log(`Added layer: ${layerConfig.id}`);
         }
     };
+    
 
     const removeLayer = (layerId: string) => {
         if (!mapRef.current) return;
@@ -83,9 +105,9 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         }
         source = mapRef.current.getSource(sourceId) as maplibregl.GeoJSONSource;
         source.setData(newData);
-    }
+    };
 
-    return { setSource, updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
+    return { reloadLayersWithNewData, setSource, updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
 };
 
 export default useLayersManager;

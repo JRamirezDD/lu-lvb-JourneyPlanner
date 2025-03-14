@@ -36,7 +36,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/api/index.js"
-, "src/components/map/layers/layersManager.tss", "src/utils/convertBoundingBoxToCenterAndRadius.js"  ],
+, "src/components/map/layers/layersManager.tss", "src/utils/convertBoundingBoxToCenterAndRadius.js", "src/components/map/utils/helpers/waitForLayer.ts"  ],
   "exclude": [
     "node_modules",
     "src-copy",
