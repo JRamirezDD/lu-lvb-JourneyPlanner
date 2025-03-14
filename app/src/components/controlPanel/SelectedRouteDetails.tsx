@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Clock, Info, ChevronDown, ChevronUp, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, ChevronDown, ChevronUp, X } from "lucide-react";
 import PersonStanding from "../../../public/icons/otp-icons/Walk.svg";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -8,6 +8,7 @@ import { TransportMode } from "@/types/TransportMode";
 import TramLogo from "../../../public/icons/otp-icons/Tram-Logo.svg";
 import S_BahnLogo from "../../../public/icons/otp-icons/S-Bahn-Logo.svg";
 import BusLogo from "../../../public/icons/otp-icons/Bus-Logo.svg";
+import TrainLogo from "../../../public/icons/otp-icons/Train.svg";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { Itinerary } from "@/types/Itinerary";
@@ -38,14 +39,23 @@ interface RouteData {
 
 type LegType = 'START' | 'END' | 'WALK' | 'TRANSFER' | TransportMode;
 
+// Helper function to check if a mode is "WALK"
+const isWalkMode = (mode: string): boolean => mode === "WALK";
+
 const getTransportColor = (mode: TransportMode) => {
   switch (mode) {
     case "TRAM": return "bg-red-600";
     case "SUBURB": return "bg-green-600";
     case "BUS": return "bg-purple-600";
-    case "WALK": return "bg-gray-200";
+    case "TRAIN": return "bg-blue-600";
     default: return "bg-gray-400";
   }
+};
+
+// Special function to get color for any mode including "WALK"
+const getAnyModeColor = (mode: string): string => {
+  if (isWalkMode(mode)) return "bg-gray-200";
+  return getTransportColor(mode as TransportMode);
 };
 
 const getLineColor = (mode: TransportMode) => {
@@ -53,15 +63,21 @@ const getLineColor = (mode: TransportMode) => {
     case "TRAM": return "border-red-600";
     case "SUBURB": return "border-green-600";
     case "BUS": return "border-purple-600";
-    case "WALK": return "border-gray-600 border-dashed";
+    case "TRAIN": return "border-blue-600";
     default: return "border-gray-200";
   }
 };
 
-const getLegType = (mode: TransportMode): LegType => {
+// Special function to get line color for any mode including "WALK"
+const getAnyModeLineColor = (mode: string): string => {
+  if (isWalkMode(mode)) return "border-gray-600 border-dashed";
+  return getLineColor(mode as TransportMode);
+};
+
+const getLegType = (mode: string): LegType => {
   if (mode === 'WALK') return 'WALK';
   if (mode === 'TRANSFER') return 'TRANSFER';
-  return mode;
+  return mode as TransportMode;
 };
 
 const formatTime = (timestamp: number): string => {
@@ -87,6 +103,7 @@ const getTransportLogo = (mode: TransportMode) => {
     case "TRAM": return TramLogo;
     case "SUBURB": return S_BahnLogo;
     case "BUS": return BusLogo;
+    case "TRAIN": return TrainLogo;
     default: return null;
   }
 };
@@ -295,7 +312,7 @@ const SelectedRouteDetails = () => {
                 </div>
                 
                 {index < selectedItinerary.legs.length && (
-                  <div className={`h-full border-l-4 my-2 transition-all ${getLineColor(leg.mode)}`} />
+                  <div className={`h-full border-l-4 my-2 transition-all ${getAnyModeLineColor(leg.mode)}`} />
                 )}
                 
                 {/* Arrival Time - Show actual and scheduled times */}
@@ -328,7 +345,7 @@ const SelectedRouteDetails = () => {
                   <div className={`w-3 h-3 rounded-full ${
                     getLegType(leg.mode) === 'START' ? 'bg-green-500' :
                     getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' :
-                    getTransportColor(leg.mode)
+                    getAnyModeColor(leg.mode)
                   }`} />
                   <div className="font-medium text-gray-900">
                     {leg.from.name}
@@ -337,25 +354,18 @@ const SelectedRouteDetails = () => {
 
                 {/* Transport Details */}
                 <div className="ml-5 my-3">
-                  {getLegType(leg.mode) !== 'WALK' ? (
+                  {!isWalkMode(leg.mode) ? (
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
-                        {getTransportLogo(leg.mode) && (
-                          <Image src={getTransportLogo(leg.mode)!} alt={leg.mode} width={24} height={24} />
+                        {getTransportLogo(leg.mode as TransportMode) && (
+                          <Image src={getTransportLogo(leg.mode as TransportMode)!} alt={leg.mode} width={24} height={24} />
                         )}
-                        <div className={`px-3 py-1.5 rounded-full shadow-sm ${getTransportColor(leg.mode)}`}>
+                        <div className={`px-3 py-1.5 rounded-full shadow-sm ${getAnyModeColor(leg.mode)}`}>
                           <span className="text-white font-medium">
                             {leg.route ? `${leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode} ${leg.route}` : leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode}
                           </span>
                         </div>
-                        {/* Platform and stops info */}
-                        {(leg.mode === "TRAM" || leg.mode === "SUBURB" || leg.mode === "BUS" || leg.mode === "TRAIN") && (
-                          <div className="text-sm text-gray-600 flex items-center gap-2">
-                            <Info size={16} />
-                            <span>{translations?.ControlPanel?.routeDetails?.platform?.replace("{number}", leg.mode || "")}</span>
-                          </div>
-                        )}
-
+                        
                         {/* Add toggle button when there are stops */}
                         {leg.intermediateStops && leg.intermediateStops.length > 0 && (
                           <button
@@ -420,7 +430,7 @@ const SelectedRouteDetails = () => {
                   <div className={`w-3 h-3 rounded-full ${
                     getLegType(leg.mode) === 'END' ? 'bg-red-500' :
                     getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' :
-                    getTransportColor(leg.mode)
+                    getAnyModeColor(leg.mode)
                   }`} />
                   <div className="font-medium text-gray-900">
                     {leg.to.name}
