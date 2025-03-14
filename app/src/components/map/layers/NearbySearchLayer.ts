@@ -41,7 +41,7 @@ export const stop_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "haltestelle",
-    "icon-size": 0.065,
+    "icon-size": 1,
   },
   paint: {
     "icon-opacity": [
@@ -95,7 +95,7 @@ export const ticketMachine_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
       "icon-image": "ticket", 
-      "icon-size": 0.06,
+      "icon-size": 0.015,
   },
   paint: {
     "icon-opacity": 1,
@@ -113,7 +113,7 @@ export const taxi_station_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "taxi", 
-    "icon-size": 0.06,
+    "icon-size": 0.015,
   },
   paint: {
     "icon-opacity": 1,
@@ -130,7 +130,7 @@ export const escooter_station_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "scooter", 
-    "icon-size": 0.06,
+    "icon-size": 0.015,
   },
   paint: {
     "icon-opacity": 1,
@@ -147,7 +147,7 @@ export const nextbike_station_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "nextbike", 
-    "icon-size": 0.06,
+    "icon-size": 0.015,
   },
   paint: {
     "icon-opacity": 1,
@@ -164,7 +164,7 @@ export const mobistation_stopsLayerConfig: LayerSpecification = {
   maxzoom: 22,
   layout: {
     "icon-image": "charger", 
-    "icon-size": 0.06,
+    "icon-size": 0.015,
   },
   paint: {
     "icon-opacity": 1,
