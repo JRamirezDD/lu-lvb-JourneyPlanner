@@ -57,25 +57,81 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         if (!activeLayers.current.has(layerConfig.id)) {
             console.info(`Layer ${layerConfig.id} not found, adding...`);
     
-            // Step 1: Modify layerConfig to start with opacity 0
+            
+    
+            // Fade-in effect for layers
+            
+            // Save original paint properties
+            const originalPaint = layerConfig.paint ? { ...layerConfig.paint } : {};
+
+
+            // Modify layerConfig to start with opacity 0
             const modifiedLayerConfig: maplibregl.LayerSpecification = {
                 ...layerConfig,
-                paint: {
-                    ...layerConfig.paint,
+            };
+
+            if (layerConfig.type === "line") {
+                modifiedLayerConfig.paint = {
+                    ...modifiedLayerConfig.paint,
+                    "line-opacity": 0,
+                };
+            }
+
+            if (layerConfig.type === "fill") {
+                modifiedLayerConfig.paint = {
+                    ...modifiedLayerConfig.paint,
+                    "fill-opacity": 0,
+                };
+            }
+
+            if (layerConfig.type === "circle") {
+                modifiedLayerConfig.paint = {
+                    ...modifiedLayerConfig.paint,
+                    "circle-opacity": 0,
+                };
+            }
+
+            if (layerConfig.type === "symbol") {
+                modifiedLayerConfig.paint = {
+                    ...modifiedLayerConfig.paint,
                     "icon-opacity": 0,
                     "text-opacity": 0,
-                }
-            };
+                };
+            }
+
+            if (layerConfig.type === "raster") {
+                modifiedLayerConfig.paint = {
+                    ...modifiedLayerConfig.paint,
+                    "raster-opacity": 0,
+                };
+            }
+
+            if (layerConfig.type === "fill-extrusion") {
+                modifiedLayerConfig.paint = {
+                    ...modifiedLayerConfig.paint,
+                    "fill-extrusion-opacity": 0,
+                };
+            }
+
+            if (layerConfig.type === "heatmap") {
+                modifiedLayerConfig.paint = {
+                    ...modifiedLayerConfig.paint,
+                    "heatmap-opacity": 0,
+                };
+            }
+
+            
+
     
-            // Step 2: Add layer with opacity set to 0
+            // Add layer with opacity set to 0
             mapRef.current.addLayer(modifiedLayerConfig);
             activeLayers.current.add(layerConfig.id);
             console.log(`Added layer with initial opacity 0: ${layerConfig.id}`);
     
             // Step 3: Ensure a slight delay before starting fade-in
             setTimeout(() => {
-                fadeInLayer(mapRef.current!, layerConfig.id);
-            }, 50);
+                fadeInLayer(mapRef.current!, layerConfig.id, originalPaint);
+            }, 1000);
         }
     };
     
