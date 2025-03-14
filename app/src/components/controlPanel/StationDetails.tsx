@@ -156,7 +156,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
   const departures = stopMonitorData?.items.map(item => ({
     line: item.line,
     type: getTransportType(item.transport_type, item.line),
-    color: getTransportColor(item.transport_type, item.line),
+    color: item.route_color === "" ? "bg-gray-600" : "#" + item.route_color,    
     destination: item.trip_headsign,
     time: formatTime(item.departure_time),
     platform: item.track || item.track_scheduled || "",
@@ -269,8 +269,11 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
               {departures.map((departure, index) => (
                 <div key={index} className="grid grid-cols-12 gap-5 px-4 py-3 border-b hover:bg-[#fef9c3]/10 items-center">
                   <div className="col-span-2 flex justify-start">
-                    <div
-                      className={`inline-flex px-2 py-0.5 min-w-[60px] justify-center rounded-md font-medium text-white tracking-wider ${departure.color}`}
+                  <div
+                      className={`inline-flex px-2 py-0.5 min-w-[60px] justify-center rounded-md font-medium text-white tracking-wider`}
+                      style={{
+                        backgroundColor: departure.color
+                      }}
                     >
                       {departure.line}
                     </div>
