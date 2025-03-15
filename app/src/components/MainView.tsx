@@ -101,6 +101,8 @@ const MainView: React.FC = () => {
             width: isVertical ? "100%" : `${sidebarWidth}px`,
             height: isVertical ? `calc(100% - ${minPanelHeight}px)` : "100%", // Map gets a fixed space in vertical mode
             position: "relative",
+            transition: "height 0.4s ease-in-out", // Smooth height transition
+
             zIndex: isVertical && isExpanded ? 0 : 1, // Ensure map is under panel when expanded
           }}
         >
@@ -116,7 +118,6 @@ const MainView: React.FC = () => {
             boxShadow: "0 -2px 10px rgba(0,0,0,0.2)",
             transition: "height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
             zIndex: 2, // Ensure panel is above map when expanded
-            overflow: "hidden", // Ensures contents stay within bounds
             display: "flex", 
             flexDirection: "column", 
           }}
