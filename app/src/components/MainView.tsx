@@ -8,9 +8,9 @@ import MapComponent from "./map/MapComponent";
 
 const MainView: React.FC = () => {
   const [isVertical, setIsVertical] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false); // Track expanded/collapsed state
-  const minPanelHeight = 100; // Minimum height for better interaction
-  const maxPanelHeight = 500; // Expanded height
+  const [isExpanded, setIsExpanded] = useState(false); // Track state for use in vertical mode
+  const minPanelHeight = 100; // Minimum height in vertical mode
+  const maxPanelHeight = 500; // Expanded height in vertical mode
   const sidebarWidth = 450; // Width of control panel in horizontal mode  const [activeView, setActiveView] = useState<"planner" | "routes" | "details" | "station">("planner");
 
   useEffect(() => {
@@ -87,12 +87,11 @@ const MainView: React.FC = () => {
                 height: isExpanded ? `${maxPanelHeight}px` : `${minPanelHeight}px`,
                 backgroundColor: "white",
                 boxShadow: "0 -2px 10px rgba(0,0,0,0.2)",
-                transition: "height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)", // Smoother animation
+                transition: "height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
                 zIndex: 2, // Ensure panel is above map when expanded
-                userSelect: "none", // Prevents text selection during drag
                 overflow: "hidden", // Ensures contents stay within bounds
-                display: "flex", // Keeps control panel within bounds
-                flexDirection: "column", // Keeps elements stacked properly
+                display: "flex", 
+                flexDirection: "column", 
               }}
             >
                 <div
@@ -122,7 +121,7 @@ const MainView: React.FC = () => {
                     overflow: "hidden", // Prevents unwanted scrolling
                     pointerEvents: isExpanded ? "auto" : "none", // Disable interactions when collapsed
                     opacity: isExpanded ? 1 : 0.5, // Reduce opacity when collapsed for visual feedback
-                    transition: "opacity 0.2s ease-in-out", // Smooth transition effect
+                    transition: "opacity 0.2s ease-in-out", 
                   }}
                 >
                   <ControlPanel />
