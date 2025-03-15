@@ -43,9 +43,9 @@ export default async function LocaleLayout({
                       <NearbySearchDataProvider>
                         <div className="w-full h-screen flex flex-col">
                           <Navbar locale={language} />
-                          <div className="flex-1 overflow-hidden">
-                            {children}
-                          </div>
+                          <div className="flex-1" style={{ height: "calc(100vh - 64px)" }}> 
+                          {children}
+                        </div>
                         </div>
                       </NearbySearchDataProvider>
                     </StopmonitorDataProvider>

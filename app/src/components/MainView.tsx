@@ -1,9 +1,6 @@
-// MainView.tsx
 "use client";
 import React, { useEffect, useState } from "react";
 import ControlPanel from "./controlPanel/ControlPanel";
-import { MapWidget } from "./map/MapWidget";
-import CenterMapButton from "./map/buttons/CenterMapButton";
 import MapComponent from "./map/MapComponent";
 
 const MainView: React.FC = () => {
