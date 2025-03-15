@@ -242,10 +242,10 @@ const DepartureFilter = ({
       {/* Calendar */}
       <div className="bg-gray-100">
         {/* Month navigation */}
-        <div className="flex items-center justify-between bg-primary-yellow py-2 px-4">
+        <div className="flex items-center justify-between bg-primary-blue py-2 px-4 text-white">
           <button 
             onClick={() => changeMonth(-1)}
-            className="p-1 rounded-full hover:bg-primary-yellow/80"
+            className="p-1 rounded-full hover:bg-primary-blue/80"
           >
             <ChevronLeft size={20} />
           </button>
@@ -254,7 +254,7 @@ const DepartureFilter = ({
           </div>
           <button 
             onClick={() => changeMonth(1)}
-            className="p-1 rounded-full hover:bg-primary-yellow/80"
+            className="p-1 rounded-full hover:bg-primary-blue/80"
           >
             <ChevronRight size={20} />
           </button>

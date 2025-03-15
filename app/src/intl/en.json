@@ -8,16 +8,21 @@
       "list2": "Journey Planner"
     },
     "ControlPanel": {
+        "searchButton": "Search Station",
+        "search": {
+            "title": "Search for a station",
+            "placeholder": "Enter a station name"
+        },
         "planner": {
             "title": "Plan Your Trip",
             "origin": "Origin",
             "destination": "Destination",
-            "seeRoutes": "See Routes",
+            "seeRoutes": "Search",
             "currentLocation": "Current Location",
             "useCurrentLocation": "Use your current location",
             "filters": {
                 "departure": "Departure",
-                "transportButton": "Transport",
+                "transportButton": "Transport Options",
                 "datePicker": {
                     "date": "Date",
                     "time": "Time",
@@ -32,11 +37,19 @@
                 },
                 "departureNow": "Depart Now",
                 "departureAt": "Depart at {time}",
+                "arriveNow": "Arrive Now",
+                "arriveAt": "Arrive at {time}",
                 "transport": {
                     "bike": "Bike",
                     "walk": "Walk",
-                    "car": "Car"
-                }
+                    "car": "Car",
+                    "tram": "Tram",
+                    "bus": "Bus",
+                    "sBahn": "S-Bahn",
+                    "train": "Train"
+                },
+                "minimalWalking": "Minimal Walking",
+                "lessTransfers": "Less Transfers"
             }
         },
         "routes": {

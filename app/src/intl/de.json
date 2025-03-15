@@ -8,11 +8,16 @@
         "list2": "Reiseplaner"
     },
     "ControlPanel": {
+        "searchButton": "Stationssuche",
+        "search": {
+            "title": "Stationssuche",
+            "placeholder": "Station eingeben"
+        },
         "planner": {
             "title": "Planen Sie Ihre Reise",
             "origin": "Start",
             "destination": "Ziel",
-            "seeRoutes": "Routen anzeigen",
+            "seeRoutes": "Suchen",
             "currentLocation": "Aktueller Standort",
             "useCurrentLocation": "Verwenden Sie Ihren aktuellen Standort",
             "filters": {
@@ -20,9 +25,13 @@
                 "transport": {
                     "bike": "Fahrrad",
                     "walk": "Zu Fuß",
-                    "car": "Auto"
+                    "car": "Auto",
+                    "tram": "Tram",
+                    "bus": "Bus",
+                    "sBahn": "S-Bahn",
+                    "train": "Regionalverkehr"
                 },
-                "transportButton": "Transport",
+                "transportButton": "Verkehrsmittel",
                 "datePicker": {
                     "date": "Datum",
                     "time": "Uhrzeit",
@@ -36,7 +45,9 @@
                     "selected": "Ausgewählt"
                 },
                 "departureNow": "Jetzt abfahren",
-                "departureAt": "Abfahrt um {time}"
+                "departureAt": "Abfahrt um {time}",
+                "minimalWalking": "Minimaler Fußweg",
+                "lessTransfers": "Weniger Umsteigungen"
             }
         },
         "routes": {

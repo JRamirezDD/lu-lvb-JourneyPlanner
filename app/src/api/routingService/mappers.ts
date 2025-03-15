@@ -25,6 +25,7 @@ export const toLeg = (data: any): Leg =>
         data.realTime,
         data.distance,
         data.mode,
+        data.routeColor ? "#" + data.routeColor : "",
         toLocation(data.from),
         toLocation(data.to),
         new LegGeometry(data.legGeometry?.points?.map((point: any) => ({ lat: point.lat, lon: point.lon })) || {}),
