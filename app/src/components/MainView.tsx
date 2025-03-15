@@ -23,6 +23,20 @@ const MainView: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    // Prevent pull-to-refresh and scrolling gestures while dragging
+    const preventDefaultBehavior = (e: TouchEvent) => {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("touchmove", preventDefaultBehavior, { passive: false });
+    return () => {
+      document.removeEventListener("touchmove", preventDefaultBehavior);
+    };
+  }, []);
+
   const handleDragStart = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
     e.preventDefault(); // Prevent text selection
     document.body.style.userSelect = "none"; // Disable text selection globally
@@ -34,7 +48,7 @@ const MainView: React.FC = () => {
     const startY = "touches" in e ? e.touches[0].clientY : e.clientY;
 
     const onMove = (event: MouseEvent | TouchEvent) => {
-      if (event.cancelable) event.preventDefault(); // Prevent browser default behaviors (like pull-to-refresh)
+      if (event.cancelable) event.preventDefault(); // Fully prevent browser default behaviors (like pull-to-refresh)
       if (event.type === "touchmove") {
         event.stopPropagation();
       }
