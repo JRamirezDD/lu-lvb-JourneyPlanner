@@ -1,9 +1,14 @@
 import { useState, useEffect, useMemo } from "react";
-import { ChevronLeft, Star, AlertTriangle, Clock, Info } from "lucide-react";
+import { ChevronLeft, Star, AlertTriangle } from "lucide-react";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useStopmonitorDataContext } from "@/contexts/DataContext/stopmonitorDataContext";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
+import TramLogo from "../../../public/icons/otp-icons/Tram-Logo.svg";
+import S_BahnLogo from "../../../public/icons/otp-icons/S-Bahn-Logo.svg";
+import BusLogo from "../../../public/icons/otp-icons/Bus-Logo.svg";
+import TrainLogo from "../../../public/icons/otp-icons/Train.svg";
+import Image from "next/image";
 
 interface Departure {
   line: string;
@@ -163,6 +168,18 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
     minutes: Math.round(item.dep_waiting_time / 60)
   })) || [];
 
+  // Get the appropriate icon for each transport type
+  const getTransportIcon = (type: "tram" | "bus" | "s-bahn" | "train" | "regional") => {
+    switch (type) {
+      case "tram": return TramLogo;
+      case "bus": return BusLogo;
+      case "s-bahn": return S_BahnLogo;
+      case "train": return TrainLogo;
+      case "regional": return TrainLogo;
+      default: return null;
+    }
+  };
+
   // Extract alerts from stopMonitorData
   const disruptions: Disruption[] = useMemo(() => {
     if (!stopMonitorData?.items) return [];
@@ -269,12 +286,20 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
               {departures.map((departure, index) => (
                 <div key={index} className="grid grid-cols-12 gap-5 px-4 py-3 border-b hover:bg-[#fef9c3]/10 items-center">
                   <div className="col-span-2 flex justify-start">
-                  <div
-                      className={`inline-flex px-2 py-0.5 min-w-[60px] justify-center rounded-md font-medium text-white tracking-wider`}
+                    <div
+                      className={`inline-flex px-2 py-0.5 min-w-[60px] justify-center rounded-md font-medium text-white tracking-wider items-center gap-1`}
                       style={{
                         backgroundColor: departure.color
                       }}
                     >
+                      {getTransportIcon(departure.type) && (
+                        <Image 
+                          src={getTransportIcon(departure.type)} 
+                          alt={departure.type} 
+                          width={16}
+                          height={16}
+                        />
+                      )}
                       {departure.line}
                     </div>
                   </div>
@@ -312,13 +337,35 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
                     {disruption.lines.map((line) => {
                       // Determine color based on line prefix
                       let bgColor = "bg-gray-100";
-                      if (line.startsWith('RE') || line.startsWith('RB')) bgColor = "bg-blue-100 text-blue-800";
-                      else if (line.startsWith('S')) bgColor = "bg-green-100 text-green-800";
-                      else if (line.match(/^\d+E?$/)) bgColor = "bg-red-100 text-red-800"; // Tram lines are usually numbers
-                      else if (line.match(/^\d+[A-Z]$/)) bgColor = "bg-purple-100 text-purple-800"; // Bus lines often have a number followed by a letter
+                      let type: "tram" | "bus" | "s-bahn" | "train" | "regional" = "train";
+                      
+                      if (line.startsWith('RE') || line.startsWith('RB')) {
+                        bgColor = "bg-blue-100 text-blue-800";
+                        type = "regional";
+                      }
+                      else if (line.startsWith('S')) {
+                        bgColor = "bg-green-100 text-green-800";
+                        type = "s-bahn";
+                      }
+                      else if (line.match(/^\d+E?$/)) {
+                        bgColor = "bg-red-100 text-red-800";
+                        type = "tram";
+                      }
+                      else if (line.match(/^\d+[A-Z]$/)) {
+                        bgColor = "bg-purple-100 text-purple-800";
+                        type = "bus";
+                      }
                       
                       return (
-                        <span key={line} className={`px-2 py-0.5 min-w-[60px] text-center rounded text-sm font-medium tracking-wider ${bgColor}`}>
+                        <span key={line} className={`px-2 py-0.5 min-w-[60px] text-center rounded text-sm font-medium tracking-wider flex items-center justify-center gap-1 ${bgColor}`}>
+                          {getTransportIcon(type) && (
+                            <Image 
+                              src={getTransportIcon(type)} 
+                              alt={type} 
+                              width={12}
+                              height={12}
+                            />
+                          )}
                           {line}
                         </span>
                       );
