@@ -9,10 +9,9 @@ import MapComponent from "./map/MapComponent";
 const MainView: React.FC = () => {
   const [isVertical, setIsVertical] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false); // Track state for use in vertical mode
-  const minPanelHeight = 100; // Minimum height in vertical mode
+  const minPanelHeight = 150; // Minimum height in vertical mode
   const maxPanelHeight = 500; // Expanded height in vertical mode
   const sidebarWidth = 450; // Width of control panel in horizontal mode  
-  const [activeView, setActiveView] = useState<"planner" | "routes" | "details" | "station">("planner");
 
   useEffect(() => {
     const handleResize = () => {
@@ -101,8 +100,6 @@ const MainView: React.FC = () => {
             width: isVertical ? "100%" : `${sidebarWidth}px`,
             height: isVertical ? `calc(100% - ${minPanelHeight}px)` : "100%", // Map gets a fixed space in vertical mode
             position: "relative",
-            transition: "height 0.4s ease-in-out", // Smooth height transition
-
             zIndex: isVertical && isExpanded ? 0 : 1, // Ensure map is under panel when expanded
           }}
         >
