@@ -28,7 +28,7 @@ const MainView: React.FC = () => {
       }
   
       if (e.cancelable) {
-        e.preventDefault();
+        // e.preventDefault();
       }
     };
   
