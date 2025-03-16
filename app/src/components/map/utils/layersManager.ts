@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { GeoJSON } from "geojson";
 import { LayerSpecification, SourceSpecification } from "maplibre-gl";
-import fadeInLayer from "./helpers/fadeInLayer"; // Import fade-in function
+import fadeInLayer from "../helpers/fadeInLayer"; // Import fade-in function
 
 const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>) => {
     const sources = useRef(new Map<string, any>());

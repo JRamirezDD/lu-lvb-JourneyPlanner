@@ -39,46 +39,12 @@ import { useLocationContext } from "@/contexts/locationContext";
 import { Coordinates } from "@/types/Coordinates";
 import { createCurrentLocationData, currentLocationAccuracyLayerConfig, currentLocationLayerConfig, currentLocationSource } from "./layers/currentLocationLayer";
 import { Location } from "@/types/Location";
-import centerToLayer from "./utils/helpers/centerToLayer";
-import waitForLayer from "./utils/helpers/waitForLayer";
+import centerToLayer from "./helpers/centerToLayer";
+import waitForLayer from "./helpers/waitForLayer";
 import { useControLPanelContext } from "@/contexts/controlPanelContext";
+import { loadAllMapIcons } from "./helpers/images";
+import { getExtendedBounds, boundsToString } from "./helpers/boundingBox";
 
-// --- Bounding Box Helpers ---
-
-// Returns an extended bounding box (bufferFactor of 0.5 means 50% larger than view)
-const getExtendedBounds = (map: maplibregl.Map, bufferFactor = 1) => {
-    const bounds = map.getBounds();
-    const sw = bounds.getSouthWest();
-    const ne = bounds.getNorthEast();
-    const center = bounds.getCenter();
-  
-    const lngDiff = ne.lng - sw.lng;
-    const latDiff = ne.lat - sw.lat;
-  
-    return new maplibregl.LngLatBounds(
-      [
-        center.lng - (lngDiff * (1 + bufferFactor)) / 2,
-        center.lat - (latDiff * (1 + bufferFactor)) / 2,
-      ],
-      [
-        center.lng + (lngDiff * (1 + bufferFactor)) / 2,
-        center.lat + (latDiff * (1 + bufferFactor)) / 2,
-      ]
-    );
-  };
-
-// Converts bounds into a comma-separated string: "minLng,minLat,maxLng,maxLat"
-const boundsToString = (bounds: maplibregl.LngLatBounds) => {
-    const sw = bounds.getSouthWest();
-    const ne = bounds.getNorthEast();
-    return `${sw.lat},${sw.lng},${ne.lat},${ne.lng}`;
-  };
-
-// --- Component Implementation ---
-
-interface MapWidgetProps {
-  onStopSelect: (stop: { stop_id: string; stop_name: string }) => void;
-}
 
 export const MapWidget: React.FC = ({ }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -129,82 +95,7 @@ export const MapWidget: React.FC = ({ }) => {
             //console.log("Initial query bounds:", extendedBounds);
     
             // Load Images
-            const loadImages = () => {
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/haltestelle.svg", 19).then((image) => {
-                    if (!map.hasImage("haltestelle")) {
-                        map.addImage("haltestelle", image as HTMLImageElement );
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-
-                loadPNGImage("/lu-lvb-JourneyPlanner/icons/current-location-icon.png").then((image) => {
-                    if (!map.hasImage("current-location-icon")) {
-                    map.addImage("current-location-icon", image as HTMLImageElement | ImageBitmap);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error loading current location icon:", error);
-                });
-
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/Bus-Logo.svg").then((image) => {
-                    if (!map.hasImage("Bus-Logo")) {
-                        map.addImage("Bus-Logo", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/ticket.svg").then((image) => {
-                    if (!map.hasImage("ticket")) {
-                        map.addImage("ticket", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/taxi.svg").then((image) => {
-                    if (!map.hasImage("taxi")) {
-                        map.addImage("taxi", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/nextbike.svg").then((image) => {
-                    if (!map.hasImage("nextbike")) {
-                        map.addImage("nextbike", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/scooter.svg").then((image) => {
-                    if (!map.hasImage("scooter")) {
-                        map.addImage("scooter", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/charger.svg").then((image) => {
-                    if (!map.hasImage("charger")) {
-                        map.addImage("charger", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/filled_pin.svg").then((image) => {
-                    if (!map.hasImage("filled_pin")) {
-                        map.addImage("filled_pin", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/hollow_pin.svg").then((image) => {
-                    if (!map.hasImage("hollow_pin")) {
-                        map.addImage("hollow_pin", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-            };
-            loadImages();
+            loadAllMapIcons(map);
 
             // Set up moveend listener
             map.on("moveend", () => {
