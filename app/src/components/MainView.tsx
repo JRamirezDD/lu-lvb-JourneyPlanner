@@ -18,49 +18,15 @@ const MainView: React.FC = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  useEffect(() => {
-    const preventDefaultBehavior = (e: TouchEvent) => {
-      // Allow scrolling inside ControlPanel
-      const controlPanel = document.getElementById("control-panel-component");
-      if (isExpanded && controlPanel && controlPanel.contains(e.target as Node)) {
-        return; // Don't block scrolling if user is interacting inside ControlPanel
-      }
-  
-      if (e.cancelable) {
-        // e.preventDefault();
-      }
-    };
-  
-    document.addEventListener("touchmove", preventDefaultBehavior, { passive: false });
-    
-    return () => {
-      document.removeEventListener("touchmove", preventDefaultBehavior);
-    };
-  }, []);
   
 
   const handleDragStart = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
     e.preventDefault(); // Prevent text selection
     document.body.style.userSelect = "none"; // Disable text selection globally
 
-    // **Detect if the interaction happened on the drag handle**
-    const interactionBox = document.getElementById("interaction-box");
-    if (interactionBox && interactionBox.contains(e.target as Node)) {
-        // Only stop propagation if the interaction is inside the handle
-        e.stopPropagation();
-    }
-
     const startY = "touches" in e ? e.touches[0].clientY : e.clientY;
 
     const onMove = (event: MouseEvent | TouchEvent) => {
-        // if (event.cancelable) event.preventDefault(); // Prevent browser defaults like pull-to-refresh
-
-        // **Only stop propagation if the event originated from the drag handle**
-        // if (interactionBox && interactionBox.contains(event.target as Node)) {
-        //     event.stopPropagation();
-        // }
-
         if (event.cancelable) {
           event.preventDefault();
         }
