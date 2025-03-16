@@ -97,28 +97,43 @@ const MainView: React.FC = () => {
             flexDirection: "column", 
           }}
         >
+      <div
+        id="interaction-box"
+        style={{
+          height: "50px", // Interaction box thickness
+          cursor: "ns-resize",
+          backgroundColor: "white", // Should match ControlPanel color
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexShrink: 0, // Prevents the drag handle from shrinking
+        }}
+        onMouseDown={handleDragStart} // Desktop support
+        onTouchStart={handleDragStart} // Mobile support
+      >
         <div
-          id="interaction-box"
+          id="click-handle"
           style={{
-            height: "50px", // Interaction box thickness
-            cursor: "ns-resize",
-            backgroundColor: "white", // Should match ControlPanel color
+            width: "160px",
+            height: "20px",
+            alignContent: "center",
             display: "flex",
             justifyContent: "center",
-            alignItems: "center",
-            flexShrink: 0, // Prevents the drag handle from shrinking
           }}
-          onMouseDown={handleDragStart} // Desktop support
-          onTouchStart={handleDragStart} // Mobile support
+          onClick={(e) => {
+            e.stopPropagation(); // Prevents event from interfering with drag logic
+            setIsExpanded((prev) => !prev); // Toggle expansion
+          }}
         >
-          <div
-            style={{
-              width: "60px",
-              height: "6px",
-              backgroundColor: "#999",
-              borderRadius: "5px",
-            }}
-          />
+        <div
+          style={{
+            width: "60px",
+            height: "6px",
+            backgroundColor: "#999",
+            borderRadius: "5px",
+          }}
+        />
+        </div>
         </div>
             <div
               id="control-panel-component"
