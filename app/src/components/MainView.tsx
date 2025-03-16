@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from "react";
 import ControlPanel from "./controlPanel/ControlPanel";
 import MapComponent from "./map/MapComponent";
+import { useControLPanelContext } from "@/contexts/controlPanelContext";
 
 const MainView: React.FC = () => {
   const [isVertical, setIsVertical] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false); // Track state for use in vertical mode
+  const { controlPanelIsExpanded, setControlPanelIsExpanded } = useControLPanelContext();
   const minPanelHeight = 150; // Minimum height in vertical mode
   const maxPanelHeight = 500; // Expanded height in vertical mode
   const sidebarWidth = 450; // Width of control panel in horizontal mode  
@@ -33,9 +34,9 @@ const MainView: React.FC = () => {
 
         const clientY = "touches" in event ? event.touches[0].clientY : (event as MouseEvent).clientY;
         if (clientY < startY) {
-            setIsExpanded(true);
+            setControlPanelIsExpanded(true);
         } else {
-            setIsExpanded(false);
+            setControlPanelIsExpanded(false);
         }
     };
 
@@ -78,7 +79,7 @@ const MainView: React.FC = () => {
             width: isVertical ? "100%" : `${sidebarWidth}px`,
             height: isVertical ? `calc(100% - ${minPanelHeight}px)` : "100%", // Map gets a fixed space in vertical mode
             position: "relative",
-            zIndex: isVertical && isExpanded ? 0 : 1, // Ensure map is under panel when expanded
+            zIndex: isVertical && controlPanelIsExpanded ? 0 : 1, // Ensure map is under panel when expanded
           }}
         >
           <MapComponent />
@@ -88,7 +89,7 @@ const MainView: React.FC = () => {
             position: "absolute",
             bottom: 0,
             width: "100%",
-            height: isExpanded ? `${maxPanelHeight}px` : `${minPanelHeight}px`,
+            height: controlPanelIsExpanded ? `${maxPanelHeight}px` : `${minPanelHeight}px`,
             backgroundColor: "white",
             boxShadow: "0 -2px 10px rgba(0,0,0,0.2)",
             transition: "height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
@@ -122,7 +123,7 @@ const MainView: React.FC = () => {
           }}
           onClick={(e) => {
             e.stopPropagation(); // Prevents event from interfering with drag logic
-            setIsExpanded((prev) => !prev); // Toggle expansion
+            setControlPanelIsExpanded(!controlPanelIsExpanded); // Toggle expansion
           }}
         >
         <div
@@ -140,8 +141,8 @@ const MainView: React.FC = () => {
               style={{
                 flexGrow: 1, // Ensures the control panel fills remaining space
                 overflow: "hidden", // Prevents unwanted scrolling
-                pointerEvents: isExpanded ? "all" : "none", // Disable interactions when collapsed
-                opacity: isExpanded ? 1 : 0.5, // Reduce opacity when collapsed for visual feedback
+                pointerEvents: controlPanelIsExpanded ? "all" : "none", // Disable interactions when collapsed
+                opacity: controlPanelIsExpanded ? 1 : 0.5, // Reduce opacity when collapsed for visual feedback
                 transition: "opacity 0.2s ease-in-out", 
               }}
             >

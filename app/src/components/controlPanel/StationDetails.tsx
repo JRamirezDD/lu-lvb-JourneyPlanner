@@ -9,6 +9,7 @@ import S_BahnLogo from "../../../public/icons/otp-icons/S-Bahn-Logo.svg";
 import BusLogo from "../../../public/icons/otp-icons/Bus-Logo.svg";
 import TrainLogo from "../../../public/icons/otp-icons/Train.svg";
 import Image from "next/image";
+import { useControLPanelContext } from "@/contexts/controlPanelContext";
 
 interface Departure {
   line: string;
@@ -43,6 +44,8 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
   } = useStopmonitorDataContext();
   const { goToPreviousViewMode, viewMode, previousViewMode, navigationHistory } = useUIContext();
   const { setSelectedNearbySearchItem, setSelectedStop } = useMapContext();
+  const { setControlPanelIsExpanded } = useControLPanelContext();
+  
   
   // Add debug logging for UI context
   console.log("StationDetails UI Context:", { viewMode, previousViewMode, navigationHistory });

@@ -20,7 +20,7 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
   const { translations } = useSettingsContext();
   const { goToPreviousViewMode } = useUIContext();
   const { setSelectedNearbySearchItem, setSelectedStop } = useMapContext();
-  const { setSelectedItem } = useControLPanelContext();
+  const { setSelectedItem, setControlPanelIsExpanded } = useControLPanelContext();
   
   const { 
     autocompleteData, 
@@ -252,8 +252,16 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
     });
     setSelectedItem(selectedStation.item);
 
-    // Navigate to station view
     setActiveView("STATION");
+
+    // Hide ControlPanel
+    setControlPanelIsExpanded(false);
+  
+    // wait 2 secs
+    setTimeout(() => {
+      setControlPanelIsExpanded(true);
+    }, 1000);
+
   };
 
   // Handle back button click

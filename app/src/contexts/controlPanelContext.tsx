@@ -10,6 +10,9 @@ export interface IControlPanelContext extends IContext {
     selectedItem: AutocompleteItem | null;
     setSelectedItem: (stop: AutocompleteItem | null) => void;
 
+    controlPanelIsExpanded: boolean;
+    setControlPanelIsExpanded: (expanded: boolean) => void;
+
 
     selectedOrigin: AutocompleteItem | null;
     setSelectedOrigin: (origin: AutocompleteItem | null) => void;
@@ -25,6 +28,9 @@ const ControlPanelContext = createContext<IControlPanelContext | undefined>(unde
 export const ControlPanelProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // Local state for the map.
     const [selectedItem, setSelectedItemState] = useState<AutocompleteItem | null>(null);
+
+    // Control Panel state
+    const [controlPanelIsExpanded, setControlPanelIsExpanded] = useState<boolean>(false);
 
 
     // Function to update the selected stop.
@@ -54,7 +60,8 @@ export const ControlPanelProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const value: IControlPanelContext = {
         selectedItem,
         setSelectedItem,
-
+        controlPanelIsExpanded,
+        setControlPanelIsExpanded,
         selectedOrigin,
         setSelectedOrigin,
         selectedDestination,

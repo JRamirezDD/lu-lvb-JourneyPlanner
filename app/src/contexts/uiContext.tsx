@@ -22,6 +22,7 @@ export const UIProvider: React.FC<{ children: React.ReactNode }> = ({ children }
     const [previousViewMode, setPreviousViewMode] = useState<ViewMode>("DEFAULT");
     const [navigationHistory, setNavigationHistory] = useState<ViewMode[]>(["DEFAULT"]);
 
+
     // Function to update the view mode.
     const setViewMode = (mode: ViewMode) => {
         console.log("Setting view mode to", mode, "from", viewMode);
