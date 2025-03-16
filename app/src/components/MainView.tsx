@@ -20,18 +20,25 @@ const MainView: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Prevent pull-to-refresh and scrolling gestures while dragging
     const preventDefaultBehavior = (e: TouchEvent) => {
+      // Allow scrolling inside ControlPanel
+      const controlPanel = document.getElementById("control-panel");
+      if (isExpanded && controlPanel && controlPanel.contains(e.target as Node)) {
+        return; // Don't block scrolling if user is interacting inside ControlPanel
+      }
+  
       if (e.cancelable) {
         e.preventDefault();
       }
     };
-
+  
     document.addEventListener("touchmove", preventDefaultBehavior, { passive: false });
+  
     return () => {
       document.removeEventListener("touchmove", preventDefaultBehavior);
     };
   }, []);
+  
 
   const handleDragStart = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
     e.preventDefault(); // Prevent text selection
@@ -72,6 +79,8 @@ const MainView: React.FC = () => {
     window.addEventListener("mouseup", onEnd);
     window.addEventListener("touchmove", onMove);
     window.addEventListener("touchend", onEnd);
+
+    document.body.style.userSelect = "auto";
   };
 
   const containerStyle: React.CSSProperties = isVertical
