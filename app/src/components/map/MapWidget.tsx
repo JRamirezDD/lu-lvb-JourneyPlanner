@@ -302,6 +302,7 @@ export const MapWidget: React.FC = ({ }) => {
     // Update current location icon on map when location changes
     useEffect(() => {
         if (isEnabled && currentLocation) {
+            setCenter(currentLocation.coords);
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
         }
     }, [currentLocation, isEnabled]);
