@@ -33,7 +33,7 @@ const MainView: React.FC = () => {
     };
   
     document.addEventListener("touchmove", preventDefaultBehavior, { passive: false });
-  
+    
     return () => {
       document.removeEventListener("touchmove", preventDefaultBehavior);
     };
@@ -44,44 +44,45 @@ const MainView: React.FC = () => {
     e.preventDefault(); // Prevent text selection
     document.body.style.userSelect = "none"; // Disable text selection globally
 
-    if (e.type === "touchstart") {
-      e.stopPropagation();
+    // **Detect if the interaction happened on the drag handle**
+    const interactionBox = document.getElementById("interaction-box");
+    if (interactionBox && interactionBox.contains(e.target as Node)) {
+        // Only stop propagation if the interaction is inside the handle
+        e.stopPropagation();
     }
 
     const startY = "touches" in e ? e.touches[0].clientY : e.clientY;
 
     const onMove = (event: MouseEvent | TouchEvent) => {
-      if (event.cancelable) event.preventDefault(); // Fully prevent browser default behaviors (like pull-to-refresh)
-      if (event.type === "touchmove") {
-        event.stopPropagation();
-      }
+        if (event.cancelable) event.preventDefault(); // Prevent browser defaults like pull-to-refresh
 
-      const clientY = "touches" in event ? event.touches[0].clientY : (event as MouseEvent).clientY;
-      if (clientY < startY) {
-        setIsExpanded(true);
-      } else {
-        setIsExpanded(false);
-      }
+        // **Only stop propagation if the event originated from the drag handle**
+        if (interactionBox && interactionBox.contains(event.target as Node)) {
+            event.stopPropagation();
+        }
+
+        const clientY = "touches" in event ? event.touches[0].clientY : (event as MouseEvent).clientY;
+        if (clientY < startY) {
+            setIsExpanded(true);
+        } else {
+            setIsExpanded(false);
+        }
     };
 
     const onEnd = (event: MouseEvent | TouchEvent) => {
-      document.body.style.userSelect = "auto"; // Re-enable text selection
-      if (event.type === "touchend") {
-        event.stopPropagation();
-      }
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onEnd);
-      window.removeEventListener("touchmove", onMove);
-      window.removeEventListener("touchend", onEnd);
+        document.body.style.userSelect = "auto"; // Re-enable text selection
+        window.removeEventListener("mousemove", onMove);
+        window.removeEventListener("mouseup", onEnd);
+        window.removeEventListener("touchmove", onMove);
+        window.removeEventListener("touchend", onEnd);
     };
 
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onEnd);
     window.addEventListener("touchmove", onMove);
     window.addEventListener("touchend", onEnd);
-
-    document.body.style.userSelect = "auto";
   };
+
 
   const containerStyle: React.CSSProperties = isVertical
     ? {
@@ -126,33 +127,35 @@ const MainView: React.FC = () => {
             flexDirection: "column", 
           }}
         >
-            <div
-              style={{
-                height: "50px", // Interaction thickness
-                cursor: "ns-resize",
-                backgroundColor: "white", // Should match ControlPanel color
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexShrink: 0, // Prevents the drag handle from shrinking
-              }}
-              onMouseDown={handleDragStart} // Desktop support
-              onTouchStart={handleDragStart} // Mobile support
-            >
-              <div
-                style={{
-                  width: "60px",
-                  height: "6px",
-                  backgroundColor: "#999",
-                  borderRadius: "5px",
-                }} />
-            </div>
+        <div
+          id="interaction-box"
+          style={{
+            height: "50px", // Interaction box thickness
+            cursor: "ns-resize",
+            backgroundColor: "white", // Should match ControlPanel color
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexShrink: 0, // Prevents the drag handle from shrinking
+          }}
+          onMouseDown={handleDragStart} // Desktop support
+          onTouchStart={handleDragStart} // Mobile support
+        >
+          <div
+            style={{
+              width: "60px",
+              height: "6px",
+              backgroundColor: "#999",
+              borderRadius: "5px",
+            }}
+          />
+        </div>
             <div
               id="control-panel-component"
               style={{
                 flexGrow: 1, // Ensures the control panel fills remaining space
                 overflow: "hidden", // Prevents unwanted scrolling
-                pointerEvents: isExpanded ? "auto" : "none", // Disable interactions when collapsed
+                pointerEvents: isExpanded ? "all" : "none", // Disable interactions when collapsed
                 opacity: isExpanded ? 1 : 0.5, // Reduce opacity when collapsed for visual feedback
                 transition: "opacity 0.2s ease-in-out", 
               }}
