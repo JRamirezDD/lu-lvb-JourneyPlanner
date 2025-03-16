@@ -41,6 +41,7 @@ import { createCurrentLocationData, currentLocationAccuracyLayerConfig, currentL
 import { Location } from "@/types/Location";
 import centerToLayer from "./utils/helpers/centerToLayer";
 import waitForLayer from "./utils/helpers/waitForLayer";
+import { useControLPanelContext } from "@/contexts/controlPanelContext";
 
 // --- Bounding Box Helpers ---
 
@@ -92,6 +93,7 @@ export const MapWidget: React.FC = ({ }) => {
     const { setSelectedNearbySearchItem, selectedNearbySearchItem } = useMapContext();
     const { selectedStop } = useMapContext();
     const { currentLocation, locationIsEnabled: isEnabled } = useLocationContext();
+    const { selectedItem } = useControLPanelContext();
   
     
     // State to hold the current query bounds (the extended bounding box used for querying)
@@ -99,6 +101,7 @@ export const MapWidget: React.FC = ({ }) => {
     const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
     const { reloadLayersWithNewData, setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
+
 
     const  storedCenter = useRef<Coordinates | null>(null); 
 
@@ -288,7 +291,16 @@ export const MapWidget: React.FC = ({ }) => {
         if (mapRef.current && storedCenter.current && isEnabled) {
             moveMap(storedCenter.current, 14, 500);
         }
-    }, [resetCenterCounter]);
+    }, [resetCenterCounter, resetCenterTrigger]);
+
+    // On Autocomplete item selection, move map to selected item
+    useEffect(() => {
+        if (mapRef.current && selectedItem) {
+            // remove previous pin if exists?
+            // add new pin?
+            moveMap({ lat: selectedItem.lat, lon: selectedItem.lon }, 14, 500);
+        }
+    }, [selectedItem]);
 
     
     useEffect(() => {
@@ -306,6 +318,8 @@ export const MapWidget: React.FC = ({ }) => {
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
         }
     }, [currentLocation, isEnabled]);
+
+
 
     
     // Bounds change event handler
