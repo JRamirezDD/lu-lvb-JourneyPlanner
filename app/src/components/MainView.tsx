@@ -48,7 +48,7 @@ const MainView: React.FC = () => {
     const interactionBox = document.getElementById("interaction-box");
     if (interactionBox && interactionBox.contains(e.target as Node)) {
         // Only stop propagation if the interaction is inside the handle
-        // e.stopPropagation();
+        e.stopPropagation();
     }
 
     const startY = "touches" in e ? e.touches[0].clientY : e.clientY;
@@ -58,7 +58,7 @@ const MainView: React.FC = () => {
 
         // **Only stop propagation if the event originated from the drag handle**
         if (interactionBox && interactionBox.contains(event.target as Node)) {
-            // event.stopPropagation();
+            event.stopPropagation();
         }
 
         const clientY = "touches" in event ? event.touches[0].clientY : (event as MouseEvent).clientY;
