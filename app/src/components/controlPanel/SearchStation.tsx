@@ -7,17 +7,20 @@ import SuggestionContainer from "./widgets/SuggestionContainer";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
+import { useControLPanelContext } from "@/contexts/controlPanelContext";
 
 interface SelectedStation {
   name: string;
   coordinates: string; // Format: "lat,lon"
   stopId?: string;
+  item: AutocompleteItem;
 }
 
 const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => void }) => {
   const { translations } = useSettingsContext();
   const { goToPreviousViewMode } = useUIContext();
-  const { setSelectedStop, setSelectedNearbySearchItem } = useMapContext();
+  const { setSelectedNearbySearchItem } = useMapContext();
+  const { setSelectedItem } = useControLPanelContext();
   
   const { 
     autocompleteData, 
@@ -151,7 +154,8 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
       setSelectedStation({ 
         name: fullAddress, 
         coordinates,
-        stopId
+        stopId,
+        item: suggestion
       });
       setIsStationSelected(true);
       setShowSuggestions(false);
@@ -241,10 +245,7 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
     setSelectedNearbySearchItem(null);
 
     // Set the selected stop in the MapContext
-    setSelectedStop({
-      stop_id: selectedStation.stopId,
-      stop_name: selectedStation.name
-    });
+    setSelectedItem(selectedStation.item);
 
     // Navigate to station view
     setActiveView("STATION");
@@ -254,7 +255,7 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
   const handleBackClick = () => {
     // Clear any existing selections
     setSelectedNearbySearchItem(null);
-    setSelectedStop(null);
+    setSelectedItem(null);
     
     // Navigate back
     goToPreviousViewMode();

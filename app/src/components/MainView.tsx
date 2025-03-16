@@ -22,7 +22,7 @@ const MainView: React.FC = () => {
   useEffect(() => {
     const preventDefaultBehavior = (e: TouchEvent) => {
       // Allow scrolling inside ControlPanel
-      const controlPanel = document.getElementById("control-panel");
+      const controlPanel = document.getElementById("control-panel-component");
       if (isExpanded && controlPanel && controlPanel.contains(e.target as Node)) {
         return; // Don't block scrolling if user is interacting inside ControlPanel
       }
@@ -101,6 +101,7 @@ const MainView: React.FC = () => {
     <div style={containerStyle}>
       {isVertical ? (
         <><div
+          id="map-component"
           style={{
             flex: isVertical ? "none" : `0 0 ${sidebarWidth}px`,
             width: isVertical ? "100%" : `${sidebarWidth}px`,
@@ -147,6 +148,7 @@ const MainView: React.FC = () => {
                 }} />
             </div>
             <div
+              id="control-panel-component"
               style={{
                 flexGrow: 1, // Ensures the control panel fills remaining space
                 overflow: "hidden", // Prevents unwanted scrolling
@@ -160,7 +162,7 @@ const MainView: React.FC = () => {
           </div></>
       ) : (
         <>
-          <div style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto" }}>
+          <div id="control-panel-component" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto" }}>
             <ControlPanel />
           </div>
           <div style={{ position: "relative", overflow: "hidden", width: "100%", height: "100%" }}>
