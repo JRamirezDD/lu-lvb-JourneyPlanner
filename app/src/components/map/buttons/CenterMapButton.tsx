@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
 import { useMapContext } from "@/contexts/mapContext";
+import { LocationProvider, useLocationContext } from "@/contexts/locationContext";
 
 const CenterMapButton: React.FC = () => {
   const { resetCenterTrigger } = useMapContext();
+  const { locationIsEnabled } = useLocationContext();
 
   return (
     <button

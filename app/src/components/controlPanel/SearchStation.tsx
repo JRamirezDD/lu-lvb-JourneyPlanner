@@ -19,7 +19,7 @@ interface SelectedStation {
 const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => void }) => {
   const { translations } = useSettingsContext();
   const { goToPreviousViewMode } = useUIContext();
-  const { setSelectedNearbySearchItem } = useMapContext();
+  const { setSelectedNearbySearchItem, setSelectedStop } = useMapContext();
   const { setSelectedItem } = useControLPanelContext();
   
   const { 
@@ -245,6 +245,11 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
     setSelectedNearbySearchItem(null);
 
     // Set the selected stop in the MapContext
+    setSelectedStation(selectedStation);
+    setSelectedStop({
+      stop_id: selectedStation.stopId,
+      stop_name: selectedStation.name
+    });
     setSelectedItem(selectedStation.item);
 
     // Navigate to station view

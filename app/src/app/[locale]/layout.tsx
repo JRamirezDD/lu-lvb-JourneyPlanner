@@ -14,6 +14,7 @@ import { NearbySearchDataProvider } from "@/contexts/DataContext/nearbySearchDat
 import { LocationProvider } from "@/contexts/locationContext";
 import LocationUpdater from "@/utils/locationUpdater";
 import LayoutWrapper from "./LayoutWrapper";
+import { ControlPanelProvider } from "@/contexts/controlPanelContext";
 
 
 const roboto = Roboto({
@@ -40,6 +41,7 @@ export default async function LocaleLayout({
             <LocationUpdater />
             <UIProvider>
               <MapProvider>
+              <ControlPanelProvider>
                 <AutocompleteDataProvider>
                   <OtpDataProvider>
                     <StopmonitorDataProvider>
@@ -49,6 +51,7 @@ export default async function LocaleLayout({
                     </StopmonitorDataProvider>
                   </OtpDataProvider>
                 </AutocompleteDataProvider>
+                </ControlPanelProvider>
               </MapProvider>
             </UIProvider>
           </LocationProvider>

@@ -92,7 +92,7 @@ export const MapWidget: React.FC = ({ }) => {
     const { setSelectedItinerary, selectedItinerary, resetCenterTrigger, resetCenterCounter, zoominLevel, zoomoutLevel } = useMapContext();
     const { setSelectedNearbySearchItem, selectedNearbySearchItem } = useMapContext();
     const { selectedStop } = useMapContext();
-    const { currentLocation, locationIsEnabled: isEnabled } = useLocationContext();
+    const { currentLocation, locationIsEnabled } = useLocationContext();
     const { selectedItem } = useControLPanelContext();
   
     
@@ -288,36 +288,36 @@ export const MapWidget: React.FC = ({ }) => {
     }
 
     useEffect(() => {
-        if (mapRef.current && storedCenter.current && isEnabled) {
+        if (mapRef.current && storedCenter.current && locationIsEnabled) {
             moveMap(storedCenter.current, 14, 500);
         }
     }, [resetCenterCounter, resetCenterTrigger]);
 
     // On Autocomplete item selection, move map to selected item
     useEffect(() => {
-        if (mapRef.current && selectedItem) {
+        if (mapRef.current && selectedItem && viewMode === "STATION") {
             // remove previous pin if exists?
             // add new pin?
-            moveMap({ lat: selectedItem.lat, lon: selectedItem.lon }, 14, 500);
+            moveMap({ lat: selectedItem.lat, lon: selectedItem.lon }, 15.3, 500);
         }
     }, [selectedItem]);
 
     
     useEffect(() => {
-        if (mapRef.current && isEnabled && currentLocation) {
+        if (mapRef.current && locationIsEnabled && currentLocation) {
             setCenter(currentLocation.coords);
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
             resetCenterTrigger();
         }
-    }, [isEnabled, mapRef.current]);
+    }, [locationIsEnabled, mapRef.current]);
 
     // Update current location icon on map when location changes
     useEffect(() => {
-        if (isEnabled && currentLocation) {
+        if (locationIsEnabled && currentLocation) {
             setCenter(currentLocation.coords);
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
         }
-    }, [currentLocation, isEnabled]);
+    }, [currentLocation, locationIsEnabled]);
 
 
 
