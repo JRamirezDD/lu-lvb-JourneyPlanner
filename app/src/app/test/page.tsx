@@ -8,6 +8,7 @@ import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataC
 import { SettingsProvider } from "@/contexts/settingsContext";
 import MainView from "@/components/MainView";
 import { NearbySearchDataProvider } from "@/contexts/DataContext/nearbySearchDataContext";
+import { ControlPanelProvider } from "@/contexts/controlPanelContext";
 
 
 
@@ -16,6 +17,7 @@ export default function Home() {
               <SettingsProvider initialLanguage={"en"}>
               <UIProvider>
               <MapProvider>
+              <ControlPanelProvider>
                 <AutocompleteDataProvider>
                 <OtpDataProvider>
                 <StopmonitorDataProvider>
@@ -41,6 +43,7 @@ export default function Home() {
                   </StopmonitorDataProvider>
                   </OtpDataProvider>
                   </AutocompleteDataProvider>
+                </ControlPanelProvider>
                 </MapProvider>
                 </UIProvider>
                 </SettingsProvider>
