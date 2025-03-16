@@ -290,8 +290,8 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
           }}
           onKeyDown={handleKeyDown}
           onFocus={handleInputFocus}
-          className="station-input w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
-        />
+          className="station-input w-full p-2 border rounded text-[16px] focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
+          />
         {showSuggestions && (
           <SuggestionContainer
             suggestions={autocompleteResults}

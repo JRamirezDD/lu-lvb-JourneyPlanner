@@ -635,8 +635,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
             }}
             onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
             onFocus={handleOriginFocus}
-            className="location-input w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
-          />
+            className="location-input w-full p-2 border rounded text-[16px] focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
+            />
           {showOriginSuggestions && (
             <SuggestionContainer
               suggestions={originAutocompleteData}
@@ -685,8 +685,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
             }}
             onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
             onFocus={handleDestinationFocus}
-            className="location-input w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
-          />
+            className="location-input w-full p-2 border rounded text-[16px] focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
+            />
           {showDestinationSuggestions && (
             <SuggestionContainer
               suggestions={destinationAutocompleteData}
