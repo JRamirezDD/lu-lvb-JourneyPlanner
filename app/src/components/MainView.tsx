@@ -54,11 +54,15 @@ const MainView: React.FC = () => {
     const startY = "touches" in e ? e.touches[0].clientY : e.clientY;
 
     const onMove = (event: MouseEvent | TouchEvent) => {
-        if (event.cancelable) event.preventDefault(); // Prevent browser defaults like pull-to-refresh
+        // if (event.cancelable) event.preventDefault(); // Prevent browser defaults like pull-to-refresh
 
         // **Only stop propagation if the event originated from the drag handle**
-        if (interactionBox && interactionBox.contains(event.target as Node)) {
-            event.stopPropagation();
+        // if (interactionBox && interactionBox.contains(event.target as Node)) {
+        //     event.stopPropagation();
+        // }
+
+        if (event.cancelable) {
+          event.preventDefault();
         }
 
         const clientY = "touches" in event ? event.touches[0].clientY : (event as MouseEvent).clientY;
@@ -79,7 +83,7 @@ const MainView: React.FC = () => {
 
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onEnd);
-    window.addEventListener("touchmove", onMove);
+    window.addEventListener("touchmove", onMove, { passive: false });
     window.addEventListener("touchend", onEnd);
   };
 
