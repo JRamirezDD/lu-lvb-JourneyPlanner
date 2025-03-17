@@ -8,26 +8,24 @@ export interface ILocationContext {
     updateLocation: (coords: Location) => void;
     locationIsEnabled: boolean;
     setIsEnabled(value: boolean): void;
+    error: String | null;
+    setError: (error: String | null) => void;
 }
 
-export const LocationContext = createContext<ILocationContext>({
-  currentLocation: null,
-  updateLocation: () => {},
-  locationIsEnabled: false,
-  setIsEnabled: () => {},
-});
+export const LocationContext = createContext<ILocationContext | undefined>(undefined);
 
 export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-
+    const [error, setError] = useState<String | null>(null);
+    
 
     const updateLocation = (coords: Location) => {
       setCurrentLocation(coords);
     };
 
     return (
-      <LocationContext.Provider value={{ currentLocation, updateLocation, locationIsEnabled: isEnabled, setIsEnabled }}>
+      <LocationContext.Provider value={{ currentLocation, updateLocation, locationIsEnabled: isEnabled, setIsEnabled, error, setError }}>
         {children}
       </LocationContext.Provider>
     );
