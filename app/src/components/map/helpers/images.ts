@@ -4,7 +4,6 @@ import loadPNGImage from "@/utils/loadPNGImage";
 export const loadAllMapIcons = async (map: maplibregl.Map) => {
     const images = [
         { path: "/lu-lvb-JourneyPlanner/icons/otp-icons/haltestelle.svg", id: "haltestelle", size: 19 },
-        { path: "/lu-lvb-JourneyPlanner/icons/current-location-icon.png", id: "current-location-icon" },
         { path: "/lu-lvb-JourneyPlanner/icons/otp-icons/Bus-Logo.svg", id: "Bus-Logo" },
         { path: "/lu-lvb-JourneyPlanner/icons/otp-icons/ticket.svg", id: "ticket" },
         { path: "/lu-lvb-JourneyPlanner/icons/otp-icons/taxi.svg", id: "taxi" },
@@ -13,6 +12,7 @@ export const loadAllMapIcons = async (map: maplibregl.Map) => {
         { path: "/lu-lvb-JourneyPlanner/icons/otp-icons/charger.svg", id: "charger" },
         { path: "/lu-lvb-JourneyPlanner/filled_pin.svg", id: "filled_pin" },
         { path: "/lu-lvb-JourneyPlanner/hollow_pin.svg", id: "hollow_pin" },
+        { path: "/lu-lvb-JourneyPlanner/icons/map-icons/current-location-icon.png", id: "current-location-icon" },
     ];
     
     async function loadImages(map: maplibregl.Map): Promise<void> {

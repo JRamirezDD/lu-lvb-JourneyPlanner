@@ -24,13 +24,18 @@ const CenterMapButton: React.FC = () => {
     <div className="relative">
       <button
         onClick={() => handleClick()}
-        className="z-[1000] cursor-pointer bg-transparent border-none"
+        style={{
+          zIndex: 1000,
+          cursor: "pointer",
+          background: "transparent",
+          border: "none",
+        }}
       >
-        <img
-          src="/lu-lvb-JourneyPlanner/icons/center-map-button-icon.png"
-          alt="Center Map"
-          className="w-8 h-8"
-        />
+      <img
+        src="/lu-lvb-JourneyPlanner/icons/map-icons/center-map-button-icon.png"
+        alt="Center Map"
+        style={{ width: "32px", height: "32px" }}
+      />
       </button>
 
       {showError && (

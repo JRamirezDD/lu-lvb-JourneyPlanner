@@ -16,7 +16,7 @@ const DecreaseZoomButton: React.FC = () => {
       }}
     >
       <img
-        src="/lu-lvb-JourneyPlanner/icons/decrease-zoom-button-icon.png"
+        src="/lu-lvb-JourneyPlanner/icons/map-icons/decrease-zoom-button-icon.png"
         alt="Center Map"
         style={{ width: "32px", height: "32px" }}
       />
