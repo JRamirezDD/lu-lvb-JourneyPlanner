@@ -2,13 +2,14 @@
 
 import { useLocationContext } from "@/contexts/locationContext";
 import { Coordinates } from "@/types/Coordinates";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const LocationUpdater: React.FC = () => {
   const { updateLocation, locationIsEnabled: isEnabled, setError, setIsEnabled } = useLocationContext();
+  const [errorCounter, setErrorCounter] = useState(0);
   const lastUpdateRef = useRef(0);
   // Set the desired update interval in milliseconds (e.g., 10000ms = 10 seconds)
-  const updateInterval = 50;
+  const updateInterval = 500;
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -16,6 +17,7 @@ const LocationUpdater: React.FC = () => {
         (position) => {
           const currentTimestamp = Date.now();
           if (currentTimestamp - lastUpdateRef.current < updateInterval) {
+            setErrorCounter((prev) => prev + 1);
             return;
           }
           lastUpdateRef.current = currentTimestamp;
@@ -31,6 +33,7 @@ const LocationUpdater: React.FC = () => {
           if (accuracy > 500) { // 500 meters from estimated centerl
             console.warn(`Accuracy is too low ${accuracy}, skipping update`);
             setError("Accuracy is too low, skipping update");
+            setErrorCounter((prev) => prev + 1);
             return;
           }
           else {
@@ -38,9 +41,6 @@ const LocationUpdater: React.FC = () => {
           }
 
           updateLocation({ timestamp, coords, heading, speed, accuracy });
-
-
-
           if (!isEnabled) {
             setIsEnabled(true);
           }
@@ -48,8 +48,9 @@ const LocationUpdater: React.FC = () => {
         (error) => { 
           console.error("Error loading position:  ", error) 
           setError("Error loading position:  " + error.message); 
+          setErrorCounter((prev) => prev + 1);
         },
-        { enableHighAccuracy: false, timeout: 5000 }
+        { enableHighAccuracy: false, timeout: updateInterval }
       );
 
 
@@ -59,7 +60,7 @@ const LocationUpdater: React.FC = () => {
       setError("Geolocation is not supported by this browser."); 
       console.error("Geolocation is not supported by this browser.");
     }
-  }, [updateLocation]);
+  }, [updateLocation, errorCounter]);
 
   return null;
 };

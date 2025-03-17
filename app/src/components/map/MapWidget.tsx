@@ -148,14 +148,14 @@ export const MapWidget: React.FC = ({ }) => {
     useEffect(() => {
         if (mapRef.current) {
             const currentZoom = mapRef.current.getZoom();
-            moveMap(undefined, currentZoom + 1, 200);
+            moveMap(null, currentZoom + 1, 200);
         }
     }, [zoominLevel]);
 
     useEffect(() => {
         if (mapRef.current) {
             const currentZoom = mapRef.current.getZoom();
-            moveMap(undefined, currentZoom - 1, 200);
+            moveMap(null, currentZoom - 1, 200);
         }
     }, [zoomoutLevel]);
 
@@ -167,7 +167,8 @@ export const MapWidget: React.FC = ({ }) => {
         }
     }
 
-    const moveMap = (coords?: Coordinates, zoomLevel?: number, duration?: number): void => {
+    const moveMap = (coords?: Coordinates | null, zoomLevel?: number, duration?: number): void => {
+        console.log("Moving map to:", coords, "zoom:", zoomLevel, "duration:", duration);
         if (mapRef.current) {
             mapRef.current.easeTo({
                 center: coords? [coords.lon, coords.lat] : mapRef.current.getCenter(),
@@ -182,7 +183,7 @@ export const MapWidget: React.FC = ({ }) => {
         if (mapRef.current && storedCenter.current && locationIsEnabled) {
             moveMap(storedCenter.current, 14, 500);
         }
-    }, [resetCenterCounter, resetCenterTrigger]);
+    }, [resetCenterCounter]);
 
     // On Autocomplete item selection, move map to selected item
     useEffect(() => {
