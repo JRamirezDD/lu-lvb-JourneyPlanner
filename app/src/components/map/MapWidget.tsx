@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import maplibregl, { Map } from "maplibre-gl";
+import maplibregl, { Map, MapGeoJSONFeature } from "maplibre-gl";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./utils/ILayer";
@@ -39,11 +39,12 @@ import { useLocationContext } from "@/contexts/locationContext";
 import { Coordinates } from "@/types/Coordinates";
 import { createCurrentLocationData, currentLocationAccuracyLayerConfig, currentLocationLayerConfig, currentLocationSource } from "./layers/currentLocationLayer";
 import { Location } from "@/types/Location";
-import centerToLayer from "./helpers/centerToLayer";
-import waitForLayer from "./helpers/waitForLayer";
+import centerToLayer from "./helpers/fitToFeatures";
+import waitForSource from "./helpers/waitForSource";
 import { useControLPanelContext } from "@/contexts/controlPanelContext";
 import { loadAllMapIcons } from "./helpers/images";
 import { getExtendedBounds, boundsToString } from "./helpers/boundingBox";
+import fitToFeatures from "./helpers/fitToFeatures";
 
 
 export const MapWidget: React.FC = ({ }) => {
@@ -55,7 +56,7 @@ export const MapWidget: React.FC = ({ }) => {
     const [mapLoaded, setMapLoaded] = useState(false);
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
     const { nearBySearchData, fetchNearbySearch, loadingNearbySearch, errorNearbySearch } = useNearbySearchDataContext();
-    const { setSelectedItinerary, selectedItinerary, resetCenterTrigger, resetCenterCounter, zoominLevel, zoomoutLevel } = useMapContext();
+    const { selectedItinerary, resetCenterTrigger, resetCenterCounter, zoominLevel, zoomoutLevel } = useMapContext();
     const { setSelectedNearbySearchItem, selectedNearbySearchItem } = useMapContext();
     const { selectedStop } = useMapContext();
     const { currentLocation, locationIsEnabled } = useLocationContext();
@@ -66,7 +67,7 @@ export const MapWidget: React.FC = ({ }) => {
     const currentQueryBoundsRef = useRef<maplibregl.LngLatBounds | null>(null);
     const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
-    const { reloadLayersWithNewData, setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
+    const { setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
 
 
     const  storedCenter = useRef<Coordinates | null>(null); 
@@ -209,7 +210,7 @@ export const MapWidget: React.FC = ({ }) => {
             setCenter(currentLocation.coords);
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
         }
-    }, [currentLocation, locationIsEnabled]);
+    }, [currentLocation]);
 
 
 
@@ -252,8 +253,6 @@ export const MapWidget: React.FC = ({ }) => {
         }
     };
 
-    
-
     // React to viewmode changes
     useEffect(() => {
         if (mapRef.current) {
@@ -264,24 +263,25 @@ export const MapWidget: React.FC = ({ }) => {
     // listen to changes in itinerary
     useEffect(() => {
         // After triggering layer load
-        if (mapRef.current) {
-            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
-            
+        if (mapRef.current && selectedItinerary && viewMode === "ITINERARY") {
             reloadItineraryLayers(mapRef, layerManagerRef.current, selectedItinerary);
             
-            waitForLayer(mapRef.current, itineraryLayerConfig.id)
-            .then(() => {
-                if (mapRef.current)
-                    centerToLayer(mapRef.current, itineraryLayerConfig.id);
-                else {
-                    console.error("Map reference not available.");
+            console.log("Selected Itinerary:", selectedItinerary);
+            
+            // wait for itinerary layers to load
+            waitForSource(mapRef.current, "itinerary-source").then(() => {
+                if (mapRef.current) {
+                    // debug
+                    // get features
+
+                    const features = mapRef.current.querySourceFeatures("itinerary-source") as MapGeoJSONFeature[];
+                    console.log("DEBUG RENDERED FEATURES:", features);
+
+                    fitToFeatures(mapRef.current, features);
                 }
-            })
-            .catch((error) => {
-                console.error(error);
             });
         }
-    }, [setSelectedItinerary]);
+    }, [selectedItinerary]);
 
 
     // React to stopsData being loaded
@@ -327,7 +327,7 @@ export const MapWidget: React.FC = ({ }) => {
         }
     
         if (viewMode === "ITINERARY") {
-            updateItineraryLayers(mapRef, layerManager, itinerary);
+            loadItineraryLayers(mapRef, layerManager, itinerary);
         } else {
             removeItineraryLayers(mapRef, layerManager);
         }
@@ -381,34 +381,14 @@ export const MapWidget: React.FC = ({ }) => {
         activeSources.current.delete("stops-source");
     }
     
-    // Itinerary Layers
-    const updateItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
-        if (!itinerary) return;
-    
-        const geojsonData = createItineraryLayerData(itinerary);
-        console.log("updating itinerary")
-        if (!geojsonData) return;
-    
-        const layers = [
-            walkLayerConfig, 
-            suburbLayerConfig, 
-            tramLayerConfig, 
-            trainLayerConfig, 
-            busLayerConfig,
-            legStartEndLayerConfig, 
-            intermediateStopsLayerConfig,
-            destinationLayerConfig,
-            originLayerConfig
-        ];
-        layers.forEach(addLayerIfNotExists);
-    };
+    const loadItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
 
-    const reloadItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
         if (!itinerary) return;
-    
         const geojsonData = createItineraryLayerData(itinerary);
-        console.log("updating itinerary")
         if (!geojsonData) return;
+    
+        setSource("itinerary-source", itinerarySource, geojsonData);
+        activateSource("itinerary-source");
     
         const layers = [
             walkLayerConfig, 
@@ -421,11 +401,33 @@ export const MapWidget: React.FC = ({ }) => {
             destinationLayerConfig,
             originLayerConfig
         ];
-        layers.forEach(() => reloadLayersWithNewData("itinerary-source", geojsonData, layers));
+        layers.forEach((layer) => addLayerIfNotExists(layer));
     }
 
+    // Itinerary Layers
+    const reloadItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
+        if (!itinerary) return;
+
+        console.log("Reloading itinerary layers...");
+
+        removeItineraryLayers(mapRef, layerManager);
+        
+
+        loadItineraryLayers(mapRef, layerManager, itinerary);
+    };
+
     const removeItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
-        const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig, destinationLayerConfig, originLayerConfig];
+        const layers = [
+            walkLayerConfig, 
+            suburbLayerConfig, 
+            tramLayerConfig, 
+            trainLayerConfig, 
+            busLayerConfig,
+            legStartEndLayerConfig, 
+            intermediateStopsLayerConfig,
+            destinationLayerConfig,
+            originLayerConfig
+        ];
         layers.forEach(layer => removeLayer(layer.id));
         
         clearSource("itinerary-source");
