@@ -1,8 +1,10 @@
+"use client";
+
 import { Roboto } from "next/font/google";
 import "@/app/globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import { SettingsProvider } from "@/contexts/settingsContext";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { UIProvider } from "@/contexts/uiContext";
 import { MapProvider } from "@/contexts/mapContext";
 import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDataContext";
@@ -11,6 +13,8 @@ import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataC
 import { NearbySearchDataProvider } from "@/contexts/DataContext/nearbySearchDataContext";
 import { LocationProvider } from "@/contexts/locationContext";
 import LocationUpdater from "@/utils/locationUpdater";
+import LayoutWrapper from "./LayoutWrapper";
+import { ControlPanelProvider } from "@/contexts/controlPanelContext";
 
 
 const roboto = Roboto({
@@ -27,30 +31,27 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const language = locale === "de" ? "de" : "en"; 
+  const language = locale === "de" ? "de" : "en";
 
   return (
     <html lang={language}>
-      <body className={`${roboto.className} antialiased`}>
+      <body className="antialiased">
         <SettingsProvider initialLanguage={language}>
           <LocationProvider>
-            <LocationUpdater /> {/* updates location provider */}
+            <LocationUpdater />
             <UIProvider>
               <MapProvider>
+              <ControlPanelProvider>
                 <AutocompleteDataProvider>
                   <OtpDataProvider>
                     <StopmonitorDataProvider>
                       <NearbySearchDataProvider>
-                        <div className="w-full h-screen flex flex-col">
-                          <Navbar locale={language} />
-                          <div className="flex-1 overflow-hidden">
-                            {children}
-                          </div>
-                        </div>
+                        <LayoutWrapper locale={language}>{children}</LayoutWrapper>
                       </NearbySearchDataProvider>
                     </StopmonitorDataProvider>
                   </OtpDataProvider>
                 </AutocompleteDataProvider>
+                </ControlPanelProvider>
               </MapProvider>
             </UIProvider>
           </LocationProvider>
@@ -59,3 +60,4 @@ export default async function LocaleLayout({
     </html>
   );
 }
+

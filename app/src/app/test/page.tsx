@@ -1,5 +1,7 @@
 "use client";
 
+import { LocationProvider } from "@/contexts/locationContext";
+import LocationUpdater from "@/utils/locationUpdater";
 import { UIProvider } from "@/contexts/uiContext";
 import { MapProvider } from "@/contexts/mapContext";
 import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDataContext";
@@ -8,14 +10,18 @@ import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataC
 import { SettingsProvider } from "@/contexts/settingsContext";
 import MainView from "@/components/MainView";
 import { NearbySearchDataProvider } from "@/contexts/DataContext/nearbySearchDataContext";
+import { ControlPanelProvider } from "@/contexts/controlPanelContext";
 
 
 
 export default function Home() {
   return (
               <SettingsProvider initialLanguage={"en"}>
+              <LocationProvider>
+              <LocationUpdater />
               <UIProvider>
               <MapProvider>
+              <ControlPanelProvider>
                 <AutocompleteDataProvider>
                 <OtpDataProvider>
                 <StopmonitorDataProvider>
@@ -41,8 +47,10 @@ export default function Home() {
                   </StopmonitorDataProvider>
                   </OtpDataProvider>
                   </AutocompleteDataProvider>
+                </ControlPanelProvider>
                 </MapProvider>
                 </UIProvider>
+                </LocationProvider>
                 </SettingsProvider>
   );
 }
