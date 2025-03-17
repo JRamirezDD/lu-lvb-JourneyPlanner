@@ -1,5 +1,7 @@
 "use client";
 
+import { LocationProvider } from "@/contexts/locationContext";
+import LocationUpdater from "@/utils/locationUpdater";
 import { UIProvider } from "@/contexts/uiContext";
 import { MapProvider } from "@/contexts/mapContext";
 import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDataContext";
