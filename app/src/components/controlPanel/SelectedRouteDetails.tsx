@@ -54,9 +54,9 @@ const formatTime = (timestamp: number): string => {
   // Convert the timestamp to a Date object
   const date = new Date(timestamp);
 
-  // Extract hours and minutes from the timestamp
-  const hours = date.getUTCHours();
-  const minutes = date.getUTCMinutes();
+  // Extract hours and minutes from the timestamp using local time
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
 
   // Format as HH:MM
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
