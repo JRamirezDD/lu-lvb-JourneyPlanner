@@ -5,7 +5,7 @@ import { Coordinates } from "@/types/Coordinates";
 import React, { useContext, useEffect, useRef } from "react";
 
 const LocationUpdater: React.FC = () => {
-  const { updateLocation, locationIsEnabled, setIsEnabled } = useContext(LocationContext);
+  const { updateLocation, locationIsEnabled: isEnabled, setIsEnabled } = useContext(LocationContext);
   const lastUpdateRef = useRef(0);
   // Set the desired update interval in milliseconds (e.g., 10000ms = 10 seconds)
   const updateInterval = 50;
@@ -35,23 +35,25 @@ const LocationUpdater: React.FC = () => {
           }
 
           updateLocation({ timestamp, coords, heading, speed, accuracy });
+
+
+
+          if (!isEnabled) {
+            setIsEnabled(true);
+          }
         },
         (error) => { 
             console.error("Error loading position", error) 
-            setIsEnabled(false);
         },
         { enableHighAccuracy: false, timeout: 5000 }
       );
+
+
 
       return () => navigator.geolocation.clearWatch(watchId);
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
-
-    if (!locationIsEnabled) {
-      setIsEnabled(true);
-    }
-
   }, [updateLocation]);
 
   return null;
