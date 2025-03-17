@@ -15,6 +15,8 @@ import { ControlPanelProvider } from "@/contexts/controlPanelContext";
 export default function Home() {
   return (
               <SettingsProvider initialLanguage={"en"}>
+              <LocationProvider>
+              <LocationUpdater />
               <UIProvider>
               <MapProvider>
               <ControlPanelProvider>
@@ -46,6 +48,7 @@ export default function Home() {
                 </ControlPanelProvider>
                 </MapProvider>
                 </UIProvider>
+                </LocationProvider>
                 </SettingsProvider>
   );
 }
