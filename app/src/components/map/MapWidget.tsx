@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import maplibregl, { Map } from "maplibre-gl";
+import maplibregl, { Map, MapGeoJSONFeature } from "maplibre-gl";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { LayerManager } from "./utils/ILayer";
@@ -39,45 +39,13 @@ import { useLocationContext } from "@/contexts/locationContext";
 import { Coordinates } from "@/types/Coordinates";
 import { createCurrentLocationData, currentLocationAccuracyLayerConfig, currentLocationLayerConfig, currentLocationSource } from "./layers/currentLocationLayer";
 import { Location } from "@/types/Location";
-import centerToLayer from "./utils/helpers/centerToLayer";
-import waitForLayer from "./utils/helpers/waitForLayer";
+import centerToLayer from "./helpers/fitToFeatures";
+import waitForSource from "./helpers/waitForSource";
+import { useControLPanelContext } from "@/contexts/controlPanelContext";
+import { loadAllMapIcons } from "./helpers/images";
+import { getExtendedBounds, boundsToString } from "./helpers/boundingBox";
+import fitToFeatures from "./helpers/fitToFeatures";
 
-// --- Bounding Box Helpers ---
-
-// Returns an extended bounding box (bufferFactor of 0.5 means 50% larger than view)
-const getExtendedBounds = (map: maplibregl.Map, bufferFactor = 1) => {
-    const bounds = map.getBounds();
-    const sw = bounds.getSouthWest();
-    const ne = bounds.getNorthEast();
-    const center = bounds.getCenter();
-  
-    const lngDiff = ne.lng - sw.lng;
-    const latDiff = ne.lat - sw.lat;
-  
-    return new maplibregl.LngLatBounds(
-      [
-        center.lng - (lngDiff * (1 + bufferFactor)) / 2,
-        center.lat - (latDiff * (1 + bufferFactor)) / 2,
-      ],
-      [
-        center.lng + (lngDiff * (1 + bufferFactor)) / 2,
-        center.lat + (latDiff * (1 + bufferFactor)) / 2,
-      ]
-    );
-  };
-
-// Converts bounds into a comma-separated string: "minLng,minLat,maxLng,maxLat"
-const boundsToString = (bounds: maplibregl.LngLatBounds) => {
-    const sw = bounds.getSouthWest();
-    const ne = bounds.getNorthEast();
-    return `${sw.lat},${sw.lng},${ne.lat},${ne.lng}`;
-  };
-
-// --- Component Implementation ---
-
-interface MapWidgetProps {
-  onStopSelect: (stop: { stop_id: string; stop_name: string }) => void;
-}
 
 export const MapWidget: React.FC = ({ }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -88,16 +56,19 @@ export const MapWidget: React.FC = ({ }) => {
     const [mapLoaded, setMapLoaded] = useState(false);
     const { stopsData, fetchStops, loadingStops, errorStops } = useStopmonitorDataContext();
     const { nearBySearchData, fetchNearbySearch, loadingNearbySearch, errorNearbySearch } = useNearbySearchDataContext();
-    const { setSelectedItinerary, selectedItinerary, resetCenterTrigger, resetCenterCounter, zoominLevel, zoomoutLevel } = useMapContext();
+    const { selectedItinerary, resetCenterTrigger, resetCenterCounter, zoominLevel, zoomoutLevel } = useMapContext();
     const { setSelectedNearbySearchItem, selectedNearbySearchItem } = useMapContext();
-    const { currentLocation, locationIsEnabled: isEnabled } = useLocationContext();
+    const { selectedStop } = useMapContext();
+    const { currentLocation, locationIsEnabled } = useLocationContext();
+    const { selectedItem } = useControLPanelContext();
   
     
     // State to hold the current query bounds (the extended bounding box used for querying)
     const currentQueryBoundsRef = useRef<maplibregl.LngLatBounds | null>(null);
     const [queryBoundsState, setQueryBoundsState] = useState<maplibregl.LngLatBounds | null>(null);
     
-    const { reloadLayersWithNewData, setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
+    const { setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
+
 
     const  storedCenter = useRef<Coordinates | null>(null); 
 
@@ -107,8 +78,7 @@ export const MapWidget: React.FC = ({ }) => {
         const map = new maplibregl.Map({
             container: mapContainerRef.current,
             style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", 
-            // "https://api.maptiler.com/maps/c07241ff-0cee-4b65-8404-fb9439c2fc2e/style.json?key=0RiVj3uh1o63zeuIVaKk",
-            center: [12.377014, 51.340613],
+            center: [12.375057676911903, 51.33983432025775],
             zoom: 14,
             fadeDuration: 0
           });
@@ -126,84 +96,7 @@ export const MapWidget: React.FC = ({ }) => {
             //console.log("Initial query bounds:", extendedBounds);
     
             // Load Images
-            const loadImages = () => {
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/haltestelle.svg", 19).then((image) => {
-                    if (!map.hasImage("haltestelle")) {
-                        map.addImage("haltestelle", image as HTMLImageElement );
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-
-                
-
-                loadPNGImage("/lu-lvb-JourneyPlanner/icons/current-location-icon.png").then((image) => {
-                    if (!map.hasImage("current-location-icon")) {
-                    map.addImage("current-location-icon", image as HTMLImageElement | ImageBitmap);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error loading current location icon:", error);
-                });
-
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/Bus-Logo.svg").then((image) => {
-                    if (!map.hasImage("Bus-Logo")) {
-                        map.addImage("Bus-Logo", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/ticket.svg").then((image) => {
-                    if (!map.hasImage("ticket")) {
-                        map.addImage("ticket", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/taxi.svg").then((image) => {
-                    if (!map.hasImage("taxi")) {
-                        map.addImage("taxi", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/nextbike.svg").then((image) => {
-                    if (!map.hasImage("nextbike")) {
-                        map.addImage("nextbike", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/scooter.svg").then((image) => {
-                    if (!map.hasImage("scooter")) {
-                        map.addImage("scooter", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/icons/otp-icons/charger.svg").then((image) => {
-                    if (!map.hasImage("charger")) {
-                        map.addImage("charger", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/filled_pin.svg").then((image) => {
-                    if (!map.hasImage("filled_pin")) {
-                        map.addImage("filled_pin", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-                loadSVGImage("/lu-lvb-JourneyPlanner/hollow_pin.svg").then((image) => {
-                    if (!map.hasImage("hollow_pin")) {
-                        map.addImage("hollow_pin", image as HTMLImageElement | ImageBitmap);
-                    }
-                }).catch((error) => {
-                    throw error;
-                });
-            };
-            loadImages();
+            loadAllMapIcons(map);
 
             // Set up moveend listener
             map.on("moveend", () => {
@@ -256,14 +149,14 @@ export const MapWidget: React.FC = ({ }) => {
     useEffect(() => {
         if (mapRef.current) {
             const currentZoom = mapRef.current.getZoom();
-            moveMap(undefined, currentZoom + 1, 200);
+            moveMap(null, currentZoom + 1, 200);
         }
     }, [zoominLevel]);
 
     useEffect(() => {
         if (mapRef.current) {
             const currentZoom = mapRef.current.getZoom();
-            moveMap(undefined, currentZoom - 1, 200);
+            moveMap(null, currentZoom - 1, 200);
         }
     }, [zoomoutLevel]);
 
@@ -275,7 +168,8 @@ export const MapWidget: React.FC = ({ }) => {
         }
     }
 
-    const moveMap = (coords?: Coordinates, zoomLevel?: number, duration?: number): void => {
+    const moveMap = (coords?: Coordinates | null, zoomLevel?: number, duration?: number): void => {
+        console.log("Moving map to:", coords, "zoom:", zoomLevel, "duration:", duration);
         if (mapRef.current) {
             mapRef.current.easeTo({
                 center: coords? [coords.lon, coords.lat] : mapRef.current.getCenter(),
@@ -287,26 +181,38 @@ export const MapWidget: React.FC = ({ }) => {
     }
 
     useEffect(() => {
-        if (mapRef.current && storedCenter.current && isEnabled) {
+        if (mapRef.current && storedCenter.current && locationIsEnabled) {
             moveMap(storedCenter.current, 14, 500);
         }
     }, [resetCenterCounter]);
 
+    // On Autocomplete item selection, move map to selected item
+    useEffect(() => {
+        if (mapRef.current && selectedItem && viewMode === "STATION") {
+            // remove previous pin if exists?
+            // add new pin?
+            moveMap({ lat: selectedItem.lat, lon: selectedItem.lon }, 15.3, 500);
+        }
+    }, [selectedItem]);
+
     
     useEffect(() => {
-        if (mapRef.current && isEnabled && currentLocation) {
+        if (mapRef.current && locationIsEnabled && currentLocation) {
             setCenter(currentLocation.coords);
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
             resetCenterTrigger();
         }
-    }, [isEnabled, mapRef.current]);
+    }, [locationIsEnabled, mapRef.current]);
 
     // Update current location icon on map when location changes
     useEffect(() => {
-        if (isEnabled && currentLocation) {
+        if (locationIsEnabled && currentLocation) {
+            setCenter(currentLocation.coords);
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
         }
-    }, [currentLocation, isEnabled]);
+    }, [currentLocation]);
+
+
 
     
     // Bounds change event handler
@@ -347,8 +253,6 @@ export const MapWidget: React.FC = ({ }) => {
         }
     };
 
-    
-
     // React to viewmode changes
     useEffect(() => {
         if (mapRef.current) {
@@ -359,24 +263,25 @@ export const MapWidget: React.FC = ({ }) => {
     // listen to changes in itinerary
     useEffect(() => {
         // After triggering layer load
-        if (mapRef.current) {
-            loadLayers(mapRef, layerManagerRef.current, viewMode, stopsData, nearBySearchData, selectedItinerary);
-            
+        if (mapRef.current && selectedItinerary && viewMode === "ITINERARY") {
             reloadItineraryLayers(mapRef, layerManagerRef.current, selectedItinerary);
             
-            waitForLayer(mapRef.current, itineraryLayerConfig.id)
-            .then(() => {
-                if (mapRef.current)
-                    centerToLayer(mapRef.current, itineraryLayerConfig.id);
-                else {
-                    console.error("Map reference not available.");
+            console.log("Selected Itinerary:", selectedItinerary);
+            
+            // wait for itinerary layers to load
+            waitForSource(mapRef.current, "itinerary-source").then(() => {
+                if (mapRef.current) {
+                    // debug
+                    // get features
+
+                    const features = mapRef.current.querySourceFeatures("itinerary-source") as MapGeoJSONFeature[];
+                    console.log("DEBUG RENDERED FEATURES:", features);
+
+                    fitToFeatures(mapRef.current, features);
                 }
-            })
-            .catch((error) => {
-                console.error(error);
             });
         }
-    }, [setSelectedItinerary]);
+    }, [selectedItinerary]);
 
 
     // React to stopsData being loaded
@@ -422,7 +327,7 @@ export const MapWidget: React.FC = ({ }) => {
         }
     
         if (viewMode === "ITINERARY") {
-            updateItineraryLayers(mapRef, layerManager, itinerary);
+            loadItineraryLayers(mapRef, layerManager, itinerary);
         } else {
             removeItineraryLayers(mapRef, layerManager);
         }
@@ -476,34 +381,14 @@ export const MapWidget: React.FC = ({ }) => {
         activeSources.current.delete("stops-source");
     }
     
-    // Itinerary Layers
-    const updateItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
-        if (!itinerary) return;
-    
-        const geojsonData = createItineraryLayerData(itinerary);
-        console.log("updating itinerary")
-        if (!geojsonData) return;
-    
-        const layers = [
-            walkLayerConfig, 
-            suburbLayerConfig, 
-            tramLayerConfig, 
-            trainLayerConfig, 
-            busLayerConfig,
-            legStartEndLayerConfig, 
-            intermediateStopsLayerConfig,
-            destinationLayerConfig,
-            originLayerConfig
-        ];
-        layers.forEach(addLayerIfNotExists);
-    };
+    const loadItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
 
-    const reloadItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
         if (!itinerary) return;
-    
         const geojsonData = createItineraryLayerData(itinerary);
-        console.log("updating itinerary")
         if (!geojsonData) return;
+    
+        setSource("itinerary-source", itinerarySource, geojsonData);
+        activateSource("itinerary-source");
     
         const layers = [
             walkLayerConfig, 
@@ -516,11 +401,33 @@ export const MapWidget: React.FC = ({ }) => {
             destinationLayerConfig,
             originLayerConfig
         ];
-        layers.forEach(() => reloadLayersWithNewData("itinerary-source", geojsonData, layers));
+        layers.forEach((layer) => addLayerIfNotExists(layer));
     }
 
+    // Itinerary Layers
+    const reloadItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null, itinerary: Itinerary | null) => {
+        if (!itinerary) return;
+
+        console.log("Reloading itinerary layers...");
+
+        removeItineraryLayers(mapRef, layerManager);
+        
+
+        loadItineraryLayers(mapRef, layerManager, itinerary);
+    };
+
     const removeItineraryLayers = (mapRef: React.MutableRefObject<maplibregl.Map | null>, layerManager: LayerManager | null) => {
-        const layers = [walkLayerConfig, suburbLayerConfig, tramLayerConfig, trainLayerConfig, legStartEndLayerConfig, intermediateStopsLayerConfig, busLayerConfig, destinationLayerConfig, originLayerConfig];
+        const layers = [
+            walkLayerConfig, 
+            suburbLayerConfig, 
+            tramLayerConfig, 
+            trainLayerConfig, 
+            busLayerConfig,
+            legStartEndLayerConfig, 
+            intermediateStopsLayerConfig,
+            destinationLayerConfig,
+            originLayerConfig
+        ];
         layers.forEach(layer => removeLayer(layer.id));
         
         clearSource("itinerary-source");

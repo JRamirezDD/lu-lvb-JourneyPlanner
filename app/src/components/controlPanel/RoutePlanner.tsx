@@ -186,7 +186,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       await fetchAutocompleteData({ 
         search: query,
         format: "JSON",
-        pointType: "N,P,S,W"
+        pointType: "N,P,S,W",
+        center: currentLocation ? `${currentLocation.coords.lat},${currentLocation.coords.lon}` : "51.34178106043562, 12.378857364835381"
       });
     } catch (error) {
       console.error('Error fetching origin suggestions:', error);
@@ -214,7 +215,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       await fetchAutocompleteData({ 
         search: query,
         format: "JSON",
-        pointType: "N,P,S,W"
+        pointType: "N,P,S,W",
+        center: currentLocation ? `${currentLocation.coords.lat},${currentLocation.coords.lon}` : "51.34178106043562, 12.378857364835381"
       });
     } catch (error) {
       console.error('Error fetching destination suggestions:', error);
@@ -635,8 +637,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
             }}
             onKeyDown={(e) => handleKeyDown(e, originAutocompleteData, true)}
             onFocus={handleOriginFocus}
-            className="location-input w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
-          />
+            className="location-input w-full p-2 border rounded text-[16px] focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
+            />
           {showOriginSuggestions && (
             <SuggestionContainer
               suggestions={originAutocompleteData}
@@ -685,8 +687,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
             }}
             onKeyDown={(e) => handleKeyDown(e, destinationAutocompleteData, false)}
             onFocus={handleDestinationFocus}
-            className="location-input w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
-          />
+            className="location-input w-full p-2 border rounded text-[16px] focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
+            />
           {showDestinationSuggestions && (
             <SuggestionContainer
               suggestions={destinationAutocompleteData}

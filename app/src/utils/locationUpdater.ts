@@ -1,11 +1,11 @@
 "use client";
 
-import { LocationContext } from "@/contexts/locationContext";
+import { LocationContext, useLocationContext } from "@/contexts/locationContext";
 import { Coordinates } from "@/types/Coordinates";
 import React, { useContext, useEffect, useRef } from "react";
 
 const LocationUpdater: React.FC = () => {
-  const { updateLocation, locationIsEnabled: isEnabled, setIsEnabled } = useContext(LocationContext);
+  const { updateLocation, locationIsEnabled: isEnabled, setIsEnabled, error, setError } = useLocationContext();
   const lastUpdateRef = useRef(0);
   // Set the desired update interval in milliseconds (e.g., 10000ms = 10 seconds)
   const updateInterval = 50;
@@ -31,11 +31,12 @@ const LocationUpdater: React.FC = () => {
 
           if (accuracy > 500) { // 500 meters from estimated centerl
             console.warn(`Accuracy is too low ${accuracy}, skipping update`);
+            setError("Accuracy is too low, skipping update");
             throw new Error("Accuracy is too low, skipping update");
           }
 
+          setError(null);
           updateLocation({ timestamp, coords, heading, speed, accuracy });
-
 
 
           if (!isEnabled) {
@@ -44,8 +45,9 @@ const LocationUpdater: React.FC = () => {
         },
         (error) => { 
             console.error("Error loading position", error) 
+            setError(error.message)
         },
-        { enableHighAccuracy: false, timeout: 5000 }
+        { enableHighAccuracy: false, timeout: 1000 }
       );
 
 
@@ -53,6 +55,7 @@ const LocationUpdater: React.FC = () => {
       return () => navigator.geolocation.clearWatch(watchId);
     } else {
       console.error("Geolocation is not supported by this browser.");
+      setError("Geolocation is not supported by this browser.");
     }
   }, [updateLocation]);
 

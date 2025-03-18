@@ -23,6 +23,7 @@
     "axios": "^1.7.9",
     "class-transformer": "^0.5.1",
     "cors": "^2.8.5",
+    "framer-motion": "^12.5.0",
     "geojson": "^0.5.0",
     "haversine-distance": "^1.2.3",
     "http-proxy-middleware": "^3.0.3",

@@ -7,17 +7,20 @@ import SuggestionContainer from "./widgets/SuggestionContainer";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
+import { useControLPanelContext } from "@/contexts/controlPanelContext";
 
 interface SelectedStation {
   name: string;
   coordinates: string; // Format: "lat,lon"
   stopId?: string;
+  item: AutocompleteItem;
 }
 
 const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => void }) => {
   const { translations } = useSettingsContext();
   const { goToPreviousViewMode } = useUIContext();
-  const { setSelectedStop, setSelectedNearbySearchItem } = useMapContext();
+  const { setSelectedNearbySearchItem, setSelectedStop } = useMapContext();
+  const { setSelectedItem, setControlPanelIsExpanded } = useControLPanelContext();
   
   const { 
     autocompleteData, 
@@ -151,7 +154,8 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
       setSelectedStation({ 
         name: fullAddress, 
         coordinates,
-        stopId
+        stopId,
+        item: suggestion
       });
       setIsStationSelected(true);
       setShowSuggestions(false);
@@ -241,20 +245,30 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
     setSelectedNearbySearchItem(null);
 
     // Set the selected stop in the MapContext
+    setSelectedStation(selectedStation);
     setSelectedStop({
       stop_id: selectedStation.stopId,
       stop_name: selectedStation.name
     });
+    setSelectedItem(selectedStation.item);
 
-    // Navigate to station view
     setActiveView("STATION");
+
+    // Hide ControlPanel
+    setControlPanelIsExpanded(false);
+  
+    // wait 2 secs
+    setTimeout(() => {
+      setControlPanelIsExpanded(true);
+    }, 1000);
+
   };
 
   // Handle back button click
   const handleBackClick = () => {
     // Clear any existing selections
     setSelectedNearbySearchItem(null);
-    setSelectedStop(null);
+    setSelectedItem(null);
     
     // Navigate back
     goToPreviousViewMode();
@@ -290,8 +304,8 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
           }}
           onKeyDown={handleKeyDown}
           onFocus={handleInputFocus}
-          className="station-input w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
-        />
+          className="station-input w-full p-2 border rounded text-[16px] focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue"
+          />
         {showSuggestions && (
           <SuggestionContainer
             suggestions={autocompleteResults}

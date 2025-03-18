@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { GeoJSON } from "geojson";
 import { LayerSpecification, SourceSpecification } from "maplibre-gl";
-import fadeInLayer from "./helpers/fadeInLayer"; // Import fade-in function
+import fadeInLayer from "../helpers/fadeInLayer"; // Import fade-in function
 
 const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>) => {
     const sources = useRef(new Map<string, any>());
@@ -17,8 +17,6 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
             return;
         }
 
-        sources.current.set(sourceId, newData);
-
         const source = mapRef.current.getSource(sourceId) as maplibregl.GeoJSONSource;
         if (source) {
             source.setData(newData);
@@ -27,19 +25,21 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
             mapRef.current.addSource(sourceId, { type: "geojson", data: newData });
             activateSource(sourceId);
         }
+
+        sources.current.set(sourceId, newData);
     };
 
-    const reloadLayersWithNewData = (sourceId: string, newData: GeoJSON, layers: LayerSpecification[]) => {
+    const removeSource = (sourceId: string) => {
         if (!mapRef.current) return;
-        console.log(`Reloading layers with new data for source ${sourceId}.`);
-        
-        for (const layer of layers) {
-            removeLayer(layer.id);
-            updateSource(sourceId, newData);
-            addLayerIfNotExists(layer);
+        if (sources.current.has(sourceId)) {
+            console.log(`Deleting source data ${sourceId}.`);
+            mapRef.current.removeSource(sourceId);
+            sources.current.delete(sourceId);
+            activeSources.current.delete(sourceId);
+        } else {
+            console.log(`Source ${sourceId} not found.`);
         }
-
-    };
+    }
 
     const activateSource = (sourceId: string) => {
         if (!mapRef.current) return;
@@ -107,7 +107,7 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
         source.setData(newData);
     };
 
-    return { reloadLayersWithNewData, setSource, updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
+    return { setSource, updateSource, activateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers };
 };
 
 export default useLayersManager;
