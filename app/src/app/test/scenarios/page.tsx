@@ -10,12 +10,12 @@ import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDat
 import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
 import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataContext";
 import { NearbySearchDataProvider } from "@/contexts/DataContext/nearbySearchDataContext";
-import ScenarioLoader from "@/components/ScenarioLoader"; // ScenarioLoader as previously defined
 import MainView from "@/components/MainView";
+import ScenarioLoader from "@/testing/utils/ScenarioLoader";
 
 export default function ScenarioTestPage() {
   const params = useSearchParams();
-  const scenario = params.get("scenario") || "default";
+  const scenario = (params?.get("scenario") as "default" | "scenario1" | "scenario2" | "scenario3") || "default";
 
   return (
     <SettingsProvider initialLanguage="en">
