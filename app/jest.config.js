@@ -4,7 +4,7 @@ require('dotenv').config({ path: '.env.test' });
 const config = {
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['<rootDir>/testing/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/testing/jest/jest.setup.js'],
   setupFiles: ["jest-canvas-mock"],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',

@@ -1,0 +1,4 @@
+export enum Scenario {
+  DEFAULT = "DEFAULT",
+  ITINERARY_VIEW_SCENARIO = "ITINERARY_VIEW_SCENARIO",
+}

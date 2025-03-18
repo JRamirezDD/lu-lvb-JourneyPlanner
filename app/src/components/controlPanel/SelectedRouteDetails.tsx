@@ -12,32 +12,6 @@ import TrainLogo from "../../../public/icons/otp-icons/Train.svg";
 import { useUIContext } from "@/contexts/uiContext";
 import { useMapContext } from "@/contexts/mapContext";
 import { Itinerary } from "@/types/Itinerary";
-//import { RouteColor } from "@/types/RouteColor";
-
-interface RouteData {
-  id: number;
-  duration: string;
-  startTime: string;
-  endTime: string;
-  walkDistance: string;
-  walkDuration: string;
-  steps: {
-    time: string;
-    type: "start" | "walk" | "tram" | "bus" | "s-bahn" | "transfer" | "end";
-    routeColor: string;
-    line?: string;
-    from?: string;
-    to?: string;
-    duration?: string;
-    distance?: string;
-    platform?: string;
-    direction?: string;
-    stops?: number;
-    stopDuration?: string;
-    transferDuration?: string;
-  }[];
-}
-
 
 type LegType = 'START' | 'END' | 'WALK' | 'TRANSFER' | TransportMode;
 
@@ -102,9 +76,8 @@ const formatTimeDifference = (scheduledTime: number, actualTime: number): { text
 
 const SelectedRouteDetails = () => {
   const { otpData, selectedItineraryIndex, setSelectedItineraryIndex, clearSearchParams } = useOtpDataContext();
-  const { translations } = useSettingsContext();
   const { goToPreviousViewMode, setViewMode, previousViewMode, navigationHistory } = useUIContext();
-  const { setSelectedItinerary } = useMapContext();
+  const { setSelectedItinerary, selectedItinerary } = useMapContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
 
   // Log navigation state
@@ -137,7 +110,6 @@ const SelectedRouteDetails = () => {
     return <div>No route selected</div>;
   }
 
-  const selectedItinerary = otpData.plan.itineraries[selectedItineraryIndex];
   const totalRoutes = Math.min(otpData.plan.itineraries.length, 5);
 
   // Updated location name handler with more defensive checks
@@ -198,6 +170,9 @@ const SelectedRouteDetails = () => {
     setViewMode("DEFAULT");
   };
 
+  if (!selectedItinerary)
+    return <div>No itinerary selected</div>;
+
   return (
     <div className="flex flex-col w-full bg-white">
       {/* Header */}
@@ -214,9 +189,9 @@ const SelectedRouteDetails = () => {
           </button>
           <div>
             <div className="text-sm opacity-80">
-              {formatTime(selectedItinerary.startTime)} - {formatTime(selectedItinerary.endTime)}
+              {formatTime(selectedItinerary.otpItinerary.startTime)} - {formatTime(selectedItinerary.otpItinerary.endTime)}
             </div>
-            <div className="font-medium">{formatDuration(selectedItinerary.duration)}</div>
+            <div className="font-medium">{formatDuration(selectedItinerary.otpItinerary.duration)}</div>
           </div>
         </div>
         {/* Navigation Buttons */}
@@ -252,7 +227,7 @@ const SelectedRouteDetails = () => {
       {/* Steps Timeline */}
       <div className="p-4">
         <div className="space-y-6">
-          {selectedItinerary.legs.map((leg, index) => (
+          {selectedItinerary.otpItinerary.legs.map((leg, index) => (
             <div key={index} className="flex gap-4">
               {/* Time Column */}
               <div className="w-16 flex flex-col items-center">
@@ -279,7 +254,7 @@ const SelectedRouteDetails = () => {
                   })()}
                 </div>
 
-                {index < selectedItinerary.legs.length && (
+                {index < selectedItinerary.otpItinerary.legs.length && (
                   <div
                     className={`h-full border-l-4 my-2 transition-all`} // Remove inline style from className
                     style={{ borderLeftColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }} // Apply style attribute

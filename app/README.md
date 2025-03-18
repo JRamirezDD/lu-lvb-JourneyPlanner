@@ -95,7 +95,11 @@ Current pages are visible at:
 - [/examples/contexts/multi-component](http://localhost:3000/lu-lvb-JourneyPlanner/en/examples/contexts/multi-component)
 - [/examples/contexts/trigger-function](http://localhost:3000/lu-lvb-JourneyPlanner/en/examples/contexts/trigger-function)
 
+#### Development Pages:
+Pages are only accessible when ran in Development or Test mode:
 
+Pre-made Scenarios:
+http://localhost:3000/lu-lvb-JourneyPlanner/test/scenarios?scenario=itineraryViewScenario
 
 
 
@@ -114,6 +118,23 @@ npx jest --testNamePattern="ComponentName" # Run tests that match a specific nam
 npx jest --coverage # To view a detailed coverage report under the /coverage folder.
 
 ```
+
+### Playwright Tests
+
+Ensure you have downloaded Playwright
+```bash
+npx playwright install
+```
+
+Available commands:
+```bash
+npm run test:playwright
+# or
+npm run test:playwright:headed
+# or
+npm run test:playwright:ui
+```
+
 
 ### ESLint and Prettier
 ```bash
