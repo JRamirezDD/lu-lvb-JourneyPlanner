@@ -1,13 +1,12 @@
 import { test, expect, Page } from '@playwright/test';
 import { Scenario } from '@/testing/types/Scenario';
 
-// Helper function to measure heap memory usage
+// measure heap memory usage
 const getHeapUsageMB = async (page: Page) => {
   const heapSize = await page.evaluate(() => performance.memory.usedJSHeapSize);
   return heapSize / 1024 / 1024;
 };
 
-// List scenarios to test
 const scenarios = Object.values(Scenario) as Scenario[];
 
 for (const scenario of scenarios) {
