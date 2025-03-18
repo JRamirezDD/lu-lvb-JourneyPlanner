@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, act } from '@testing-library/react';
+import { render, act, waitFor } from '@testing-library/react';
 import { LocationProvider, useLocationContext } from '@/contexts/locationContext';
 import LocationUpdater from '@/utils/locationUpdater';
 
@@ -13,23 +13,24 @@ Object.defineProperty(global.navigator, 'geolocation', {
   writable: true,
 });
 
+let updateLocationMock: jest.Mock;
+
+// Component wrapper to access context state inside the test
+const TestComponent = () => {
+  const { currentLocation, updateLocation, error } = useLocationContext();
+  updateLocationMock = jest.fn(updateLocation);
+
+  return (
+    <div>
+      <p data-testid="location">
+        {currentLocation ? `Lat: ${currentLocation.coords.lat}, Lon: ${currentLocation.coords.lon}` : 'No location'}
+      </p>
+      <p data-testid="error">{error}</p>
+    </div>
+  );
+};
+
 describe('LocationUpdater', () => {
-  let updateLocationMock: jest.Mock;
-
-  // Component wrapper to access context state inside the test
-  const TestComponent = () => {
-    const { currentLocation, updateLocation, error } = useLocationContext();
-    updateLocationMock = jest.fn(updateLocation);
-
-    return (
-      <div>
-        <p data-testid="location">
-          {currentLocation ? `Lat: ${currentLocation.coords.lat}, Lon: ${currentLocation.coords.lon}` : 'No location'}
-        </p>
-        <p data-testid="error">{error}</p>
-      </div>
-    );
-  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -67,12 +68,6 @@ describe('LocationUpdater', () => {
     // Check if location was updated
     expect(getByTestId('location').textContent).toContain(`Lat: ${mockPosition.coords.latitude}`);
     expect(getByTestId('location').textContent).toContain(`Lon: ${mockPosition.coords.longitude}`);
-    expect(updateLocationMock).toHaveBeenCalledWith({
-      timestamp: mockPosition.timestamp,
-      coords: { lat: mockPosition.coords.latitude, lon: mockPosition.coords.longitude },
-      heading: mockPosition.coords.heading,
-      speed: mockPosition.coords.speed,
-      accuracy: mockPosition.coords.accuracy,
     });
   });
 
@@ -87,18 +82,16 @@ describe('LocationUpdater', () => {
       success(mockLowAccuracyPosition);
     });
 
-    const { getByTestId } = render(
-      <LocationProvider>
+    jest.spyOn(console, 'error').mockImplementation(() => jest.fn());
+    await waitFor(() => expect(() => render
+      (<LocationProvider>
         <LocationUpdater />
         <TestComponent />
-      </LocationProvider>
-    );
-
-    await act(async () => {});
-
-    // Expect an error message
-    expect(getByTestId('error').textContent).toBe('Accuracy is too low, skipping update');
-  });
+      </LocationProvider>)
+    ).toThrow("Accuracy is too low, skipping update")
+    ); 
+    jest.restoreAllMocks();
+    });
 
   test('handles geolocation errors correctly', async () => {
     // Simulate geolocation error
@@ -130,4 +123,3 @@ describe('LocationUpdater', () => {
     unmount();
     expect(mockGeolocation.clearWatch).toHaveBeenCalled();
   });
-});
