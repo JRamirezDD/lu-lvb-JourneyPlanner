@@ -6,13 +6,15 @@ import { IContext } from "./IContext";
 
 export interface ISettingsContext extends IContext {
     language: "en" | "de";
+    setLanguage: (lang: "en" | "de") => void;
     translations: Record<string, any>;
     transportModes: TransportMode[];
-    avoidWalking: boolean;
-    wheelchairAccessible: boolean;
-
-    setLanguage: (lang: "en" | "de") => void;
     setTransportModes: (modes: TransportMode[]) => void;
+    avoidWalking: boolean;
+    setAvoidWalking: (avoid: boolean) => void;
+    wheelchairAccessible: boolean;
+    setWheelchairAccessible: (wheelchair: boolean) => void;
+
     toggleAvoidWalking: () => void;
     toggleWheelchairAccessible: () => void;
     toggleTransportMode: (mode: TransportMode) => void;
@@ -83,6 +85,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode; initialLang
                 toggleAvoidWalking,
                 toggleWheelchairAccessible,
                 toggleTransportMode,
+                setAvoidWalking,
+                setWheelchairAccessible,
                 clearState,
             }}
         >
