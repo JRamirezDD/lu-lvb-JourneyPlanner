@@ -112,12 +112,6 @@ const SelectedRouteDetails = () => {
   const { setSelectedItinerary } = useMapContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
 
-  // Log navigation state
-  console.log('SelectedRouteDetails navigation state:', {
-    previousViewMode,
-    navigationHistory
-  });
-
   // Update the map when the selected itinerary changes
   useEffect(() => {
     if (otpData && selectedItineraryIndex !== null) {
@@ -129,14 +123,28 @@ const SelectedRouteDetails = () => {
       );
       setSelectedItinerary(mapItinerary);
     }
-  }, [otpData, selectedItineraryIndex]);
 
-  // Fixed debug logging
-  console.log('Selected Itinerary Data:', {
-    otpData,
-    selectedItineraryIndex,
-    legs: selectedItineraryIndex !== null ? otpData?.plan?.itineraries?.[selectedItineraryIndex]?.legs : null
-  });
+    // Cleanup function
+    return () => {
+      // Clear the selected itinerary when component unmounts
+      setSelectedItinerary(null);
+    };
+  }, [otpData?.plan?.itineraries, selectedItineraryIndex]); // More specific dependencies
+
+  // Remove unnecessary debug logging
+  // console.log('Selected Itinerary Data:', {
+  //   otpData,
+  //   selectedItineraryIndex,
+  //   legs: selectedItineraryIndex !== null ? otpData?.plan?.itineraries?.[selectedItineraryIndex]?.legs : null
+  // });
+
+  // Log only essential navigation state
+  useEffect(() => {
+    console.log('SelectedRouteDetails navigation state:', {
+      previousViewMode,
+      navigationHistory
+    });
+  }, [previousViewMode, navigationHistory]);
 
   if (!otpData || selectedItineraryIndex === null) {
     return <div>No route selected</div>;

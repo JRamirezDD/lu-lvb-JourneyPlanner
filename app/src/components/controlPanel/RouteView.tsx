@@ -5,7 +5,7 @@ import Bus from "../../../public/icons/otp-icons/Bus-Logo.svg";
 import Sbahn from "../../../public/icons/otp-icons/S-Bahn-Logo.svg";
 import Train from "../../../public/icons/otp-icons/Train.svg";
 import Image from "next/image";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import RoutePlanner from "./RoutePlanner";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useOtpDataContext } from "@/contexts/DataContext/routingDataContext";
@@ -177,34 +177,34 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
 
   const handleRouteClick = (index: number) => {
     // Find the original index in the unsorted itineraries array
-    if (otpData && sortedItineraries) {
-      const selectedItinerary = sortedItineraries[index];
-      const originalIndex = otpData.plan.itineraries.findIndex(
-        itinerary => itinerary.startTime === selectedItinerary.startTime && 
-                    itinerary.endTime === selectedItinerary.endTime
-      );
-      
-      // Set the selected itinerary index in the context
-      const actualIndex = originalIndex !== -1 ? originalIndex : index;
-      setSelectedItineraryIndex(actualIndex);
-      
-      // Create an Itinerary object from the OtpItinerary
-      const itinerary = otpData.plan.itineraries[actualIndex];
-      const mapItinerary = new Itinerary(
-        otpData.plan.from,
-        otpData.plan.to,
-        itinerary
-      );
-      
-      // Send the selected itinerary to the map context
-      setSelectedItinerary(mapItinerary);
-      
-      // Navigate to the itinerary view
-      setActiveView("ITINERARY");
-    }
+    if (!otpData || !sortedItineraries) return;
+
+    const selectedItinerary = sortedItineraries[index];
+    const originalIndex = otpData.plan.itineraries.findIndex(
+      itinerary => itinerary.startTime === selectedItinerary.startTime && 
+                  itinerary.endTime === selectedItinerary.endTime
+    );
+    
+    // Set the selected itinerary index in the context
+    const actualIndex = originalIndex !== -1 ? originalIndex : index;
+    
+    // Update all related state in one go to prevent multiple re-renders
+    setSelectedItineraryIndex(actualIndex);
+    setActiveView("ITINERARY");
+    
+    // Create an Itinerary object from the OtpItinerary
+    const itinerary = otpData.plan.itineraries[actualIndex];
+    const mapItinerary = new Itinerary(
+      otpData.plan.from,
+      otpData.plan.to,
+      itinerary
+    );
+    
+    // Send the selected itinerary to the map context
+    setSelectedItinerary(mapItinerary);
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
     // Skip handling if an input element is focused
     if (document.activeElement instanceof HTMLInputElement || 
         document.activeElement instanceof HTMLTextAreaElement ||
@@ -232,15 +232,17 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
         }
         break;
     }
-  };
+  }, [selectedRouteIndex, sortedItineraries.length]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedRouteIndex, sortedItineraries]);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
-  // Function to calculate wait time between legs
-  const calculateWaitTime = (currentLeg: any, nextLeg: any): number | null => {
+  // Memoize the wait time calculation function
+  const calculateWaitTime = useCallback((currentLeg: any, nextLeg: any): number | null => {
     if (!currentLeg || !nextLeg) return null;
     
     const currentLegEndTime = currentLeg.endTime;
@@ -251,39 +253,28 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
     
     // Only return wait time if it's significant (more than 60 seconds)
     return waitTime > 60000 ? waitTime : null;
-  };
+  }, []);
 
-  // Function to determine if a WALK leg is actually a transfer wait
-  const isTransferWait = (leg: any, index: number, legs: any[]): boolean => {
-    // If it's not a WALK leg, it's definitely not a transfer wait
+  // Memoize these helper functions
+  const isTransferWait = useCallback((leg: any, index: number, legs: any[]): boolean => {
     if (leg.mode !== "WAIT") return false;
-    
-    // If it's the first or last leg, it's a real walk, not a transfer wait
     if (index === 0 || index === legs.length - 1) return false;
     
-    // If the leg is between two transport legs and is short (less than 300m)
-    // and at a similar location, it's likely a transfer wait
     const prevLeg = legs[index - 1];
     const nextLeg = legs[index + 1];
     
-    // Check if both adjacent legs are transit legs
     const isBetweenTransit = prevLeg.transitLeg && nextLeg.transitLeg;
-    
-    // Check if the walk distance is short (typical for transfers)
     const isShortWalk = leg.distance < 300;
-    
-    // Check if the from/to locations have similar names (indicating a transfer point)
     const isSameLocation = 
       (leg.from.name.includes(prevLeg.to.name) || prevLeg.to.name.includes(leg.from.name)) &&
       (leg.to.name.includes(nextLeg.from.name) || nextLeg.from.name.includes(leg.to.name));
     
     return isBetweenTransit && (isShortWalk || isSameLocation);
-  };
+  }, []);
 
-  // Function to determine if a leg is a walking leg
-  const isWalkingLeg = (leg: any): boolean => {
+  const isWalkingLeg = useCallback((leg: any): boolean => {
     return leg.mode === "TRANSFER" || (leg.transitLeg === false && leg.mode !== "BIKE" && leg.mode !== "CAR");
-  };
+  }, []);
 
   return (
     <div className="flex flex-col gap-6">
