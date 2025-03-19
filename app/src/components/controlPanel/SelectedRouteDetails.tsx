@@ -193,10 +193,7 @@ const SelectedRouteDetails = () => {
         <div className="flex items-center gap-4">
           <button
             className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors"
-            onClick={() => {
-              console.log("Back button clicked, navigating using goToPreviousViewMode");
-              goToPreviousViewMode();
-            }}
+            onClick={goToPreviousViewMode}
           >
             <ChevronLeft size={24} />
           </button>
@@ -212,8 +209,7 @@ const SelectedRouteDetails = () => {
           <button
             onClick={handlePrevRoute}
             disabled={selectedItineraryIndex === 0}
-            className={`p-1 rounded ${selectedItineraryIndex === 0 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'
-              }`}
+            className={`p-1 rounded ${selectedItineraryIndex === 0 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'}`}
           >
             <ChevronLeft size={24} />
           </button>
@@ -223,8 +219,7 @@ const SelectedRouteDetails = () => {
           <button
             onClick={handleNextRoute}
             disabled={selectedItineraryIndex === totalRoutes - 1}
-            className={`p-1 rounded ${selectedItineraryIndex === totalRoutes - 1 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'
-              }`}
+            className={`p-1 rounded ${selectedItineraryIndex === totalRoutes - 1 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'}`}
           >
             <ChevronRight size={24} />
           </button>
@@ -246,9 +241,8 @@ const SelectedRouteDetails = () => {
               <div className="w-16 flex flex-col items-center">
                 {!isWaitLeg(leg) && (
                   <>
-                    {/* Departure Time - Show actual and scheduled times */}
+                    {/* Departure Time */}
                     <div className="flex flex-col items-center">
-                      {/* Calculate scheduled departure time */}
                       {(() => {
                         const actualDepartureTime = leg.startTime;
                         const scheduledDepartureTime = actualDepartureTime - (leg.departureDelay || 0) * 1000;
@@ -268,11 +262,37 @@ const SelectedRouteDetails = () => {
                         );
                       })()}
                     </div>
-                {index < selectedItinerary.otpItinerary.legs.length && (
-                  <div
-                    className={`h-full border-l-4 my-2 transition-all`} // Remove inline style from className
-                    style={{ borderLeftColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }} // Apply style attribute
-                  />
+
+                    {/* Timeline */}
+                    {index < selectedItinerary.otpItinerary.legs.length && (
+                      <div
+                        className="h-full border-l-4 my-2 transition-all"
+                        style={{ borderLeftColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }}
+                      />
+                    )}
+
+                    {/* Arrival Time */}
+                    <div className="flex flex-col items-center">
+                      {(() => {
+                        const actualArrivalTime = leg.endTime;
+                        const scheduledArrivalTime = actualArrivalTime - (leg.arrivalDelay || 0) * 1000;
+                        const timeDiff = formatTimeDifference(scheduledArrivalTime, actualArrivalTime);
+
+                        return (
+                          <>
+                            <span className="font-medium text-gray-900">
+                              {formatTime(actualArrivalTime)}
+                            </span>
+                            {timeDiff.text && (
+                              <span className={`text-sm font-medium ${timeDiff.color}`}>
+                                {timeDiff.text}
+                              </span>
+                            )}
+                          </>
+                        );
+                      })()}
+                    </div>
+                  </>
                 )}
               </div>
 
@@ -281,9 +301,8 @@ const SelectedRouteDetails = () => {
                 {/* From Location */}
                 {!isWaitLeg(leg) && (
                   <div className="flex items-center gap-2 mb-3">
-                    <div className={`w-3 h-3 rounded-full ${getLegType(leg.mode) === 'START' ? 'bg-green-500' :
-                        getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' :
-                          ''}`}
+                    <div 
+                      className={`w-3 h-3 rounded-full ${getLegType(leg.mode) === 'START' ? 'bg-green-500' : getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' : ''}`}
                       style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }}
                     />
                     <div className="font-medium text-gray-900">
@@ -306,7 +325,7 @@ const SelectedRouteDetails = () => {
                           <Image src={getTransportLogo(leg.mode as TransportMode)!} alt={leg.mode} width={24} height={24} />
                         )}
                         <div
-                          className={`px-3 py-1.5 rounded-full shadow-sm`}
+                          className="px-3 py-1.5 rounded-full shadow-sm"
                           style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }}
                         >
                           <span className="text-white font-medium">
@@ -314,7 +333,6 @@ const SelectedRouteDetails = () => {
                           </span>
                         </div>
                         
-                        {/* Add toggle button when there are stops */}
                         {leg.intermediateStops && leg.intermediateStops.length > 0 && (
                           <button
                             onClick={() => toggleLegExpansion(index)}
@@ -328,18 +346,15 @@ const SelectedRouteDetails = () => {
                         )}
                       </div>
 
-                      {/* Show stops only when expanded */}
-                      {expandedLegs.includes(index) && leg.intermediateStops && (
+                      {expandedLegs.includes(index) && leg.intermediateStops && leg.intermediateStops.length > 0 && (
                         <div className="ml-8 pl-4 border-l-2 border-gray-200">
                           {leg.intermediateStops.map((stop, stopIndex) => {
                             const legDuration = leg.endTime - leg.startTime;
                             const stopRatio = (stopIndex + 1) / (leg.intermediateStops?.length || 1);
                             const estimatedTime = leg.startTime + (legDuration * stopRatio);
-
                             const startDelayMs = (leg.departureDelay || 0) * 1000;
                             const endDelayMs = (leg.arrivalDelay || 0) * 1000;
                             const estimatedDelayMs = startDelayMs + (endDelayMs - startDelayMs) * stopRatio;
-
                             const scheduledTime = estimatedTime - estimatedDelayMs;
                             const timeDiff = formatTimeDifference(scheduledTime, estimatedTime);
 
@@ -375,9 +390,8 @@ const SelectedRouteDetails = () => {
                 {/* To Location */}
                 {!isWaitLeg(leg) && (
                   <div className="flex items-center gap-2">
-                    <div className={`w-3 h-3 rounded-full ${getLegType(leg.mode) === 'END' ? 'bg-red-500' :
-                        getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' : ''
-                      }`}
+                    <div 
+                      className={`w-3 h-3 rounded-full ${getLegType(leg.mode) === 'END' ? 'bg-red-500' : getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' : ''}`}
                       style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }}
                     />
                     <div className="font-medium text-gray-900">
