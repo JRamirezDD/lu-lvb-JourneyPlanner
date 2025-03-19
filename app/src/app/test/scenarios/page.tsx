@@ -16,13 +16,18 @@ import ScenarioLoader from "@/testing/utils/ScenarioLoader";
 import { Scenario } from "@/testing/types/Scenario";
 
 export default function ScenarioTestPage() {
-  // Add block when running in production NODE_ENV mode.
-  
+  if (process.env.NODE_ENV === "production") {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <h1>404 - Page Not Found</h1>
+      </div>
+      );
+  }
   const params = useSearchParams();
   const scenario = (params?.get("scenario") as Scenario) || "DEFAULT";
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <SettingsProvider initialLanguage={"en"}>
         <LocationProvider>
           <UIProvider>
