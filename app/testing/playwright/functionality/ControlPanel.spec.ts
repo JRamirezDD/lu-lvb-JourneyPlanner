@@ -21,12 +21,7 @@ test.describe('ControlPanel Component Tests', () => {
 
     //Press Search, expect response
     await page.getByRole('button', { name: 'Search', exact: true }).click();
-    const x = page.getByRole('region', { name: 'Map' }).innerHTML;
     const firstResponse = page.getByText('→').first();
-    const y = page.getByRole('region', { name: 'Map' }).innerHTML;
-    console.log("x" + x);
-    console.log("y" + y);
-    expect(x).not.toEqual(y);
     expect(firstResponse).toBeDefined;
 
     //click an Itinerary, then switch itineraries and ensure they're different itineraries.
@@ -82,6 +77,8 @@ test.describe('ControlPanel Component Tests', () => {
     await page.getByRole('textbox', { name: 'Origin' }).fill('Hans');
     await page.getByText('Leipzig', { exact: true }).first().click();
     await page.getByRole('textbox', { name: 'Destination' }).click();
+    await page.getByRole('textbox', { name: 'Destination' }).fill('haup');
+    await page.waitForTimeout(100);
     await page.getByRole('textbox', { name: 'Destination' }).fill('haupt');
     await page.getByText('Leipzig Hbf').click();
     //store initial values:
