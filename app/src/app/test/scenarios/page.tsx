@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { SettingsProvider } from "@/contexts/settingsContext";
 import { MapProvider } from "@/contexts/mapContext";
