@@ -3,7 +3,8 @@ import { LayerSpecification } from "maplibre-gl";
 const fadeInLayer = (
     map: maplibregl.Map,
     layerConfig: LayerSpecification,
-    duration = 500
+    duration = 500,
+    beforeId?: string 
 ) => {
 
 
@@ -67,7 +68,12 @@ const fadeInLayer = (
                 };
             }
 
-            map.addLayer(modifiedLayerConfig);
+            if (beforeId) {
+                map.addLayer(modifiedLayerConfig, beforeId);
+            } else {
+                map.addLayer(modifiedLayerConfig);
+            }
+
 
 
     let startTime: number | null = null;
