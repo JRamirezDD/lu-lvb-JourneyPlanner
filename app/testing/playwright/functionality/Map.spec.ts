@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('ControlPanel Component Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/lu-lvb-JourneyPlanner/en'); // Adjust URL if needed
+    await page.goto('http://localhost:3000/lu-lvb-JourneyPlanner/en');
     await page.setViewportSize({ width: 1200, height: 800 }); // Ensure horizontal layout
   });
 
