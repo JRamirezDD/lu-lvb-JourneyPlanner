@@ -20,12 +20,13 @@ export default function ScenarioTestPage() {
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
         <h1>404 - Page Not Found</h1>
       </div>
-  };
+      );
+  }
   const params = useSearchParams();
   const scenario = (params?.get("scenario") as Scenario) || "DEFAULT";
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <SettingsProvider initialLanguage={"en"}>
         <LocationProvider>
           <UIProvider>
