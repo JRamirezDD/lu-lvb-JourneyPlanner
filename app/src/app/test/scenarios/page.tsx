@@ -12,31 +12,50 @@ import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataC
 import { NearbySearchDataProvider } from "@/contexts/DataContext/nearbySearchDataContext";
 import MainView from "@/components/MainView";
 import ScenarioLoader from "@/testing/utils/ScenarioLoader";
+import { Scenario } from "@/testing/types/Scenario";
 
 export default function ScenarioTestPage() {
   const params = useSearchParams();
-  const scenario = (params?.get("scenario") as "default" | "scenario1" | "scenario2" | "scenario3") || "default";
+  const scenario = (params?.get("scenario") as Scenario) || "DEFAULT";
 
   return (
-    <SettingsProvider initialLanguage="en">
+      <SettingsProvider initialLanguage={"en"}>
       <LocationProvider>
-        <UIProvider>
-          <MapProvider>
-            <ControlPanelProvider>
-              <AutocompleteDataProvider>
-                <OtpDataProvider>
-                  <StopmonitorDataProvider>
-                    <NearbySearchDataProvider>
-                      <ScenarioLoader scenario={scenario} />
-                      <MainView />
-                    </NearbySearchDataProvider>
-                  </StopmonitorDataProvider>
-                </OtpDataProvider>
-              </AutocompleteDataProvider>
-            </ControlPanelProvider>
-          </MapProvider>
+      <UIProvider>
+      <MapProvider>
+      <ControlPanelProvider>
+        <AutocompleteDataProvider>
+        <OtpDataProvider>
+        <StopmonitorDataProvider>
+          <NearbySearchDataProvider>
+        <>
+        <ScenarioLoader scenario={scenario} />
+
+<div id="app" style={{ width: "100%", height: "100%" }}>
+<MainView />
+</div>
+<style jsx global>{`
+html,
+body,
+#__next,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+`}</style>
+</>
+
+
+          </NearbySearchDataProvider>
+          </StopmonitorDataProvider>
+          </OtpDataProvider>
+          </AutocompleteDataProvider>
+        </ControlPanelProvider>
+        </MapProvider>
         </UIProvider>
-      </LocationProvider>
-    </SettingsProvider>
-  );
+        </LocationProvider>
+        </SettingsProvider>
+);
 }
