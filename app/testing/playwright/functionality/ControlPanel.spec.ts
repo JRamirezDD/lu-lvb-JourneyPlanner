@@ -92,4 +92,12 @@ test.describe('ControlPanel Component Tests', () => {
     expect(origin2).toEqual(destination1);
   })
 
+  test('Test translation', async ({ page }) => {
+    await page.getByRole('button', { name: 'Switch to EN language' }).click();
+    const English = page.getByText('Plan Your Trip');
+    await page.getByRole('button', { name: 'Switch to DE language' }).click();
+    const German = page.getByText('Planen Sie Ihre ReiseStationssuche');
+    expect(English).not.toBeNull;
+    expect(German).not.toBeNull;
+  })
 })
