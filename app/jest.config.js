@@ -4,10 +4,10 @@ require('dotenv').config({ path: '.env.test' });
 const config = {
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['<rootDir>/testing/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/testing/jest/jest.setup.js'],
   setupFiles: ["jest-canvas-mock"],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
     '\\.svg$': '<rootDir>/__mocks__/fileMock.js',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
   },
@@ -17,9 +17,10 @@ const config = {
     }]
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(lucide-react|@lucide)/)'
+    'src/node_modules/(?!(lucide-react|@lucide)/)'
   ],
-  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+  testMatch: ['<rootDir>/testing/jest/**/*.test.(js|jsx|ts|tsx)'],
+  testPathIgnorePatterns: ['<rootDir>/src/.next/', '<rootDir>/src/node_modules/'],
   compilerOptions: {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

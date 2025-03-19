@@ -4,38 +4,66 @@
 import { useEffect } from "react";
 import { useSettingsContext } from "@/contexts/settingsContext";
 import { useMapContext } from "@/contexts/mapContext";
+import { useControLPanelContext } from "@/contexts/controlPanelContext";
+import { useLocationContext } from "@/contexts/locationContext";
+import { useUIContext } from "@/contexts/uiContext";
+import { backupLayerConfig, busLayerConfig, destinationLayerConfig, intermediateStopsLayerConfig, legStartEndLayerConfig, originLayerConfig, suburbLayerConfig, trainLayerConfig, walkLayerConfig } from "@/components/map/layers/ItineraryLayer";
+import { mockOtpResponse } from "@/api/routingService/dto/__mock__/otpResponse.mock";
+import { fetchOtpData } from "@/api/routingService/routingService";
+import { Itinerary } from "@/types/Itinerary";
+import { Scenario } from "../types/Scenario";
 
-export default function ScenarioLoader({ scenario }: { scenario: "default" | "scenario1" | "scenario2" | "scenario3" }) {
-  const settingsCtx = useSettingsContext();
+export default function ScenarioLoader({ scenario }: { scenario: Scenario }) {
+  const controlPanelCtx = useControLPanelContext();
+  const locationCtx = useLocationContext();
   const mapCtx = useMapContext();
-  // rest of contexts
+  const settingsCtx = useSettingsContext();
+  const uiCtx = useUIContext();
+    // rest of contexts
 
-  useEffect(() => {
     if (!scenario) return;
 
-    const scenarios: { [key: string]: () => void } = {
+    const scenarios: Record<Scenario, () => void> = {
+      // define scenarios
+      ITINERARY_VIEW_SCENARIO: () => {
+        console.log("Scenario: itineraryViewScenario");
+        // ControlPanelContext
+        controlPanelCtx.selectedItem = null;
+        controlPanelCtx.controlPanelIsExpanded = true;
+        controlPanelCtx.selectedOrigin = null;
+        controlPanelCtx.selectedDestination = null;
 
-        // define scenarios
-      scenario1: () => {
-        settingsCtx.setLanguage("en");
-        settingsCtx.setAvoidWalking(false);
-        mapCtx.setCurrentPosition({ lat: 50.0, lon: 14.0 });
+        // LocationContext
+        locationCtx.currentLocation = null;
+        locationCtx.locationIsEnabled = false;
+        locationCtx.error = null;
+
+        // Map Context
+        mapCtx.currentPosition = null;
+        mapCtx.visibleLayers = [intermediateStopsLayerConfig.id, walkLayerConfig.id, suburbLayerConfig.id, busLayerConfig.id, trainLayerConfig.id, backupLayerConfig.id, legStartEndLayerConfig.id, destinationLayerConfig.id, originLayerConfig.id];
+        fetchOtpData({}).then((data) => {
+          mapCtx.selectedItinerary = new Itinerary(data.plan.from, data.plan.to, data.plan.itineraries[0]);
+        });
+        mapCtx.selectedStop = null;
+        mapCtx.selectedNearbySearchItem = null;
+        mapCtx.resetCenterCounter = 0;
+        mapCtx.zoominLevel = 0;
+        mapCtx.zoomoutLevel = 0;
+        
+        // Settings Context
+        settingsCtx.language = "en";
+        settingsCtx.avoidWalking = false;
+        settingsCtx.wheelchairAccessible = false;
+
+        // UI Context
+        uiCtx.viewMode = "ITINERARY";
+        uiCtx.previousViewMode = "DEFAULT";
+        uiCtx.navigationHistory = ["DEFAULT"];
       },
-      scenario2: () => {
-        settingsCtx.setLanguage("de");
-        settingsCtx.setAvoidWalking(true);
-        mapCtx.setCurrentPosition({ lat: 52.5, lon: 13.4 });
-      },
-      scenario3: () => {
-        settingsCtx.setLanguage("en");
-        settingsCtx.setAvoidWalking(true);
-        mapCtx.setCurrentPosition({ lat: 48.8, lon: 2.35 });
-      },
-      default: () => {},
+      DEFAULT: () => {},
     };
 
     scenarios[scenario]?.();
-  }, [scenario]);
 
-  return null;
+    return null;
 }
