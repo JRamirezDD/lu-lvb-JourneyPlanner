@@ -243,24 +243,22 @@ const SelectedRouteDetails = () => {
                   <>
                     {/* Departure Time */}
                     <div className="flex flex-col items-center">
-                      {(() => {
-                        const actualDepartureTime = leg.startTime;
-                        const scheduledDepartureTime = actualDepartureTime - (leg.departureDelay || 0) * 1000;
-                        const timeDiff = formatTimeDifference(scheduledDepartureTime, actualDepartureTime);
+                      <div className="relative">
+                        <span className="font-medium text-gray-900">
+                          {formatTime(leg.startTime)}
+                        </span>
+                        {(() => {
+                          const actualDepartureTime = leg.startTime;
+                          const scheduledDepartureTime = actualDepartureTime - (leg.departureDelay || 0) * 1000;
+                          const timeDiff = formatTimeDifference(scheduledDepartureTime, actualDepartureTime);
 
-                        return (
-                          <>
-                            <span className="font-medium text-gray-900">
-                              {formatTime(actualDepartureTime)}
+                          return timeDiff.text && (
+                            <span className={`absolute -top-3 -right-6 text-sm font-bold ${timeDiff.color}`}>
+                              {timeDiff.text}
                             </span>
-                            {timeDiff.text && (
-                              <span className={`text-sm font-medium ${timeDiff.color}`}>
-                                {timeDiff.text}
-                              </span>
-                            )}
-                          </>
-                        );
-                      })()}
+                          );
+                        })()}
+                      </div>
                     </div>
 
                     {/* Timeline */}
@@ -273,24 +271,22 @@ const SelectedRouteDetails = () => {
 
                     {/* Arrival Time */}
                     <div className="flex flex-col items-center">
-                      {(() => {
-                        const actualArrivalTime = leg.endTime;
-                        const scheduledArrivalTime = actualArrivalTime - (leg.arrivalDelay || 0) * 1000;
-                        const timeDiff = formatTimeDifference(scheduledArrivalTime, actualArrivalTime);
+                      <div className="relative">
+                        <span className="font-medium text-gray-900">
+                          {formatTime(leg.endTime)}
+                        </span>
+                        {(() => {
+                          const actualArrivalTime = leg.endTime;
+                          const scheduledArrivalTime = actualArrivalTime - (leg.arrivalDelay || 0) * 1000;
+                          const timeDiff = formatTimeDifference(scheduledArrivalTime, actualArrivalTime);
 
-                        return (
-                          <>
-                            <span className="font-medium text-gray-900">
-                              {formatTime(actualArrivalTime)}
+                          return timeDiff.text && (
+                            <span className={`absolute -top-3 -right-6 text-sm font-bold ${timeDiff.color}`}>
+                              {timeDiff.text}
                             </span>
-                            {timeDiff.text && (
-                              <span className={`text-sm font-medium ${timeDiff.color}`}>
-                                {timeDiff.text}
-                              </span>
-                            )}
-                          </>
-                        );
-                      })()}
+                          );
+                        })()}
+                      </div>
                     </div>
                   </>
                 )}
@@ -366,14 +362,16 @@ const SelectedRouteDetails = () => {
                                   {stop.name}
                                 </div>
                                 <div className="flex items-center">
-                                  <span className="text-base font-normal">
-                                    {formatTime(estimatedTime)}
-                                  </span>
-                                  {timeDiff.text && (
-                                    <span className={`text-base font-normal ml-1 ${timeDiff.color}`}>
-                                      {timeDiff.text}
+                                  <div className="relative">
+                                    <span className="text-base font-normal">
+                                      {formatTime(estimatedTime)}
                                     </span>
-                                  )}
+                                    {timeDiff.text && (
+                                      <span className={`absolute -top-3 -right-6 text-sm font-bold ${timeDiff.color}`}>
+                                        {timeDiff.text}
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
                             );

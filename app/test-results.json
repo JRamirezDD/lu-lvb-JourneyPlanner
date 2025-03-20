@@ -67,6 +67,7 @@
   },
   "suites": [
     {
+<<<<<<< HEAD
       "title": "functionality\\ControlPanel.spec.ts",
       "file": "functionality/ControlPanel.spec.ts",
       "column": 0,
@@ -562,18 +563,22 @@
     {
       "title": "performance\\uiContext.spec.ts",
       "file": "performance/uiContext.spec.ts",
+=======
+      "title": "functionality\\navigationCP.spec.ts",
+      "file": "functionality/navigationCP.spec.ts",
+>>>>>>> b0c8de55deb0b6cdf560cbefb0128b764f36bdf9
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Performance of app",
-          "file": "performance/uiContext.spec.ts",
-          "line": 3,
+          "title": "Navigation Control Panel",
+          "file": "functionality/navigationCP.spec.ts",
+          "line": 7,
           "column": 6,
           "specs": [
             {
-              "title": "should load control panel components quickly",
+              "title": "Search Station",
               "ok": true,
               "tags": [],
               "tests": [
@@ -583,17 +588,35 @@
                   "expectedStatus": "passed",
                   "projectId": "",
                   "projectName": "",
+<<<<<<< HEAD
                   "results": [],
                   "status": "skipped"
+=======
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2570,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-03-20T14:14:12.891Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+>>>>>>> b0c8de55deb0b6cdf560cbefb0128b764f36bdf9
                 }
               ],
-              "id": "2a6aacfa5f3c9f5cc2a4-23c2d49a32a9ed3e3a83",
-              "file": "performance/uiContext.spec.ts",
-              "line": 4,
+              "id": "68d55b1ad663362ae51d-8cbc8310c0152b968e1b",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 8,
               "column": 9
             },
             {
-              "title": "should handle view transitions efficiently",
+              "title": "Modify departure",
               "ok": true,
               "tags": [],
               "tests": [
@@ -603,17 +626,35 @@
                   "expectedStatus": "passed",
                   "projectId": "",
                   "projectName": "",
+<<<<<<< HEAD
                   "results": [],
                   "status": "skipped"
+=======
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4186,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-03-20T14:14:15.695Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+>>>>>>> b0c8de55deb0b6cdf560cbefb0128b764f36bdf9
                 }
               ],
-              "id": "2a6aacfa5f3c9f5cc2a4-cbc5c0217709f920f355",
-              "file": "performance/uiContext.spec.ts",
-              "line": 20,
+              "id": "68d55b1ad663362ae51d-343e94deb0ff4e6ab81e",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 22,
               "column": 9
             },
             {
-              "title": "should maintain performance during route planning",
+              "title": "Modify Transport mode",
               "ok": true,
               "tags": [],
               "tests": [
@@ -623,13 +664,64 @@
                   "expectedStatus": "passed",
                   "projectId": "",
                   "projectName": "",
+<<<<<<< HEAD
                   "results": [],
                   "status": "skipped"
+=======
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2007,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-03-20T14:14:19.892Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+>>>>>>> b0c8de55deb0b6cdf560cbefb0128b764f36bdf9
                 }
               ],
-              "id": "2a6aacfa5f3c9f5cc2a4-a928be40776b2146804e",
-              "file": "performance/uiContext.spec.ts",
-              "line": 33,
+              "id": "68d55b1ad663362ae51d-59e3cffe99cbef3990b7",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 34,
+              "column": 9
+            },
+            {
+              "title": "Search for a journey",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8794,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-03-20T14:14:21.906Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "68d55b1ad663362ae51d-b2a7192f93802acd5301",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 46,
               "column": 9
             }
           ]
@@ -639,11 +731,19 @@
   ],
   "errors": [],
   "stats": {
+<<<<<<< HEAD
     "startTime": "2025-03-20T17:12:10.504Z",
     "duration": 8028.188000000001,
     "expected": 0,
     "skipped": 21,
     "unexpected": 1,
+=======
+    "startTime": "2025-03-20T14:14:10.957Z",
+    "duration": 21053.674000000003,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+>>>>>>> b0c8de55deb0b6cdf560cbefb0128b764f36bdf9
     "flaky": 0
   }
 }
