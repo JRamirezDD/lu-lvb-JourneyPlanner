@@ -70,7 +70,6 @@ export const MapWidget: React.FC = ({ }) => {
     
     const { setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
 
-
     const  storedCenter = useRef<Coordinates | null>(null); 
 
     useEffect(() => {
@@ -276,7 +275,9 @@ export const MapWidget: React.FC = ({ }) => {
                     // debug
                     // get features
 
-                    const features = mapRef.current.querySourceFeatures("itinerary-source") as MapGeoJSONFeature[];
+                    const features = selectedItinerary.toGeoJson().features.map((feature) => {
+                        return feature as MapGeoJSONFeature;
+                    });
                     console.log("DEBUG RENDERED FEATURES:", features);
 
                     fitToFeatures(mapRef.current, features);
