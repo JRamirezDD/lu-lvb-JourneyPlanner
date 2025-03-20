@@ -75,8 +75,12 @@ const useLayersManager = (mapRef: React.MutableRefObject<maplibregl.Map | null>)
             console.info(`Layer ${layerConfig.id} not found, adding...`);
     
             // with fade-in effect
-            fadeInLayer(mapRef.current!, layerConfig, fade_in_duration);
-
+            if (mapRef.current.getLayer('current-location-layer')) {
+                fadeInLayer(mapRef.current!, layerConfig, fade_in_duration, 'current-location-layer');
+            } else {
+                // If 'current-location-layer' doesn't exist, add the layer at the top
+                fadeInLayer(mapRef.current!, layerConfig, fade_in_duration);
+            }
             activeLayers.current.add(layerConfig.id);
             console.log(`Added layer: ${layerConfig.id}`);
         }

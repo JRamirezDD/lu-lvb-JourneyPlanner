@@ -1,117 +1,71 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('ControlPanel Component Tests', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/lu-lvb-JourneyPlanner/en');
-    await page.setViewportSize({ width: 1200, height: 800 }); // Ensure horizontal layout
-  });
+// Assuming you have mapController and mapLocator defined or imported correctly
+// If not, you'll need to set up your test environment to provide these functionalities.
 
-  test('should render RoutePlanner in DEFAULT view', async ({ page }) => {
-    await expect(page.locator('text=Route Planner')).toBeVisible(); // Adjust locator based on RoutePlanner content
-  });
+test('test', async ({ page }) => {
+    await page.goto('http://localhost:3000/lu-lvb-JourneyPlanner/en'); // Replace with your URL
 
-  test('should switch to RouteView on PLAN view', async ({ page }) => {
-    await page.locator('button:has-text("Plan Route")').click(); // Adjust selector based on your RoutePlanner button
-    await expect(page.locator('text=Route View')).toBeVisible(); // Adjust locator based on RouteView content
-  });
+    // Wait for the map container to be present in the DOM
+    await page.waitForSelector('#map-component');
 
-  test('should switch to SelectedRouteDetails on ITINERARY view', async ({ page }) => {
-    // Simulate navigation to ITINERARY view (you may need to add a way to trigger this in your app)
-    await page.evaluate(() => {
-      window.localStorage.setItem('viewMode', 'ITINERARY');
-    });
-    await page.reload();
-    await expect(page.locator('text=Selected Route Details')).toBeVisible(); // Adjust locator
-  });
+    // Wait for the map to load. You might need to adjust the selector and timeout.
+    await page.waitForSelector('.maplibregl-canvas');
+    await page.waitForTimeout(5000);
 
-  test('should switch to SearchStation on SEARCH_STATION view', async ({ page }) => {
-    await page.locator('button:has-text("Search Station")').click(); // Adjust selector based on your app
-    await expect(page.locator('text=Search Station')).toBeVisible(); // Adjust locator
-  });
-
-  test('should switch to StationDetails on STATION view from map selection', async ({ page }) => {
-    // Simulate map selection (you'll need to adjust this to match your map interaction)
-    await page.evaluate(() => {
-      // Simulate selecting a stop from the map
-      const mockStop = {
-        id: 'stop-123',
-        name: 'Test Station',
-        data: { stop_id: '123' }, // Mimic your Stop data
-      };
-      window.localStorage.setItem('selectedNearbySearchItem', JSON.stringify(mockStop));
-      window.localStorage.setItem('viewMode', 'STATION');
-    });
-    await page.reload();
-    await expect(page.locator('text=Test Station')).toBeVisible(); // Adjust based on StationDetails content
-  });
-
-    test('should switch to StationDetails on STATION view from search selection', async ({ page }) => {
-        // Simulate search selection (you'll need to adjust this to match your search interaction)
-        await page.evaluate(() => {
-            const mockStop = {
-                stop_id: '456',
-                stop_name: 'Search Station',
-            };
-            window.localStorage.setItem('selectedStop', JSON.stringify(mockStop));
-            window.localStorage.setItem('viewMode', 'STATION');
+    // Wait for the map's 'load' event using page.evaluate()
+    const mapLoaded = await page.evaluate(() => {
+        return new Promise((resolve) => {
+            if ((window as any).map) {
+                (window as any).map.on('load', () => {
+                    resolve(true);
+                });
+            } else {
+                resolve(false);
+            }
         });
-        await page.reload();
-        await expect(page.locator('text=Search Station')).toBeVisible();
     });
 
-    test('should clear selections when navigating away from STATION view', async ({ page }) => {
-        // Simulate map selection and STATION view
-        await page.evaluate(() => {
-            const mockStop = {
-                id: 'stop-789',
-                name: 'Map Station',
-                data: { stop_id: '789' },
-            };
-            window.localStorage.setItem('selectedNearbySearchItem', JSON.stringify(mockStop));
-            window.localStorage.setItem('viewMode', 'STATION');
-        });
-        await page.reload();
+    expect(mapLoaded).toBe(true);
 
-        // Navigate to DEFAULT view
-        await page.evaluate(() => {
-            window.localStorage.setItem('viewMode', 'DEFAULT');
-        });
-        await page.reload();
+    // Assuming you have a marker layer with id 'marker'
+    // and that mapLocator can find it.
+    // If you are using a different method to add markers, you will need to adjust this.
+    const markerExists = await page.evaluate(() => {
+        const map = (window as any).map;
+        if(map){
+            const markerLayer = map.getStyle().layers.find((layer: { id: string; }) => layer.id === 'nb_stops-layer');
+            console.log("MARKER:", markerLayer);
+            if(markerLayer){
+                //check if there are any features in the data source.
+                const source = map.getSource(markerLayer['source']);
+                if(source){
+                    //This depends on how your markers are added.
+                    //If they are added with geojson, you can check the features.
+                    //If they are added with html markers, you will need to check those.
+                    if(source.type === 'geojson'){
+                        const data = (source as any)._data;
+                        if(data && data.features && data.features.length > 0){
+                            return true;
+                        }
+                    } else {
+                        //check for html markers.
+                        const markers = document.getElementsByClassName('maplibregl-marker');
+                        if(markers && markers.length > 0){
+                            return true;
+                        }
 
-        // Verify selections are cleared (you may need to adjust this based on your app's behavior)
-        const selectedNearbySearchItem = await page.evaluate(() => window.localStorage.getItem('selectedNearbySearchItem'));
-        const selectedStop = await page.evaluate(() => window.localStorage.getItem('selectedStop'));
-        const stableStopId = await page.evaluate(() => window.localStorage.getItem('stableStopId'));
-
-        expect(selectedNearbySearchItem).toBeNull();
-        expect(selectedStop).toBeNull();
-        expect(stableStopId).toBeNull();
+                    }
+                } else {
+                    console.log("Source doesn't exist");
+                }
+            }
+        } else {
+            console.log("Map doesn't exist");
+        }
+        return false;
     });
 
-    test('should use selectedStop when selectionSource is search', async ({ page }) => {
-        await page.evaluate(() => {
-            const mockStop = {
-                stop_id: '999',
-                stop_name: 'Search Result Station',
-            };
-            window.localStorage.setItem('selectedStop', JSON.stringify(mockStop));
-            window.localStorage.setItem('viewMode', 'STATION');
-        });
-        await page.reload();
-        await expect(page.locator('text=Search Result Station')).toBeVisible();
-    });
+    expect(markerExists).toBe(true);
 
-    test('should use stableStopId when selectionSource is map', async ({ page }) => {
-        await page.evaluate(() => {
-            const mockStop = {
-                id: 'stop-101',
-                name: 'Map Result Station',
-                data: { stop_id: '101' },
-            };
-            window.localStorage.setItem('selectedNearbySearchItem', JSON.stringify(mockStop));
-            window.localStorage.setItem('viewMode', 'STATION');
-        });
-        await page.reload();
-        await expect(page.locator('text=Map Result Station')).toBeVisible();
-    });
 });

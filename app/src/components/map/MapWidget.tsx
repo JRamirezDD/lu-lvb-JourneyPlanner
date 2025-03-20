@@ -1,5 +1,6 @@
 "use client";
 
+import { installMapGrab } from '@mapgrab/map-interface';
 import { useEffect, useRef, useState } from "react";
 import maplibregl, { Map, MapGeoJSONFeature } from "maplibre-gl";
 import { useUIContext } from "@/contexts/uiContext";
@@ -82,7 +83,8 @@ export const MapWidget: React.FC = ({ }) => {
             zoom: 14,
             fadeDuration: 0
           });
-    
+          installMapGrab(map, 'mainMap');
+
         map.on("load", () => {
 
             // Initialize LayerManager and mapRef

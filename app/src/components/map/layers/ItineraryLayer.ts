@@ -172,8 +172,10 @@ export const destinationLayerConfig: LayerSpecification = {
   paint: {
     "circle-opacity" : 1,
     "circle-stroke-opacity": 1,
-    "circle-radius": 7,
-    "circle-color": "#032c58",
+    "circle-stroke-color": "#032c58",
+    "circle-stroke-width": 4,
+    "circle-radius": 4,
+    "circle-color": "#e6eaee",
   },
   filter: ["==", ["get", "type"], "Destination"]
 };
