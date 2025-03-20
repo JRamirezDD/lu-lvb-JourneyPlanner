@@ -47,9 +47,11 @@ test.describe('Navigation Control Panel', () => {
         await page.getByRole('textbox', { name: 'Origin' }).click();
         await page.getByRole('textbox', { name: 'Origin' }).fill('Witz');
         await page.getByText('Leipzig, Witzgallstr.').click();
+
         await page.getByRole('textbox', { name: 'Destination' }).click();
         await page.getByRole('textbox', { name: 'Destination' }).fill('Ha');
         await page.getByText('Leipzig, Hauptbahnhof (Tram/').click();
+        
         await page.getByRole('button', { name: 'Search', exact: true }).click();
         await page.getByText('→').first().click();
 
