@@ -154,7 +154,7 @@ const MainView: React.FC = () => {
           <div id="control-panel-component" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto" }}>
             <ControlPanel />
           </div>
-          <div style={{ position: "relative", overflow: "hidden", width: "100%", height: "100%" }}>
+          <div id="map-component" style={{ position: "relative", overflow: "hidden", width: "100%", height: "100%" }}>
             <MapComponent />
           </div>
         </>
