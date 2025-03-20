@@ -411,29 +411,28 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
                               <span>{Math.round(leg.duration / 60)} min</span>
                             </div>
                           ) : (
-                            // New transport display style similar to the image
-                            <div className="flex items-center">
-                              {/* Transport logo and route number */}
+                            // New transport display style with icon outside the bubble
+                            <div className="flex items-center gap-2">
+                              {/* Transport logo */}
+                              {getTransportIcon(leg.mode) && (
+                                <Image
+                                  src={getTransportIcon(leg.mode)!}
+                                  alt={leg.mode}
+                                  width={20}
+                                  height={20}
+                                />
+                              )}
+                              {/* Route number in colored bubble */}
                               <div
-  className={`px-3 py-1 rounded-md font-medium text-white flex items-center gap-1`}
-  style={{
-    backgroundColor: leg.routeColor && leg.routeColor.startsWith("#")
-      ? leg.routeColor
-      : undefined,
-  }}
->
-  {/* Display the actual logo instead of just a letter */}
-  {getTransportIcon(leg.mode) && (
-    <Image
-      src={getTransportIcon(leg.mode)!}
-      alt={leg.mode}
-      width={20}
-      height={20}
-      className="mr-1"
-    />
-  )}
-  {leg.route && <span>{leg.route}</span>}
-</div>
+                                className="px-3 py-1 rounded-md font-medium text-white"
+                                style={{
+                                  backgroundColor: leg.routeColor && leg.routeColor.startsWith("#")
+                                    ? leg.routeColor
+                                    : undefined,
+                                }}
+                              >
+                                {leg.route && <span>{leg.route}</span>}
+                              </div>
                             </div>
                           )}
 

@@ -321,16 +321,18 @@ const SelectedRouteDetails = () => {
                   ) : !isWalkMode(leg.mode) ? (
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
-                        {getTransportLogo(leg.mode as TransportMode) && (
-                          <Image src={getTransportLogo(leg.mode as TransportMode)!} alt={leg.mode} width={24} height={24} />
-                        )}
-                        <div
-                          className="px-3 py-1.5 rounded-full shadow-sm"
-                          style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }}
-                        >
-                          <span className="text-white font-medium">
-                            {leg.route ? `${leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode} ${leg.route}` : leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode}
-                          </span>
+                        <div className="flex items-center gap-2">
+                          {getTransportLogo(leg.mode as TransportMode) && (
+                            <Image src={getTransportLogo(leg.mode as TransportMode)!} alt={leg.mode} width={24} height={24} />
+                          )}
+                          <div
+                            className="px-3 py-1.5 rounded-full shadow-sm"
+                            style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }}
+                          >
+                            <span className="text-white font-medium">
+                              {leg.route ? `${leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode} ${leg.route}` : leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode}
+                            </span>
+                          </div>
                         </div>
                         
                         {leg.intermediateStops && leg.intermediateStops.length > 0 && (
