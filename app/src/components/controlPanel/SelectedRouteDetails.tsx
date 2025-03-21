@@ -15,10 +15,8 @@ import { Itinerary } from "@/types/Itinerary";
 
 type LegType = 'START' | 'END' | 'WALK' | 'TRANSFER' | TransportMode;
 
-// Helper function to check if a mode is "WALK"
 const isWalkMode = (mode: string): boolean => mode === "WALK";
 
-// Helper function to check if it's a wait leg
 const isWaitLeg = (leg: any): boolean => {
   return leg.mode === "WAIT" || (leg.from.name === leg.to.name && leg.mode !== "WALK");
 };
@@ -33,7 +31,6 @@ const formatTime = (timestamp: number): string => {
   // Convert the timestamp to a Date object
   const date = new Date(timestamp);
 
-  // Extract hours and minutes from the timestamp using local time
   const hours = date.getHours();
   const minutes = date.getMinutes();
 
@@ -99,19 +96,10 @@ const SelectedRouteDetails = () => {
 
     // Cleanup function
     return () => {
-      // Clear the selected itinerary when component unmounts
       setSelectedItinerary(null);
     };
-  }, [otpData?.plan?.itineraries, selectedItineraryIndex]); // More specific dependencies
+  }, [otpData?.plan?.itineraries, selectedItineraryIndex]); 
 
-  // Remove unnecessary debug logging
-  // console.log('Selected Itinerary Data:', {
-  //   otpData,
-  //   selectedItineraryIndex,
-  //   legs: selectedItineraryIndex !== null ? otpData?.plan?.itineraries?.[selectedItineraryIndex]?.legs : null
-  // });
-
-  // Log only essential navigation state
   useEffect(() => {
     console.log('SelectedRouteDetails navigation state:', {
       previousViewMode,
@@ -125,18 +113,11 @@ const SelectedRouteDetails = () => {
 
   const totalRoutes = Math.min(otpData.plan.itineraries.length, 5);
 
-  // Updated location name handler with more defensive checks
   const getLocationName = (leg: any, isDestination: boolean) => {
     try {
-      // Debug log
-      console.log('Leg data:', leg);
-
       if (!leg) return "Unknown location";
 
       const location = isDestination ? leg.to.name : leg.from.name;
-
-      // Debug log
-      console.log('Location data:', location);
 
       // Handle different possible formats
       if (!location) return "Unknown location";
@@ -175,11 +156,8 @@ const SelectedRouteDetails = () => {
 
   // Handle reset button click
   const handleResetClick = () => {
-    // Clear the search parameters
     clearSearchParams();
-    // Clear the selected itinerary from the map
     setSelectedItinerary(null);
-    // Navigate to the default view
     setViewMode("DEFAULT");
   };
 

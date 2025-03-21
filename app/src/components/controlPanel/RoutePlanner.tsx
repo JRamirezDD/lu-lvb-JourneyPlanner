@@ -69,7 +69,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   const [originAutocompleteData, setOriginAutocompleteData] = useState<AutocompleteItem[]>([]);
   const [destinationAutocompleteData, setDestinationAutocompleteData] = useState<AutocompleteItem[]>([]);
   
-  // Add search request tracking
   const [searchRequestStack, setSearchRequestStack] = useState<{
     id: number;
     field: "origin" | "destination";
@@ -116,10 +115,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       })
     : '';
 
-  // Log transport modes changes
-  useEffect(() => {
-    console.log('Current Transport Modes:', transportModes);
-  }, [transportModes]);
 
   const toggleFilter = (type: string) => {
     const modeMap: { [key: string]: TransportMode } = {
@@ -137,6 +132,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
   };
 
   const swapLocations = () => {
+
     // Close all suggestion containers
     setShowOriginSuggestions(false);
     setShowDestinationSuggestions(false);
@@ -144,8 +140,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     // Swap the input values
     setOrigin(destination);
     setDestination(origin);
-    
-    // Swap the selected locations
     const tempOrigin = selectedOrigin;
     setSelectedOrigin(selectedDestination);
     setSelectedDestination(tempOrigin);
@@ -154,21 +148,18 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     setIsOriginSelected(!!selectedDestination);
     setIsDestinationSelected(!!selectedOrigin);
     
-    // Clear any autocomplete data
     setOriginAutocompleteData([]);
     setDestinationAutocompleteData([]);
     clearAutocompleteData();
     
-    // Clear the search request stack
     setSearchRequestStack([]);
   };
 
-  // Functions to trigger fetch of suggestions. The returned autocomplete data will be processed by the effect below.
   const fetchOriginSuggestions = async (query: string) => {
     if (query.length < 2) return;
     
     try {
-      // Ensure destination suggestions are closed
+      
       setShowDestinationSuggestions(false);
       setDestinationAutocompleteData([]);
       
@@ -181,7 +172,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         { id: requestId, field: "origin", query }
       ]);
       
-      // Clear previous autocomplete data
+    
       await clearAutocompleteData();
       await fetchAutocompleteData({ 
         search: query,
@@ -198,7 +189,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     if (query.length < 2) return;
     
     try {
-      // Ensure origin suggestions are closed
+      
       setShowOriginSuggestions(false);
       setOriginAutocompleteData([]);
       
@@ -249,44 +240,38 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       setShowDestinationSuggestions(true);
     }
     
-    // Remove the processed request from the stack
     setSearchRequestStack(prev => prev.filter(req => req.id !== latestRequest.id));
     
   }, [autocompleteData, loadingAutocomplete, errorAutocomplete, searchRequestStack]);
 
-  // Effects to fetch suggestions on input change
+  // Effects to fetch origin suggestions on input change
   useEffect(() => {
     if (isOriginSelected) return;
-    
-    // Only show suggestions if the user has interacted with the input
+   
     if (document.activeElement?.classList.contains('location-input')) {
       if (origin.length >= 2) {
         fetchOriginSuggestions(origin);
       } else if (locationIsEnabled) {
-        // Always show current location when location is enabled
         setOriginAutocompleteData([]);
         setShowOriginSuggestions(true);
       } else {
-        // Hide suggestions if location is not enabled and input is too short
         setOriginAutocompleteData([]);
         setShowOriginSuggestions(false);
       }
     }
   }, [origin, locationIsEnabled]);
 
+  // Effects to fetch destination suggestions on input change
   useEffect(() => {
     if (isDestinationSelected) return;
     
-    // Only show suggestions if the user has interacted with the input
     if (document.activeElement?.classList.contains('location-input')) {
       if (destination.length >= 2) {
         fetchDestinationSuggestions(destination);
       } else if (locationIsEnabled) {
-        // Always show current location when location is enabled
         setDestinationAutocompleteData([]);
         setShowDestinationSuggestions(true);
       } else {
-        // Hide suggestions if location is not enabled and input is too short
         setDestinationAutocompleteData([]);
         setShowDestinationSuggestions(false);
       }
@@ -295,7 +280,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
 
   // Clear autocomplete data when focusing on input fields
   const handleOriginFocus = () => {
-    // Close destination suggestions when origin is focused
     setShowDestinationSuggestions(false);
     setDestinationAutocompleteData([]);
     clearAutocompleteData();
@@ -303,14 +287,13 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     if (origin.length >= 2 && !isOriginSelected) {
       fetchOriginSuggestions(origin);
     } else if (locationIsEnabled) {
-      // Always show current location option when input is focused and location is enabled
       setOriginAutocompleteData([]);
       setShowOriginSuggestions(true);
     }
   };
 
+  // Clear autocomplete data when focusing on input fields
   const handleDestinationFocus = () => {
-    // Close origin suggestions when destination is focused
     setShowOriginSuggestions(false);
     setOriginAutocompleteData([]);
     clearAutocompleteData();
@@ -318,12 +301,12 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     if (destination.length >= 2 && !isDestinationSelected) {
       fetchDestinationSuggestions(destination);
     } else if (locationIsEnabled) {
-      // Always show current location option when input is focused and location is enabled
       setDestinationAutocompleteData([]);
       setShowDestinationSuggestions(true);
     }
   };
 
+  // Handle suggestion click
   const handleSuggestionClick = (suggestion: AutocompleteItem, isOrigin: boolean) => {
     let SelectedLocation: SetStateAction<SelectedLocation | null>;
 
@@ -348,13 +331,11 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       setShowDestinationSuggestions(false);
     }
     
-    // Clear autocomplete data and reset state
     setOriginAutocompleteData([]); 
     setDestinationAutocompleteData([]);
     clearAutocompleteData();
     setSelectedIndex(-1);
     
-    // Clear the search request stack
     setSearchRequestStack([]);
   
     if (document.activeElement instanceof HTMLElement) {
@@ -369,7 +350,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
       if (!target.closest('.suggestions-container') && !target.closest('.location-input')) {
         setShowOriginSuggestions(false);
         setShowDestinationSuggestions(false);
-        // Clear the search request stack when clicking outside
         setSearchRequestStack([]);
       }
     };
@@ -456,8 +436,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
-        e.stopPropagation(); // Stop event propagation
-        // Ensure only one suggestion container is visible
+        e.stopPropagation(); 
         if (isOrigin) {
           setShowDestinationSuggestions(false);
         } else {
@@ -465,10 +444,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         }
         
         if (onlyCurrentLocationShown) {
-          setSelectedIndex(-2); // Select current location
+          setSelectedIndex(-2);
         } else {
-          // If we're at the current location option (-2) or before it (-1), move to the first suggestion (0)
-          // Otherwise, move down through the suggestions
           setSelectedIndex(prev => {
             if (prev < 0) return 0;
             return prev < suggestions.length - 1 ? prev + 1 : prev;
@@ -477,8 +454,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         break;
       case 'ArrowUp':
         e.preventDefault();
-        e.stopPropagation(); // Stop event propagation
-        // Ensure only one suggestion container is visible
+        e.stopPropagation(); 
         if (isOrigin) {
           setShowDestinationSuggestions(false);
         } else {
@@ -486,10 +462,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         }
         
         if (onlyCurrentLocationShown) {
-          setSelectedIndex(-2); // Select current location
+          setSelectedIndex(-2); 
         } else {
-          // If we're at the first suggestion (0), move to the current location option (-2)
-          // Otherwise, move up through the suggestions
           setSelectedIndex(prev => {
             if (prev === 0 && locationIsEnabled) return -2;
             return prev > -2 ? prev - 1 : -2;
@@ -498,12 +472,10 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         break;
       case 'Enter':
         e.preventDefault();
-        e.stopPropagation(); // Stop event propagation
+        e.stopPropagation(); 
         
-        // Only handle Enter if suggestions are visible
         if ((isOrigin && showOriginSuggestions) || (!isOrigin && showDestinationSuggestions)) {
           if (selectedIndex === -2 && locationIsEnabled) {
-            // Handle current location selection
             if (isOrigin) {
               handleUseCurrentLocationForOrigin();
             } else {
@@ -517,7 +489,7 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
         break;
       case 'Escape':
         e.preventDefault();
-        e.stopPropagation(); // Stop event propagation
+        e.stopPropagation(); 
         if (isOrigin) {
           setShowOriginSuggestions(false);
         } else {
@@ -544,7 +516,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     }
 
     const coordinates = `${currentLocation.coords.lat},${currentLocation.coords.lon}`;
-    // Use the translated text for current location
     const locationName = translations?.ControlPanel?.planner?.currentLocation || "Current Location";
     
     setOrigin(locationName);
@@ -552,11 +523,10 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     setIsOriginSelected(true);
     setShowOriginSuggestions(false);
     
-    // Clear autocomplete data and reset state
+  
     setOriginAutocompleteData([]);
     clearAutocompleteData();
     setSelectedIndex(-1);
-    // Clear the search request stack
     setSearchRequestStack([]);
   };
 
@@ -568,7 +538,6 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     }
 
     const coordinates = `${currentLocation.coords.lat},${currentLocation.coords.lon}`;
-    // Use the translated text for current location
     const locationName = translations?.ControlPanel?.planner?.currentLocation || "Current Location";
     
     setDestination(locationName);
@@ -576,11 +545,10 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
     setIsDestinationSelected(true);
     setShowDestinationSuggestions(false);
     
-    // Clear autocomplete data and reset state
+  
     setDestinationAutocompleteData([]);
     clearAutocompleteData();
     setSelectedIndex(-1);
-    // Clear the search request stack
     setSearchRequestStack([]);
   };
 
@@ -623,10 +591,8 @@ const RoutePlanner = ({ setActiveView }: { setActiveView: (view: ViewMode) => vo
               setSelectedOrigin(null);
               setSelectedIndex(-1);
               
-              // Close destination suggestions
               setShowDestinationSuggestions(false);
               
-              // Show suggestions based on input length
               if (e.target.value.length >= 2) {
                 fetchOriginSuggestions(e.target.value);
               } else if (locationIsEnabled) {

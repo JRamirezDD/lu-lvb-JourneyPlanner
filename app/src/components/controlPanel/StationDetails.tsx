@@ -47,22 +47,16 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
   const { setControlPanelIsExpanded } = useControLPanelContext();
   
   
-  // Add debug logging for UI context
-  console.log("StationDetails UI Context:", { viewMode, previousViewMode, navigationHistory });
-  console.log("StationDetails Props:", { stopId, stopName });
-  
   // Default values for stopId and stopName
-  const effectiveStopId = stopId || "0013000"; // Default to "0013000" if no stopId provided
-  const effectiveStopName = stopName || "Leipzig Hauptbahnhof"; // Default name if none provided
+  const effectiveStopId = stopId || "0013000"; 
+  const effectiveStopName = stopName || "Leipzig Hauptbahnhof"; 
   
   const [activeTab, setActiveTab] = useState<"now" | "disruptions">("now");
   const [currentFetchId, setCurrentFetchId] = useState<string | null>(null);
 
   // Handle back button click
   const handleBackClick = () => {
-    console.log("Back button clicked, clearing selections and navigating back");
-    
-    // Clear both selection sources to prevent bugs when searching multiple times
+  
     setSelectedNearbySearchItem(null);
     setSelectedStop(null);
     
@@ -74,26 +68,22 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
   useEffect(() => {
     setActiveTab("now");
     
-    // Generate a new fetch ID to track the current fetch
     setCurrentFetchId(effectiveStopId);
     
-    console.log("StopId changed, resetting tab and setting new fetch ID:", effectiveStopId);
   }, [effectiveStopId]);
 
   useEffect(() => {
     // Fetch stop monitor data when component mounts or stopId changes
     const fetchData = async () => {
-      // Store the current fetch ID to check if it's still valid when the fetch completes
-      const fetchId = effectiveStopId;
+     const fetchId = effectiveStopId;
       setCurrentFetchId(fetchId);
       
       try {
-        console.log("Fetching stop monitor data for stopId:", effectiveStopId);
         await fetchStopMonitor({
           stopid: effectiveStopId,
-          date: new Date().toISOString().split('T')[0].replace(/-/g, ''), // Format: YYYYMMDD
-          minutes: "60",  // Show next hour of departures
-          max_items: "10" // Limit to 10 items
+          date: new Date().toISOString().split('T')[0].replace(/-/g, ''), 
+          minutes: "60",  
+          max_items: "10" 
         });
         
         // Check if this fetch is still the current one
@@ -102,7 +92,6 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
           return;
         }
         
-        console.log("Fetch completed successfully for stopId:", effectiveStopId);
       } catch (error) {
         console.error('Error fetching stop monitor data:', error);
       }
@@ -111,14 +100,6 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
     fetchData();
   }, [effectiveStopId, fetchStopMonitor]);
 
-  // Add logging
-  console.log('StopMonitor Data:', {
-    data: stopMonitorData,
-    loading: loadingStopMonitor,
-    error: errorStopMonitor,
-    items: stopMonitorData?.items,
-    firstItem: stopMonitorData?.items?.[0]
-  });
 
   const getTransportType = (type: string, line: string): "tram" | "bus" | "s-bahn" | "train" | "regional" => {
     // First check the line prefix for regional trains
@@ -142,7 +123,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
     if (line.startsWith('T')) return "tram";
     if (line.startsWith('B')) return "bus";
     
-    return "s-bahn"; // Default fallback
+    return "s-bahn"; 
   };
 
   const getTransportColor = (type: string, line: string): string => {
@@ -187,14 +168,12 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
   const disruptions: Disruption[] = useMemo(() => {
     if (!stopMonitorData?.items) return [];
     
-    // Create a map to deduplicate alerts
     const alertMap = new Map<string, Disruption>();
     
     // Process all items and their alerts
     stopMonitorData.items.forEach(item => {
       if (item.alerts && item.alerts.length > 0) {
         item.alerts.forEach(alert => {
-          // Use the description text as a unique key
           const key = alert.alertDescriptionText;
           
           if (!alertMap.has(key)) {
@@ -210,7 +189,7 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
             
             alertMap.set(key, {
               type: type,
-              lines: [item.line], // Start with this line
+              lines: [item.line], 
               message: alert.alertDescriptionText,
               until: formattedDate,
               header: alert.alertHeaderText

@@ -11,7 +11,7 @@ import { useControLPanelContext } from "@/contexts/controlPanelContext";
 
 interface SelectedStation {
   name: string;
-  coordinates: string; // Format: "lat,lon"
+  coordinates: string;
   stopId?: string;
   item: AutocompleteItem;
 }
@@ -77,7 +77,6 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
     setAutocompleteResults(autocompleteData);
     setShowSuggestions(true);
     
-    // Remove the processed request from the stack
     setSearchRequestStack(prev => prev.filter(req => req.id !== latestRequest.id));
     
   }, [autocompleteData, loadingAutocomplete, errorAutocomplete, searchRequestStack]);
@@ -115,7 +114,6 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
     if (stationQuery.length >= 2) {
       fetchStationSuggestions(stationQuery);
     } else {
-      // Hide suggestions if input is too short
       setAutocompleteResults([]);
       setShowSuggestions(false);
     }
@@ -222,7 +220,6 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
       const target = event.target as HTMLElement;
       if (!target.closest('.suggestions-container') && !target.closest('.station-input')) {
         setShowSuggestions(false);
-        // Clear the search request stack when clicking outside
         setSearchRequestStack([]);
       }
     };
@@ -238,10 +235,6 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
       return;
     }
 
-    console.log("Selected station:", selectedStation);
-    console.log("Using stopId:", selectedStation.stopId);
-
-    // Clear any existing map selection
     setSelectedNearbySearchItem(null);
 
     // Set the selected stop in the MapContext
@@ -254,10 +247,8 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
 
     setActiveView("STATION");
 
-    // Hide ControlPanel
     setControlPanelIsExpanded(false);
   
-    // wait 2 secs
     setTimeout(() => {
       setControlPanelIsExpanded(true);
     }, 1000);
@@ -266,11 +257,9 @@ const SearchStation = ({ setActiveView }: { setActiveView: (view: ViewMode) => v
 
   // Handle back button click
   const handleBackClick = () => {
-    // Clear any existing selections
     setSelectedNearbySearchItem(null);
     setSelectedItem(null);
     
-    // Navigate back
     goToPreviousViewMode();
   };
 
