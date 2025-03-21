@@ -43,11 +43,9 @@ import {
 }
   if (json.vehicletype === "bike") {
     if (typeof json.bike_type !== "undefined") {
-      // A free-floating bike has a bike_type property
       return toBikeFreeSearchJson(json);
     }
     if (typeof json.num_spaces !== "undefined") {
-      // A bike station will have properties like num_spaces
       return toBikeStationSearchJson(json);
     }
   } else if (json.vehicletype === "car") {
@@ -72,7 +70,7 @@ import {
   } else if (typeof json.flexaId !== "undefined") {
     return toFlexa(json);
   }
-  // Fallback: return json directly (or throw an error)
+  // Fallback: return json 
   return json;
 };
   
@@ -189,7 +187,7 @@ import {
   
   /** Maps JSON to EscooterStationSearchJson */
   export const toEscooterStationSearchJson = (json: any): EscooterStationSearchJson => ({
-    provider: json.provider, // assuming provider is an array of "voi" or "tier"
+    provider: json.provider, 
     num_spaces: json.num_spaces,
     vehicletype: json.vehicletype,
     num_vehicles: json.num_vehicles,
@@ -227,9 +225,6 @@ import {
   /* ======================
      Mapper for the overall response
      ====================== */
-  // export const toNearBySearchResponse = (json: any): NearBySearchResponse => 
-  //   new NearBySearchResponse((json.items || []).map((item: any) => toSearchItemJson(item)));
-  
 
   export const toNearBySearchResponse = (data: any): NearBySearchResponse => {
     if(Array.isArray(data)){
@@ -238,6 +233,6 @@ import {
         return new NearBySearchResponse(data.items.map(toSearchItemJson));
     } else {
         console.error("toNearBySearchResponse: Invalid data format", data);
-        return new NearBySearchResponse([]); // Return an empty response, or handle the error as needed.
+        return new NearBySearchResponse([]); 
     }
 };

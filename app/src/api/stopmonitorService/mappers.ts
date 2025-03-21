@@ -106,7 +106,6 @@ export const toStopTimesResponse = (data: any): StopTimesResponse =>
         data.afterGivenStop ? data.afterGivenStop.map(toStopTimesItem) : []
     );
 
-// Helper to convert alerts
 export const toAlert = (data: any): Alert =>
     new Alert(
         data.effectiveStartDate,
