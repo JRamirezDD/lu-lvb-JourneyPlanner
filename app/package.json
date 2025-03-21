@@ -13,7 +13,7 @@
     "start:frontend": "npx serve out",
     "start:backend": "next start",
     "lint": "next lint",
-    "test": "npm run test:jest && npm run test:playwright",
+    "test": "npm run test:playwright && npm run test:jest",
     "test:jest": "jest --forceExit",
     "test:playwright:basic": "playwright test",
     "test:playwright": "start-server-and-test dev http://localhost:3000/lu-lvb-JourneyPlanner/ 'playwright test'",
