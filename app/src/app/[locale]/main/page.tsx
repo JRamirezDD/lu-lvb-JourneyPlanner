@@ -1,7 +1,7 @@
 import { generateStaticParams } from "../generateStaticParams";
 export { generateStaticParams };
 
-import MainView from "@/components/MainView";
+import MainView from "@/view/MainView";
 
 export default function MainPage() {
   return (
