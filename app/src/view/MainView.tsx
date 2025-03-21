@@ -38,7 +38,7 @@ const MainView: React.FC = () => {
         } else {
             setControlPanelIsExpanded(false);
         }
-    };
+    };  
 
     const onEnd = (event: MouseEvent | TouchEvent) => {
         document.body.style.userSelect = "auto"; // Re-enable text selection
