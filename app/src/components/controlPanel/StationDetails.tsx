@@ -287,26 +287,26 @@ const StationDetails = ({ stopId, stopName }: StationDetailsProps) => {
 
               {/* Departures */}
               {departures.map((departure, index) => (
-                <div key={index} className="grid grid-cols-12 gap-5 px-4 py-3 border-b hover:bg-[#fef9c3]/10 items-center">
-                  <div className="col-span-2 flex justify-start">
+                <div key={index} className="grid grid-cols-12 gap-5 px-1 py-3 border-b hover:bg-[#fef9c3]/10 items-center">
+                  <div className="col-span-2 flex items-center gap-2">
+                    {getTransportIcon(departure.type) && (
+                      <Image 
+                        src={getTransportIcon(departure.type)} 
+                        alt={departure.type} 
+                        width={20}
+                        height={20}
+                      />
+                    )}
                     <div
-                      className={`inline-flex px-2 py-0.5 min-w-[60px] justify-center rounded-md font-medium text-white tracking-wider items-center gap-1`}
+                      className={`inline-flex px-2 py-0.5 min-w-[45px] justify-center rounded-md font-medium text-white tracking-wider`}
                       style={{
                         backgroundColor: departure.color
                       }}
                     >
-                      {getTransportIcon(departure.type) && (
-                        <Image 
-                          src={getTransportIcon(departure.type)} 
-                          alt={departure.type} 
-                          width={16}
-                          height={16}
-                        />
-                      )}
                       {departure.line}
                     </div>
                   </div>
-                  <div className="col-span-6 font-medium text-gray-900 pl-2">{departure.destination}</div>
+                  <div className="col-span-6 font-medium text-gray-900 pl-4">{departure.destination}</div>
                   <div className="col-span-2 text-right">
                     <div className="font-medium text-gray-900">{departure.time}</div>
                     <div className="text-sm text-green-600">

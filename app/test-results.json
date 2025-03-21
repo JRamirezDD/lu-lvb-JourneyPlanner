@@ -1,0 +1,749 @@
+{
+  "config": {
+    "configFile": "C:\\repos\\lu-lvb-JourneyPlanner\\app\\playwright.config.ts",
+    "rootDir": "C:/repos/lu-lvb-JourneyPlanner/app/testing/playwright",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "C:/repos/lu-lvb-JourneyPlanner/app/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/repos/lu-lvb-JourneyPlanner/app/testing/playwright",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 300000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.51.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:3000/lu-lvb-JourneyPlanner/en",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+<<<<<<< HEAD
+      "title": "functionality\\ControlPanel.spec.ts",
+      "file": "functionality/ControlPanel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "ControlPanel Component Tests",
+          "file": "functionality/ControlPanel.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Test Control Panel Search and Select Itinerary Function",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5958,
+                      "error": {
+                        "message": "Error: locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for getByText('→').first()\u001b[22m\n\u001b[2m    - locator resolved to <span class=\"mx-3 font-medium\">→</span>\u001b[22m\n",
+                        "stack": "Error: locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for getByText('→').first()\u001b[22m\n\u001b[2m    - locator resolved to <span class=\"mx-3 font-medium\">→</span>\u001b[22m\n\n    at C:\\repos\\lu-lvb-JourneyPlanner\\app\\testing\\playwright\\functionality\\ControlPanel.spec.ts:28:25",
+                        "location": {
+                          "file": "C:\\repos\\lu-lvb-JourneyPlanner\\app\\testing\\playwright\\functionality\\ControlPanel.spec.ts",
+                          "column": 25,
+                          "line": 28
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[90m//click an Itinerary, then switch itineraries and ensure they're different itineraries.\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m firstResponse\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m     \u001b[36mconst\u001b[39m content1 \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#control-panel-component'\u001b[39m)\u001b[33m.\u001b[39minnerHTML()\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#control-panel-component'\u001b[39m)\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mnth(\u001b[35m2\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m     \u001b[36mconst\u001b[39m content2 \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#control-panel-component'\u001b[39m)\u001b[33m.\u001b[39minnerHTML()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\repos\\lu-lvb-JourneyPlanner\\app\\testing\\playwright\\functionality\\ControlPanel.spec.ts",
+                            "column": 25,
+                            "line": 28
+                          },
+                          "message": "Error: locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for getByText('→').first()\u001b[22m\n\u001b[2m    - locator resolved to <span class=\"mx-3 font-medium\">→</span>\u001b[22m\n\n\n\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[90m//click an Itinerary, then switch itineraries and ensure they're different itineraries.\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m firstResponse\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m     \u001b[36mconst\u001b[39m content1 \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#control-panel-component'\u001b[39m)\u001b[33m.\u001b[39minnerHTML()\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#control-panel-component'\u001b[39m)\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mnth(\u001b[35m2\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m     \u001b[36mconst\u001b[39m content2 \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#control-panel-component'\u001b[39m)\u001b[33m.\u001b[39minnerHTML()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at C:\\repos\\lu-lvb-JourneyPlanner\\app\\testing\\playwright\\functionality\\ControlPanel.spec.ts:28:25\u001b[22m"
+                        },
+                        {
+                          "message": "Error: browserContext._wrapApiCall: Target page, context or browser has been closed"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-03-20T17:12:11.798Z",
+                      "attachments": [
+                        {
+                          "name": "_prompt-0",
+                          "contentType": "text/markdown",
+                          "body": "IyBJbnN0cnVjdGlvbnMKCi0gRm9sbG93aW5nIFBsYXl3cmlnaHQgdGVzdCBmYWlsZWQuCi0gRXhwbGFpbiB3aHksIGJlIGNvbmNpc2UsIHJlc3BlY3QgUGxheXdyaWdodCBiZXN0IHByYWN0aWNlcy4KLSBQcm92aWRlIGEgc25pcHBldCBvZiBjb2RlIHdpdGggdGhlIGZpeCwgaWYgcG9zc2libGUuCgojIFRlc3QgaW5mbwoKLSBOYW1lOiBDb250cm9sUGFuZWwgQ29tcG9uZW50IFRlc3RzID4+IFRlc3QgQ29udHJvbCBQYW5lbCBTZWFyY2ggYW5kIFNlbGVjdCBJdGluZXJhcnkgRnVuY3Rpb24KLSBMb2NhdGlvbjogQzpccmVwb3NcbHUtbHZiLUpvdXJuZXlQbGFubmVyXGFwcFx0ZXN0aW5nXHBsYXl3cmlnaHRcZnVuY3Rpb25hbGl0eVxDb250cm9sUGFuZWwuc3BlYy50czo5OjcKCiMgRXJyb3IgZGV0YWlscwoKYGBgCkVycm9yOiBsb2NhdG9yLmNsaWNrOiBUYXJnZXQgcGFnZSwgY29udGV4dCBvciBicm93c2VyIGhhcyBiZWVuIGNsb3NlZApDYWxsIGxvZzoKICAtIHdhaXRpbmcgZm9yIGdldEJ5VGV4dCgn4oaSJykuZmlyc3QoKQogICAgLSBsb2NhdG9yIHJlc29sdmVkIHRvIDxzcGFuIGNsYXNzPSJteC0zIGZvbnQtbWVkaXVtIj7ihpI8L3NwYW4+CgogICAgYXQgQzpccmVwb3NcbHUtbHZiLUpvdXJuZXlQbGFubmVyXGFwcFx0ZXN0aW5nXHBsYXl3cmlnaHRcZnVuY3Rpb25hbGl0eVxDb250cm9sUGFuZWwuc3BlYy50czoyODoyNQpgYGAKCiMgVGVzdCBzb3VyY2UKCmBgYHRzCiAgIDEgfCBpbXBvcnQgeyB0ZXN0LCBleHBlY3QgfSBmcm9tICdAcGxheXdyaWdodC90ZXN0JzsKICAgMiB8CiAgIDMgfCB0ZXN0LmRlc2NyaWJlKCdDb250cm9sUGFuZWwgQ29tcG9uZW50IFRlc3RzJywgKCkgPT4gewogICA0IHwgICB0ZXN0LmJlZm9yZUVhY2goYXN5bmMgKHsgcGFnZSB9KSA9PiB7CiAgIDUgfCAgICAgYXdhaXQgcGFnZS5nb3RvKCdodHRwOi8vbG9jYWxob3N0OjMwMDAvbHUtbHZiLUpvdXJuZXlQbGFubmVyL2VuJyk7CiAgIDYgfCAgICAgYXdhaXQgcGFnZS5zZXRWaWV3cG9ydFNpemUoeyB3aWR0aDogMTIwMCwgaGVpZ2h0OiA4MDAgfSk7CiAgIDcgfCAgIH0pOwogICA4IHwKICAgOSB8ICAgdGVzdCgnVGVzdCBDb250cm9sIFBhbmVsIFNlYXJjaCBhbmQgU2VsZWN0IEl0aW5lcmFyeSBGdW5jdGlvbicsIGFzeW5jICh7IHBhZ2UgfSkgPT4gewogICAxMCB8ICAgICAvL0VudGVyIE9yaWdpbiwgd2FpdCBmb3IgcmVzcG9uc2UKICAgMTEgfCAgICAgYXdhaXQgcGFnZS5nZXRCeVJvbGUoJ3RleHRib3gnLCB7IG5hbWU6ICdPcmlnaW4nIH0pLmNsaWNrKCk7CiAgIDEyIHwgICAgIGF3YWl0IHBhZ2UuZ2V0QnlSb2xlKCd0ZXh0Ym94JywgeyBuYW1lOiAnT3JpZ2luJyB9KS5maWxsKCdoYW5zLScpOwogICAxMyB8ICAgICBhd2FpdCBwYWdlLmdldEJ5VGV4dCgnTGVpcHppZywgRW5nZWxzZG9yZiwgSGFucy0nKS5jbGljaygpOwogICAxNCB8CiAgIDE1IHwgICAgIC8vRW50ZXIgRGVzdGluYXRpb24sIHdhaXQgZm9yIHJlc3BvbnNlCiAgIDE2IHwgICAgIGF3YWl0IHBhZ2UuZ2V0QnlSb2xlKCd0ZXh0Ym94JywgeyBuYW1lOiAnRGVzdGluYXRpb24nIH0pLmNsaWNrKCk7CiAgIDE3IHwgICAgIGF3YWl0IHBhZ2UuZ2V0QnlSb2xlKCd0ZXh0Ym94JywgeyBuYW1lOiAnRGVzdGluYXRpb24nIH0pLmZpbGwoJ2hhdXAnKTsKICAgMTggfCAgICAgYXdhaXQgcGFnZS53YWl0Rm9yVGltZW91dCgxMDApOwogICAxOSB8ICAgICBhd2FpdCBwYWdlLmdldEJ5Um9sZSgndGV4dGJveCcsIHsgbmFtZTogJ0Rlc3RpbmF0aW9uJyB9KS5maWxsKCdoYXVwdCcpOwogICAyMCB8ICAgICBhd2FpdCBwYWdlLmdldEJ5VGV4dCgnTGVpcHppZyBIYmYnKS5jbGljaygpOwogICAyMSB8CiAgIDIyIHwgICAgIC8vUHJlc3MgU2VhcmNoLCBleHBlY3QgcmVzcG9uc2UKICAgMjMgfCAgICAgYXdhaXQgcGFnZS5nZXRCeVJvbGUoJ2J1dHRvbicsIHsgbmFtZTogJ1NlYXJjaCcsIGV4YWN0OiB0cnVlIH0pLmNsaWNrKCk7CiAgIDI0IHwgICAgIGNvbnN0IGZpcnN0UmVzcG9uc2UgPSBwYWdlLmdldEJ5VGV4dCgn4oaSJykuZmlyc3QoKTsKICAgMjUgfCAgICAgZXhwZWN0KGZpcnN0UmVzcG9uc2UpLnRvQmVEZWZpbmVkOwogICAyNiB8CiAgIDI3IHwgICAgIC8vY2xpY2sgYW4gSXRpbmVyYXJ5LCB0aGVuIHN3aXRjaCBpdGluZXJhcmllcyBhbmQgZW5zdXJlIHRoZXkncmUgZGlmZmVyZW50IGl0aW5lcmFyaWVzLgo+ICAyOCB8ICAgICBhd2FpdCBmaXJzdFJlc3BvbnNlLmNsaWNrKCk7CiAgICAgIHwgICAgICAgICAgICAgICAgICAgICAgICAgXiBFcnJvcjogbG9jYXRvci5jbGljazogVGFyZ2V0IHBhZ2UsIGNvbnRleHQgb3IgYnJvd3NlciBoYXMgYmVlbiBjbG9zZWQKICAgMjkgfCAgICAgY29uc3QgY29udGVudDEgPSBwYWdlLmxvY2F0b3IoJyNjb250cm9sLXBhbmVsLWNvbXBvbmVudCcpLmlubmVySFRNTCgpOwogICAzMCB8ICAgICBhd2FpdCBwYWdlLmxvY2F0b3IoJyNjb250cm9sLXBhbmVsLWNvbXBvbmVudCcpLmdldEJ5Um9sZSgnYnV0dG9uJykubnRoKDIpLmNsaWNrKCk7CiAgIDMxIHwgICAgIGNvbnN0IGNvbnRlbnQyID0gcGFnZS5sb2NhdG9yKCcjY29udHJvbC1wYW5lbC1jb21wb25lbnQnKS5pbm5lckhUTUwoKTsKICAgMzIgfCAgICAgZXhwZWN0KGNvbnRlbnQxKS5ub3QudG9FcXVhbChjb250ZW50Mik7CiAgIDMzIHwgICB9KTsKICAgMzQgfAogICAzNSB8ICAgdGVzdCgnVGVzdCBTdG9wIFNlYXJjaCBGdW5jdGlvbmFsaXR5JywgYXN5bmMgKHsgcGFnZSB9KSA9PiB7CiAgIDM2IHwgICAgIC8vU2VhcmNoIGZvciBhIHN0YXRpb24sIHdhaXQgZm9yIHJlc3BvbnNlLCBzZWFyY2gKICAgMzcgfCAgICAgYXdhaXQgcGFnZS5nZXRCeVJvbGUoJ2J1dHRvbicsIHsgbmFtZTogJ1NlYXJjaCBTdGF0aW9uJyB9KS5jbGljaygpOwogICAzOCB8ICAgICBhd2FpdCBwYWdlLmdldEJ5Um9sZSgndGV4dGJveCcsIHsgbmFtZTogJ0VudGVyIGEgc3RhdGlvbiBuYW1lJyB9KS5jbGljaygpOwogICAzOSB8ICAgICBhd2FpdCBwYWdlLmdldEJ5Um9sZSgndGV4dGJveCcsIHsgbmFtZTogJ0VudGVyIGEgc3RhdGlvbiBuYW1lJyB9KS5maWxsKCdIYXVwdEJhaCcpOwogICA0MCB8ICAgICBhd2FpdCBwYWdlLmdldEJ5VGV4dCgnTGVpcHppZywgSGF1cHRiYWhuaG9mIChUcmFtLycpLmNsaWNrKCk7CiAgIDQxIHwgICAgIGF3YWl0IHBhZ2UuZ2V0QnlSb2xlKCdidXR0b24nLCB7IG5hbWU6ICdTZWFyY2ggZm9yIGEgc3RhdGlvbicgfSkuY2xpY2soKTsKICAgNDIgfAogICA0MyB8ICAgICAvL2Vuc3VyZSBkaXNydXB0aW9ucyBwYWdlIGNhbiBiZSBjbGlja2VkIAogICA0NCB8ICAgICBhd2FpdCBwYWdlLmdldEJ5Um9sZSgnYnV0dG9uJywgeyBuYW1lOiAnRGlzcnVwdGlvbnMnIH0pLmNsaWNrKCk7CiAgIDQ1IHwKICAgNDYgfAogICA0NyB8ICAgfSkKICAgNDggfAogICA0OSB8ICAgdGVzdCgnVGVzdCBmaWx0ZXIgZnVuY3Rpb25hbGl0eScsIGFzeW5jICh7IHBhZ2UgfSkgPT4gewogICA1MCB8ICAgICAvL0ZpbmRzIGFuIGl0aW5lcmFyeSB0aGF0IHVzZXMgYW4gU2JhaG4sIHRoZW4gZmlsdGVycyBhbmQgZW5zdXJlcyB0aGF0IHRoZXJlIGFyZSBubyBpdGluZXJhcmllcyB1c2luZyBzYmFobgogICA1MSB8ICAgICBhd2FpdCBwYWdlLmdldEJ5Um9sZSgndGV4dGJveCcsIHsgbmFtZTogJ09yaWdpbicgfSkuY2xpY2soKTsKICAgNTIgfCAgICAgYXdhaXQgcGFnZS5nZXRCeVJvbGUoJ3RleHRib3gnLCB7IG5hbWU6ICdPcmlnaW4nIH0pLmZpbGwoJ2hhbnMnKTsKICAgNTMgfCAgICAgYXdhaXQgcGFnZS5nZXRCeVRleHQoJ1dpZWRlbWFyLCBIYW5zLUdyYWRlLVN0ci4nKS5jbGljaygpOwogICA1NCB8ICAgICBhd2FpdCBwYWdlLmdldEJ5Um9sZSgndGV4dGJveCcsIHsgbmFtZTogJ0Rlc3RpbmF0aW9uJyB9KS5jbGljaygpOwogICA1NSB8ICAgICBhd2FpdCBwYWdlLmdldEJ5Um9sZSgndGV4dGJveCcsIHsgbmFtZTogJ0Rlc3RpbmF0aW9uJyB9KS5maWxsKCdoYXVwJyk7CiAgIDU2IHwgICAgIGF3YWl0IHBhZ2Uud2FpdEZvclRpbWVvdXQoMTAwKTsKICAgNTcgfCAgICAgYXdhaXQgcGFnZS5nZXRCeVJvbGUoJ3RleHRib3gnLCB7IG5hbWU6ICdEZXN0aW5hdGlvbicgfSkuZmlsbCgnaGF1cHQnKTsKICAgNTggfCAgICAgYXdhaXQgcGFnZS5nZXRCeVRleHQoJ0xlaXB6aWcgSGJmJykuY2xpY2soKTsKICAgNTkgfAogICA2MCB8ICAgICBhd2FpdCBwYWdlLmdldEJ5Um9sZSgnYnV0dG9uJywgeyBuYW1lOiAnU2VhcmNoJywgZXhhY3Q6IHRydWUgfSkuY2xpY2soKTsKICAgNjEgfCAgICAgYXdhaXQgcGFnZS5sb2NhdG9yKCdpbWdbYWx0Kj0iU1VCVVJCIl0nKTsKICAgNjIgfAogICA2MyB8ICAgICBhd2FpdCBwYWdlLmdldEJ5Um9sZSgnYnV0dG9uJywgeyBuYW1lOiAnVHJhbnNwb3J0IE9wdGlvbnMnIH0pLmNsaWNrKCk7CiAgIDY0IHwgICAgIGF3YWl0IHBhZ2UuZ2V0QnlSb2xlKCdsaXN0aXRlbScpLmZpbHRlcih7IGhhc1RleHQ6ICdTLUJhaG4nIH0pLmdldEJ5Um9sZSgnYnV0dG9uJykuY2xpY2soKTsKICAgNjUgfCAgICAgYXdhaXQgcGFnZS5nZXRCeVJvbGUoJ2J1dHRvbicsIHsgbmFtZTogJ1NlYXJjaCcsIGV4YWN0OiB0cnVlIH0pLmNsaWNrKCk7CiAgIDY2IHwgICAgIHRyeSB7CiAgIDY3IHwgICAgICAgY29uc3Qgc3VidXJiSW1hZ2UgPSBhd2FpdCBwYWdlLmxvY2F0b3IoJ2ltZ1thbHQqPSJTVUJVUkIiXScpOwogICA2OCB8ICAgICAgIGF3YWl0IGV4cGVjdChzdWJ1cmJJbWFnZSkubm90LnRvQmVWaXNpYmxlKCk7CiAgIDY5IHwgICAgIH0gY2F0Y2ggKGVycm9yKSB7CiAgIDcwIHwgICAgICAgZXhwZWN0KHRydWUpLnRvQmUodHJ1ZSk7CiAgIDcxIHwgICAgIH0KICAgNzIgfCAgIH0pCiAgIDczIHwKICAgNzQgfCAgIHRlc3QoJ1Rlc3Qgc3dhcCBpbnB1dCBmdW5jdGlvbmFsaXR5JywgYXN5bmMgKHsgcGFnZSB9KSA9PiB7CiAgIDc1IHwgICAgIC8vZW50ZXIgb3JpZ2luIGFuZCBkZXN0aW5hdGlvbjoKICAgNzYgfCAgICAgYXdhaXQgcGFnZS5nZXRCeVJvbGUoJ3RleHRib3gnLCB7IG5hbWU6ICdPcmlnaW4nIH0pLmNsaWNrKCk7CiAgIDc3IHwgICAgIGF3YWl0IHBhZ2UuZ2V0QnlSb2xlKCd0ZXh0Ym94JywgeyBuYW1lOiAnT3JpZ2luJyB9KS5maWxsKCdIYW5zJyk7CiAgIDc4IHwgICAgIGF3YWl0IHBhZ2UuZ2V0QnlUZXh0KCdMZWlwemlnJywgeyBleGFjdDogdHJ1ZSB9KS5maXJzdCgpLmNsaWNrKCk7CiAgIDc5IHwgICAgIGF3YWl0IHBhZ2UuZ2V0QnlSb2xlKCd0ZXh0Ym94JywgeyBuYW1lOiAnRGVzdGluYXRpb24nIH0pLmNsaWNrKCk7CiAgIDgwIHwgICAgIGF3YWl0IHBhZ2UuZ2V0QnlSb2xlKCd0ZXh0Ym94JywgeyBuYW1lOiAnRGVzdGluYXRpb24nIH0pLmZpbGwoJ2hhdXAnKTsKICAgODEgfCAgICAgYXdhaXQgcGFnZS53YWl0Rm9yVGltZW91dCgxMDApOwogICA4MiB8ICAgICBhd2FpdCBwYWdlLmdldEJ5Um9sZSgndGV4dGJveCcsIHsgbmFtZTogJ0Rlc3RpbmF0aW9uJyB9KS5maWxsKCdoYXVwdCcpOwogICA4MyB8ICAgICBhd2FpdCBwYWdlLmdldEJ5VGV4dCgnTGVpcHppZyBIYmYnKS5jbGljaygpOwogICA4NCB8ICAgICAvL3N0b3JlIGluaXRpYWwgdmFsdWVzOgogICA4NSB8ICAgICBjb25zdCBvcmlnaW4xID0gcGFnZS5nZXRCeVJvbGUoJ3RleHRib3gnLCB7IG5hbWU6ICdPcmlnaW4nIH0pLmlucHV0VmFsdWU7CiAgIDg2IHwgICAgIGNvbnN0IGRlc3RpbmF0aW9uMSA9IHBhZ2UuZ2V0QnlSb2xlKCd0ZXh0Ym94JywgeyBuYW1lOiAnRGVzdGluYXRpb24nIH0pLmlucHV0VmFsdWU7CiAgIDg3IHwgICAgIC8vc3dpdGNoLCBzdG9yZSBsYXRlciB2YWx1ZXMsIGNvbXBhcmUgdmFsdWVzOgogICA4OCB8ICAgICBhd2FpdCBwYWdlLmxvY2F0b3IoJyNjb250cm9sLXBhbmVsLWNvbXBvbmVudCcpLmdldEJ5Um9sZSgnYnV0dG9uJykuZmlsdGVyKHsgaGFzVGV4dDogL14kLyB9KS5jbGljaygpOwogICA4OSB8ICAgICBjb25zdCBvcmlnaW4yID0gcGFnZS5nZXRCeVJvbGUoJ3RleHRib3gnLCB7IG5hbWU6ICdPcmlnaW4nIH0pLmlucHV0VmFsdWU7CiAgIDkwIHwgICAgIGNvbnN0IGRlc3RpbmF0aW9uMiA9IHBhZ2UuZ2V0QnlSb2xlKCd0ZXh0Ym94JywgeyBuYW1lOiAnRGVzdGluYXRpb24nIH0pLmlucHV0VmFsdWU7CiAgIDkxIHwgICAgIGV4cGVjdChvcmlnaW4xKS50b0VxdWFsKGRlc3RpbmF0aW9uMik7CiAgIDkyIHwgICAgIGV4cGVjdChvcmlnaW4yKS50b0VxdWFsKGRlc3RpbmF0aW9uMSk7CiAgIDkzIHwgICB9KQogICA5NCB8CiAgIDk1IHwgICB0ZXN0KCdUZXN0IHRyYW5zbGF0aW9uJywgYXN5bmMgKHsgcGFnZSB9KSA9PiB7CiAgIDk2IHwgICAgIGF3YWl0IHBhZ2UuZ2V0QnlSb2xlKCdidXR0b24nLCB7IG5hbWU6ICdTd2l0Y2ggdG8gRU4gbGFuZ3VhZ2UnIH0pLmNsaWNrKCk7CiAgIDk3IHwgICAgIGNvbnN0IEVuZ2xpc2ggPSBwYWdlLmdldEJ5VGV4dCgnUGxhbiBZb3VyIFRyaXAnKTsKICAgOTggfCAgICAgYXdhaXQgcGFnZS5nZXRCeVJvbGUoJ2J1dHRvbicsIHsgbmFtZTogJ1N3aXRjaCB0byBERSBsYW5ndWFnZScgfSkuY2xpY2soKTsKICAgOTkgfCAgICAgY29uc3QgR2VybWFuID0gcGFnZS5nZXRCeVRleHQoJ1BsYW5lbiBTaWUgSWhyZSBSZWlzZVN0YXRpb25zc3VjaGUnKTsKICAxMDAgfCAgICAgZXhwZWN0KEVuZ2xpc2gpLm5vdC50b0JlTnVsbDsKICAxMDEgfCAgICAgZXhwZWN0KEdlcm1hbikubm90LnRvQmVOdWxsOwogIDEwMiB8ICAgfSkKICAxMDMgfCB9KQpgYGA="
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\repos\\lu-lvb-JourneyPlanner\\app\\testing\\playwright\\functionality\\ControlPanel.spec.ts",
+                        "column": 25,
+                        "line": 28
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "e4886945c6df8b3b6c23-1899008651958ea4586f",
+              "file": "functionality/ControlPanel.spec.ts",
+              "line": 9,
+              "column": 7
+            },
+            {
+              "title": "Test Stop Search Functionality",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e4886945c6df8b3b6c23-a0d3526e2b145746a205",
+              "file": "functionality/ControlPanel.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "Test filter functionality",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e4886945c6df8b3b6c23-a065cd2c264471ac91d1",
+              "file": "functionality/ControlPanel.spec.ts",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "Test swap input functionality",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e4886945c6df8b3b6c23-9a853f5e3623d62faba3",
+              "file": "functionality/ControlPanel.spec.ts",
+              "line": 74,
+              "column": 7
+            },
+            {
+              "title": "Test translation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e4886945c6df8b3b6c23-ca917b2059a875ef8978",
+              "file": "functionality/ControlPanel.spec.ts",
+              "line": 95,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "functionality\\mainView.spec.ts",
+      "file": "functionality/mainView.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "MainView Component Tests",
+          "file": "functionality/mainView.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should render the MainView components",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fae584267e8eaac218da-90eb4d1b08e00bedbe48",
+              "file": "functionality/mainView.spec.ts",
+              "line": 8,
+              "column": 7
+            },
+            {
+              "title": "should switch to vertical layout on smaller screens",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fae584267e8eaac218da-f609e8ef80866b1a9183",
+              "file": "functionality/mainView.spec.ts",
+              "line": 13,
+              "column": 7
+            },
+            {
+              "title": "should switch to horizontal layout on larger screens",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fae584267e8eaac218da-773e5e9548bd5efcb37f",
+              "file": "functionality/mainView.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "should expand and collapse the control panel in vertical layout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fae584267e8eaac218da-9b47c19f8030b96eab69",
+              "file": "functionality/mainView.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "should toggle control panel expansion on click",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fae584267e8eaac218da-809dacd7cb3718c0bf7b",
+              "file": "functionality/mainView.spec.ts",
+              "line": 55,
+              "column": 7
+            },
+            {
+              "title": "should have a drag handle visible in vertical mode",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fae584267e8eaac218da-62b5e0aa53e30fe7c5bb",
+              "file": "functionality/mainView.spec.ts",
+              "line": 73,
+              "column": 7
+            },
+            {
+              "title": "should not have a drag handle visible in horizontal mode",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fae584267e8eaac218da-f7ebd56bedc5912012e7",
+              "file": "functionality/mainView.spec.ts",
+              "line": 78,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "functionality\\Map.spec.ts",
+      "file": "functionality/Map.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "test",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "df3a164c390f013805f0-5f9b768adfee6459bc5f",
+          "file": "functionality/Map.spec.ts",
+          "line": 6,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "functionality\\navigationCP.spec.ts",
+      "file": "functionality/navigationCP.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Navigation Control Panel",
+          "file": "functionality/navigationCP.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Search Station",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "68d55b1ad663362ae51d-8cbc8310c0152b968e1b",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 8,
+              "column": 9
+            },
+            {
+              "title": "Modify departure",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "68d55b1ad663362ae51d-343e94deb0ff4e6ab81e",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 22,
+              "column": 9
+            },
+            {
+              "title": "Modify Transport mode",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "68d55b1ad663362ae51d-59e3cffe99cbef3990b7",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 34,
+              "column": 9
+            },
+            {
+              "title": "Search for a journey",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "68d55b1ad663362ae51d-b2a7192f93802acd5301",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 46,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "performance\\mainView.spec.ts",
+      "file": "performance/mainView.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "MainView memory performance - DEFAULT",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "173c7ab54960da384663-5bf1cd09ca1a545a6844",
+          "file": "performance/mainView.spec.ts",
+          "line": 13,
+          "column": 7
+        },
+        {
+          "title": "MainView memory performance - ITINERARY_VIEW_SCENARIO",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "173c7ab54960da384663-64080a168ff6b8de8665",
+          "file": "performance/mainView.spec.ts",
+          "line": 13,
+          "column": 7
+        }
+      ]
+    },
+    {
+      "title": "performance\\uiContext.spec.ts",
+      "file": "performance/uiContext.spec.ts",
+=======
+      "title": "functionality\\navigationCP.spec.ts",
+      "file": "functionality/navigationCP.spec.ts",
+>>>>>>> b0c8de55deb0b6cdf560cbefb0128b764f36bdf9
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Navigation Control Panel",
+          "file": "functionality/navigationCP.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Search Station",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+<<<<<<< HEAD
+                  "results": [],
+                  "status": "skipped"
+=======
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2570,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-03-20T14:14:12.891Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+>>>>>>> b0c8de55deb0b6cdf560cbefb0128b764f36bdf9
+                }
+              ],
+              "id": "68d55b1ad663362ae51d-8cbc8310c0152b968e1b",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 8,
+              "column": 9
+            },
+            {
+              "title": "Modify departure",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+<<<<<<< HEAD
+                  "results": [],
+                  "status": "skipped"
+=======
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4186,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-03-20T14:14:15.695Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+>>>>>>> b0c8de55deb0b6cdf560cbefb0128b764f36bdf9
+                }
+              ],
+              "id": "68d55b1ad663362ae51d-343e94deb0ff4e6ab81e",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 22,
+              "column": 9
+            },
+            {
+              "title": "Modify Transport mode",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+<<<<<<< HEAD
+                  "results": [],
+                  "status": "skipped"
+=======
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2007,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-03-20T14:14:19.892Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+>>>>>>> b0c8de55deb0b6cdf560cbefb0128b764f36bdf9
+                }
+              ],
+              "id": "68d55b1ad663362ae51d-59e3cffe99cbef3990b7",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 34,
+              "column": 9
+            },
+            {
+              "title": "Search for a journey",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8794,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-03-20T14:14:21.906Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "68d55b1ad663362ae51d-b2a7192f93802acd5301",
+              "file": "functionality/navigationCP.spec.ts",
+              "line": 46,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+<<<<<<< HEAD
+    "startTime": "2025-03-20T17:12:10.504Z",
+    "duration": 8028.188000000001,
+    "expected": 0,
+    "skipped": 21,
+    "unexpected": 1,
+=======
+    "startTime": "2025-03-20T14:14:10.957Z",
+    "duration": 21053.674000000003,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+>>>>>>> b0c8de55deb0b6cdf560cbefb0128b764f36bdf9
+    "flaky": 0
+  }
+}

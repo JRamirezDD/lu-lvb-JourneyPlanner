@@ -1,5 +1,6 @@
 "use client";
 
+import { installMapGrab } from '@mapgrab/map-interface';
 import { useEffect, useRef, useState } from "react";
 import maplibregl, { Map, MapGeoJSONFeature } from "maplibre-gl";
 import { useUIContext } from "@/contexts/uiContext";
@@ -69,7 +70,6 @@ export const MapWidget: React.FC = ({ }) => {
     
     const { setSource, updateSource, clearSource, addLayerIfNotExists, removeLayer, activeSources, activeLayers, activateSource } = useLayersManager(mapRef);
 
-
     const  storedCenter = useRef<Coordinates | null>(null); 
 
     useEffect(() => {
@@ -82,7 +82,8 @@ export const MapWidget: React.FC = ({ }) => {
             zoom: 14,
             fadeDuration: 0
           });
-    
+          installMapGrab(map, 'mainMap');
+
         map.on("load", () => {
 
             // Initialize LayerManager and mapRef
@@ -274,7 +275,9 @@ export const MapWidget: React.FC = ({ }) => {
                     // debug
                     // get features
 
-                    const features = mapRef.current.querySourceFeatures("itinerary-source") as MapGeoJSONFeature[];
+                    const features = selectedItinerary.toGeoJson().features.map((feature) => {
+                        return feature as MapGeoJSONFeature;
+                    });
                     console.log("DEBUG RENDERED FEATURES:", features);
 
                     fitToFeatures(mapRef.current, features);

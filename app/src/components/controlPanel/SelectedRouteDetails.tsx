@@ -18,6 +18,11 @@ type LegType = 'START' | 'END' | 'WALK' | 'TRANSFER' | TransportMode;
 // Helper function to check if a mode is "WALK"
 const isWalkMode = (mode: string): boolean => mode === "WALK";
 
+// Helper function to check if it's a wait leg
+const isWaitLeg = (leg: any): boolean => {
+  return leg.mode === "WAIT" || (leg.from.name === leg.to.name && leg.mode !== "WALK");
+};
+
 const getLegType = (mode: string): LegType => {
   if (mode === 'WALK') return 'WALK';
   if (mode === 'TRANSFER') return 'TRANSFER';
@@ -80,12 +85,6 @@ const SelectedRouteDetails = () => {
   const { setSelectedItinerary, selectedItinerary } = useMapContext();
   const [expandedLegs, setExpandedLegs] = useState<number[]>([]);
 
-  // Log navigation state
-  console.log('SelectedRouteDetails navigation state:', {
-    previousViewMode,
-    navigationHistory
-  });
-
   // Update the map when the selected itinerary changes
   useEffect(() => {
     if (otpData && selectedItineraryIndex !== null) {
@@ -97,14 +96,28 @@ const SelectedRouteDetails = () => {
       );
       setSelectedItinerary(mapItinerary);
     }
-  }, [otpData, selectedItineraryIndex]);
 
-  // Fixed debug logging
-  console.log('Selected Itinerary Data:', {
-    otpData,
-    selectedItineraryIndex,
-    legs: selectedItineraryIndex !== null ? otpData?.plan?.itineraries?.[selectedItineraryIndex]?.legs : null
-  });
+    // Cleanup function
+    return () => {
+      // Clear the selected itinerary when component unmounts
+      setSelectedItinerary(null);
+    };
+  }, [otpData?.plan?.itineraries, selectedItineraryIndex]); // More specific dependencies
+
+  // Remove unnecessary debug logging
+  // console.log('Selected Itinerary Data:', {
+  //   otpData,
+  //   selectedItineraryIndex,
+  //   legs: selectedItineraryIndex !== null ? otpData?.plan?.itineraries?.[selectedItineraryIndex]?.legs : null
+  // });
+
+  // Log only essential navigation state
+  useEffect(() => {
+    console.log('SelectedRouteDetails navigation state:', {
+      previousViewMode,
+      navigationHistory
+    });
+  }, [previousViewMode, navigationHistory]);
 
   if (!otpData || selectedItineraryIndex === null) {
     return <div>No route selected</div>;
@@ -180,10 +193,7 @@ const SelectedRouteDetails = () => {
         <div className="flex items-center gap-4">
           <button
             className="p-2 hover:bg-primary-yellow/80 rounded-full transition-colors"
-            onClick={() => {
-              console.log("Back button clicked, navigating using goToPreviousViewMode");
-              goToPreviousViewMode();
-            }}
+            onClick={goToPreviousViewMode}
           >
             <ChevronLeft size={24} />
           </button>
@@ -199,8 +209,7 @@ const SelectedRouteDetails = () => {
           <button
             onClick={handlePrevRoute}
             disabled={selectedItineraryIndex === 0}
-            className={`p-1 rounded ${selectedItineraryIndex === 0 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'
-              }`}
+            className={`p-1 rounded ${selectedItineraryIndex === 0 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'}`}
           >
             <ChevronLeft size={24} />
           </button>
@@ -210,8 +219,7 @@ const SelectedRouteDetails = () => {
           <button
             onClick={handleNextRoute}
             disabled={selectedItineraryIndex === totalRoutes - 1}
-            className={`p-1 rounded ${selectedItineraryIndex === totalRoutes - 1 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'
-              }`}
+            className={`p-1 rounded ${selectedItineraryIndex === totalRoutes - 1 ? 'text-primary-blue/40' : 'hover:bg-primary-yellow/80'}`}
           >
             <ChevronRight size={24} />
           </button>
@@ -231,91 +239,98 @@ const SelectedRouteDetails = () => {
             <div key={index} className="flex gap-4">
               {/* Time Column */}
               <div className="w-16 flex flex-col items-center">
-                {/* Departure Time - Show actual and scheduled times */}
-                <div className="flex flex-col items-center">
-                  {/* Calculate scheduled departure time */}
-                  {(() => {
-                    const actualDepartureTime = leg.startTime;
-                    const scheduledDepartureTime = actualDepartureTime - (leg.departureDelay || 0) * 1000; // Convert seconds to ms
-                    const timeDiff = formatTimeDifference(scheduledDepartureTime, actualDepartureTime);
-
-                    return (
-                      <>
+                {!isWaitLeg(leg) && (
+                  <>
+                    {/* Departure Time */}
+                    <div className="flex flex-col items-center">
+                      <div className="relative">
                         <span className="font-medium text-gray-900">
-                          {formatTime(actualDepartureTime)}
+                          {formatTime(leg.startTime)}
                         </span>
-                        {timeDiff.text && (
-                          <span className={`text-sm font-medium ${timeDiff.color}`}>
-                            {timeDiff.text}
-                          </span>
-                        )}
-                      </>
-                    );
-                  })()}
-                </div>
+                        {(() => {
+                          const actualDepartureTime = leg.startTime;
+                          const scheduledDepartureTime = actualDepartureTime - (leg.departureDelay || 0) * 1000;
+                          const timeDiff = formatTimeDifference(scheduledDepartureTime, actualDepartureTime);
 
-                {index < selectedItinerary.otpItinerary.legs.length && (
-                  <div
-                    className={`h-full border-l-4 my-2 transition-all`} // Remove inline style from className
-                    style={{ borderLeftColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }} // Apply style attribute
-                  />
+                          return timeDiff.text && (
+                            <span className={`absolute -top-3 -right-6 text-sm font-bold ${timeDiff.color}`}>
+                              {timeDiff.text}
+                            </span>
+                          );
+                        })()}
+                      </div>
+                    </div>
+
+                    {/* Timeline */}
+                    {index < selectedItinerary.otpItinerary.legs.length && (
+                      <div
+                        className="h-full border-l-4 my-2 transition-all"
+                        style={{ borderLeftColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }}
+                      />
+                    )}
+
+                    {/* Arrival Time */}
+                    <div className="flex flex-col items-center">
+                      <div className="relative">
+                        <span className="font-medium text-gray-900">
+                          {formatTime(leg.endTime)}
+                        </span>
+                        {(() => {
+                          const actualArrivalTime = leg.endTime;
+                          const scheduledArrivalTime = actualArrivalTime - (leg.arrivalDelay || 0) * 1000;
+                          const timeDiff = formatTimeDifference(scheduledArrivalTime, actualArrivalTime);
+
+                          return timeDiff.text && (
+                            <span className={`absolute -top-3 -right-6 text-sm font-bold ${timeDiff.color}`}>
+                              {timeDiff.text}
+                            </span>
+                          );
+                        })()}
+                      </div>
+                    </div>
+                  </>
                 )}
-
-                {/* Arrival Time - Show actual and scheduled times */}
-                <div className="flex flex-col items-center">
-                  {(() => {
-                    const actualArrivalTime = leg.endTime;
-                    const scheduledArrivalTime = actualArrivalTime - (leg.arrivalDelay || 0) * 1000; // Convert seconds to ms
-                    const timeDiff = formatTimeDifference(scheduledArrivalTime, actualArrivalTime);
-
-                    return (
-                      <>
-                        <span className="font-medium text-gray-900">
-                          {formatTime(actualArrivalTime)}
-                        </span>
-                        {timeDiff.text && (
-                          <span className={`text-sm font-medium ${timeDiff.color}`}>
-                            {timeDiff.text}
-                          </span>
-                        )}
-                      </>
-                    );
-                  })()}
-                </div>
               </div>
 
               {/* Content Column */}
-              <div className="flex-1 pb-8">
+              <div className="flex-1">
                 {/* From Location */}
-                <div className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded-full ${getLegType(leg.mode) === 'START' ? 'bg-green-500' :
-                      getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' :
-                        ''}`}
-                    style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }} // Apply style attribute
-                  />
-                  <div className="font-medium text-gray-900">
-                    {leg.from.name}
+                {!isWaitLeg(leg) && (
+                  <div className="flex items-center gap-2 mb-3">
+                    <div 
+                      className={`w-3 h-3 rounded-full ${getLegType(leg.mode) === 'START' ? 'bg-green-500' : getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' : ''}`}
+                      style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }}
+                    />
+                    <div className="font-medium text-gray-900">
+                      {leg.from.name}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Transport Details */}
-                <div className="ml-5 my-3">
-                  {!isWalkMode(leg.mode) ? (
+                <div className={`${isWaitLeg(leg) ? '' : 'ml-5'} mb-3`}>
+                  {isWaitLeg(leg) ? (
+                    <div className="flex items-center gap-3 bg-white border border-gray-200 px-4 py-2.5 rounded-lg shadow-sm">
+                      <Clock size={24} className="text-gray-600" />
+                      <span className="text-gray-600 text-lg">Wait ({formatDuration(leg.duration)})</span>
+                    </div>
+                  ) : !isWalkMode(leg.mode) ? (
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
-                        {getTransportLogo(leg.mode as TransportMode) && (
-                          <Image src={getTransportLogo(leg.mode as TransportMode)!} alt={leg.mode} width={24} height={24} />
-                        )}
-                        <div
-                          className={`px-3 py-1.5 rounded-full shadow-sm`} // Remove inline style from className
-                          style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }} // Apply style attribute
-                        >
-                          <span className="text-white font-medium">
-                            {leg.route ? `${leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode} ${leg.route}` : leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode}
-                          </span>
+                        <div className="flex items-center gap-2">
+                          {getTransportLogo(leg.mode as TransportMode) && (
+                            <Image src={getTransportLogo(leg.mode as TransportMode)!} alt={leg.mode} width={24} height={24} />
+                          )}
+                          <div
+                            className="px-3 py-1.5 rounded-full shadow-sm"
+                            style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }}
+                          >
+                            <span className="text-white font-medium">
+                              {leg.route ? `${leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode} ${leg.route}` : leg.mode === 'SUBURB' ? 'S-BAHN' : leg.mode}
+                            </span>
+                          </div>
                         </div>
                         
-                        {/* Add toggle button when there are stops */}
                         {leg.intermediateStops && leg.intermediateStops.length > 0 && (
                           <button
                             onClick={() => toggleLegExpansion(index)}
@@ -329,19 +344,15 @@ const SelectedRouteDetails = () => {
                         )}
                       </div>
 
-                      {/* Show stops only when expanded */}
-                      {expandedLegs.includes(index) && leg.intermediateStops && (
+                      {expandedLegs.includes(index) && leg.intermediateStops && leg.intermediateStops.length > 0 && (
                         <div className="ml-8 pl-4 border-l-2 border-gray-200">
                           {leg.intermediateStops.map((stop, stopIndex) => {
-
                             const legDuration = leg.endTime - leg.startTime;
                             const stopRatio = (stopIndex + 1) / (leg.intermediateStops?.length || 1);
                             const estimatedTime = leg.startTime + (legDuration * stopRatio);
-
                             const startDelayMs = (leg.departureDelay || 0) * 1000;
                             const endDelayMs = (leg.arrivalDelay || 0) * 1000;
                             const estimatedDelayMs = startDelayMs + (endDelayMs - startDelayMs) * stopRatio;
-
                             const scheduledTime = estimatedTime - estimatedDelayMs;
                             const timeDiff = formatTimeDifference(scheduledTime, estimatedTime);
 
@@ -351,14 +362,16 @@ const SelectedRouteDetails = () => {
                                   {stop.name}
                                 </div>
                                 <div className="flex items-center">
-                                  <span className="text-base font-normal">
-                                    {formatTime(estimatedTime)}
-                                  </span>
-                                  {timeDiff.text && (
-                                    <span className={`text-base font-normal ml-1 ${timeDiff.color}`}>
-                                      {timeDiff.text}
+                                  <div className="relative">
+                                    <span className="text-base font-normal">
+                                      {formatTime(estimatedTime)}
                                     </span>
-                                  )}
+                                    {timeDiff.text && (
+                                      <span className={`absolute -top-3 -right-6 text-sm font-bold ${timeDiff.color}`}>
+                                        {timeDiff.text}
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
                             );
@@ -375,16 +388,17 @@ const SelectedRouteDetails = () => {
                 </div>
 
                 {/* To Location */}
-                <div className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded-full ${getLegType(leg.mode) === 'END' ? 'bg-red-500' :
-                      getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' : ''
-                    }`}
-                    style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }} // Apply style attribute
-                  />
-                  <div className="font-medium text-gray-900">
-                    {leg.to.name}
+                {!isWaitLeg(leg) && (
+                  <div className="flex items-center gap-2">
+                    <div 
+                      className={`w-3 h-3 rounded-full ${getLegType(leg.mode) === 'END' ? 'bg-red-500' : getLegType(leg.mode) === 'WALK' ? 'bg-gray-400' : ''}`}
+                      style={{ backgroundColor: leg.routeColor && leg.routeColor.startsWith("#") ? leg.routeColor : undefined }}
+                    />
+                    <div className="font-medium text-gray-900">
+                      {leg.to.name}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           ))}
