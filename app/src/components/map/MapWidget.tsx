@@ -200,6 +200,7 @@ export const MapWidget: React.FC = ({ }) => {
             setCenter(currentLocation.coords);
             updateCurrentLocationLayer(mapRef, layerManagerRef.current, currentLocation);
             resetCenterTrigger();
+            mapRef.current.queryRenderedFeatures
         }
     }, [locationIsEnabled, mapRef.current]);
 
