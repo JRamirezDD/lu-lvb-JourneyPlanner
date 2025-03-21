@@ -99,7 +99,7 @@ const DepartureFilter = ({
     const days = [];
     const today = new Date();
     
-    // Add empty cells for days before the first day of the month
+    
     for (let i = 0; i < adjustedFirstDay; i++) {
       days.push(<div key={`empty-${i}`} className="h-10 w-10"></div>);
     }

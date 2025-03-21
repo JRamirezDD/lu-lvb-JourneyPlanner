@@ -149,7 +149,7 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
       date: lastDate,
       time: adjustedTime,
       numItineraries: 5,
-      arriveBy: false  // Always use departure time for earlier/later buttons
+      arriveBy: false 
     };
     fetchOtpData(params);
   };
@@ -248,10 +248,8 @@ const RouteView = ({ setActiveView }: { setActiveView: (view: ViewMode) => void 
     const currentLegEndTime = currentLeg.endTime;
     const nextLegStartTime = nextLeg.startTime;
     
-    // If there's a time gap between legs, it's a wait time
     const waitTime = nextLegStartTime - currentLegEndTime;
     
-    // Only return wait time if it's significant (more than 60 seconds)
     return waitTime > 60000 ? waitTime : null;
   }, []);
 
