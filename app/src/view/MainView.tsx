@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ControlPanel from "./controlPanel/ControlPanel";
-import MapComponent from "./map/MapComponent";
+import ControlPanel from "../components/controlPanel/ControlPanel";
+import MapComponent from "../components/map/MapComponent";
 import { useControLPanelContext } from "@/contexts/controlPanelContext";
 
 const MainView: React.FC = () => {
