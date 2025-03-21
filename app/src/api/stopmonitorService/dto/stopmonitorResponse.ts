@@ -35,7 +35,7 @@ export class MonitorItem extends GeoJsonConvertible {
     toGeoJson(): Feature<Geometry | null> {
         const geojson: Feature<Geometry | null> = {
             type: "Feature",
-            geometry: null, // No coordinates provided, geometry set to null
+            geometry: null, 
             properties: {
                 trip_id: this.trip_id,
                 stop_id: this.stop_id,
@@ -207,7 +207,7 @@ export class TripInfo extends GeoJsonConvertible {
     toGeoJson(): Feature<Geometry | null> {
         const geojson: Feature<Geometry | null> = {
             type: "Feature",
-            geometry: null, // Add geometry: null
+            geometry: null, 
             properties: {
                 trip_id: this.trip_id,
                 service_date: this.service_date,
@@ -249,7 +249,7 @@ export class StopTimesItem extends GeoJsonConvertible {
     toGeoJson(): Feature<Geometry | null> {
         const geojson: Feature<Geometry | null> = {
             type: "Feature",
-            geometry: null, // Add geometry: null
+            geometry: null, 
             properties: {
                 arrival_time: this.arrival_time,
                 date: this.date,
@@ -286,7 +286,7 @@ export class Alert extends GeoJsonConvertible {
     toGeoJson(): Feature<Geometry | null> {
         const geojson: Feature<Geometry | null> = {
             type: "Feature",
-            geometry: null, // Add geometry: null
+            geometry: null, 
             properties: {
                 effectiveStartDate: this.effectiveStartDate,
                 effectiveEndDate: this.effectiveEndDate,

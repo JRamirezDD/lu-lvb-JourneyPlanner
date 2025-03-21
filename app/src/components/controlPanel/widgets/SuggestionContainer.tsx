@@ -36,11 +36,10 @@ const SuggestionContainer: React.FC<SuggestionContainerProps> = ({
                                    onCurrentLocationClick && 
                                    !hasCurrentLocationInSuggestions;
 
-  // Determine if we should show the "No suggestions found" message
-  // Only show it if there are no suggestions AND current location is not available
+  
   const showNoSuggestionsMessage = suggestions.length === 0 && !shouldShowCurrentLocation;
 
-  // Handle current location click with event stopping
+  
   const handleCurrentLocationClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();

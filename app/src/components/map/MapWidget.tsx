@@ -190,8 +190,6 @@ export const MapWidget: React.FC = ({ }) => {
     // On Autocomplete item selection, move map to selected item
     useEffect(() => {
         if (mapRef.current && selectedItem && viewMode === "STATION") {
-            // remove previous pin if exists?
-            // add new pin?
             moveMap({ lat: selectedItem.lat, lon: selectedItem.lon }, 15.3, 500);
         }
     }, [selectedItem]);
@@ -272,9 +270,6 @@ export const MapWidget: React.FC = ({ }) => {
             // wait for itinerary layers to load
             waitForSource(mapRef.current, "itinerary-source").then(() => {
                 if (mapRef.current) {
-                    // debug
-                    // get features
-
                     const features = selectedItinerary.toGeoJson().features.map((feature) => {
                         return feature as MapGeoJSONFeature;
                     });
@@ -545,11 +540,6 @@ export const MapWidget: React.FC = ({ }) => {
         addLayerIfNotExists(currentLocationAccuracyLayerConfig);
         addLayerIfNotExists(currentLocationLayerConfig);
     };
-
-    
-
-      
-
 
     //console.log("Rendering MapWidget. Map container ref:", mapContainerRef.current);
     return (

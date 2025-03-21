@@ -173,5 +173,3 @@ export const mobistation_stopsLayerConfig: LayerSpecification = {
   filter: ["==", ["get", "type"], "mobistation"],
 };
 
-
-//free_floating, stop, ticket-machine, station, mobistation 

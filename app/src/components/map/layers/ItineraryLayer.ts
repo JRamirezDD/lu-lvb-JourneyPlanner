@@ -34,7 +34,7 @@ export const createItineraryLayerData = (selectedItinerary: Itinerary): FeatureC
 
 import { SourceSpecification, LayerSpecification } from "maplibre-gl";
 
-//current leg modes are: walking, s bahn, bus, tram, train
+//current leg modes are: walking, s bahn, bus, tram, train, and backup layer
 
 // Shared itinerary source (dynamically updated)
 export const itinerarySource: SourceSpecification = {
@@ -133,7 +133,7 @@ export const trainLayerConfig: LayerSpecification = {
   filter: ["==", ["get", "mode"], "TRAIN"],
 };
 
-// display any lines with different modes 
+// display any lines with different modes ad black line
 export const backupLayerConfig: LayerSpecification = {
   id: "backup-layer",
   type: "line",
@@ -194,4 +194,3 @@ export const originLayerConfig: LayerSpecification = {
 };
 
 
-//"name": "Destination",

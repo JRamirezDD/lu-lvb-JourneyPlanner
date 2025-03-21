@@ -15,11 +15,9 @@ const ControlPanel = () => {
   const { viewMode, setViewMode } = useUIContext();
   const { selectedStop, selectedNearbySearchItem, setSelectedNearbySearchItem, setSelectedStop } = useMapContext();
 
-  // We'll store the stable Stop ID here.
   const [stableStopId, setStableStopId] = useState<string | null>(null);
   const [stableStopName, setStableStopName] = useState<string | null>(null);
   
-  // Track the source of the station selection
   const [selectionSource, setSelectionSource] = useState<'map' | 'search' | null>(null);
 
   // When a new nearby search item is selected from the map
@@ -27,14 +25,10 @@ const ControlPanel = () => {
     if (selectedNearbySearchItem?.data instanceof Stop) {
       const newStopId = extractTrailingDigits(selectedNearbySearchItem.id);
       
-      console.log("Setting stableStopId from map selection:", newStopId);
       setStableStopId(newStopId);
       setStableStopName(selectedNearbySearchItem.name);
       setSelectionSource('map');
       
-      // Set the view mode to STATION
-      // The UIContext will handle preserving the previous view mode
-      console.log("Setting view mode to STATION from map selection");
       setViewMode("STATION");
     }
   }, [selectedNearbySearchItem, setViewMode]);
@@ -45,7 +39,6 @@ const ControlPanel = () => {
       console.log("Setting selection source to search");
       setSelectionSource('search');
       
-      // No need to clear stableStopId here, as we're using selectionSource to determine which to use
     }
   }, [selectedStop]);
 
@@ -69,7 +62,6 @@ const ControlPanel = () => {
         setStableStopName(null);
       }
       
-      // Reset selection source when navigating away
       setSelectionSource(null);
     }
   }, [viewMode, selectedNearbySearchItem, selectedStop, setSelectedNearbySearchItem, setSelectedStop]);
