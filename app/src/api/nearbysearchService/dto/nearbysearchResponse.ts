@@ -51,9 +51,8 @@ export class SearchItemJson extends GeoJsonConvertible {
         return plainToInstance(TicketSeller, value);
       case "flexa":
         return plainToInstance(Flexa, value);
-      // Add other cases as needed for "parkingarea", "operationarea", "mobistation", etc.
       default:
-        return value; // Fallback to the plain object if no match is found.
+        return value; 
     }
   }, { toClassOnly: true })
   public data: any;
@@ -96,14 +95,7 @@ export class SearchItemJson extends GeoJsonConvertible {
   }
 }
 
-//export type Latitude = number;    /* between -90 and 90 */
-//export type Longitude = number;   /* Longitude: number between -180 and 180 */
-
-/* ***************************************************************
-   Variant DTOs for the "data" property
-   *************************************************************** */
- 
-export class BikeFreeSearchJson { //For a free-floating bike (or a bike that is not part of a station)
+export class BikeFreeSearchJson { //For a free-floating bike 
   constructor(
     public uid: number | null,
     public state: "ok",
@@ -143,7 +135,7 @@ export class FlinksterSearchJson {    //For a Flinkster search item
   }
 }
 
-export class FlinksterAddress { //HERE
+export class FlinksterAddress {
   zip: string;
   city: string;
   number: string;
@@ -157,7 +149,7 @@ export class FlinksterAddress { //HERE
   }
 }
 
-export class FlinksterAttributes {  //HERE
+export class FlinksterAttributes {
   parking: { description: string };
   locationnote: { description: string };
 
@@ -168,9 +160,9 @@ export class FlinksterAttributes {  //HERE
 }
 
 /**
- * For taxi-based items.
+ * taxi-based items.
  */
-export class Taxi { //HERE
+export class Taxi {
   phone: string;
 
   constructor(phone: string) {
@@ -178,7 +170,7 @@ export class Taxi { //HERE
   }
 }
   /**
- * For mobistation items (often used when the source is "lvb").
+ * mobistation items
  */
 export class Mobistation {
   constructor(
@@ -201,7 +193,7 @@ export class Mobistation {
   }
 }
 
-export class MobistationAddress { //HERE
+export class MobistationAddress {
   city: string;
   street: string;
   postalcode: string;
@@ -254,7 +246,7 @@ export class EscooterFreeSearchJson {
   }
 }
 
-export class Price {    //HERE
+export class Price {   
   price_id?: string;
   start_price: string;
   price_per_min: string;
@@ -291,7 +283,7 @@ export type TicketSellerType =
   | "konsum"
   | "service-point";
 
-export class TicketSellerNotes {  //HERE
+export class TicketSellerNotes {  
   machineNumber: number;
 
   constructor(machineNumber: number) {
