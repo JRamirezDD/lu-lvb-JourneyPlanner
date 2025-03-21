@@ -9,7 +9,7 @@ import { StopmonitorDataProvider } from '@/contexts/DataContext/stopmonitorDataC
 import { SettingsProvider, useSettingsContext } from '@/contexts/settingsContext';
 import { AutocompleteDataProvider } from '@/contexts/DataContext/autocompleteDataContext';
 import { OtpDataProvider } from '@/contexts/DataContext/routingDataContext';
-import MainView from '@/components/MainView';
+import MainView from '@/view/MainView';
 import { NearbySearchDataProvider } from '@/contexts/DataContext/nearbySearchDataContext';
 
 

@@ -19,11 +19,11 @@ for (const scenario of scenarios) {
 
     const memoryUsage: number[] = [];
 
-    // Record memory usage every 5 seconds, total 3 minutes
-    for (let i = 0; i < 36; i++) {
+    // Record memory usage every 10 seconds, total 3 minutes
+    for (let i = 0; i < 18; i++) {
       const heapMB = await getHeapUsageMB(page);
       memoryUsage.push(heapMB);
-      console.log(`[${scenario}] Heap at ${(i + 1) * 5}s: ${heapMB.toFixed(2)} MB`);
+      console.log(`[${scenario}] Heap at ${(i + 1) * 10}s: ${heapMB.toFixed(2)} MB`);
       await page.waitForTimeout(5000);
     }
 

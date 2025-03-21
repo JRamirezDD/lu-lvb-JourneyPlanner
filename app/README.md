@@ -10,7 +10,8 @@
 - Node.js v22.12.0
 
 ## Hosting
-Not currently hosted. Hosting to be delivered in Sprint 2.
+WebApp available at:
+[https://jramirezdd.github.io/lu-lvb-JourneyPlanner](https://jramirezdd.github.io/lu-lvb-JourneyPlanner)
 
 ## Development Mode vs Production Mode
 The application can be ran in 2 modes. Development Mode, and Production Mode.
