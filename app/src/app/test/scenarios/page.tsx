@@ -11,7 +11,7 @@ import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDat
 import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
 import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataContext";
 import { NearbySearchDataProvider } from "@/contexts/DataContext/nearbySearchDataContext";
-import MainView from "@/components/MainView";
+import MainView from "@/view/MainView";
 import ScenarioLoader from "@/testing/utils/ScenarioLoader";
 import { Scenario } from "@/testing/types/Scenario";
 

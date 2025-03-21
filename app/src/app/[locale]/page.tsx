@@ -3,7 +3,7 @@ import "maplibre-gl/dist/maplibre-gl.css"; // Additive maplibre-gl CSS functiona
 import { generateStaticParams } from "./generateStaticParams";
 export { generateStaticParams };
 
-import MainView from "@/components/MainView";
+import MainView from "@/view/MainView";
 
 export default function MainPage() {
   return (

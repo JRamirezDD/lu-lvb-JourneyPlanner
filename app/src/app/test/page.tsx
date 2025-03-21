@@ -8,7 +8,7 @@ import { AutocompleteDataProvider } from "@/contexts/DataContext/autocompleteDat
 import { OtpDataProvider } from "@/contexts/DataContext/routingDataContext";
 import { StopmonitorDataProvider } from "@/contexts/DataContext/stopmonitorDataContext";
 import { SettingsProvider } from "@/contexts/settingsContext";
-import MainView from "@/components/MainView";
+import MainView from "@/view/MainView";
 import { NearbySearchDataProvider } from "@/contexts/DataContext/nearbySearchDataContext";
 import { ControlPanelProvider } from "@/contexts/controlPanelContext";
 
